@@ -1,0 +1,17 @@
+{
+  "schema": "neoeng.dcore.support-bundle-policy.v1",
+  "maximum_trace_events": 4096,
+  "maximum_entry_bytes": 16777216,
+  "maximum_total_bytes": 67108864,
+  "include_time_travel": true,
+  "time_travel_payload_requires_explicit_authorization": true,
+  "include_visual_correlation": true,
+  "include_monotonic_timestamps": false,
+  "pseudonymization_salt_policy": "unique-per-export-or-case; never reuse a session/authentication key",
+  "forbidden_material": [
+    "session keys",
+    "authentication secrets",
+    "private signing material",
+    "raw external subject identifiers"
+  ]
+}

@@ -26,6 +26,28 @@ enum class TraceCategory : std::uint8_t {
     Evidence,
 };
 
+enum class TraceSubsystem : std::uint8_t {
+    Unknown,
+    InputParser,
+    NetworkGateway,
+    Session,
+    Simulation,
+    Rollback,
+    Recovery,
+    Evidence,
+    ViewLab,
+    SupportBundle,
+    Qualification,
+};
+
+enum class TraceSeverity : std::uint8_t {
+    Debug,
+    Info,
+    Warning,
+    Error,
+    Critical,
+};
+
 enum class TraceOutcome : std::uint8_t {
     Accepted,
     Rejected,
@@ -46,6 +68,7 @@ enum class TraceCode : std::uint16_t {
     StateDivergence,
     RollbackStarted,
     RollbackCompleted,
+    BudgetSampled,
     BudgetExceeded,
     DeviceLost,
     IoStall,
@@ -62,6 +85,10 @@ enum class TraceCode : std::uint16_t {
     EvidenceChainBroken,
     EvidenceSignatureRejected,
     MerkleProofRejected,
+    DivergenceLocalized,
+    SupportBundleCreated,
+    SupportBundleVerificationFailed,
+    ValidationGateDeferred,
 };
 
 struct TraceEvent final {
@@ -76,6 +103,11 @@ struct TraceEvent final {
     std::uint32_t component{};
     std::int64_t measured_value{};
     std::int64_t budget_limit{};
+    TraceSubsystem subsystem{TraceSubsystem::Unknown};
+    TraceSeverity severity{TraceSeverity::Info};
+    std::uint64_t subject_token{};
+    std::uint64_t related_hash{};
+    std::uint32_t detail_code{};
 
     auto operator<=>(const TraceEvent&) const = default;
 };
@@ -158,6 +190,8 @@ private:
 };
 
 [[nodiscard]] const char* to_string(TraceCategory category) noexcept;
+[[nodiscard]] const char* to_string(TraceSubsystem subsystem) noexcept;
+[[nodiscard]] const char* to_string(TraceSeverity severity) noexcept;
 [[nodiscard]] const char* to_string(TraceOutcome outcome) noexcept;
 [[nodiscard]] const char* to_string(TraceCode code) noexcept;
 

@@ -170,8 +170,8 @@ cs004_required = [
 for rel in cs004_required:
     if not (root/rel).is_file():
         errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
-if 'project(NeoEngDCore VERSION 1.4.0 ' not in cmake:
-    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.4.0')
+if 'project(NeoEngDCore VERSION 1.5.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.5.0')
 for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
     if rel not in cmake:
         errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
@@ -194,6 +194,69 @@ for rel in ('include/neoeng/core/state_evidence.hpp', 'src/state_evidence.cpp'):
         for forbidden in ('neoeng/render', 'neoeng_dcore_view_lab', 'modules/view_lab'):
             if forbidden in text:
                 errors.append(f'dependência visual proibida na evidência canônica: {rel}: {forbidden}')
+
+
+# ChangeSet 005 observability/support-bundle boundary and deferred validation gates.
+cs005_required = [
+    'include/neoeng/core/diagnostics.hpp',
+    'src/diagnostics.cpp',
+    'include/neoeng/core/support_bundle.hpp',
+    'src/support_bundle.cpp',
+    'tests/observability_support_tests.cpp',
+    'apps/support_bundle_probe.cpp',
+    'apps/support_bundle_fuzz.cpp',
+    'scripts/verify_support_bundle.py',
+    'scripts/windows/collect-support-bundle.ps1',
+    'audit/DEFERRED_VALIDATION_GATES.json',
+    'config/support_bundle_policy.json',
+    'docs/contracts/OBSERVABILITY_V2.md',
+    'docs/contracts/SUPPORT_BUNDLE_V1.md',
+    'docs/architecture/OBSERVABILITY_SUPPORT_BOUNDARY.md',
+    'docs/changesets/005/CHANGESET.md',
+    'docs/changesets/005/TEST_STATUS.md',
+]
+for rel in cs005_required:
+    if not (root/rel).is_file():
+        errors.append(f'arquivo obrigatório do ChangeSet 005 ausente: {rel}')
+for rel in ('src/diagnostics.cpp', 'src/support_bundle.cpp',
+            'apps/support_bundle_probe.cpp', 'apps/support_bundle_fuzz.cpp'):
+    if rel not in cmake:
+        errors.append(f'fonte CS005 sem cobertura CMake: {rel}')
+gates_path = root/'audit/DEFERRED_VALIDATION_GATES.json'
+if gates_path.is_file():
+    try:
+        gates = json.loads(gates_path.read_text(encoding='utf-8'))
+        if gates.get('schema') != 'neoeng.dcore.deferred-validation-gates.v1':
+            errors.append('schema do ledger de validações diferidas divergente')
+        gate_rows = gates.get('gates', [])
+        if not gate_rows:
+            errors.append('ledger de validações diferidas vazio')
+        for row in gate_rows:
+            if row.get('blocking_for_current_changeset') is not False:
+                errors.append(f"gate diferido bloqueia indevidamente o CS005: {row.get('gate_id')}")
+            if row.get('category') == 'native_validation_pending'                     and row.get('blocking_for_profile_qualification') is not True:
+                errors.append(f"gate nativo não bloqueia qualificação: {row.get('gate_id')}")
+    except Exception as exc:
+        errors.append(f'ledger de validações diferidas inválido: {exc}')
+support_contract = root/'docs/contracts/SUPPORT_BUNDLE_V1.md'
+if support_contract.is_file() and 'neoeng.dcore.support-bundle.v1' not in support_contract.read_text(encoding='utf-8'):
+    errors.append('schema de support bundle ausente no contrato')
+policy_path = root/'config/support_bundle_policy.json'
+if policy_path.is_file():
+    try:
+        policy = json.loads(policy_path.read_text(encoding='utf-8'))
+        if policy.get('time_travel_payload_requires_explicit_authorization') is not True:
+            errors.append('política de support bundle não exige autorização explícita para time-travel')
+    except Exception as exc:
+        errors.append(f'política de support bundle inválida: {exc}')
+for rel in ('include/neoeng/core/diagnostics.hpp', 'include/neoeng/core/support_bundle.hpp',
+            'src/diagnostics.cpp', 'src/support_bundle.cpp'):
+    item = root/rel
+    if item.is_file():
+        text = item.read_text(encoding='utf-8', errors='replace').lower()
+        for forbidden in ('neoeng/render', 'neoeng_dcore_view_lab', 'modules/view_lab'):
+            if forbidden in text:
+                errors.append(f'dependência visual proibida no núcleo CS005: {rel}: {forbidden}')
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)

@@ -53,7 +53,20 @@ OperationalRuntime::OperationalRuntime(
       traces_(config.trace_capacity),
       time_travel_(config.time_travel_frame_capacity),
       input_buffer_(config.network.maximum_input_commands),
-      safe_checkpoint_interval_frames_(config.safe_checkpoint_interval_frames) {
+      safe_checkpoint_interval_frames_(config.safe_checkpoint_interval_frames),
+      wall_clock_budget_tracing_(config.enable_wall_clock_budget_tracing),
+      input_ingest_budget_({
+          .id = BudgetId::InputIngest,
+          .subsystem = TraceSubsystem::NetworkGateway,
+          .limit_ns = config.input_ingest_budget_ns,
+          .exceed_severity = TraceSeverity::Warning,
+      }),
+      state_advance_budget_({
+          .id = BudgetId::StateAdvance,
+          .subsystem = TraceSubsystem::Simulation,
+          .limit_ns = config.state_advance_budget_ns,
+          .exceed_severity = TraceSeverity::Warning,
+      }) {
     if (safe_checkpoint_interval_frames_ == 0U) {
         throw std::invalid_argument("Safe checkpoint interval must be greater than zero");
     }
@@ -73,6 +86,8 @@ void OperationalRuntime::record_network_rejection(
         .outcome = TraceOutcome::Rejected,
         .code = trace_code_for_packet_rejection(reason),
         .measured_value = static_cast<std::int64_t>(reason),
+        .subsystem = TraceSubsystem::NetworkGateway,
+        .severity = TraceSeverity::Warning,
     });
 }
 
@@ -88,6 +103,8 @@ void OperationalRuntime::record_payload_rejection(
         .outcome = TraceOutcome::Rejected,
         .code = TraceCode::InputMalformed,
         .measured_value = static_cast<std::int64_t>(reason),
+        .subsystem = TraceSubsystem::InputParser,
+        .severity = TraceSeverity::Warning,
     });
 }
 
@@ -104,6 +121,10 @@ OperationalStepResult OperationalRuntime::ingest_authenticated_input(
     std::uint64_t now_ms,
     CorrelationId correlation_id,
     std::span<const std::uint8_t> datagram) {
+    ScopedBudgetMeasurement ingest_budget_scope(
+        wall_clock_budget_tracing_ ? &budget_monitor_ : nullptr,
+        wall_clock_budget_tracing_ ? &traces_ : nullptr,
+        input_ingest_budget_, correlation_id, engine_.state().frame);
     OperationalStepResult result{
         .resulting_frame = engine_.state().frame,
         .state_hash = stable_hash(engine_.state()),
@@ -146,8 +167,17 @@ OperationalStepResult OperationalRuntime::ingest_authenticated_input(
             .outcome = TraceOutcome::Accepted,
             .code = TraceCode::InputAuthenticated,
             .measured_value = static_cast<std::int64_t>(parsed.command_count),
+            .subsystem = TraceSubsystem::InputParser,
+            .severity = TraceSeverity::Info,
+            .subject_token = origin,
         });
-        engine_.advance(std::span<const InputCommand>(input_buffer_.data(), parsed.command_count));
+        {
+            ScopedBudgetMeasurement state_budget_scope(
+                wall_clock_budget_tracing_ ? &budget_monitor_ : nullptr,
+                wall_clock_budget_tracing_ ? &traces_ : nullptr,
+                state_advance_budget_, correlation_id, engine_.state().frame);
+            engine_.advance(std::span<const InputCommand>(input_buffer_.data(), parsed.command_count));
+        }
         if (engine_.state().frame % safe_checkpoint_interval_frames_ == 0U) {
             recovery_.mark_safe_checkpoint(engine_.state().frame);
         }
@@ -159,6 +189,10 @@ OperationalStepResult OperationalRuntime::ingest_authenticated_input(
             .outcome = TraceOutcome::Applied,
             .code = TraceCode::StateAdvanced,
             .measured_value = static_cast<std::int64_t>(stable_hash(engine_.state())),
+            .subsystem = TraceSubsystem::Simulation,
+            .severity = TraceSeverity::Info,
+            .subject_token = origin,
+            .related_hash = stable_hash(engine_.state()),
         });
         result.advanced = true;
         result.resulting_frame = engine_.state().frame;
@@ -217,6 +251,10 @@ bool OperationalRuntime::install_authenticated_session(
         .code = installed ? TraceCode::SessionEstablished : TraceCode::SessionRejected,
         .measured_value = static_cast<std::int64_t>(binding.key_epoch),
         .budget_limit = static_cast<std::int64_t>(binding.expires_at_ms),
+        .subsystem = TraceSubsystem::Session,
+        .severity = installed ? TraceSeverity::Info : TraceSeverity::Warning,
+        .subject_token = origin,
+        .detail_code = binding.key_id,
     });
     return installed;
 }
@@ -231,6 +269,20 @@ std::size_t OperationalRuntime::revoke_authenticated_sessions_for_key(
     std::uint32_t key_id,
     std::uint32_t key_epoch) noexcept {
     return gateway_.revoke_sessions_for_key(key_id, key_epoch);
+}
+
+
+BudgetEvaluation OperationalRuntime::record_budget_sample(
+    const BudgetSample& sample) noexcept {
+    return budget_monitor_.record(sample, traces_);
+}
+
+StateDivergenceReport OperationalRuntime::verify_state_against(
+    const WorldState& expected,
+    CorrelationId correlation_id,
+    std::uint64_t monotonic_time_ns) {
+    return diagnose_state_divergence(
+        expected, engine_.state(), correlation_id, &traces_, monotonic_time_ns);
 }
 
 RecoveryAckResult OperationalRuntime::acknowledge_recovery(
@@ -294,6 +346,8 @@ RecoveryAckResult OperationalRuntime::acknowledge_recovery(
             : TraceCode::RecoveryAcknowledgementRejected,
         .measured_value = static_cast<std::int64_t>(result.reason),
         .budget_limit = static_cast<std::int64_t>(generation),
+        .subsystem = TraceSubsystem::Recovery,
+        .severity = result.accepted ? TraceSeverity::Info : TraceSeverity::Warning,
     });
     return result;
 }

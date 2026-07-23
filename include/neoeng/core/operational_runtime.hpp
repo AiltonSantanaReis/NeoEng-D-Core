@@ -1,5 +1,6 @@
 #pragma once
 
+#include "neoeng/core/diagnostics.hpp"
 #include "neoeng/core/network_security.hpp"
 #include "neoeng/core/observability.hpp"
 #include "neoeng/core/recovery.hpp"
@@ -21,6 +22,9 @@ struct OperationalRuntimeConfig final {
     std::size_t trace_capacity{4'096U};
     std::size_t time_travel_frame_capacity{300U};
     std::uint64_t safe_checkpoint_interval_frames{1U};
+    bool enable_wall_clock_budget_tracing{true};
+    std::uint64_t input_ingest_budget_ns{2'000'000U};
+    std::uint64_t state_advance_budget_ns{2'000'000U};
 };
 
 struct OperationalStepResult final {
@@ -66,6 +70,13 @@ public:
         std::uint32_t key_id,
         std::uint32_t key_epoch) noexcept;
 
+    [[nodiscard]] BudgetEvaluation record_budget_sample(
+        const BudgetSample& sample) noexcept;
+    [[nodiscard]] StateDivergenceReport verify_state_against(
+        const WorldState& expected,
+        CorrelationId correlation_id,
+        std::uint64_t monotonic_time_ns = 0U);
+
     [[nodiscard]] RecoveryAckResult acknowledge_recovery(
         std::uint64_t generation,
         RecoveryAcknowledgement acknowledgement,
@@ -102,6 +113,10 @@ private:
     TimeTravelDebugger time_travel_;
     std::vector<InputCommand> input_buffer_{};
     std::uint64_t safe_checkpoint_interval_frames_{1U};
+    bool wall_clock_budget_tracing_{true};
+    BudgetDefinition input_ingest_budget_{};
+    BudgetDefinition state_advance_budget_{};
+    BudgetMonitor budget_monitor_{};
 };
 
 } // namespace neoeng::core

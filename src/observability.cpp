@@ -313,6 +313,34 @@ const char* to_string(TraceCategory category) noexcept {
     return "unknown";
 }
 
+const char* to_string(TraceSubsystem subsystem) noexcept {
+    switch (subsystem) {
+    case TraceSubsystem::Unknown: return "unknown";
+    case TraceSubsystem::InputParser: return "input_parser";
+    case TraceSubsystem::NetworkGateway: return "network_gateway";
+    case TraceSubsystem::Session: return "session";
+    case TraceSubsystem::Simulation: return "simulation";
+    case TraceSubsystem::Rollback: return "rollback";
+    case TraceSubsystem::Recovery: return "recovery";
+    case TraceSubsystem::Evidence: return "evidence";
+    case TraceSubsystem::ViewLab: return "view_lab";
+    case TraceSubsystem::SupportBundle: return "support_bundle";
+    case TraceSubsystem::Qualification: return "qualification";
+    }
+    return "unknown";
+}
+
+const char* to_string(TraceSeverity severity) noexcept {
+    switch (severity) {
+    case TraceSeverity::Debug: return "debug";
+    case TraceSeverity::Info: return "info";
+    case TraceSeverity::Warning: return "warning";
+    case TraceSeverity::Error: return "error";
+    case TraceSeverity::Critical: return "critical";
+    }
+    return "unknown";
+}
+
 const char* to_string(TraceOutcome outcome) noexcept {
     switch (outcome) {
     case TraceOutcome::Accepted: return "accepted";
@@ -337,6 +365,7 @@ const char* to_string(TraceCode code) noexcept {
     case TraceCode::StateDivergence: return "state_divergence";
     case TraceCode::RollbackStarted: return "rollback_started";
     case TraceCode::RollbackCompleted: return "rollback_completed";
+    case TraceCode::BudgetSampled: return "budget_sampled";
     case TraceCode::BudgetExceeded: return "budget_exceeded";
     case TraceCode::DeviceLost: return "device_lost";
     case TraceCode::IoStall: return "io_stall";
@@ -353,6 +382,10 @@ const char* to_string(TraceCode code) noexcept {
     case TraceCode::EvidenceChainBroken: return "evidence_chain_broken";
     case TraceCode::EvidenceSignatureRejected: return "evidence_signature_rejected";
     case TraceCode::MerkleProofRejected: return "merkle_proof_rejected";
+    case TraceCode::DivergenceLocalized: return "divergence_localized";
+    case TraceCode::SupportBundleCreated: return "support_bundle_created";
+    case TraceCode::SupportBundleVerificationFailed: return "support_bundle_verification_failed";
+    case TraceCode::ValidationGateDeferred: return "validation_gate_deferred";
     }
     return "unknown";
 }

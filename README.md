@@ -23,10 +23,10 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 ## Conteúdo auditado
 
-- 62 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
-- 56 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
-- 75 fontes de aplicações/benchmarks/fuzz/probes, incluindo o CLI do View Lab, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 6 fontes de teste e 49 testes registrados quando o toolset completo e o View Lab estão ativos;
+- 64 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
+- 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
+- 77 fontes de aplicações/benchmarks/fuzz/probes, incluindo o CLI do View Lab, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 7 fontes de teste e 52 testes registrados quando o toolset completo e o View Lab estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -109,3 +109,23 @@ A versão 1.4.0 adiciona uma camada de evidência para checkpoints sem substitui
 `stable_hash()` continua sendo o mecanismo operacional de 64 bits. SHA-256, Merkle e assinatura são calculados somente quando a política de checkpoint solicitar. HMAC-SHA256 existe apenas como autenticador de regressão controlada e não é apresentado como assinatura assimétrica.
 
 Documentação: `docs/contracts/STATE_EVIDENCE_V1.md`, `docs/architecture/STATE_EVIDENCE_BOUNDARY.md` e `docs/changesets/004/`.
+
+
+## ChangeSet 005 — observabilidade transversal e pacote de suporte
+
+A versão 1.5.0 adiciona:
+
+- eventos com subsistema, severidade, subject token pseudonimizável, hash relacionado e código de detalhe;
+- budgets executáveis com emissão automática de `BudgetSampled` e `BudgetExceeded`;
+- diagnóstico hierárquico de divergência por stable hash, SHA-256, Merkle e diff semântico;
+- pacote `neoeng.dcore.support-bundle.v1` com manifesto SHA-256, limites, redaction report e verificador independente;
+- autorização explícita para incluir captures de time-travel;
+- ledger `audit/DEFERRED_VALIDATION_GATES.json`, que separa lacuna de implementação de validação nativa pendente.
+
+No Windows, após o build:
+
+```powershell
+.\scripts\windows\collect-support-bundle.ps1
+```
+
+A campanha física Windows/ARM64 e a qualificação P0-P4 permanecem diferidas. Os resultados virtualizados são baseline de engenharia e não qualificam hardware. Documentação: `docs/contracts/OBSERVABILITY_V2.md`, `docs/contracts/SUPPORT_BUNDLE_V1.md` e `docs/changesets/005/`.
