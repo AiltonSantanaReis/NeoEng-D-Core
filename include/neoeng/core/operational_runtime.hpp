@@ -3,6 +3,7 @@
 #include "neoeng/core/network_security.hpp"
 #include "neoeng/core/observability.hpp"
 #include "neoeng/core/recovery.hpp"
+#include "neoeng/core/recovery_contract.hpp"
 #include "neoeng/core/rollback.hpp"
 
 #include <cstddef>
@@ -19,6 +20,7 @@ struct OperationalRuntimeConfig final {
     SnapshotStrategy snapshot_strategy{SnapshotStrategy::FullCopy};
     std::size_t trace_capacity{4'096U};
     std::size_t time_travel_frame_capacity{300U};
+    std::uint64_t safe_checkpoint_interval_frames{1U};
 };
 
 struct OperationalStepResult final {
@@ -26,6 +28,7 @@ struct OperationalStepResult final {
     PacketRejectReason packet_reason{PacketRejectReason::None};
     InputPayloadRejectReason payload_reason{InputPayloadRejectReason::None};
     RecoverySignal recovery{};
+    RecoveryContractEvent recovery_event{};
     std::uint64_t resulting_frame{};
     std::uint64_t state_hash{};
 };
@@ -47,11 +50,36 @@ public:
         FaultKind fault,
         CorrelationId correlation_id,
         std::uint64_t monotonic_time_ns = 0U) noexcept;
+    [[nodiscard]] RecoveryContractEvent report_external_fault_event(
+        FaultKind fault,
+        CorrelationId correlation_id,
+        std::uint64_t monotonic_time_ns = 0U) noexcept;
+
+    [[nodiscard]] bool install_authenticated_session(
+        OriginId origin,
+        const SecureSessionBinding& binding,
+        std::uint64_t now_ms) noexcept;
+    [[nodiscard]] bool revoke_authenticated_session(
+        OriginId origin,
+        std::uint64_t session_id) noexcept;
+    [[nodiscard]] std::size_t revoke_authenticated_sessions_for_key(
+        std::uint32_t key_id,
+        std::uint32_t key_epoch) noexcept;
+
+    [[nodiscard]] RecoveryAckResult acknowledge_recovery(
+        std::uint64_t generation,
+        RecoveryAcknowledgement acknowledgement,
+        CorrelationId correlation_id,
+        std::uint64_t restored_checkpoint_frame = 0U,
+        std::uint64_t monotonic_time_ns = 0U) noexcept;
 
     [[nodiscard]] const WorldState& state() const noexcept { return engine_.state(); }
     [[nodiscard]] const TraceBuffer& traces() const noexcept { return traces_; }
     [[nodiscard]] const TimeTravelDebugger& time_travel() const noexcept { return time_travel_; }
     [[nodiscard]] const RecoveryController& recovery() const noexcept { return recovery_; }
+    [[nodiscard]] const RecoveryHostBridge& recovery_host_bridge() const noexcept {
+        return recovery_host_bridge_;
+    }
 
 private:
     void record_network_rejection(
@@ -62,13 +90,18 @@ private:
         CorrelationId correlation_id,
         InputPayloadRejectReason reason,
         std::uint64_t monotonic_time_ns) noexcept;
+    [[nodiscard]] RecoveryContractEvent publish_recovery(
+        const RecoverySignal& signal,
+        std::uint64_t monotonic_time_ns) noexcept;
 
     RollbackEngine engine_;
     NetworkSecurityGateway gateway_;
     RecoveryController recovery_;
+    RecoveryHostBridge recovery_host_bridge_;
     TraceBuffer traces_;
     TimeTravelDebugger time_travel_;
     std::vector<InputCommand> input_buffer_{};
+    std::uint64_t safe_checkpoint_interval_frames_{1U};
 };
 
 } // namespace neoeng::core

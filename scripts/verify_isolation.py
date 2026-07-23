@@ -8,10 +8,40 @@ def sha(p):
         for b in iter(lambda:f.read(1024*1024),b''): h.update(b)
     return h.hexdigest()
 expected=json.loads((root/'audit/YEAR1_EXPECTED_SOURCE_FILES.json').read_text(encoding='utf-8'))
+authorized_path=root/'audit/AUTHORIZED_SOURCE_MODIFICATIONS.json'
+authorized_entries=[]
+if authorized_path.is_file():
+    authorized_document=json.loads(authorized_path.read_text(encoding='utf-8'))
+    authorized_entries=authorized_document.get('entries', [])
+authorized={row.get('path'): row for row in authorized_entries}
+exact_source_matches=0
+authorized_source_modifications=0
+expected_paths={row['path'] for row in expected}
 for row in expected:
     p=root/row['path']
-    if not p.is_file(): errors.append(f"ausente: {row['path']}")
-    elif sha(p)!=row['source_sha256']: errors.append(f"hash divergente da origem: {row['path']}")
+    if not p.is_file():
+        errors.append(f"ausente: {row['path']}")
+        continue
+    actual=sha(p)
+    if actual==row['source_sha256']:
+        exact_source_matches+=1
+        if row['path'] in authorized:
+            errors.append(f"exceção obsoleta para arquivo idêntico à origem: {row['path']}")
+        continue
+    exception=authorized.get(row['path'])
+    if exception is None:
+        errors.append(f"hash divergente da origem sem autorização: {row['path']}")
+        continue
+    if exception.get('original_source_sha256')!=row['source_sha256']:
+        errors.append(f"hash original incorreto na autorização: {row['path']}")
+    if exception.get('current_sha256')!=actual:
+        errors.append(f"hash atual incorreto na autorização: {row['path']}")
+    if not exception.get('authorized_changeset') or not exception.get('reason'):
+        errors.append(f"autorização incompleta: {row['path']}")
+    authorized_source_modifications+=1
+for path in authorized:
+    if path not in expected_paths:
+        errors.append(f"autorização não corresponde ao corpus obrigatório: {path}")
 for rel in ('include','src','apps','tests','CMakeLists.txt'):
     p=root/rel
     items=[p] if p.is_file() else list(p.rglob('*'))
@@ -81,4 +111,4 @@ if (root/'scripts/windows'/(_legacy([114,117,110,45,121,101,97,114,49,46,112,115
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print(f"OK: {len(expected)} arquivos obrigatórios conferem com a origem; identidade NeoEng D-Core validada; CMake cobre todas as fontes; sem dependências Y2/render.")
+print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); identidade NeoEng D-Core validada; CMake cobre todas as fontes; sem dependências Y2/render.")

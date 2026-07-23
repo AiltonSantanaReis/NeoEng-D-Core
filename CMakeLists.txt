@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.1.0 LANGUAGES CXX)
+project(NeoEngDCore VERSION 1.2.0 LANGUAGES CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -83,8 +83,10 @@ set(NEOENG_DCORE_CORE_SOURCES
   src/paged_segmented_pair_history.cpp
   src/segmented_authoritative_paged_temporal_physics.cpp
   src/network_security.cpp
+  src/session_security.cpp
   src/observability.cpp
   src/recovery.cpp
+  src/recovery_contract.cpp
   src/hardware_profile.cpp
   src/operational_runtime.cpp
 )
@@ -128,8 +130,11 @@ if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
 endif()
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_network_packet_fuzz apps/network_packet_fuzz.cpp)
+  neoeng_dcore_add_tool(neoeng_session_security_probe apps/session_security_probe.cpp)
+  neoeng_dcore_add_tool(neoeng_session_handshake_fuzz apps/session_handshake_fuzz.cpp)
   neoeng_dcore_add_tool(neoeng_time_travel_cli apps/dcore_time_travel_cli.cpp)
   neoeng_dcore_add_tool(neoeng_recovery_fault_injection apps/recovery_fault_injection.cpp)
+  neoeng_dcore_add_tool(neoeng_recovery_contract_probe apps/recovery_contract_probe.cpp)
   neoeng_dcore_add_tool(neoeng_hardware_profile_probe apps/hardware_profile_probe.cpp)
 endif()
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
@@ -363,12 +368,20 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_operational_hardening_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_operational_hardening_tests)
   add_test(NAME neoeng_operational_hardening_tests COMMAND neoeng_operational_hardening_tests)
-  set_tests_properties(neoeng_tests neoeng_operational_hardening_tests PROPERTIES LABELS "smoke;dcore")
+  add_executable(neoeng_session_recovery_contract_tests tests/session_recovery_contract_tests.cpp)
+  target_link_libraries(neoeng_session_recovery_contract_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_session_recovery_contract_tests)
+  add_test(NAME neoeng_session_recovery_contract_tests COMMAND neoeng_session_recovery_contract_tests)
+  set_tests_properties(neoeng_tests neoeng_operational_hardening_tests
+    neoeng_session_recovery_contract_tests PROPERTIES LABELS "smoke;dcore")
 
   if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
     add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
     add_test(NAME neoeng_network_packet_fuzz_smoke COMMAND neoeng_network_packet_fuzz 25000)
+    add_test(NAME neoeng_session_security_probe COMMAND neoeng_session_security_probe)
+    add_test(NAME neoeng_session_handshake_fuzz_smoke COMMAND neoeng_session_handshake_fuzz 25000)
     add_test(NAME neoeng_recovery_fault_injection COMMAND neoeng_recovery_fault_injection)
+    add_test(NAME neoeng_recovery_contract_probe COMMAND neoeng_recovery_contract_probe)
     add_test(NAME neoeng_immutable_fuzz COMMAND neoeng_immutable_fuzz)
     add_test(NAME neoeng_active_fuzz COMMAND neoeng_active_fuzz)
     add_test(NAME neoeng_v06_fuzz COMMAND neoeng_v06_fuzz 500)
@@ -394,7 +407,9 @@ if(BUILD_TESTING)
     add_test(NAME neoeng_v26_fuzz COMMAND neoeng_v26_fuzz 100)
     add_test(NAME neoeng_v27_fuzz COMMAND neoeng_v27_fuzz 100)
     set_tests_properties(
-      neoeng_snapshot_fuzz neoeng_network_packet_fuzz_smoke neoeng_recovery_fault_injection
+      neoeng_snapshot_fuzz neoeng_network_packet_fuzz_smoke
+      neoeng_session_security_probe neoeng_session_handshake_fuzz_smoke
+      neoeng_recovery_fault_injection neoeng_recovery_contract_probe
       neoeng_immutable_fuzz neoeng_active_fuzz
       neoeng_v06_fuzz
       neoeng_v07_fuzz

@@ -24,6 +24,7 @@ public:
     [[nodiscard]] std::size_t correct_input_and_resimulate(
         std::uint64_t input_frame,
         std::span<const InputCommand> corrected_inputs);
+    void restore_checkpoint(std::uint64_t frame);
 
     [[nodiscard]] const WorldState& state() const noexcept { return current_; }
     [[nodiscard]] const ISnapshotStore& snapshots() const noexcept { return *snapshots_; }

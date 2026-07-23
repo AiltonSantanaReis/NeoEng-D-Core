@@ -33,6 +33,15 @@ void RollbackEngine::advance(std::span<const InputCommand> inputs) {
     }
 }
 
+void RollbackEngine::restore_checkpoint(std::uint64_t frame) {
+    if (!snapshots_->contains(frame)) {
+        throw std::out_of_range("Required recovery checkpoint is no longer retained");
+    }
+    current_ = snapshots_->restore(frame);
+    snapshots_->truncate_after(frame);
+    input_history_.erase(input_history_.lower_bound(frame), input_history_.end());
+}
+
 std::size_t RollbackEngine::correct_input_and_resimulate(
     std::uint64_t input_frame,
     std::span<const InputCommand> corrected_inputs) {

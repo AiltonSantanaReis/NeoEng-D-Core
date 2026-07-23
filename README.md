@@ -23,10 +23,10 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 ## Conteúdo auditado
 
-- 57 headers canônicos (52 da base e 5 adicionados pelo ChangeSet 001);
-- 51 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`), sendo 46 da base e 5 do ChangeSet 001;
-- 69 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 2 fontes de teste e 39 testes registrados quando o toolset completo está ativo;
+- 59 headers canônicos (52 da base, 5 do ChangeSet 001 e 2 do ChangeSet 002);
+- 53 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`), sendo 46 da base, 5 do ChangeSet 001 e 2 do ChangeSet 002;
+- 72 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 3 fontes de teste e 43 testes registrados quando o toolset completo está ativo;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -52,3 +52,23 @@ ctest --test-dir build/windows-clang-release -R "operational_hardening|network_p
 ```
 
 Para registrar uma qualificação de hardware no Windows, use `scripts/windows/qualify-hardware-profile.ps1`. O script recusa aprovação quando o baseline está incompleto, o ambiente não coincide ou as medições obrigatórias estão ausentes. Os perfis permanecem `UNQUALIFIED` até campanha em hardware físico.
+
+
+## ChangeSet 002 — sessão autenticada e recuperação formal
+
+A versão 1.2.0 adiciona:
+
+- handshake HMAC-SHA256 cliente/servidor com proteção anti-replay e anti-downgrade;
+- derivação separada de chaves client→server e server→client;
+- root key lifecycle, rotação, expiração, papéis e revogação conjunta de sessões;
+- modo estrito do gateway, que exige sessão estabelecida por origem;
+- contrato `neoeng.dcore.recovery.v1` com códigos estáveis, geração e acknowledgements tipados;
+- restauração real de checkpoint e truncamento da linha temporal após rollback.
+
+A documentação está em `docs/changesets/002/`. Para executar os testes específicos:
+
+```powershell
+ctest --test-dir build/windows-clang-release -R "session_recovery_contract|session_security|session_handshake|recovery_contract" --output-on-failure
+```
+
+O protocolo v1 autentica e protege a integridade, mas não cifra o tráfego e não oferece forward secrecy. Nonces e session IDs precisam vir de CSPRNG do host; HSM/TPM, transporte real, adapters Unreal/Unity e auditoria criptográfica independente permanecem etapas posteriores.

@@ -19,6 +19,15 @@ using AuthenticationKey = std::array<std::uint8_t, 32>;
 using AuthenticationTag = std::array<std::uint8_t, kSecurePacketTagBytes>;
 using OriginId = std::uint64_t;
 
+struct SecureSessionBinding final {
+    std::uint64_t session_id{};
+    AuthenticationKey client_to_server_key{};
+    std::uint32_t key_id{};
+    std::uint32_t key_epoch{};
+    std::uint8_t authorized_role{};
+    std::uint64_t expires_at_ms{};
+};
+
 struct NetworkSecurityLimits final {
     std::size_t maximum_payload_bytes{1'200U};
     std::size_t maximum_input_commands{64U};
@@ -27,6 +36,7 @@ struct NetworkSecurityLimits final {
     std::uint64_t session_timeout_ms{30'000U};
     std::uint32_t rate_limit_packets_per_second{240U};
     std::uint32_t rate_limit_burst_packets{480U};
+    bool require_established_session{false};
 };
 
 enum class PacketRejectReason : std::uint8_t {
@@ -42,7 +52,10 @@ enum class PacketRejectReason : std::uint8_t {
     AuthenticationFailed,
     RateLimited,
     OriginCapacityReached,
+    UnknownSession,
     SessionMismatch,
+    SessionExpired,
+    SessionRevoked,
     ReplayDuplicate,
     ReplayTooOld,
     ResourceExhausted,
@@ -85,6 +98,14 @@ struct InputPayloadParseResult final {
     std::span<const std::uint8_t> key,
     std::span<const std::uint8_t> message) noexcept;
 
+[[nodiscard]] bool authentication_tags_equal(
+    std::span<const std::uint8_t> lhs,
+    std::span<const std::uint8_t> rhs) noexcept;
+
+[[nodiscard]] bool authentication_key_is_valid(const AuthenticationKey& key) noexcept;
+
+void securely_erase(AuthenticationKey& key) noexcept;
+
 [[nodiscard]] std::vector<std::uint8_t> encode_authenticated_packet(
     const AuthenticationKey& key,
     std::uint64_t session_id,
@@ -103,8 +124,24 @@ struct InputPayloadParseResult final {
 class NetworkSecurityGateway final {
 public:
     explicit NetworkSecurityGateway(
-        AuthenticationKey key,
+        AuthenticationKey fallback_key,
         NetworkSecurityLimits limits = {});
+
+    NetworkSecurityGateway(const NetworkSecurityGateway&) = delete;
+    NetworkSecurityGateway& operator=(const NetworkSecurityGateway&) = delete;
+    NetworkSecurityGateway(NetworkSecurityGateway&&) = default;
+    NetworkSecurityGateway& operator=(NetworkSecurityGateway&&) = default;
+    ~NetworkSecurityGateway();
+
+    [[nodiscard]] bool install_session(
+        OriginId origin,
+        const SecureSessionBinding& binding,
+        std::uint64_t now_ms) noexcept;
+    [[nodiscard]] bool revoke_session(OriginId origin, std::uint64_t session_id) noexcept;
+    [[nodiscard]] std::size_t revoke_sessions_for_key(
+        std::uint32_t key_id,
+        std::uint32_t key_epoch) noexcept;
+    [[nodiscard]] bool has_session(OriginId origin, std::uint64_t session_id) const noexcept;
 
     [[nodiscard]] PacketDecision process(
         OriginId origin,
@@ -124,10 +161,23 @@ private:
         std::uint64_t last_seen_ms{};
         std::uint64_t token_timestamp_ms{};
         std::uint64_t milli_tokens{};
+        AuthenticationKey session_key{};
+        std::uint32_t key_id{};
+        std::uint32_t key_epoch{};
+        std::uint8_t authorized_role{};
+        std::uint64_t absolute_expiry_ms{};
         bool initialized{};
+        bool established{};
+        bool revoked{};
     };
 
-    AuthenticationKey key_{};
+    [[nodiscard]] static bool state_is_expired(
+        const OriginState& state,
+        const NetworkSecurityLimits& limits,
+        std::uint64_t now_ms) noexcept;
+    static void erase_state_key(OriginState& state) noexcept;
+
+    AuthenticationKey fallback_key_{};
     NetworkSecurityLimits limits_{};
     std::vector<OriginState> origins_{};
 };

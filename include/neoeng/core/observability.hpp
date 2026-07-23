@@ -52,6 +52,10 @@ enum class TraceCode : std::uint16_t {
     SafeWaitEntered,
     SafeRollbackEntered,
     HeadlessModeEntered,
+    RecoveryAcknowledged,
+    RecoveryAcknowledgementRejected,
+    SessionEstablished,
+    SessionRejected,
 };
 
 struct TraceEvent final {
@@ -132,6 +136,7 @@ public:
     [[nodiscard]] std::string export_reproducible_json(
         std::uint64_t seed,
         std::string_view environment_id) const;
+    void truncate_after(std::uint64_t frame_number) noexcept;
 
     [[nodiscard]] std::size_t size() const noexcept { return size_; }
     [[nodiscard]] std::size_t capacity() const noexcept { return records_.size(); }

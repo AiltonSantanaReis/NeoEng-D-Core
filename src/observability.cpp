@@ -270,6 +270,21 @@ std::string TimeTravelDebugger::export_reproducible_json(
     return stream.str();
 }
 
+void TimeTravelDebugger::truncate_after(std::uint64_t frame_number) noexcept {
+    while (size_ != 0U) {
+        const std::size_t newest_index = logical_index(size_ - 1U);
+        const auto& slot = records_[newest_index];
+        if (slot.has_value() && slot->state.frame <= frame_number) {
+            break;
+        }
+        records_[newest_index].reset();
+        --size_;
+    }
+    if (size_ == 0U) {
+        oldest_index_ = 0U;
+    }
+}
+
 std::optional<std::uint64_t> TimeTravelDebugger::oldest_frame() const noexcept {
     if (size_ == 0U) {
         return std::nullopt;
@@ -328,6 +343,10 @@ const char* to_string(TraceCode code) noexcept {
     case TraceCode::SafeWaitEntered: return "safe_wait_entered";
     case TraceCode::SafeRollbackEntered: return "safe_rollback_entered";
     case TraceCode::HeadlessModeEntered: return "headless_mode_entered";
+    case TraceCode::RecoveryAcknowledged: return "recovery_acknowledged";
+    case TraceCode::RecoveryAcknowledgementRejected: return "recovery_acknowledgement_rejected";
+    case TraceCode::SessionEstablished: return "session_established";
+    case TraceCode::SessionRejected: return "session_rejected";
     }
     return "unknown";
 }

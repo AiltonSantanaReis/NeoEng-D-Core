@@ -142,7 +142,7 @@ template <typename T>
     return static_cast<T>(static_cast<U>(value));
 }
 
-[[nodiscard]] bool constant_time_equal(
+[[nodiscard]] bool constant_time_equal_impl(
     std::span<const std::uint8_t> lhs,
     std::span<const std::uint8_t> rhs) noexcept {
     if (lhs.size() != rhs.size()) {
@@ -202,6 +202,24 @@ AuthenticationTag hmac_sha256(
     outer.update(outer_pad);
     outer.update(inner_digest);
     return outer.finish();
+}
+
+
+bool authentication_tags_equal(
+    std::span<const std::uint8_t> lhs,
+    std::span<const std::uint8_t> rhs) noexcept {
+    return constant_time_equal_impl(lhs, rhs);
+}
+
+bool authentication_key_is_valid(const AuthenticationKey& key) noexcept {
+    return std::any_of(key.begin(), key.end(), [](std::uint8_t byte) { return byte != 0U; });
+}
+
+void securely_erase(AuthenticationKey& key) noexcept {
+    volatile std::uint8_t* bytes = key.data();
+    for (std::size_t index = 0; index < key.size(); ++index) {
+        bytes[index] = 0U;
+    }
 }
 
 std::vector<std::uint8_t> encode_authenticated_packet(
@@ -298,19 +316,128 @@ InputPayloadParseResult parse_input_payload(
 }
 
 NetworkSecurityGateway::NetworkSecurityGateway(
-    AuthenticationKey key,
+    AuthenticationKey fallback_key,
     NetworkSecurityLimits limits)
-    : key_(key), limits_(limits) {
+    : fallback_key_(fallback_key), limits_(limits) {
     if (limits_.maximum_payload_bytes == 0U
         || limits_.maximum_tracked_origins == 0U
         || limits_.rate_limit_packets_per_second == 0U
         || limits_.rate_limit_burst_packets == 0U) {
         throw std::invalid_argument("NetworkSecurityLimits contains an invalid zero or burst value");
     }
-    if (std::all_of(key_.begin(), key_.end(), [](std::uint8_t byte) { return byte == 0U; })) {
+    if (!authentication_key_is_valid(fallback_key_)) {
         throw std::invalid_argument("Authentication key must not be all zero");
     }
     origins_.reserve(limits_.maximum_tracked_origins);
+}
+
+NetworkSecurityGateway::~NetworkSecurityGateway() {
+    securely_erase(fallback_key_);
+    for (OriginState& state : origins_) {
+        erase_state_key(state);
+    }
+}
+
+bool NetworkSecurityGateway::state_is_expired(
+    const OriginState& state,
+    const NetworkSecurityLimits& limits,
+    std::uint64_t now_ms) noexcept {
+    const bool idle_expired = now_ms > state.last_seen_ms
+        && now_ms - state.last_seen_ms > limits.session_timeout_ms;
+    const bool absolute_expired = state.established
+        && state.absolute_expiry_ms != 0U
+        && now_ms > state.absolute_expiry_ms;
+    return idle_expired || absolute_expired;
+}
+
+void NetworkSecurityGateway::erase_state_key(OriginState& state) noexcept {
+    securely_erase(state.session_key);
+}
+
+bool NetworkSecurityGateway::install_session(
+    OriginId origin,
+    const SecureSessionBinding& binding,
+    std::uint64_t now_ms) noexcept {
+    if (origin == 0U || binding.session_id == 0U
+        || binding.expires_at_ms <= now_ms
+        || !authentication_key_is_valid(binding.client_to_server_key)) {
+        return false;
+    }
+    try {
+        auto iterator = std::find_if(origins_.begin(), origins_.end(),
+            [origin](const OriginState& state) { return state.origin == origin; });
+        if (iterator == origins_.end()) {
+            expire_idle_origins(now_ms);
+            if (origins_.size() >= limits_.maximum_tracked_origins) {
+                return false;
+            }
+            origins_.push_back(OriginState{});
+            iterator = std::prev(origins_.end());
+        } else {
+            erase_state_key(*iterator);
+        }
+        *iterator = OriginState{
+            .origin = origin,
+            .session_id = binding.session_id,
+            .highest_sequence = 0U,
+            .replay_bitmap = 0U,
+            .last_seen_ms = now_ms,
+            .token_timestamp_ms = now_ms,
+            .milli_tokens = static_cast<std::uint64_t>(
+                limits_.rate_limit_burst_packets) * 1'000U,
+            .session_key = binding.client_to_server_key,
+            .key_id = binding.key_id,
+            .key_epoch = binding.key_epoch,
+            .authorized_role = binding.authorized_role,
+            .absolute_expiry_ms = binding.expires_at_ms,
+            .initialized = false,
+            .established = true,
+            .revoked = false,
+        };
+        return true;
+    } catch (const std::bad_alloc&) {
+        return false;
+    }
+}
+
+bool NetworkSecurityGateway::revoke_session(
+    OriginId origin,
+    std::uint64_t session_id) noexcept {
+    const auto iterator = std::find_if(origins_.begin(), origins_.end(),
+        [origin, session_id](const OriginState& state) {
+            return state.origin == origin && state.session_id == session_id && state.established;
+        });
+    if (iterator == origins_.end()) {
+        return false;
+    }
+    iterator->revoked = true;
+    erase_state_key(*iterator);
+    return true;
+}
+
+std::size_t NetworkSecurityGateway::revoke_sessions_for_key(
+    std::uint32_t key_id,
+    std::uint32_t key_epoch) noexcept {
+    std::size_t revoked{};
+    for (OriginState& state : origins_) {
+        if (state.established && state.key_id == key_id && state.key_epoch == key_epoch
+            && !state.revoked) {
+            state.revoked = true;
+            erase_state_key(state);
+            ++revoked;
+        }
+    }
+    return revoked;
+}
+
+bool NetworkSecurityGateway::has_session(
+    OriginId origin,
+    std::uint64_t session_id) const noexcept {
+    return std::any_of(origins_.begin(), origins_.end(),
+        [origin, session_id](const OriginState& state) {
+            return state.origin == origin && state.session_id == session_id
+                && state.established && !state.revoked;
+        });
 }
 
 PacketDecision NetworkSecurityGateway::process(
@@ -350,16 +477,33 @@ PacketDecision NetworkSecurityGateway::process(
         if (timestamp_is_in_future(now_ms, sent_at_ms, limits_.maximum_clock_skew_ms)) {
             return {.reason = PacketRejectReason::TimestampInFuture};
         }
-        const std::span<const std::uint8_t> authenticated_bytes = datagram.first(
-            kSecurePacketHeaderBytes + payload_size);
-        const std::span<const std::uint8_t> supplied_tag = datagram.last(kSecurePacketTagBytes);
-        const AuthenticationTag computed_tag = hmac_sha256(key_, authenticated_bytes);
-        if (!constant_time_equal(computed_tag, supplied_tag)) {
-            return {.reason = PacketRejectReason::AuthenticationFailed};
-        }
 
         auto iterator = std::find_if(origins_.begin(), origins_.end(),
             [origin](const OriginState& state) { return state.origin == origin; });
+        const AuthenticationKey* authentication_key = &fallback_key_;
+        if (iterator != origins_.end() && iterator->established) {
+            if (iterator->revoked) {
+                return {.reason = PacketRejectReason::SessionRevoked};
+            }
+            if (state_is_expired(*iterator, limits_, now_ms)) {
+                return {.reason = PacketRejectReason::SessionExpired};
+            }
+            if (iterator->session_id != session_id) {
+                return {.reason = PacketRejectReason::SessionMismatch};
+            }
+            authentication_key = &iterator->session_key;
+        } else if (limits_.require_established_session) {
+            return {.reason = PacketRejectReason::UnknownSession};
+        }
+
+        const std::span<const std::uint8_t> authenticated_bytes = datagram.first(
+            kSecurePacketHeaderBytes + payload_size);
+        const std::span<const std::uint8_t> supplied_tag = datagram.last(kSecurePacketTagBytes);
+        const AuthenticationTag computed_tag = hmac_sha256(*authentication_key, authenticated_bytes);
+        if (!authentication_tags_equal(computed_tag, supplied_tag)) {
+            return {.reason = PacketRejectReason::AuthenticationFailed};
+        }
+
         if (iterator == origins_.end()) {
             expire_idle_origins(now_ms);
             if (origins_.size() >= limits_.maximum_tracked_origins) {
@@ -372,15 +516,15 @@ PacketDecision NetworkSecurityGateway::process(
                 .replay_bitmap = 0U,
                 .last_seen_ms = now_ms,
                 .token_timestamp_ms = now_ms,
-                .milli_tokens = static_cast<std::uint64_t>(limits_.rate_limit_burst_packets) * 1'000U,
+                .milli_tokens = static_cast<std::uint64_t>(
+                    limits_.rate_limit_burst_packets) * 1'000U,
                 .initialized = false,
+                .established = false,
             });
             iterator = std::prev(origins_.end());
-        } else {
+        } else if (!iterator->established) {
             OriginState& state = *iterator;
-            const bool session_expired = now_ms > state.last_seen_ms
-                && now_ms - state.last_seen_ms > limits_.session_timeout_ms;
-            if (session_expired) {
+            if (state_is_expired(state, limits_, now_ms)) {
                 state.session_id = session_id;
                 state.highest_sequence = 0U;
                 state.replay_bitmap = 0U;
@@ -449,10 +593,15 @@ PacketDecision NetworkSecurityGateway::process(
 }
 
 void NetworkSecurityGateway::expire_idle_origins(std::uint64_t now_ms) noexcept {
-    std::erase_if(origins_, [this, now_ms](const OriginState& state) {
-        return now_ms > state.last_seen_ms
-            && now_ms - state.last_seen_ms > limits_.session_timeout_ms;
-    });
+    auto iterator = origins_.begin();
+    while (iterator != origins_.end()) {
+        if (state_is_expired(*iterator, limits_, now_ms)) {
+            erase_state_key(*iterator);
+            iterator = origins_.erase(iterator);
+        } else {
+            ++iterator;
+        }
+    }
 }
 
 std::size_t NetworkSecurityGateway::tracked_origins() const noexcept {
@@ -473,7 +622,10 @@ const char* to_string(PacketRejectReason reason) noexcept {
     case PacketRejectReason::AuthenticationFailed: return "authentication_failed";
     case PacketRejectReason::RateLimited: return "rate_limited";
     case PacketRejectReason::OriginCapacityReached: return "origin_capacity_reached";
+    case PacketRejectReason::UnknownSession: return "unknown_session";
     case PacketRejectReason::SessionMismatch: return "session_mismatch";
+    case PacketRejectReason::SessionExpired: return "session_expired";
+    case PacketRejectReason::SessionRevoked: return "session_revoked";
     case PacketRejectReason::ReplayDuplicate: return "replay_duplicate";
     case PacketRejectReason::ReplayTooOld: return "replay_too_old";
     case PacketRejectReason::ResourceExhausted: return "resource_exhausted";
