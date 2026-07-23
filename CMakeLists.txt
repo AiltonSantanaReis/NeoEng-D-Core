@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.6.0 LANGUAGES CXX)
+project(NeoEngDCore VERSION 1.7.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 option(NEOENG_DCORE_BUILD_FULL_TOOLSET "Build all portable Year-1 historical tools" ON)
 option(NEOENG_DCORE_BUILD_RESEARCH_TOOLS "Build Year-1 v0.28 gate/research tools" ON)
 option(NEOENG_DCORE_BUILD_VIEW_LAB "Build the optional read-only visual diagnostics companion" OFF)
+option(NEOENG_DCORE_BUILD_HOST_SDK "Build the stable C host integration boundary" ON)
+option(NEOENG_DCORE_ENABLE_INSTALL "Enable SDK installation and CMake package export" ON)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,6 +17,8 @@ if(MSVC)
 endif()
 include(cmake/NeoEngWarnings.cmake)
 include(CTest)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 find_package(Boost 1.80 CONFIG REQUIRED)
 
 if(WIN32 AND MSVC AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -98,6 +102,7 @@ set(NEOENG_DCORE_CORE_SOURCES
 )
 add_library(neoeng_dcore ${NEOENG_DCORE_CORE_SOURCES})
 add_library(NeoEng::DCore ALIAS neoeng_dcore)
+set_target_properties(neoeng_dcore PROPERTIES EXPORT_NAME DCore POSITION_INDEPENDENT_CODE ON)
 target_include_directories(neoeng_dcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 if(TARGET Boost::headers)
   target_link_libraries(neoeng_dcore PUBLIC Boost::headers)
@@ -365,6 +370,43 @@ endif()
 if(NEOENG_DCORE_BUILD_VIEW_LAB)
   add_subdirectory(modules/view_lab)
 endif()
+if(NEOENG_DCORE_BUILD_HOST_SDK)
+  add_subdirectory(modules/host_sdk)
+endif()
+
+if(NEOENG_DCORE_ENABLE_INSTALL)
+  set(NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore)
+  if(TARGET neoeng_dcore_host_sdk)
+    list(APPEND NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore_host_sdk)
+  endif()
+  install(TARGETS ${NEOENG_DCORE_INSTALL_TARGETS}
+    EXPORT NeoEngDCoreTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  install(DIRECTORY include/neoeng/core DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/neoeng)
+  if(TARGET neoeng_dcore_host_sdk)
+    install(FILES modules/host_sdk/include/neoeng/dcore_host.h
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/neoeng)
+  endif()
+  configure_package_config_file(
+    cmake/NeoEngDCoreConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/NeoEngDCoreConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NeoEngDCore)
+  write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/NeoEngDCoreConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion)
+  install(EXPORT NeoEngDCoreTargets
+    FILE NeoEngDCoreTargets.cmake
+    NAMESPACE NeoEng::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NeoEngDCore)
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/NeoEngDCoreConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/NeoEngDCoreConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NeoEngDCore)
+endif()
 if(NEOENG_GNU_LD_WRAP_SUPPORTED AND NEOENG_DCORE_BUILD_RESEARCH_TOOLS)
   foreach(target neoeng_v28_raa_allocation_probe neoeng_v28_bare_metal_rollback)
     if(TARGET ${target})
@@ -494,4 +536,18 @@ if(BUILD_TESTING)
       neoeng_v28_raa_selective_fuzz neoeng_v28_interval_arithmetic_audit
       neoeng_v28_active_island_shadow PROPERTIES LABELS "full;dcore")
   endif()
+endif()
+
+if(BUILD_TESTING AND NEOENG_DCORE_BUILD_HOST_SDK AND NEOENG_DCORE_ENABLE_INSTALL)
+  add_test(NAME neoeng_host_sdk_install_consumer
+    COMMAND ${CMAKE_COMMAND}
+      -DNEOENG_SOURCE_DIR=${CMAKE_SOURCE_DIR}
+      -DNEOENG_BUILD_DIR=${CMAKE_BINARY_DIR}
+      -DNEOENG_TEST_CONFIG=$<CONFIG>
+      -DNEOENG_CMAKE_GENERATOR=${CMAKE_GENERATOR}
+      -DNEOENG_C_COMPILER=${CMAKE_C_COMPILER}
+      -DNEOENG_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+      -P ${CMAKE_SOURCE_DIR}/tests/cmake/run_host_sdk_install_consumer.cmake)
+  set_tests_properties(neoeng_host_sdk_install_consumer
+    PROPERTIES LABELS "smoke;dcore;host-sdk;install")
 endif()

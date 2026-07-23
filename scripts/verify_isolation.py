@@ -170,8 +170,8 @@ cs004_required = [
 for rel in cs004_required:
     if not (root/rel).is_file():
         errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
-if 'project(NeoEngDCore VERSION 1.6.0 ' not in cmake:
-    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.6.0')
+if 'project(NeoEngDCore VERSION 1.7.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.7.0')
 for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
     if rel not in cmake:
         errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
@@ -310,7 +310,7 @@ if profile_registry_path.is_file():
         registry = json.loads(profile_registry_path.read_text(encoding='utf-8'))
         if registry.get('schema') != 'neoeng.dcore.hardware-profile-registry.v2':
             errors.append('schema do registro P0-P4 divergente')
-        if registry.get('project_version') != '1.6.0':
+        if registry.get('project_version') != '1.7.0':
             errors.append('versão do registro P0-P4 divergente')
         profiles = {row.get('profile'): row for row in registry.get('profiles', [])}
         if set(profiles) != {'P0', 'P1', 'P2', 'P3', 'P4'}:
@@ -335,7 +335,7 @@ if request_template_path.is_file():
         request_template = json.loads(request_template_path.read_text(encoding='utf-8'))
         if request_template.get('schema') != 'neoeng.dcore.qualification-campaign-request.v1':
             errors.append('schema do request de campanha divergente')
-        if request_template.get('project_version') != '1.6.0':
+        if request_template.get('project_version') != '1.7.0':
             errors.append('versão do request de campanha divergente')
     except Exception as exc:
         errors.append(f'template de campanha inválido: {exc}')
@@ -357,7 +357,7 @@ if workload_registry_path.is_file():
 if gates_path.is_file():
     try:
         gates = json.loads(gates_path.read_text(encoding='utf-8'))
-        if gates.get('project_version') != '1.6.0':
+        if gates.get('project_version') != '1.7.0':
             errors.append('versão do ledger diferido divergente para CS006')
         rows = {row.get('gate_id'): row for row in gates.get('gates', [])}
         for gate_id in ('PROFILE-P0-001', 'PROFILE-P1-NVIDIA-001', 'PROFILE-P2-AMD-001',
@@ -394,6 +394,54 @@ if hardware_source.is_file():
     if 'QualificationEvidenceDisposition::EngineeringBaseline' not in source_text:
         errors.append('avaliador CS006 não distingue baseline de engenharia')
 
+# ChangeSet 007 host integration boundary, install package and ABI governance.
+cs007_required = [
+    'modules/host_sdk/CMakeLists.txt',
+    'modules/host_sdk/include/neoeng/dcore_host.h',
+    'modules/host_sdk/src/dcore_host.cpp',
+    'modules/host_sdk/tests/host_sdk_tests.cpp',
+    'modules/host_sdk/tests/host_sdk_header_c.c',
+    'modules/host_sdk/apps/host_sdk_reference.c',
+    'cmake/NeoEngDCoreConfig.cmake.in',
+    'tests/cmake/run_host_sdk_install_consumer.cmake',
+    'tests/cmake/host_sdk_consumer/CMakeLists.txt',
+    'tests/cmake/host_sdk_consumer/main.c',
+    'scripts/verify_host_sdk_boundary.py',
+    'scripts/windows/install-host-sdk.ps1',
+    'docs/contracts/HOST_SDK_C_ABI_V1.md',
+    'docs/architecture/HOST_SDK_BOUNDARY.md',
+    'docs/changesets/007/CHANGESET.md',
+    'docs/changesets/007/EXISTING_CAPABILITY_RECONCILIATION.md',
+    'docs/changesets/007/TEST_STATUS.md',
+    'audit/HOST_SDK_GAP_ANALYSIS_1_6_0.json',
+    'audit/CHANGESET_007_CORE_INVARIANT_LEDGER.json',
+]
+for rel in cs007_required:
+    if not (root/rel).is_file():
+        errors.append(f'arquivo obrigatório do ChangeSet 007 ausente: {rel}')
+module_cmake_path = root/'modules/host_sdk/CMakeLists.txt'
+if module_cmake_path.is_file():
+    module_cmake = module_cmake_path.read_text(encoding='utf-8', errors='replace')
+    for rel in ('src/dcore_host.cpp', 'tests/host_sdk_tests.cpp', 'tests/host_sdk_header_c.c',
+                'apps/host_sdk_reference.c'):
+        if rel not in module_cmake:
+            errors.append(f'fonte Host SDK sem cobertura CMake: {rel}')
+    if 'target_link_libraries(neoeng_dcore_host_sdk PUBLIC neoeng_dcore)' not in module_cmake:
+        errors.append('dependência Host SDK -> D-Core ausente')
+for rel in ('include/neoeng/core', 'src'):
+    for item in (root/rel).glob('*'):
+        if item.is_file() and item.suffix.lower() in {'.hpp', '.h', '.cpp'}:
+            text = item.read_text(encoding='utf-8', errors='replace')
+            if 'neoeng/dcore_host.h' in text or 'neoeng_dcore_host_sdk' in text:
+                errors.append(f'dependência reversa do núcleo para Host SDK: {item.relative_to(root)}')
+host_contract = root/'docs/contracts/HOST_SDK_C_ABI_V1.md'
+if host_contract.is_file():
+    contract_text = host_contract.read_text(encoding='utf-8', errors='replace')
+    for phrase in ('ABI major: 1', 'owned by the creating thread', 'not a hostile-network ingress',
+                   'no shared-library distribution claim'):
+        if phrase not in contract_text:
+            errors.append(f'contrato Host SDK incompleto: {phrase}')
+
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render; View Lab opcional e fontes Y2 selecionadas verificadas por hash.")
+print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render/Host SDK; companions View Lab e Host SDK verificados.")

@@ -203,7 +203,7 @@ int main(int argc, char** argv) {
         const HardwareQualificationResult result = evaluate_hardware_qualification(baseline, measurement);
         std::cout << "{\n"
                   << "  \"schema\": \"neoeng.dcore.hardware-qualification.v2\",\n"
-                  << "  \"project_version\": \"1.6.0\",\n"
+                  << "  \"project_version\": \"1.7.0\",\n"
                   << "  \"independent_verification_required\": true,\n"
                   << "  \"profile\": \"" << to_string(profile) << "\",\n"
                   << "  \"environment_id\": \"" << json_escape(baseline.environment_id) << "\",\n"

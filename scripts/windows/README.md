@@ -19,3 +19,16 @@ Os presets oficiais habilitam o módulo opcional de diagnóstico visual. Para co
 ```
 
 O script produz BMPs, `visual-correlation.json` e `index.html` em `artifacts/local/<preset>/view-lab`. O View Lab é somente leitura e não altera o estado canônico.
+
+
+## Instalação do Host SDK
+
+Depois de uma compilação compatível, instale o SDK e os targets CMake em um prefixo explícito:
+
+```powershell
+.\scripts\windows\install-host-sdk.ps1 `
+  -BuildDirectory .\artifacts\local\windows-clang-release `
+  -InstallPrefix .\artifacts\local\neoeng-dcore-sdk
+```
+
+O script apenas executa a instalação CMake do build informado. Ele não compila o projeto, não qualifica o ambiente e não altera o estado canônico.

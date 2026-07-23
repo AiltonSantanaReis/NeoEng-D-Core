@@ -150,3 +150,18 @@ Para executar uma campanha, complete uma cópia de `config/qualification_campaig
 ```
 
 Resultados virtualizados são aceitos apenas como `engineering_baseline`. Nenhum perfil P0–P4 foi qualificado no ChangeSet 006. Para P1, o benchmark de manutenção de índices está automatizado, mas evidências consolidadas de alocação geral, arena e copy-on-write continuam obrigatórias antes de qualquer aprovação. Documentação: `docs/contracts/HARDWARE_QUALIFICATION_V2.md`, `docs/architecture/QUALIFICATION_BOUNDARY.md` e `docs/changesets/006/`.
+
+
+## ChangeSet 007 — integração com hosts e SDK instalável
+
+A versão 1.7.0 formaliza a fronteira de integração já prevista sem alterar a semântica do núcleo:
+
+- target companheiro `NeoEng::DCoreHostSdk`, dependente unidirecionalmente de `NeoEng::DCore`;
+- ABI C 1.0 com handle opaco, códigos de status e layouts de estruturas fixos;
+- lifecycle, avanço determinístico, correção/ressimulação, restauração de checkpoint, immutable views, hashes, traces e contrato de recovery;
+- política explícita de thread proprietária e ausência de ponteiros internos;
+- instalação/exportação CMake com `find_package(NeoEngDCore 1.7 CONFIG REQUIRED)`;
+- host de referência em C e teste de consumo a partir de prefixo instalado limpo;
+- verificadores de fronteira e ledger que comprovam que os 122 arquivos canônicos do núcleo permaneceram byte a byte inalterados.
+
+O Host SDK recebe comandos confiáveis de um adapter no mesmo processo; dados de rede hostis continuam obrigatoriamente no gateway autenticado existente. Unreal, Unity e outras verticais não foram incorporados. Documentação: `docs/contracts/HOST_SDK_C_ABI_V1.md`, `docs/architecture/HOST_SDK_BOUNDARY.md` e `docs/changesets/007/`.

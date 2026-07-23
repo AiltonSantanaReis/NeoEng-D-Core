@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.hardware-profile-registry.v2",
-  "project_version": "1.6.0",
+  "project_version": "1.7.0",
   "warning": "Template only. No profile is qualified until a native physical campaign is complete and independently verified.",
   "profiles": [
     {

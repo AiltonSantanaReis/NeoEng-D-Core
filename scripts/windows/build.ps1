@@ -6,6 +6,12 @@ param(
     [switch]$FullTestSuite
 )
 $ErrorActionPreference = 'Stop'
+# NEOENG_WINDOWS_CLANG_C_ABI_BEGIN
+# C e C++ devem usar o mesmo frontend clang-cl no preset Windows.
+$NeoEngClangClCompiler = (Get-Command clang-cl.exe -ErrorAction Stop).Source
+$env:CC = $NeoEngClangClCompiler
+$env:CXX = $NeoEngClangClCompiler
+# NEOENG_WINDOWS_CLANG_C_ABI_END
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 & (Join-Path $PSScriptRoot 'bootstrap.ps1') -InstallVcpkg:$BootstrapDependencies
 $Preset = if ($Configuration -eq 'Debug') { 'windows-clang-debug' } else { 'windows-clang-release' }
