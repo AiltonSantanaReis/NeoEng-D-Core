@@ -1,0 +1,94 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "windows-clang-release",
+      "displayName": "Windows x64 clang-cl Release",
+      "description": "Primary NeoEng D-Core Windows profile: clang-cl, Ninja and vcpkg manifest mode.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/windows-clang-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang-cl",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "BUILD_TESTING": "ON",
+        "NEOENG_WARNINGS_AS_ERRORS": "ON",
+        "NEOENG_DCORE_BUILD_RESEARCH_TOOLS": "ON",
+        "NEOENG_DCORE_BUILD_FULL_TOOLSET": "ON"
+      }
+    },
+    {
+      "name": "windows-clang-debug",
+      "displayName": "Windows x64 clang-cl Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/windows-clang-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang-cl",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "BUILD_TESTING": "ON",
+        "NEOENG_WARNINGS_AS_ERRORS": "ON",
+        "NEOENG_DCORE_BUILD_RESEARCH_TOOLS": "ON",
+        "NEOENG_DCORE_BUILD_FULL_TOOLSET": "ON"
+      }
+    },
+    {
+      "name": "linux-gcc-release",
+      "displayName": "Linux GCC verification",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/linux-gcc-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++",
+        "BUILD_TESTING": "ON",
+        "NEOENG_WARNINGS_AS_ERRORS": "ON",
+        "NEOENG_DCORE_BUILD_RESEARCH_TOOLS": "ON",
+        "NEOENG_DCORE_BUILD_FULL_TOOLSET": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-clang-release",
+      "configurePreset": "windows-clang-release"
+    },
+    {
+      "name": "windows-clang-debug",
+      "configurePreset": "windows-clang-debug"
+    },
+    {
+      "name": "linux-gcc-release",
+      "configurePreset": "linux-gcc-release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "windows-clang-release",
+      "configurePreset": "windows-clang-release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "windows-clang-debug",
+      "configurePreset": "windows-clang-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "linux-gcc-release",
+      "configurePreset": "linux-gcc-release",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

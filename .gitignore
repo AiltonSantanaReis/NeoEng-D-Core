@@ -1,0 +1,29 @@
+/build/
+/.deps/
+/.vcpkg-root
+/artifacts/local/
+*.user
+*.suo
+*.VC.db
+
+# Auditorias e evidencias locais
+/audit/
+/evidence/
+/docs/
+/MANIFEST.sha256
+/PACKAGE_VALIDATION.json
+/SOURCE_PROVENANCE.json
+
+# Artefatos compilados
+*.exe
+*.dll
+*.lib
+*.pdb
+*.obj
+*.o
+*.a
+*.so
+*.dylib
+*.log
+*.pdf
+*.bin
