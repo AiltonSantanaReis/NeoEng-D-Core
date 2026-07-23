@@ -1,0 +1,131 @@
+{
+  "schema": "neoeng.dcore.deferred-validation-gates.v1",
+  "project_version": "1.5.0",
+  "policy": {
+    "native_validation_pending_is_not_an_implementation_failure": true,
+    "virtualized_results_are_engineering_baselines": true,
+    "native_results_are_required_for_profile_qualification": true
+  },
+  "gates": [
+    {
+      "gate_id": "NATIVE-WIN-X64-001",
+      "category": "native_validation_pending",
+      "target": "Windows x86_64 physical",
+      "reason": "Physical Windows execution is deferred by the project owner.",
+      "implementation_status": "ready_for_campaign",
+      "execution_status": "not_executed",
+      "required_profile": "P1 or P4",
+      "required_artifacts": ["build-log", "ctest-report", "determinism-probe", "evidence-chain", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "NATIVE-ARM64-001",
+      "category": "native_validation_pending",
+      "target": "ARM64 physical",
+      "reason": "ARM64 hardware is not available in the current virtualized validation environment.",
+      "implementation_status": "portable_sources_ready",
+      "execution_status": "not_executed",
+      "required_profile": "P3",
+      "required_artifacts": ["build-log", "ctest-report", "determinism-probe", "evidence-chain", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "PROFILE-P0-001",
+      "category": "native_validation_pending",
+      "target": "P0 reference hardware",
+      "reason": "Reference hardware campaign has not been executed.",
+      "implementation_status": "qualification_harness_planned_for_changeset_006",
+      "execution_status": "not_executed",
+      "required_profile": "P0",
+      "required_artifacts": ["benchmark-report", "ctest-report", "evidence-chain", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "PROFILE-P1-NVIDIA-001",
+      "category": "native_validation_pending",
+      "target": "P1 NVIDIA target hardware",
+      "reason": "Contractual rollback and ECS limits require execution on the designated P1 hardware.",
+      "implementation_status": "budgets_instrumented; qualification_harness_pending_changeset_006",
+      "execution_status": "not_executed",
+      "required_profile": "P1",
+      "required_artifacts": ["rollback-percentiles", "ecs-percentiles", "build-log", "ctest-report", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "PROFILE-P2-AMD-001",
+      "category": "native_validation_pending",
+      "target": "P2 AMD target hardware",
+      "reason": "AMD qualification campaign has not been executed.",
+      "implementation_status": "qualification_harness_planned_for_changeset_006",
+      "execution_status": "not_executed",
+      "required_profile": "P2",
+      "required_artifacts": ["benchmark-report", "ctest-report", "evidence-chain", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "PROFILE-P4-8GB-001",
+      "category": "native_validation_pending",
+      "target": "P4 8 GB compatibility hardware",
+      "reason": "Historical physical evidence is retained, but the current 1.5.0 campaign has not been rerun.",
+      "implementation_status": "profile_defined_and_historical_evidence_retained",
+      "execution_status": "not_executed",
+      "required_profile": "P4",
+      "required_artifacts": ["compatibility-report", "degradation-report", "ctest-report", "hardware-inventory"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "FAULT-PHYSICAL-001",
+      "category": "native_validation_pending",
+      "target": "Physical device-loss, I/O-stall and process-memory-pressure campaign",
+      "reason": "Current evidence uses deterministic logical fault injection.",
+      "implementation_status": "logical_recovery_paths_implemented",
+      "execution_status": "not_executed",
+      "required_profile": "P1 or P4",
+      "required_artifacts": ["fault-injection-log", "recovery-traces", "support-bundle", "host-observer-log"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "CRYPTO-ASSURANCE-001",
+      "category": "external_assurance_pending",
+      "target": "Independent cryptographic review",
+      "reason": "Internal tests do not replace independent cryptographic assurance.",
+      "implementation_status": "sha256_merkle_chain_and_provider_interfaces_implemented",
+      "execution_status": "not_executed",
+      "required_profile": "all",
+      "required_artifacts": ["threat-model", "source-review", "test-vectors", "review-report"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": false
+    },
+    {
+      "gate_id": "SIGNING-BACKEND-001",
+      "category": "future_infrastructure",
+      "target": "CNG, TPM, HSM or approved asymmetric signing provider",
+      "reason": "Concrete signing provider depends on deployment architecture and key custody policy.",
+      "implementation_status": "provider_interfaces_implemented",
+      "execution_status": "not_executed",
+      "required_profile": "deployment-specific",
+      "required_artifacts": ["key-custody-policy", "provider-integration-tests", "rotation-procedure"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": false
+    },
+    {
+      "gate_id": "WORM-NOTARY-001",
+      "category": "future_infrastructure",
+      "target": "Append-only/WORM evidence storage or external notary",
+      "reason": "Storage architecture is external to the canonical simulation core.",
+      "implementation_status": "evidence_anchor_contract_available",
+      "execution_status": "not_executed",
+      "required_profile": "deployment-specific",
+      "required_artifacts": ["storage-design", "retention-policy", "tamper-test", "recovery-procedure"],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": false
+    }
+  ]
+}
