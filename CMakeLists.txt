@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.3.0 LANGUAGES CXX)
+project(NeoEngDCore VERSION 1.4.0 LANGUAGES CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -39,6 +39,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Cla
 endif()
 set(NEOENG_DCORE_CORE_SOURCES
   src/hash.cpp
+  src/crypto_hash.cpp
+  src/state_evidence.cpp
   src/simulation.cpp
   src/rollback.cpp
   src/snapshot_store.cpp
@@ -138,6 +140,8 @@ if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_recovery_fault_injection apps/recovery_fault_injection.cpp)
   neoeng_dcore_add_tool(neoeng_recovery_contract_probe apps/recovery_contract_probe.cpp)
   neoeng_dcore_add_tool(neoeng_hardware_profile_probe apps/hardware_profile_probe.cpp)
+  neoeng_dcore_add_tool(neoeng_state_evidence_probe apps/state_evidence_probe.cpp)
+  neoeng_dcore_add_tool(neoeng_state_evidence_fuzz apps/state_evidence_fuzz.cpp)
 endif()
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_benchmark apps/benchmark.cpp)
@@ -378,8 +382,12 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_session_recovery_contract_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_session_recovery_contract_tests)
   add_test(NAME neoeng_session_recovery_contract_tests COMMAND neoeng_session_recovery_contract_tests)
+  add_executable(neoeng_state_evidence_tests tests/state_evidence_tests.cpp)
+  target_link_libraries(neoeng_state_evidence_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_state_evidence_tests)
+  add_test(NAME neoeng_state_evidence_tests COMMAND neoeng_state_evidence_tests)
   set_tests_properties(neoeng_tests neoeng_operational_hardening_tests
-    neoeng_session_recovery_contract_tests PROPERTIES LABELS "smoke;dcore")
+    neoeng_session_recovery_contract_tests neoeng_state_evidence_tests PROPERTIES LABELS "smoke;dcore")
 
   if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
     add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
@@ -388,6 +396,8 @@ if(BUILD_TESTING)
     add_test(NAME neoeng_session_handshake_fuzz_smoke COMMAND neoeng_session_handshake_fuzz 25000)
     add_test(NAME neoeng_recovery_fault_injection COMMAND neoeng_recovery_fault_injection)
     add_test(NAME neoeng_recovery_contract_probe COMMAND neoeng_recovery_contract_probe)
+    add_test(NAME neoeng_state_evidence_probe COMMAND neoeng_state_evidence_probe)
+    add_test(NAME neoeng_state_evidence_fuzz_smoke COMMAND neoeng_state_evidence_fuzz 25000)
     add_test(NAME neoeng_immutable_fuzz COMMAND neoeng_immutable_fuzz)
     add_test(NAME neoeng_active_fuzz COMMAND neoeng_active_fuzz)
     add_test(NAME neoeng_v06_fuzz COMMAND neoeng_v06_fuzz 500)
@@ -416,6 +426,7 @@ if(BUILD_TESTING)
       neoeng_snapshot_fuzz neoeng_network_packet_fuzz_smoke
       neoeng_session_security_probe neoeng_session_handshake_fuzz_smoke
       neoeng_recovery_fault_injection neoeng_recovery_contract_probe
+      neoeng_state_evidence_probe neoeng_state_evidence_fuzz_smoke
       neoeng_immutable_fuzz neoeng_active_fuzz
       neoeng_v06_fuzz
       neoeng_v07_fuzz

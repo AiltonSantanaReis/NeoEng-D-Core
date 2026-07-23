@@ -152,6 +152,49 @@ if not (root/'scripts/windows/run-dcore.ps1').is_file():
 if (root/'scripts/windows'/(_legacy([114,117,110,45,121,101,97,114,49,46,112,115,49]))).exists():
     errors.append('runner Windows com identidade anterior ainda presente')
 
+
+# ChangeSet 004 cryptographic-evidence boundary and identity checks.
+cs004_required = [
+    'include/neoeng/core/crypto_hash.hpp',
+    'src/crypto_hash.cpp',
+    'include/neoeng/core/state_evidence.hpp',
+    'src/state_evidence.cpp',
+    'tests/state_evidence_tests.cpp',
+    'apps/state_evidence_probe.cpp',
+    'apps/state_evidence_fuzz.cpp',
+    'docs/contracts/STATE_EVIDENCE_V1.md',
+    'docs/architecture/STATE_EVIDENCE_BOUNDARY.md',
+    'docs/changesets/004/CHANGESET.md',
+    'docs/changesets/004/TEST_STATUS.md',
+]
+for rel in cs004_required:
+    if not (root/rel).is_file():
+        errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
+if 'project(NeoEngDCore VERSION 1.4.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.4.0')
+for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
+    if rel not in cmake:
+        errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
+state_contract = root/'docs/contracts/STATE_EVIDENCE_V1.md'
+state_source = root/'src/state_evidence.cpp'
+for item in (state_contract, state_source):
+    if item.is_file() and 'neoeng.dcore.state-evidence-chain.v1' not in item.read_text(encoding='utf-8', errors='replace'):
+        errors.append(f'schema de evidência obrigatório ausente: {item.relative_to(root).as_posix()}')
+network_security = root/'src/network_security.cpp'
+if network_security.is_file():
+    network_text = network_security.read_text(encoding='utf-8', errors='replace')
+    if '#include "neoeng/core/crypto_hash.hpp"' not in network_text:
+        errors.append('network_security.cpp não reutiliza o SHA-256 compartilhado')
+    if 'class Sha256' in network_text or 'struct Sha256' in network_text:
+        errors.append('implementação SHA-256 duplicada permaneceu em network_security.cpp')
+for rel in ('include/neoeng/core/state_evidence.hpp', 'src/state_evidence.cpp'):
+    item=root/rel
+    if item.is_file():
+        text=item.read_text(encoding='utf-8',errors='replace').lower()
+        for forbidden in ('neoeng/render', 'neoeng_dcore_view_lab', 'modules/view_lab'):
+            if forbidden in text:
+                errors.append(f'dependência visual proibida na evidência canônica: {rel}: {forbidden}')
+
 if errors:
     print('\n'.join(errors)); sys.exit(1)
 print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render; View Lab opcional e fontes Y2 selecionadas verificadas por hash.")

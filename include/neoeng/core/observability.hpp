@@ -23,6 +23,7 @@ enum class TraceCategory : std::uint8_t {
     Budget,
     Recovery,
     Tooling,
+    Evidence,
 };
 
 enum class TraceOutcome : std::uint8_t {
@@ -56,6 +57,11 @@ enum class TraceCode : std::uint16_t {
     RecoveryAcknowledgementRejected,
     SessionEstablished,
     SessionRejected,
+    EvidenceCreated,
+    EvidenceVerificationFailed,
+    EvidenceChainBroken,
+    EvidenceSignatureRejected,
+    MerkleProofRejected,
 };
 
 struct TraceEvent final {

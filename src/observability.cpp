@@ -308,6 +308,7 @@ const char* to_string(TraceCategory category) noexcept {
     case TraceCategory::Budget: return "budget";
     case TraceCategory::Recovery: return "recovery";
     case TraceCategory::Tooling: return "tooling";
+    case TraceCategory::Evidence: return "evidence";
     }
     return "unknown";
 }
@@ -347,6 +348,11 @@ const char* to_string(TraceCode code) noexcept {
     case TraceCode::RecoveryAcknowledgementRejected: return "recovery_acknowledgement_rejected";
     case TraceCode::SessionEstablished: return "session_established";
     case TraceCode::SessionRejected: return "session_rejected";
+    case TraceCode::EvidenceCreated: return "evidence_created";
+    case TraceCode::EvidenceVerificationFailed: return "evidence_verification_failed";
+    case TraceCode::EvidenceChainBroken: return "evidence_chain_broken";
+    case TraceCode::EvidenceSignatureRejected: return "evidence_signature_rejected";
+    case TraceCode::MerkleProofRejected: return "merkle_proof_rejected";
     }
     return "unknown";
 }

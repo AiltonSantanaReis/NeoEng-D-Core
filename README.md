@@ -23,10 +23,10 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 ## Conteúdo auditado
 
-- 60 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
-- 54 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
-- 73 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 5 fontes de teste e 46 testes registrados quando o toolset completo e o View Lab estão ativos;
+- 62 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
+- 56 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
+- 75 fontes de aplicações/benchmarks/fuzz/probes, incluindo o CLI do View Lab, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 6 fontes de teste e 49 testes registrados quando o toolset completo e o View Lab estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -92,3 +92,20 @@ No Windows:
 ```
 
 Abra o `index.html` indicado pelo script. A documentação completa está em `docs/changesets/003/` e `docs/architecture/VIEW_LAB_BOUNDARY.md`.
+
+
+## ChangeSet 004 — integridade criptográfica do estado
+
+A versão 1.4.0 adiciona uma camada de evidência para checkpoints sem substituir o hash rápido do hot path:
+
+- SHA-256 sobre a serialização canônica existente;
+- Merkle Tree SHA-256 por chunks e provas de inclusão;
+- envelope `neoeng.dcore.state-evidence-chain.v1`;
+- detecção de remoção interna, reordenação, alteração e quebra da cadeia; truncamento final e anexação não autorizada são detectados contra uma âncora confiável;
+- branches vinculadas ao envelope pai após rollback;
+- interfaces desacopladas para assinatura externa;
+- eventos correlacionáveis de criação e falha de evidência.
+
+`stable_hash()` continua sendo o mecanismo operacional de 64 bits. SHA-256, Merkle e assinatura são calculados somente quando a política de checkpoint solicitar. HMAC-SHA256 existe apenas como autenticador de regressão controlada e não é apresentado como assinatura assimétrica.
+
+Documentação: `docs/contracts/STATE_EVIDENCE_V1.md`, `docs/architecture/STATE_EVIDENCE_BOUNDARY.md` e `docs/changesets/004/`.
