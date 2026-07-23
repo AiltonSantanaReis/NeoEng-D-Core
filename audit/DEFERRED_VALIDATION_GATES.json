@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.deferred-validation-gates.v1",
-  "project_version": "1.5.0",
+  "project_version": "1.6.0",
   "policy": {
     "native_validation_pending_is_not_an_implementation_failure": true,
     "virtualized_results_are_engineering_baselines": true,
@@ -12,10 +12,16 @@
       "category": "native_validation_pending",
       "target": "Windows x86_64 physical",
       "reason": "Physical Windows execution is deferred by the project owner.",
-      "implementation_status": "ready_for_campaign",
+      "implementation_status": "qualification_harness_v2_ready",
       "execution_status": "not_executed",
       "required_profile": "P1 or P4",
-      "required_artifacts": ["build-log", "ctest-report", "determinism-probe", "evidence-chain", "hardware-inventory"],
+      "required_artifacts": [
+        "build-log",
+        "ctest-report",
+        "determinism-probe",
+        "evidence-chain",
+        "hardware-inventory"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -24,10 +30,16 @@
       "category": "native_validation_pending",
       "target": "ARM64 physical",
       "reason": "ARM64 hardware is not available in the current virtualized validation environment.",
-      "implementation_status": "portable_sources_ready",
+      "implementation_status": "qualification_harness_v2_and_cross_architecture_comparator_ready",
       "execution_status": "not_executed",
       "required_profile": "P3",
-      "required_artifacts": ["build-log", "ctest-report", "determinism-probe", "evidence-chain", "hardware-inventory"],
+      "required_artifacts": [
+        "build-log",
+        "ctest-report",
+        "determinism-probe",
+        "evidence-chain",
+        "hardware-inventory"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -36,10 +48,15 @@
       "category": "native_validation_pending",
       "target": "P0 reference hardware",
       "reason": "Reference hardware campaign has not been executed.",
-      "implementation_status": "qualification_harness_planned_for_changeset_006",
+      "implementation_status": "qualification_harness_v2_ready",
       "execution_status": "not_executed",
       "required_profile": "P0",
-      "required_artifacts": ["benchmark-report", "ctest-report", "evidence-chain", "hardware-inventory"],
+      "required_artifacts": [
+        "benchmark-report",
+        "ctest-report",
+        "evidence-chain",
+        "hardware-inventory"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -48,10 +65,25 @@
       "category": "native_validation_pending",
       "target": "P1 NVIDIA target hardware",
       "reason": "Contractual rollback and ECS limits require execution on the designated P1 hardware.",
-      "implementation_status": "budgets_instrumented; qualification_harness_pending_changeset_006",
+      "implementation_status": "qualification_harness_v2_ready; complete_ecs_scope_artifacts_required",
       "execution_status": "not_executed",
       "required_profile": "P1",
-      "required_artifacts": ["rollback-percentiles", "ecs-percentiles", "build-log", "ctest-report", "hardware-inventory"],
+      "required_artifacts": [
+        "rollback-raw-samples",
+        "rollback-percentiles",
+        "ecs-index-maintenance-raw-samples",
+        "ecs-general-allocation-evidence",
+        "ecs-arena-evidence",
+        "ecs-copy-on-write-evidence",
+        "build-log",
+        "ctest-report",
+        "determinism-probe",
+        "state-evidence-probe",
+        "hardware-inventory",
+        "thermal-policy",
+        "clock-policy",
+        "evidence-manifest"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -60,10 +92,35 @@
       "category": "native_validation_pending",
       "target": "P2 AMD target hardware",
       "reason": "AMD qualification campaign has not been executed.",
-      "implementation_status": "qualification_harness_planned_for_changeset_006",
+      "implementation_status": "qualification_harness_v2_ready",
       "execution_status": "not_executed",
       "required_profile": "P2",
-      "required_artifacts": ["benchmark-report", "ctest-report", "evidence-chain", "hardware-inventory"],
+      "required_artifacts": [
+        "benchmark-report",
+        "ctest-report",
+        "evidence-chain",
+        "hardware-inventory"
+      ],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
+    },
+    {
+      "gate_id": "PROFILE-P3-ARM64-001",
+      "category": "native_validation_pending",
+      "target": "P3 ARM64 target hardware",
+      "reason": "Native ARM64 profile campaign and cross-architecture comparison have not been executed.",
+      "implementation_status": "qualification_harness_v2_and_cross_architecture_comparator_ready",
+      "execution_status": "not_executed",
+      "required_profile": "P3",
+      "required_artifacts": [
+        "build-log",
+        "ctest-report",
+        "determinism-probe",
+        "state-evidence-probe",
+        "hardware-inventory",
+        "evidence-manifest",
+        "cross-architecture-comparison"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -71,11 +128,16 @@
       "gate_id": "PROFILE-P4-8GB-001",
       "category": "native_validation_pending",
       "target": "P4 8 GB compatibility hardware",
-      "reason": "Historical physical evidence is retained, but the current 1.5.0 campaign has not been rerun.",
-      "implementation_status": "profile_defined_and_historical_evidence_retained",
+      "reason": "Historical physical evidence is retained as provenance, but the current 1.6.0 qualification campaign has not been executed.",
+      "implementation_status": "qualification_harness_v2_ready; historical_evidence_retained_as_provenance_only",
       "execution_status": "not_executed",
       "required_profile": "P4",
-      "required_artifacts": ["compatibility-report", "degradation-report", "ctest-report", "hardware-inventory"],
+      "required_artifacts": [
+        "compatibility-report",
+        "degradation-report",
+        "ctest-report",
+        "hardware-inventory"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -87,7 +149,12 @@
       "implementation_status": "logical_recovery_paths_implemented",
       "execution_status": "not_executed",
       "required_profile": "P1 or P4",
-      "required_artifacts": ["fault-injection-log", "recovery-traces", "support-bundle", "host-observer-log"],
+      "required_artifacts": [
+        "fault-injection-log",
+        "recovery-traces",
+        "support-bundle",
+        "host-observer-log"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true
     },
@@ -99,7 +166,12 @@
       "implementation_status": "sha256_merkle_chain_and_provider_interfaces_implemented",
       "execution_status": "not_executed",
       "required_profile": "all",
-      "required_artifacts": ["threat-model", "source-review", "test-vectors", "review-report"],
+      "required_artifacts": [
+        "threat-model",
+        "source-review",
+        "test-vectors",
+        "review-report"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": false
     },
@@ -111,7 +183,11 @@
       "implementation_status": "provider_interfaces_implemented",
       "execution_status": "not_executed",
       "required_profile": "deployment-specific",
-      "required_artifacts": ["key-custody-policy", "provider-integration-tests", "rotation-procedure"],
+      "required_artifacts": [
+        "key-custody-policy",
+        "provider-integration-tests",
+        "rotation-procedure"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": false
     },
@@ -123,9 +199,32 @@
       "implementation_status": "evidence_anchor_contract_available",
       "execution_status": "not_executed",
       "required_profile": "deployment-specific",
-      "required_artifacts": ["storage-design", "retention-policy", "tamper-test", "recovery-procedure"],
+      "required_artifacts": [
+        "storage-design",
+        "retention-policy",
+        "tamper-test",
+        "recovery-procedure"
+      ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": false
+    },
+    {
+      "gate_id": "ECS-SCOPE-COMPLETE-001",
+      "category": "implementation_gap",
+      "target": "Complete Y1-O2 ECS evidence scope for P1",
+      "reason": "The deterministic sparse ComponentSoA index-maintenance benchmark is automated, but accepted evidence mappings for general allocation, arena behavior and copy-on-write behavior are not yet consolidated into the qualification campaign.",
+      "implementation_status": "partial_automation; index_maintenance_ready; general_allocation_arena_and_copy_on_write_mapping_pending",
+      "execution_status": "not_complete",
+      "required_profile": "P1",
+      "required_artifacts": [
+        "ecs-general-allocation-evidence",
+        "ecs-arena-evidence",
+        "ecs-copy-on-write-evidence",
+        "ecs-index-maintenance-raw-samples",
+        "ecs-scope-review"
+      ],
+      "blocking_for_current_changeset": false,
+      "blocking_for_profile_qualification": true
     }
   ]
 }

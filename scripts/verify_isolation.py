@@ -170,8 +170,8 @@ cs004_required = [
 for rel in cs004_required:
     if not (root/rel).is_file():
         errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
-if 'project(NeoEngDCore VERSION 1.5.0 ' not in cmake:
-    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.5.0')
+if 'project(NeoEngDCore VERSION 1.6.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.6.0')
 for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
     if rel not in cmake:
         errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
@@ -257,6 +257,142 @@ for rel in ('include/neoeng/core/diagnostics.hpp', 'include/neoeng/core/support_
         for forbidden in ('neoeng/render', 'neoeng_dcore_view_lab', 'modules/view_lab'):
             if forbidden in text:
                 errors.append(f'dependência visual proibida no núcleo CS005: {rel}: {forbidden}')
+
+
+# ChangeSet 006 strict P0-P4 qualification harness and architectural boundary.
+cs006_required = [
+    'include/neoeng/core/hardware_profile.hpp',
+    'src/hardware_profile.cpp',
+    'apps/hardware_profile_probe.cpp',
+    'apps/ecs_maintenance_benchmark.cpp',
+    'tests/hardware_qualification_tests.cpp',
+    'config/hardware_profiles.template.json',
+    'config/qualification_campaign.template.json',
+    'config/qualification_workloads.v1.json',
+    'scripts/qualification/run_qualification_campaign.py',
+    'scripts/qualification/verify_qualification_campaign.py',
+    'scripts/qualification/compare_architectures.py',
+    'scripts/run_hardware_qualification.sh',
+    'scripts/windows/qualify-hardware-profile.ps1',
+    'scripts/windows/verify-hardware-qualification.ps1',
+    'docs/contracts/HARDWARE_QUALIFICATION_V2.md',
+    'docs/architecture/QUALIFICATION_BOUNDARY.md',
+    'docs/changesets/006/CHANGESET.md',
+    'docs/changesets/006/PLAN_ADDENDUM.md',
+    'docs/changesets/006/TEST_STATUS.md',
+    'docs/changesets/006/DEFERRED_NATIVE_CAMPAIGNS.md',
+]
+for rel in cs006_required:
+    if not (root/rel).is_file():
+        errors.append(f'arquivo obrigatório do ChangeSet 006 ausente: {rel}')
+for rel in ('apps/hardware_profile_probe.cpp', 'apps/ecs_maintenance_benchmark.cpp'):
+    if rel not in cmake:
+        errors.append(f'fonte CS006 sem cobertura CMake: {rel}')
+if 'tests/hardware_qualification_tests.cpp' not in cmake:
+    errors.append('teste CS006 sem cobertura CMake: tests/hardware_qualification_tests.cpp')
+
+hardware_contract = root/'docs/contracts/HARDWARE_QUALIFICATION_V2.md'
+if hardware_contract.is_file():
+    contract_text = hardware_contract.read_text(encoding='utf-8', errors='replace')
+    if 'neoeng.dcore.hardware-qualification.v2' not in contract_text:
+        errors.append('schema de qualificação v2 ausente no contrato')
+    for required_phrase in ('native_physical', 'engineering_baseline', 'No profile was qualified'):
+        # The last phrase lives in CHANGESET.md; checked separately below.
+        if required_phrase != 'No profile was qualified' and required_phrase not in contract_text:
+            errors.append(f'regra obrigatória ausente no contrato de qualificação: {required_phrase}')
+changeset006 = root/'docs/changesets/006/CHANGESET.md'
+if changeset006.is_file() and 'No profile was qualified in this ChangeSet.' not in changeset006.read_text(encoding='utf-8', errors='replace'):
+    errors.append('ChangeSet 006 não declara explicitamente que nenhum perfil foi qualificado')
+
+profile_registry_path = root/'config/hardware_profiles.template.json'
+if profile_registry_path.is_file():
+    try:
+        registry = json.loads(profile_registry_path.read_text(encoding='utf-8'))
+        if registry.get('schema') != 'neoeng.dcore.hardware-profile-registry.v2':
+            errors.append('schema do registro P0-P4 divergente')
+        if registry.get('project_version') != '1.6.0':
+            errors.append('versão do registro P0-P4 divergente')
+        profiles = {row.get('profile'): row for row in registry.get('profiles', [])}
+        if set(profiles) != {'P0', 'P1', 'P2', 'P3', 'P4'}:
+            errors.append('registro de perfis não contém exatamente P0-P4')
+        for profile_id, row in profiles.items():
+            if row.get('status') != 'UNQUALIFIED':
+                errors.append(f'perfil pré-qualificado indevidamente no template: {profile_id}')
+        p1_req = profiles.get('P1', {}).get('requirements', {})
+        if p1_req.get('rollback_p99_limit_ns') != 2000000 or p1_req.get('ecs_maintenance_p99_limit_ns') != 100000:
+            errors.append('budgets P1 divergentes do plano')
+        if p1_req.get('minimum_rollback_samples') != 1000 or p1_req.get('minimum_ecs_samples') != 1000:
+            errors.append('mínimo de amostras P1 divergente')
+        for profile_id in ('P2', 'P4'):
+            if profiles.get(profile_id, {}).get('requirements', {}).get('performance_limits') != 'not_inherited_from_P1':
+                errors.append(f'{profile_id} herda ou omite indevidamente a separação dos budgets P1')
+    except Exception as exc:
+        errors.append(f'registro de perfis inválido: {exc}')
+
+request_template_path = root/'config/qualification_campaign.template.json'
+if request_template_path.is_file():
+    try:
+        request_template = json.loads(request_template_path.read_text(encoding='utf-8'))
+        if request_template.get('schema') != 'neoeng.dcore.qualification-campaign-request.v1':
+            errors.append('schema do request de campanha divergente')
+        if request_template.get('project_version') != '1.6.0':
+            errors.append('versão do request de campanha divergente')
+    except Exception as exc:
+        errors.append(f'template de campanha inválido: {exc}')
+
+workload_registry_path = root/'config/qualification_workloads.v1.json'
+if workload_registry_path.is_file():
+    try:
+        workloads_doc = json.loads(workload_registry_path.read_text(encoding='utf-8'))
+        if workloads_doc.get('schema') != 'neoeng.dcore.qualification-workload-registry.v1':
+            errors.append('schema do registro de workloads divergente')
+        ids = {row.get('workload_id') for row in workloads_doc.get('workloads', [])}
+        required_ids = {'Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1', 'Y1-O3-CANONICAL-ROLLBACK-8-V1',
+                        'ECS-B01', 'ECS-B02', 'ECS-B03', 'ECS-B04', 'ECS-B05'}
+        if not required_ids.issubset(ids):
+            errors.append('registro de workloads omite objetivos obrigatórios Y1-O2/Y1-O3/ECS-B01-B05')
+    except Exception as exc:
+        errors.append(f'registro de workloads inválido: {exc}')
+
+if gates_path.is_file():
+    try:
+        gates = json.loads(gates_path.read_text(encoding='utf-8'))
+        if gates.get('project_version') != '1.6.0':
+            errors.append('versão do ledger diferido divergente para CS006')
+        rows = {row.get('gate_id'): row for row in gates.get('gates', [])}
+        for gate_id in ('PROFILE-P0-001', 'PROFILE-P1-NVIDIA-001', 'PROFILE-P2-AMD-001',
+                        'PROFILE-P3-ARM64-001', 'PROFILE-P4-8GB-001', 'ECS-SCOPE-COMPLETE-001'):
+            if gate_id not in rows:
+                errors.append(f'gate obrigatório CS006 ausente: {gate_id}')
+        ecs_gap = rows.get('ECS-SCOPE-COMPLETE-001', {})
+        if ecs_gap.get('category') != 'implementation_gap' or ecs_gap.get('blocking_for_profile_qualification') is not True:
+            errors.append('lacuna de escopo ECS não bloqueia formalmente a qualificação P1')
+    except Exception as exc:
+        errors.append(f'ledger diferido CS006 inválido: {exc}')
+
+for rel in ('include/neoeng/core/hardware_profile.hpp', 'src/hardware_profile.cpp',
+            'apps/hardware_profile_probe.cpp', 'apps/ecs_maintenance_benchmark.cpp'):
+    item = root/rel
+    if item.is_file():
+        text = item.read_text(encoding='utf-8', errors='replace').lower()
+        for forbidden in ('neoeng/render', 'neoeng_dcore_view_lab', 'modules/view_lab'):
+            if forbidden in text:
+                errors.append(f'dependência visual proibida no núcleo/harness CS006: {rel}: {forbidden}')
+
+hardware_header = root/'include/neoeng/core/hardware_profile.hpp'
+hardware_source = root/'src/hardware_profile.cpp'
+if hardware_header.is_file():
+    header_text = hardware_header.read_text(encoding='utf-8', errors='replace')
+    for token in ('ExecutionEnvironmentKind', 'QualificationEvidenceDisposition',
+                  'NativeExecutionRequired', 'P4EightGbCompatibility', 'EcsScopeIncomplete'):
+        if token not in header_text:
+            errors.append(f'contrato CS006 incompleto; token ausente: {token}')
+if hardware_source.is_file():
+    source_text = hardware_source.read_text(encoding='utf-8', errors='replace')
+    if 'ExecutionEnvironmentKind::NativePhysical' not in source_text:
+        errors.append('avaliador CS006 não exige explicitamente execução nativa física')
+    if 'QualificationEvidenceDisposition::EngineeringBaseline' not in source_text:
+        errors.append('avaliador CS006 não distingue baseline de engenharia')
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)

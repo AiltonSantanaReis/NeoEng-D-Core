@@ -308,6 +308,14 @@ HardwareEnvironmentBaseline complete_baseline() {
         .driver_version = "registered-driver",
         .os_build = "registered-windows-build",
         .power_profile = "registered-power-profile",
+        .execution_environment = ExecutionEnvironmentKind::NativePhysical,
+        .architecture = "x86_64",
+        .memory_configuration = "registered-memory",
+        .storage_configuration = "registered-storage",
+        .firmware_version = "registered-firmware",
+        .thermal_policy = "registered-thermal-policy",
+        .profile_compatibility_confirmed = true,
+        .environment_lock_recorded = true,
     };
 }
 
@@ -324,10 +332,24 @@ void test_hardware_profile_qualification_gate() {
         .environment_id = "P1-NVIDIA-LAB-001",
         .rollback_p99_ns = 2'000'000U,
         .ecs_maintenance_p99_ns = 100'000U,
+        .rollback_sample_count = 1'000U,
+        .ecs_sample_count = 1'000U,
         .rollback_measurement_present = true,
         .ecs_measurement_present = true,
         .determinism_passed = true,
         .serialization_compatibility_passed = true,
+        .full_test_report_present = true,
+        .full_test_suite_passed = true,
+        .ecs_scope_evidence_complete = true,
+        .benchmark_report_present = true,
+        .raw_samples_present = true,
+        .binary_hashes_present = true,
+        .source_manifest_present = true,
+        .hardware_inventory_present = true,
+        .thermal_record_present = true,
+        .campaign_manifest_verified = true,
+        .clock_policy_recorded = true,
+        .allocation_gate_passed = true,
     };
     CHECK(name, evaluate_hardware_qualification(complete_baseline(), passing).status
         == QualificationStatus::Passed);
@@ -348,6 +370,17 @@ void test_hardware_profile_qualification_gate() {
         .environment_id = "P3-ARM64-LAB-001",
         .determinism_passed = true,
         .serialization_compatibility_passed = true,
+        .full_test_report_present = true,
+        .full_test_suite_passed = true,
+        .ecs_scope_evidence_complete = true,
+        .benchmark_report_present = true,
+        .raw_samples_present = true,
+        .binary_hashes_present = true,
+        .source_manifest_present = true,
+        .hardware_inventory_present = true,
+        .thermal_record_present = true,
+        .campaign_manifest_verified = true,
+        .clock_policy_recorded = true,
     };
     HardwareEnvironmentBaseline p3_baseline{
         .environment_id = "P3-ARM64-LAB-001",
@@ -356,6 +389,14 @@ void test_hardware_profile_qualification_gate() {
         .driver_version = "not-applicable",
         .os_build = "registered-os-build",
         .power_profile = "registered-power-profile",
+        .execution_environment = ExecutionEnvironmentKind::NativePhysical,
+        .architecture = "aarch64",
+        .memory_configuration = "registered-memory",
+        .storage_configuration = "registered-storage",
+        .firmware_version = "registered-firmware",
+        .thermal_policy = "registered-thermal-policy",
+        .profile_compatibility_confirmed = true,
+        .environment_lock_recorded = true,
     };
     CHECK(name, evaluate_hardware_qualification(p3_baseline, p3).status
         == QualificationStatus::Passed);

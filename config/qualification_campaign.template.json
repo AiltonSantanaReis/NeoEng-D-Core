@@ -1,0 +1,50 @@
+{
+  "schema": "neoeng.dcore.qualification-campaign-request.v1",
+  "project_version": "1.6.0",
+  "profile": "P0",
+  "execution_kind": "virtualized",
+  "environment": {
+    "environment_id": "REPLACE-ME",
+    "cpu_sku": "REPLACE-ME",
+    "physical_cpu_cores": 1,
+    "gpu_vendor": "not-applicable",
+    "gpu_sku": "not-applicable",
+    "gpu_memory_bytes": 0,
+    "driver_version": "not-applicable",
+    "os_build": "REPLACE-ME",
+    "architecture": "REPLACE-ME",
+    "memory_configuration": "REPLACE-ME",
+    "storage_configuration": "REPLACE-ME",
+    "storage_class": "unknown",
+    "firmware_version": "REPLACE-ME",
+    "power_profile": "REPLACE-ME",
+    "thermal_policy": "REPLACE-ME",
+    "environment_lock_recorded": false,
+    "profile_compatibility_reviewed": false
+  },
+  "thermal_record": {
+    "measurement_method": "unavailable_in_virtualized_environment",
+    "temperature_before_c": null,
+    "temperature_after_c": null,
+    "throttling_observed": null
+  },
+  "clock_policy": {
+    "cpu_affinity_requested": false,
+    "cpu_index": 0,
+    "frequency_policy_recorded": false,
+    "background_services_policy_recorded": false
+  },
+  "campaign": {
+    "ctest_scope": "full",
+    "rollback_samples": 1000,
+    "ecs_samples": 1000,
+    "ecs_warmup_samples": 128,
+    "ecs_body_count": 10000,
+    "ecs_active_body_count": 100,
+    "ecs_scope_artifacts": {
+      "general_allocation": "",
+      "arena": "",
+      "copy_on_write": ""
+    }
+  }
+}

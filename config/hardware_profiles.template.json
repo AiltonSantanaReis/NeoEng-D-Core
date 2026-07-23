@@ -1,48 +1,80 @@
 {
-  "schema": "neoeng.dcore.hardware-profile-registry.v1",
-  "warning": "Template only. Empty fields make every profile UNQUALIFIED.",
+  "schema": "neoeng.dcore.hardware-profile-registry.v2",
+  "project_version": "1.6.0",
+  "warning": "Template only. No profile is qualified until a native physical campaign is complete and independently verified.",
   "profiles": [
     {
       "profile": "P0",
       "status": "UNQUALIFIED",
+      "purpose": "Fixed laboratory reproducibility and daily regression",
       "environment_id": "",
-      "cpu_sku": "",
-      "gpu_sku": "",
-      "driver_version": "",
-      "os_build": "",
-      "power_profile": ""
+      "requirements": {
+        "native_physical": true,
+        "locked_environment": true,
+        "determinism": true,
+        "serialization": true
+      }
     },
     {
       "profile": "P1",
       "status": "UNQUALIFIED",
+      "purpose": "Primary NVIDIA performance target",
       "environment_id": "",
-      "cpu_sku": "",
-      "gpu_sku": "",
-      "driver_version": "",
-      "os_build": "",
-      "power_profile": "",
-      "rollback_p99_limit_ns": 2000000,
-      "ecs_maintenance_p99_limit_ns": 100000
+      "requirements": {
+        "native_physical": true,
+        "gpu_vendor": "NVIDIA",
+        "minimum_gpu_memory_bytes": 17179869184,
+        "minimum_physical_cpu_cores": 16,
+        "storage_class": "nvme_pcie_4_or_5",
+        "rollback_p99_limit_ns": 2000000,
+        "ecs_maintenance_p99_limit_ns": 100000,
+        "minimum_rollback_samples": 1000,
+        "minimum_ecs_samples": 1000,
+        "zero_allocation_gate": true
+      }
     },
     {
       "profile": "P2",
       "status": "UNQUALIFIED",
+      "purpose": "AMD semantic portability and separately qualified performance",
       "environment_id": "",
-      "cpu_sku": "",
-      "gpu_sku": "",
-      "driver_version": "",
-      "os_build": "",
-      "power_profile": ""
+      "requirements": {
+        "native_physical": true,
+        "gpu_vendor": "AMD",
+        "minimum_gpu_memory_bytes": 17179869184,
+        "minimum_physical_cpu_cores": 16,
+        "storage_class": "nvme_pcie_4_or_5",
+        "determinism": true,
+        "serialization": true,
+        "performance_limits": "not_inherited_from_P1"
+      }
     },
     {
       "profile": "P3",
       "status": "UNQUALIFIED",
+      "purpose": "ARM64 determinism and serialization compatibility",
       "environment_id": "",
-      "cpu_sku": "",
-      "gpu_sku": "not-applicable",
-      "driver_version": "not-applicable",
-      "os_build": "",
-      "power_profile": ""
+      "requirements": {
+        "native_physical": true,
+        "architecture": ["aarch64", "arm64"],
+        "determinism": true,
+        "serialization": true,
+        "performance_reported_separately": true
+      }
+    },
+    {
+      "profile": "P4",
+      "status": "UNQUALIFIED",
+      "purpose": "8 GB compatibility, safe degradation and evidence collection",
+      "environment_id": "",
+      "requirements": {
+        "native_physical": true,
+        "minimum_gpu_memory_bytes": 7516192768,
+        "maximum_gpu_memory_bytes": 9663676416,
+        "determinism": true,
+        "serialization": true,
+        "performance_limits": "not_inherited_from_P1"
+      }
     }
   ]
 }

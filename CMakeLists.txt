@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.5.0 LANGUAGES CXX)
+project(NeoEngDCore VERSION 1.6.0 LANGUAGES CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -142,6 +142,7 @@ if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_recovery_fault_injection apps/recovery_fault_injection.cpp)
   neoeng_dcore_add_tool(neoeng_recovery_contract_probe apps/recovery_contract_probe.cpp)
   neoeng_dcore_add_tool(neoeng_hardware_profile_probe apps/hardware_profile_probe.cpp)
+  neoeng_dcore_add_tool(neoeng_ecs_maintenance_benchmark apps/ecs_maintenance_benchmark.cpp)
   neoeng_dcore_add_tool(neoeng_state_evidence_probe apps/state_evidence_probe.cpp)
   neoeng_dcore_add_tool(neoeng_state_evidence_fuzz apps/state_evidence_fuzz.cpp)
   neoeng_dcore_add_tool(neoeng_support_bundle_probe apps/support_bundle_probe.cpp)
@@ -394,9 +395,14 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_state_evidence_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_state_evidence_tests)
   add_test(NAME neoeng_state_evidence_tests COMMAND neoeng_state_evidence_tests)
+  add_executable(neoeng_hardware_qualification_tests tests/hardware_qualification_tests.cpp)
+  target_link_libraries(neoeng_hardware_qualification_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_hardware_qualification_tests)
+  add_test(NAME neoeng_hardware_qualification_tests COMMAND neoeng_hardware_qualification_tests)
   set_tests_properties(neoeng_tests neoeng_operational_hardening_tests
     neoeng_session_recovery_contract_tests neoeng_state_evidence_tests
-    neoeng_observability_support_tests PROPERTIES LABELS "smoke;dcore")
+    neoeng_observability_support_tests neoeng_hardware_qualification_tests
+    PROPERTIES LABELS "smoke;dcore")
 
   if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
     add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
@@ -409,6 +415,8 @@ if(BUILD_TESTING)
     add_test(NAME neoeng_state_evidence_fuzz_smoke COMMAND neoeng_state_evidence_fuzz 25000)
     add_test(NAME neoeng_support_bundle_probe COMMAND neoeng_support_bundle_probe ${CMAKE_BINARY_DIR}/support_bundle_probe)
     add_test(NAME neoeng_support_bundle_fuzz_smoke COMMAND neoeng_support_bundle_fuzz 25000)
+    add_test(NAME neoeng_ecs_maintenance_benchmark_smoke
+      COMMAND neoeng_ecs_maintenance_benchmark ${CMAKE_BINARY_DIR}/ecs_maintenance_smoke 256 16 32 4)
     add_test(NAME neoeng_immutable_fuzz COMMAND neoeng_immutable_fuzz)
     add_test(NAME neoeng_active_fuzz COMMAND neoeng_active_fuzz)
     add_test(NAME neoeng_v06_fuzz COMMAND neoeng_v06_fuzz 500)
@@ -439,6 +447,7 @@ if(BUILD_TESTING)
       neoeng_recovery_fault_injection neoeng_recovery_contract_probe
       neoeng_state_evidence_probe neoeng_state_evidence_fuzz_smoke
       neoeng_support_bundle_probe neoeng_support_bundle_fuzz_smoke
+      neoeng_ecs_maintenance_benchmark_smoke
       neoeng_immutable_fuzz neoeng_active_fuzz
       neoeng_v06_fuzz
       neoeng_v07_fuzz

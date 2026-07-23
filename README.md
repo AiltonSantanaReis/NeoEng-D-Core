@@ -25,8 +25,8 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 - 64 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
 - 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
-- 77 fontes de aplicações/benchmarks/fuzz/probes, incluindo o CLI do View Lab, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 7 fontes de teste e 52 testes registrados quando o toolset completo e o View Lab estão ativos;
+- 78 fontes de aplicações/benchmarks/fuzz/probes no pacote (77 em `apps/` e o CLI do View Lab), todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 8 fontes de teste no pacote e 54 testes registrados quando o toolset completo e o View Lab estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -129,3 +129,24 @@ No Windows, após o build:
 ```
 
 A campanha física Windows/ARM64 e a qualificação P0-P4 permanecem diferidas. Os resultados virtualizados são baseline de engenharia e não qualificam hardware. Documentação: `docs/contracts/OBSERVABILITY_V2.md`, `docs/contracts/SUPPORT_BUNDLE_V1.md` e `docs/changesets/005/`.
+
+## ChangeSet 006 — harness de qualificação P0–P4
+
+A versão 1.6.0 transforma os perfis de hardware em campanhas reproduzíveis sem declarar resultados que não foram executados:
+
+- contrato `neoeng.dcore.hardware-qualification.v2`;
+- estados distintos para evidência incompleta, baseline de engenharia e candidato nativo à qualificação;
+- proibição explícita de `passed` em virtualização ou container;
+- verificação de compatibilidade P0–P4, arquitetura, inventário, térmica, clocks, testes, hashes e amostras brutas;
+- workload determinístico de manutenção ECS esparsa com CSV bruto;
+- runner de campanha, verificador independente e comparador semântico x86_64/ARM64;
+- wrappers Windows e Linux;
+- registro formal de campanhas físicas diferidas.
+
+Para executar uma campanha, complete uma cópia de `config/qualification_campaign.template.json` e use:
+
+```powershell
+.\scripts\windows\qualify-hardware-profile.ps1 -RequestPath .\qualification-request.json
+```
+
+Resultados virtualizados são aceitos apenas como `engineering_baseline`. Nenhum perfil P0–P4 foi qualificado no ChangeSet 006. Para P1, o benchmark de manutenção de índices está automatizado, mas evidências consolidadas de alocação geral, arena e copy-on-write continuam obrigatórias antes de qualquer aprovação. Documentação: `docs/contracts/HARDWARE_QUALIFICATION_V2.md`, `docs/architecture/QUALIFICATION_BOUNDARY.md` e `docs/changesets/006/`.

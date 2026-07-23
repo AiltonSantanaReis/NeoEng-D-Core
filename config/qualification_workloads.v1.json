@@ -1,0 +1,74 @@
+{
+  "schema": "neoeng.dcore.qualification-workload-registry.v1",
+  "project_version": "1.6.0",
+  "principle": "Workloads preserve the project plan; unavailable native execution is recorded, never inferred.",
+  "workloads": [
+    {
+      "workload_id": "Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1",
+      "objective": "Y1-O2",
+      "status": "automated",
+      "executable": "neoeng_ecs_maintenance_benchmark",
+      "official_parameters": {
+        "body_count": 10000,
+        "active_body_count": 100,
+        "page_size": 64,
+        "warmup_samples": 128,
+        "measured_samples": 1000
+      },
+      "gate": {
+        "profile": "P1",
+        "metric": "p99_ns",
+        "maximum": 100000
+      },
+      "scope_note": "This measures sparse ComponentSoA maintenance. General allocation, arena, COW and index costs remain separate evidence streams as required by the plan."
+    },
+    {
+      "workload_id": "Y1-O3-CANONICAL-ROLLBACK-8-V1",
+      "objective": "Y1-O3",
+      "status": "automated_existing_v28",
+      "executable": "neoeng_v28_bare_metal_rollback",
+      "official_parameters": {
+        "bodies": 10000,
+        "contacts": 5000,
+        "rollback_frames": 8,
+        "warmup_samples": 16,
+        "measured_samples": 1000
+      },
+      "gate": {
+        "profile": "P1",
+        "metric": "p99_ns",
+        "maximum": 2000000
+      }
+    },
+    {
+      "workload_id": "ECS-B01",
+      "objective": "10k, 100k and 1M entities; wide reads, sparse writes and archetype migration",
+      "status": "partially_automated",
+      "available": ["wide_read", "sparse_component_write"],
+      "not_claimed_complete": ["archetype_migration_under_a_frozen_archetype_contract"]
+    },
+    {
+      "workload_id": "ECS-B02",
+      "objective": "Snapshots at 8, 60 and 300 frames with bytes/frame and capture/restore p99",
+      "status": "partially_automated",
+      "not_claimed_complete": ["single consolidated 8/60/300 qualification report"]
+    },
+    {
+      "workload_id": "ECS-B03",
+      "objective": "Adversarial dirty-page and large-component patterns",
+      "status": "historical_tools_available_requires_campaign_mapping"
+    },
+    {
+      "workload_id": "ECS-B04",
+      "objective": "72-hour stability with allocations, RSS, page faults and fragmentation",
+      "status": "native_long_run_deferred",
+      "script": "scripts/run_y1_g4_72h_v28.sh"
+    },
+    {
+      "workload_id": "ECS-B05",
+      "objective": "x86_64/ARM64 schema, serialization and hash comparison; performance separate",
+      "status": "cross_architecture_execution_deferred",
+      "comparison_tool": "scripts/qualification/compare_architectures.py"
+    }
+  ]
+}
