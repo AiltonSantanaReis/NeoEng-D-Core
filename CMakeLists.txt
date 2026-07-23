@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.2.0 LANGUAGES CXX)
+project(NeoEngDCore VERSION 1.3.0 LANGUAGES CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 option(NEOENG_DCORE_BUILD_FULL_TOOLSET "Build all portable Year-1 historical tools" ON)
 option(NEOENG_DCORE_BUILD_RESEARCH_TOOLS "Build Year-1 v0.28 gate/research tools" ON)
+option(NEOENG_DCORE_BUILD_VIEW_LAB "Build the optional read-only visual diagnostics companion" OFF)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -89,6 +90,7 @@ set(NEOENG_DCORE_CORE_SOURCES
   src/recovery_contract.cpp
   src/hardware_profile.cpp
   src/operational_runtime.cpp
+  src/visual_correlation.cpp
 )
 add_library(neoeng_dcore ${NEOENG_DCORE_CORE_SOURCES})
 add_library(NeoEng::DCore ALIAS neoeng_dcore)
@@ -349,6 +351,10 @@ if(MSVC AND NEOENG_DCORE_BUILD_FULL_TOOLSET)
 endif()
 if(TARGET neoeng_v11_benchmark AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(neoeng_v11_benchmark PRIVATE -Wno-mismatched-new-delete)
+endif()
+
+if(NEOENG_DCORE_BUILD_VIEW_LAB)
+  add_subdirectory(modules/view_lab)
 endif()
 if(NEOENG_GNU_LD_WRAP_SUPPORTED AND NEOENG_DCORE_BUILD_RESEARCH_TOOLS)
   foreach(target neoeng_v28_raa_allocation_probe neoeng_v28_bare_metal_rollback)

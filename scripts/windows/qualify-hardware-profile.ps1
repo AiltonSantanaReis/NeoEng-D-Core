@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('P0','P1','P2','P3')]
+    [ValidateSet('P0','P1','P2','P3','P4')]
     [string]$Profile,
     [Parameter(Mandatory=$true)][string]$EnvironmentId,
     [Parameter(Mandatory=$true)][string]$CpuSku,

@@ -56,6 +56,15 @@ HardwareProfileContract hardware_profile_contract(HardwareProfileId id) noexcept
             .requires_determinism = true,
             .requires_serialization_compatibility = true,
         };
+    case HardwareProfileId::P4EightGbCompatibility:
+        return {
+            .id = id,
+            .name = "P4 - 8 GB compatibility",
+            .purpose = "Compatibility, safe degradation and evidence collection on 8 GB GPUs",
+            .requires_locked_environment = true,
+            .requires_determinism = true,
+            .requires_serialization_compatibility = true,
+        };
     }
     return {};
 }
@@ -113,6 +122,7 @@ const char* to_string(HardwareProfileId id) noexcept {
     case HardwareProfileId::P1NvidiaTarget: return "P1";
     case HardwareProfileId::P2AmdTarget: return "P2";
     case HardwareProfileId::P3Arm64Compatibility: return "P3";
+    case HardwareProfileId::P4EightGbCompatibility: return "P4";
     }
     return "unknown";
 }

@@ -10,6 +10,7 @@ enum class HardwareProfileId : std::uint8_t {
     P1NvidiaTarget,
     P2AmdTarget,
     P3Arm64Compatibility,
+    P4EightGbCompatibility,
 };
 
 enum class QualificationStatus : std::uint8_t {

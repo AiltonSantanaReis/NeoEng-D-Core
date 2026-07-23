@@ -1,6 +1,6 @@
 # NeoEng D-Core — pacote standalone auditado para Windows
 
-Este pacote isola o **Ano 1 - núcleo imutável, física numérica e rollback determinístico** do `v0342.zip`. A árvore ativa não contém renderização, Visibility Buffer, SDF, voxel, GPU ou unidades `y2_*`.
+Este pacote preserva o **NeoEng D-Core como autoridade canônica** sobre estado imutável, física numérica e rollback determinístico. O target `neoeng_dcore` continua sem dependência de renderização, GPU, SDF ou voxel. A partir do ChangeSet 003, o pacote inclui um módulo opcional e unidirecional `modules/view_lab`, que consome snapshots e traces somente para diagnóstico visual.
 
 A fonte normativa completa está em `docs/original/Plano_Deep_Tech_NeoEng_Ano1_Completo.pdf`, contendo as páginas físicas 12-15 (escopo técnico e gates) e 29-30 (plano operacional dos primeiros 180 dias e transição para a matriz global).
 
@@ -23,10 +23,10 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 ## Conteúdo auditado
 
-- 59 headers canônicos (52 da base, 5 do ChangeSet 001 e 2 do ChangeSet 002);
-- 53 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`), sendo 46 da base, 5 do ChangeSet 001 e 2 do ChangeSet 002;
-- 72 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 3 fontes de teste e 43 testes registrados quando o toolset completo está ativo;
+- 60 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
+- 54 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
+- 73 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 5 fontes de teste e 46 testes registrados quando o toolset completo e o View Lab estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -72,3 +72,23 @@ ctest --test-dir build/windows-clang-release -R "session_recovery_contract|sessi
 ```
 
 O protocolo v1 autentica e protege a integridade, mas não cifra o tráfego e não oferece forward secrecy. Nonces e session IDs precisam vir de CSPRNG do host; HSM/TPM, transporte real, adapters Unreal/Unity e auditoria criptográfica independente permanecem etapas posteriores.
+
+## ChangeSet 003 — extração modular de diagnóstico visual
+
+A versão 1.3.0 recupera somente o subconjunto do Ano 2 necessário aos objetivos atuais de observabilidade e time-travel:
+
+- Visibility Buffer CPU de referência, preservado byte a byte em `modules/view_lab/vendor/year2`;
+- View Lab somente leitura, com BMPs determinísticos, viewer HTML e inspeção de entidades/traces;
+- contrato `neoeng.dcore.visual-correlation.v1`;
+- perfil P4 para compatibilidade e degradação segura em GPUs de 8 GB;
+- evidências históricas selecionadas e verificadas por SHA-256.
+
+O módulo é opcional no CMake bruto, habilitado nos presets oficiais e possui dependência apenas no sentido `view_lab -> neoeng_dcore`. GPU/EGL, SDF, voxel e modelos de pesquisa do Ano 2 continuam fora do núcleo.
+
+No Windows:
+
+```powershell
+.\scripts\windows\run-view-lab.ps1 -BootstrapDependencies
+```
+
+Abra o `index.html` indicado pelo script. A documentação completa está em `docs/changesets/003/` e `docs/architecture/VIEW_LAB_BOUNDARY.md`.

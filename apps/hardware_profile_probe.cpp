@@ -13,7 +13,8 @@ neoeng::core::HardwareProfileId parse_profile(std::string_view value) {
     if (value == "P1") return HardwareProfileId::P1NvidiaTarget;
     if (value == "P2") return HardwareProfileId::P2AmdTarget;
     if (value == "P3") return HardwareProfileId::P3Arm64Compatibility;
-    std::cerr << "profile must be P0, P1, P2 or P3\n";
+    if (value == "P4") return HardwareProfileId::P4EightGbCompatibility;
+    std::cerr << "profile must be P0, P1, P2, P3 or P4\n";
     std::exit(2);
 }
 

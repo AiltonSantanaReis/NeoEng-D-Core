@@ -42,18 +42,61 @@ for row in expected:
 for path in authorized:
     if path not in expected_paths:
         errors.append(f"autorização não corresponde ao corpus obrigatório: {path}")
-for rel in ('include','src','apps','tests','CMakeLists.txt'):
+# The canonical core remains free of render/Year-2 implementation details.
+# The only active exception is the read-only companion under modules/view_lab,
+# which must depend on neoeng_dcore and must never be referenced by the core target.
+for rel in ('include','src','apps','tests'):
     p=root/rel
-    items=[p] if p.is_file() else list(p.rglob('*'))
-    for item in items:
+    for item in p.rglob('*'):
         if not item.is_file(): continue
         low=item.relative_to(root).as_posix().lower()
         if '/render/' in '/'+low or Path(low).name.startswith('y2_'):
-            errors.append(f'arquivo Y2/render presente: {low}')
-        if item.suffix.lower() in {'.cpp','.hpp','.h','.cmake','.txt'} or item.name=='CMakeLists.txt':
+            errors.append(f'arquivo Y2/render dentro do núcleo canônico: {low}')
+        if item.suffix.lower() in {'.cpp','.hpp','.h','.cmake','.txt'}:
             text=item.read_text(encoding='utf-8',errors='replace').lower()
             for token in ('neoeng/render','neoeng_render','neoeng_y2','y2_o1_'):
-                if token in text: errors.append(f"referência proibida {token!r}: {low}")
+                if token in text: errors.append(f"referência render/Y2 proibida no núcleo {token!r}: {low}")
+
+ledger_path=root/'audit/YEAR2_EXTRACTION_LEDGER.json'
+if not ledger_path.is_file():
+    errors.append('ledger de extração modular do Ano 2 ausente')
+else:
+    ledger=json.loads(ledger_path.read_text(encoding='utf-8'))
+    for row in ledger.get('active_imports', []):
+        current=root/row['current_path']
+        if not current.is_file():
+            errors.append(f"fonte modular extraída ausente: {row['current_path']}")
+            continue
+        actual=sha(current)
+        if actual!=row.get('current_sha256') or actual!=row.get('source_sha256'):
+            errors.append(f"fonte modular divergente da origem: {row['current_path']}")
+        if row.get('byte_for_byte') is not True:
+            errors.append(f"fonte modular não marcada como byte-for-byte: {row['current_path']}")
+    for row in ledger.get('selected_evidence', []):
+        current=root/row['current_path']
+        if not current.is_file():
+            errors.append(f"evidência Y2 selecionada ausente: {row['current_path']}")
+        elif sha(current)!=row.get('sha256'):
+            errors.append(f"evidência Y2 selecionada divergente: {row['current_path']}")
+
+view_cmake_path=root/'modules/view_lab/CMakeLists.txt'
+if not view_cmake_path.is_file():
+    errors.append('módulo opcional modules/view_lab ausente')
+else:
+    view_cmake=view_cmake_path.read_text(encoding='utf-8')
+    if 'target_link_libraries(neoeng_dcore_view_lab' not in view_cmake or 'neoeng_dcore' not in view_cmake:
+        errors.append('dependência view_lab -> neoeng_dcore não declarada')
+    for source_root in ('modules/view_lab/src','modules/view_lab/apps','modules/view_lab/tests','modules/view_lab/vendor/year2/src'):
+        for item in sorted((root/source_root).glob('*.cpp')):
+            rel=item.relative_to(root/'modules/view_lab').as_posix()
+            if rel not in view_cmake:
+                errors.append(f'fonte do view lab sem cobertura CMake: {item.relative_to(root).as_posix()}')
+
+cmake_top=(root/'CMakeLists.txt').read_text(encoding='utf-8')
+core_block=cmake_top.split('add_library(neoeng_dcore ${NEOENG_DCORE_CORE_SOURCES})',1)[0]
+for forbidden in ('modules/view_lab','neoeng_dcore_view_lab','neoeng_dcore_view_reference','neoeng/render'):
+    if forbidden in core_block:
+        errors.append(f'dependência reversa do núcleo para o view lab: {forbidden}')
 cmake=(root/'CMakeLists.txt').read_text(encoding='utf-8')
 for app in sorted((root/'apps').glob('*.cpp')):
     rel=app.relative_to(root).as_posix()
@@ -111,4 +154,4 @@ if (root/'scripts/windows'/(_legacy([114,117,110,45,121,101,97,114,49,46,112,115
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); identidade NeoEng D-Core validada; CMake cobre todas as fontes; sem dependências Y2/render.")
+print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render; View Lab opcional e fontes Y2 selecionadas verificadas por hash.")
