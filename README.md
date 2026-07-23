@@ -23,13 +23,32 @@ O Windows é a plataforma operacional inicial. O pacote foi compilado e testado 
 
 ## Conteúdo auditado
 
-- 52 headers canônicos;
-- 46 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`);
-- 65 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- suíte unitária consolidada e 36 testes Year-1 registrados quando o toolset completo está ativo;
+- 57 headers canônicos (52 da base e 5 adicionados pelo ChangeSet 001);
+- 51 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`), sendo 46 da base e 5 do ChangeSet 001;
+- 69 fontes de aplicações/benchmarks/fuzz/probes, todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- 2 fontes de teste e 39 testes registrados quando o toolset completo está ativo;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
 - binários Windows originais preservados apenas como proveniência, não como resultado do novo build.
 
 Consulte `audit/NEOENG_DCORE_AUDIT_COMPLETE_REPORT.md`, `audit/DCORE_FILE_CATALOG.csv` e `docs/AUDIT_STATUS.md`.
+
+## ChangeSet 001 — hardening operacional
+
+A versão 1.1.0 adiciona módulos opt-in para:
+
+- autenticação HMAC-SHA256, anti-replay, rate limiting, timeout e parsing total de inputs;
+- trace correlacionável e time-travel debugging textual;
+- fallback para device lost, I/O stall, indisponibilidade de rede, pacote malformado e OOM;
+- qualificação explícita dos perfis P0-P3, vinculando os limites de 2,0 ms e 0,1 ms exclusivamente ao P1 registrado.
+
+A integração end-to-end está em `neoeng::core::OperationalRuntime`. A documentação completa do patch está em `docs/changesets/001/`.
+
+Para executar apenas os testes do reforço:
+
+```powershell
+ctest --test-dir build/windows-clang-release -R "operational_hardening|network_packet_fuzz|recovery_fault" --output-on-failure
+```
+
+Para registrar uma qualificação de hardware no Windows, use `scripts/windows/qualify-hardware-profile.ps1`. O script recusa aprovação quando o baseline está incompleto, o ambiente não coincide ou as medições obrigatórias estão ausentes. Os perfis permanecem `UNQUALIFIED` até campanha em hardware físico.

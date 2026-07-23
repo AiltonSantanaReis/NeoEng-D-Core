@@ -1,0 +1,48 @@
+{
+  "schema": "neoeng.dcore.hardware-profile-registry.v1",
+  "warning": "Template only. Empty fields make every profile UNQUALIFIED.",
+  "profiles": [
+    {
+      "profile": "P0",
+      "status": "UNQUALIFIED",
+      "environment_id": "",
+      "cpu_sku": "",
+      "gpu_sku": "",
+      "driver_version": "",
+      "os_build": "",
+      "power_profile": ""
+    },
+    {
+      "profile": "P1",
+      "status": "UNQUALIFIED",
+      "environment_id": "",
+      "cpu_sku": "",
+      "gpu_sku": "",
+      "driver_version": "",
+      "os_build": "",
+      "power_profile": "",
+      "rollback_p99_limit_ns": 2000000,
+      "ecs_maintenance_p99_limit_ns": 100000
+    },
+    {
+      "profile": "P2",
+      "status": "UNQUALIFIED",
+      "environment_id": "",
+      "cpu_sku": "",
+      "gpu_sku": "",
+      "driver_version": "",
+      "os_build": "",
+      "power_profile": ""
+    },
+    {
+      "profile": "P3",
+      "status": "UNQUALIFIED",
+      "environment_id": "",
+      "cpu_sku": "",
+      "gpu_sku": "not-applicable",
+      "driver_version": "not-applicable",
+      "os_build": "",
+      "power_profile": ""
+    }
+  ]
+}
