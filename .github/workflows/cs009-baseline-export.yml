@@ -1,0 +1,34 @@
+name: CS009 baseline export
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Record exact source identity
+        run: |
+          git rev-parse HEAD > BASE_COMMIT.txt
+          sha256sum MANIFEST.sha256 > BASE_MANIFEST_FILE_SHA256.txt
+      - name: Create source archive
+        run: |
+          git archive --format=zip --output=neoeng-dcore-main-source.zip HEAD
+          sha256sum neoeng-dcore-main-source.zip > neoeng-dcore-main-source.zip.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cs009-baseline-source
+          path: |
+            neoeng-dcore-main-source.zip
+            neoeng-dcore-main-source.zip.sha256
+            BASE_COMMIT.txt
+            BASE_MANIFEST_FILE_SHA256.txt
+          if-no-files-found: error
+          retention-days: 1
