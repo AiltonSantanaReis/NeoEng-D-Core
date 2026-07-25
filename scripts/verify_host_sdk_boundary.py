@@ -39,8 +39,8 @@ for rel in required:
 
 cmake_path = root / 'CMakeLists.txt'
 cmake = cmake_path.read_text(encoding='utf-8', errors='replace')
-if 'project(NeoEngDCore VERSION 1.7.0 LANGUAGES C CXX)' not in cmake:
-    errors.append('identidade/versão CMake 1.7.0 com C e CXX ausente')
+if 'project(NeoEngDCore VERSION 1.8.0 LANGUAGES C CXX)' not in cmake:
+    errors.append('identidade/versão CMake 1.8.0 com C e CXX ausente')
 for token in (
     'add_subdirectory(modules/host_sdk)',
     'NeoEngDCoreConfig.cmake.in',
@@ -81,7 +81,7 @@ if header_path.is_file():
             errors.append(f'construção C++ proibida no header C: {token}')
     for token in (
         'NEOENG_DCORE_HOST_ABI_MAJOR UINT16_C(1)',
-        'NEOENG_DCORE_RUNTIME_VERSION_MINOR UINT16_C(7)',
+        'NEOENG_DCORE_RUNTIME_VERSION_MINOR UINT16_C(8)',
         'typedef struct neoeng_dcore_host neoeng_dcore_host;',
         'neoeng_dcore_host_correct_input_and_resimulate',
         'neoeng_dcore_host_acknowledge_recovery',

@@ -2,7 +2,30 @@
 
 Este pacote preserva o **NeoEng D-Core como autoridade canônica** sobre estado imutável, física numérica e rollback determinístico. O target `neoeng_dcore` continua sem dependência de renderização, GPU, SDF ou voxel. A partir do ChangeSet 003, o pacote inclui um módulo opcional e unidirecional `modules/view_lab`, que consome snapshots e traces somente para diagnóstico visual.
 
-A fonte normativa completa está em `docs/original/Plano_Deep_Tech_NeoEng_Ano1_Completo.pdf`, contendo as páginas físicas 12-15 (escopo técnico e gates) e 29-30 (plano operacional dos primeiros 180 dias e transição para a matriz global).
+A fonte normativa obrigatória está em `docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`, apoiada pelos ledgers de máquina em `audit/`. Os documentos originais permanecem como proveniência histórica e não prevalecem quando houver conflito.
+
+## Fonte de verdade e estado atual — ChangeSet 008
+
+A versão 1.8.0 estabelece a governança de fechamento do produto sem alterar a semântica do núcleo canônico da 1.7.0:
+
+- fonte normativa obrigatória e hierarquia de precedência;
+- 36 requisitos rastreáveis, 20 claims classificados e 41 limitações conhecidas;
+- matriz de responsabilidade e backlog finito de fechamento;
+- padrão normativo de conclusão e padrão de testes/asseguração;
+- verificadores fail-closed com autotestes de adulteração;
+- regra explícita de que meta-verificação não substitui prova técnica da capacidade;
+- reconhecimento de que CS009, CS010 e etapas posteriores permanecem abertos.
+
+Comandos de verificação:
+
+```powershell
+python .\scripts\verify_product_contract.py --check-report
+python .\scripts\verify_product_contract.py --self-test
+python .\scripts\verify_product_assurance.py --check-report
+python .\scripts\verify_product_assurance.py --self-test
+```
+
+O produto ainda não é declarado comercialmente concluído nem certificado. Consulte `docs/governance/PRODUCT_CLOSURE_PLAN.md` e `audit/PRODUCT_CLAIMS_LEDGER.json`.
 
 ## Execução inicial no Windows
 
@@ -19,14 +42,14 @@ Para compilar toda a superfície e executar a suíte Year-1 registrada:
 .\scripts\windows\run-dcore.ps1 -BootstrapDependencies -FullTestSuite
 ```
 
-O Windows é a plataforma operacional inicial. O pacote foi compilado e testado nesta auditoria em Linux x86_64 para validar a integridade do projeto, mas **o novo empacotamento ainda não foi executado em Windows físico neste ambiente**.
+O Windows é a plataforma operacional inicial. A fonte autoritativa 1.7.0 foi compilada e exercitada em Windows físico, com evidência independente preservada em `docs/changesets/008/evidence/WINDOWS_1_7_0_INDEPENDENT_VERIFICATION.md`. A baseline 1.8.0 deste ChangeSet foi validada em Linux x86_64 com GCC e Clang; **a regressão proporcional 1.8.0 ainda não foi executada em Windows físico**.
 
 ## Conteúdo auditado
 
 - 64 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
 - 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
 - 78 fontes de aplicações/benchmarks/fuzz/probes no pacote (77 em `apps/` e o CLI do View Lab), todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 8 fontes de teste no pacote e 54 testes registrados quando o toolset completo e o View Lab estão ativos;
+- 8 fontes C++ de teste, 2 verificadores normativos Python e 62 testes CTest registrados quando o toolset completo, o View Lab e o Host SDK estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;

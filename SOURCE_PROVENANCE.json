@@ -1,0 +1,195 @@
+{
+  "project": "NeoEng D-Core",
+  "audit_date": "2026-07-22",
+  "source_archive": {
+    "name": "v0342.zip",
+    "sha256": "1bb5276eca6e48a8a097eb1316805b19baed4db6c2b9d4d9850ceded77cdf353"
+  },
+  "source_plan": {
+    "name": "Plano_Deep_Tech_NeoEng_Detalhado.pdf",
+    "sha256": "eb259ccf26ec16c1438f135eb116a847de54c11ad88fd5cd213ccf10ed21aab5",
+    "extracted_physical_pages": [
+      12,
+      13,
+      14,
+      15,
+      29,
+      30
+    ]
+  },
+  "boundary_method": "explicit inclusion from the supplied mixed v0.34.2 worktree; git history was not used as a Year-1 snapshot because it does not contain an authoritative isolated Year-1 state",
+  "source_counts": {
+    "headers": 52,
+    "library_cpp": 46,
+    "app_cpp": 65,
+    "test_cpp": 1,
+    "document_records": 166,
+    "campaign_scripts": 23,
+    "artifact_roots": 133
+  },
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; 1.8.0 proportional Windows regression pending",
+  "package": "NeoEng-D-Core-Windows-Audited",
+  "identity_change": {
+    "date": "2026-07-22",
+    "previous_package_identity": "standalone Year-1 core package",
+    "new_project_name": "NeoEng D-Core",
+    "source_code_scope_changed": false
+  },
+  "package_version": "1.8.0",
+  "changeset_001": {
+    "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
+    "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
+    "baseline_archive_sha256": "0739c82ba95e0aa2d41b5e2e9fc649759c23cab0eac6af3a1d7e245aa626bc80",
+    "scope": [
+      "network security and hostile input handling",
+      "correlatable observability and time-travel debugging foundation",
+      "deterministic safe degradation and recovery policy",
+      "P0-P3 hardware qualification contracts"
+    ],
+    "baseline_files_removed": 0,
+    "historical_evidence_rewritten": false,
+    "windows_execution": "not performed",
+    "physical_hardware_qualification": "not performed"
+  },
+  "changeset_002": {
+    "derivation": "incremental patch over NeoEng D-Core 1.1.0 after ChangeSet 001",
+    "base_changeset": "001",
+    "scope": [
+      "authenticated session handshake and downgrade/replay defenses",
+      "direction-separated session key derivation and root-key lifecycle",
+      "strict established-session gateway with expiry and revocation",
+      "versioned host recovery contract with typed acknowledgements",
+      "actual checkpoint restore and time-travel truncation"
+    ],
+    "baseline_files_removed": 0,
+    "historical_evidence_rewritten": false,
+    "windows_execution": "not performed",
+    "physical_fault_injection": "not performed",
+    "cryptographic_independent_audit": "not performed"
+  },
+  "changeset_003": {
+    "derivation": "incremental patch over NeoEng D-Core 1.2.0 after ChangeSet 002",
+    "base_changeset": "002",
+    "scope": [
+      "optional read-only View Lab consuming D-Core time-travel records",
+      "byte-for-byte extraction of the deterministic Year-2 CPU Visibility Buffer reference",
+      "versioned core/render/GPU visual correlation contract",
+      "P4 8 GB compatibility and safe-degradation profile",
+      "selected Year-2 evidence manifest and extraction ledger"
+    ],
+    "source_archive_sha256": "1bb5276eca6e48a8a097eb1316805b19baed4db6c2b9d4d9850ceded77cdf353",
+    "active_year2_files_imported_byte_for_byte": 2,
+    "selected_evidence_files_copied_byte_for_byte": 8,
+    "dependency_direction": "modules/view_lab -> neoeng_dcore only",
+    "baseline_files_removed": 0,
+    "windows_execution": "not performed",
+    "physical_hardware_qualification": "not performed"
+  },
+  "changeset_004": {
+    "derivation": "incremental patch over NeoEng D-Core 1.3.0 after ChangeSet 003",
+    "base_changeset": "003",
+    "scope": [
+      "shared incremental SHA-256 implementation reused by network/session and state evidence",
+      "canonical state SHA-256 over the existing canonical serialization",
+      "domain-separated SHA-256 Merkle tree and inclusion proofs",
+      "versioned evidence envelopes, trusted anchors and explicit rollback branches",
+      "platform-neutral external signature-provider contract and evidence trace events"
+    ],
+    "baseline_files_removed": 0,
+    "historical_evidence_rewritten": false,
+    "windows_execution": "not performed",
+    "arm64_execution": "not performed",
+    "asymmetric_signature_backend": "not implemented",
+    "cryptographic_independent_audit": "not performed"
+  },
+  "changeset_005": {
+    "base_version": "1.4.0",
+    "target_version": "1.5.0",
+    "scope": "observability, budgets, divergence diagnostics, support-bundle export and deferred validation ledger",
+    "new_core_files": [
+      "include/neoeng/core/diagnostics.hpp",
+      "src/diagnostics.cpp",
+      "include/neoeng/core/support_bundle.hpp",
+      "src/support_bundle.cpp"
+    ],
+    "canonical_state_authority_changed": false,
+    "stable_hash_changed": false,
+    "state_evidence_schema_changed": false,
+    "native_validation_status": "deferred and recorded; no native result claimed",
+    "file_delta": {
+      "added": 42,
+      "modified": 14,
+      "deleted": 0,
+      "total_changed_paths": 56
+    }
+  },
+  "changeset_006": {
+    "base_version": "1.5.0",
+    "target_version": "1.6.0",
+    "scope": "strict P0-P4 hardware qualification harness, deterministic ECS maintenance workload, campaign integrity verifier and deferred native execution protocol",
+    "canonical_state_authority_changed": false,
+    "stable_hash_changed": false,
+    "state_evidence_schema_changed": false,
+    "renderer_or_gpu_backend_added_to_core": false,
+    "virtualized_campaign_status": "engineering_baseline_only; no profile qualified",
+    "native_validation_status": "deferred and recorded; no native result claimed",
+    "p1_complete_ecs_scope_status": "partial; index maintenance automated; general allocation, arena and copy-on-write evidence mappings remain required",
+    "file_delta": {
+      "added": 34,
+      "modified": 17,
+      "deleted": 0,
+      "total_changed_paths": 51
+    }
+  },
+  "changeset_007": {
+    "base_version": "1.6.0",
+    "target_version": "1.7.0",
+    "scope": "companion C host integration boundary, installable CMake SDK package and ABI governance",
+    "existing_capabilities_reused": [
+      "canonical transition and fixed-point state",
+      "rollback, resimulation and checkpoint restoration",
+      "state SHA-256 and Merkle evidence",
+      "trace buffer and recovery host contract"
+    ],
+    "new_companion_target": "NeoEng::DCoreHostSdk",
+    "dependency_direction": "host application -> NeoEng::DCoreHostSdk -> NeoEng::DCore",
+    "canonical_core_files_compared": 122,
+    "canonical_core_files_changed": 0,
+    "canonical_state_authority_changed": false,
+    "stable_hash_changed": false,
+    "canonical_serialization_changed": false,
+    "rollback_semantics_changed": false,
+    "network_protocol_changed": false,
+    "vertical_adapter_added": false,
+    "windows_execution": "not performed",
+    "arm64_execution": "not performed",
+    "shared_library_distribution": "not provided in 1.7.0",
+    "file_delta": {
+      "added": 37,
+      "modified": 17,
+      "deleted": 0,
+      "total_changed_paths": 54
+    }
+  },
+  "changeset_008": {
+    "base_version": "1.7.0",
+    "target_version": "1.8.0",
+    "base_archive": "NeoEng-D-Core-1.7.0-Authoritative-Baseline.zip",
+    "base_archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
+    "base_tested_commit": "fb8362602e1b3f6530d3efe8733bc76fc6de9f3e",
+    "scope": "normative product contract, requirements and claims traceability, responsibility boundaries, finite closure backlog, assurance matrix and fail-closed governance verifiers",
+    "requirements_catalogued": 36,
+    "claims_catalogued": 20,
+    "known_limitations_catalogued": 41,
+    "test_campaigns_defined": 10,
+    "canonical_core_files_compared": 122,
+    "canonical_core_files_changed": 0,
+    "canonical_state_authority_changed": false,
+    "stable_hash_changed": false,
+    "canonical_serialization_changed": false,
+    "rollback_semantics_changed": false,
+    "windows_1_8_execution": "not performed",
+    "linux_gcc_clang_execution": "performed",
+    "commercial_product_complete": false
+  }
+}

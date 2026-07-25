@@ -1,0 +1,380 @@
+{
+  "schema": "neoeng.dcore.product-test-campaigns.v1",
+  "project_version": "1.8.0",
+  "policy": {
+    "all_requirements_must_be_covered": true,
+    "planned_campaign_is_not_execution_evidence": true,
+    "raw_evidence_and_independent_verification_required": true,
+    "native_or_external_results_cannot_be_inferred": true
+  },
+  "campaigns": [
+    {
+      "campaign_id": "TEST-CS008-001",
+      "closure_stage": "CS008",
+      "description": "Re-run governance and assurance fail-closed verification for every future ChangeSet.",
+      "requirement_ids": [
+        "DCORE-SCOPE-001",
+        "DCORE-GOV-001"
+      ],
+      "status": "executed_cs008_linux_gcc_clang",
+      "required_test_classes": [
+        "fail_closed",
+        "negative",
+        "positive",
+        "regression",
+        "reproducibility"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [
+        "docs/changesets/008/evidence/gcc-ctest.log",
+        "docs/changesets/008/evidence/clang-ctest.log",
+        "docs/changesets/008/evidence/clang-asan-ubsan-ctest.log",
+        "docs/changesets/008/evidence/product-contract-self-test.log",
+        "docs/changesets/008/evidence/product-assurance-self-test.log"
+      ],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS009-001",
+      "closure_stage": "CS009",
+      "description": "Prove complete ECS evidence scope: general allocation, arena, copy-on-write and index maintenance.",
+      "requirement_ids": [
+        "DCORE-ECS-002",
+        "DCORE-ECS-003",
+        "DCORE-ECS-004"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS010-001",
+      "closure_stage": "CS010",
+      "description": "Prove deterministic two-instance operation, deliberate divergence, localization, reconciliation and recovery.",
+      "requirement_ids": [
+        "DCORE-DIST-001",
+        "DCORE-NET-002"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS011-001",
+      "closure_stage": "CS011",
+      "description": "Close numerical domain, overflow/containment and solver acceptance/fallback decisions.",
+      "requirement_ids": [
+        "DCORE-NUM-001",
+        "DCORE-NUM-002",
+        "DCORE-NUM-003"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS012-001",
+      "closure_stage": "CS012",
+      "description": "Close temporal reconstruction, durable evidence, branch/truncation and irreversible-effect contracts.",
+      "requirement_ids": [
+        "DCORE-TIME-002",
+        "DCORE-TIME-003",
+        "DCORE-DIV-002",
+        "DCORE-OBS-001"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS013-001",
+      "closure_stage": "CS013",
+      "description": "Close production security, confidentiality, asymmetric provider, authorization and protected bundles.",
+      "requirement_ids": [
+        "DCORE-CRYPTO-002",
+        "DCORE-SEC-001",
+        "DCORE-BUNDLE-002"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS014-001",
+      "closure_stage": "CS014",
+      "description": "Close release assurance, fuzzing, sanitizers, static analysis, SBOM/signing, CI and SDK surface.",
+      "requirement_ids": [
+        "DCORE-SDK-002",
+        "DCORE-REL-001",
+        "DCORE-REL-002",
+        "DCORE-REL-003",
+        "DCORE-REL-004",
+        "DCORE-COM-001"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-CS015-001",
+      "closure_stage": "CS015",
+      "description": "Perform final acceptance with zero internal gaps and claim-to-evidence reconciliation.",
+      "requirement_ids": [
+        "DCORE-ACCEPT-001"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-NATIVE-CAMPAIGN-001",
+      "closure_stage": "NATIVE_CAMPAIGN",
+      "description": "Execute native cross-architecture and profile qualification without inference from virtualized runs.",
+      "requirement_ids": [
+        "DCORE-DET-004"
+      ],
+      "status": "planned",
+      "required_test_classes": [
+        "adversarial",
+        "cross_architecture_if_applicable",
+        "cross_compiler",
+        "evidence_integrity",
+        "fault_injection",
+        "independent_verification",
+        "long_run",
+        "negative",
+        "positive",
+        "recovery"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    },
+    {
+      "campaign_id": "TEST-REGRESSION-001",
+      "closure_stage": "REGRESSION",
+      "description": "Preserve all requirements already marked complete across supported toolchains and package boundaries.",
+      "requirement_ids": [
+        "DCORE-ARCH-001",
+        "DCORE-DET-001",
+        "DCORE-DET-002",
+        "DCORE-DET-003",
+        "DCORE-NET-001",
+        "DCORE-ECS-001",
+        "DCORE-TIME-001",
+        "DCORE-DIV-001",
+        "DCORE-CRYPTO-001",
+        "DCORE-BUNDLE-001",
+        "DCORE-SDK-001"
+      ],
+      "status": "executed_cs008_linux_gcc_clang",
+      "required_test_classes": [
+        "fail_closed",
+        "negative",
+        "positive",
+        "regression",
+        "reproducibility"
+      ],
+      "mandatory_artifacts": [
+        "source-identity",
+        "build-identity",
+        "configuration",
+        "raw-results",
+        "result-summary",
+        "sha256-manifest",
+        "independent-verification",
+        "limitations"
+      ],
+      "evidence": [
+        "docs/changesets/008/evidence/gcc-ctest.log",
+        "docs/changesets/008/evidence/clang-ctest.log",
+        "docs/changesets/008/evidence/clang-asan-ubsan-ctest.log",
+        "docs/changesets/008/evidence/product-contract-self-test.log",
+        "docs/changesets/008/evidence/product-assurance-self-test.log"
+      ],
+      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "native_or_external_results_may_be_inferred": false
+    }
+  ]
+}

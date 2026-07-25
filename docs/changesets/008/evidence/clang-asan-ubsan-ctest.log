@@ -1,0 +1,42 @@
+Internal ctest changing into directory: /mnt/data/cs008_build/NeoEng-D-Core-1.8.0/build/cs008-asan
+Test project /mnt/data/cs008_build/NeoEng-D-Core-1.8.0/build/cs008-asan
+      Start  1: neoeng_product_contract_verify
+ 1/14 Test  #1: neoeng_product_contract_verify ...........   Passed    0.71 sec
+      Start  2: neoeng_product_contract_self_test
+ 2/14 Test  #2: neoeng_product_contract_self_test ........   Passed    1.34 sec
+      Start  3: neoeng_product_assurance_verify
+ 3/14 Test  #3: neoeng_product_assurance_verify ..........   Passed    0.56 sec
+      Start  4: neoeng_product_assurance_self_test
+ 4/14 Test  #4: neoeng_product_assurance_self_test .......   Passed    0.57 sec
+      Start  5: neoeng_tests
+ 5/14 Test  #5: neoeng_tests .............................   Passed    4.43 sec
+      Start  6: neoeng_operational_hardening_tests
+ 6/14 Test  #6: neoeng_operational_hardening_tests .......   Passed    1.25 sec
+      Start  7: neoeng_session_recovery_contract_tests
+ 7/14 Test  #7: neoeng_session_recovery_contract_tests ...   Passed    0.01 sec
+      Start  8: neoeng_observability_support_tests
+ 8/14 Test  #8: neoeng_observability_support_tests .......   Passed    0.01 sec
+      Start  9: neoeng_state_evidence_tests
+ 9/14 Test  #9: neoeng_state_evidence_tests ..............   Passed    0.01 sec
+      Start 10: neoeng_hardware_qualification_tests
+10/14 Test #10: neoeng_hardware_qualification_tests ......   Passed    0.01 sec
+      Start 11: neoeng_host_sdk_install_consumer
+11/14 Test #11: neoeng_host_sdk_install_consumer .........   Passed    0.71 sec
+      Start 12: neoeng_host_sdk_tests
+12/14 Test #12: neoeng_host_sdk_tests ....................   Passed    0.01 sec
+      Start 13: neoeng_host_sdk_c_header_test
+13/14 Test #13: neoeng_host_sdk_c_header_test ............   Passed    0.01 sec
+      Start 14: neoeng_host_sdk_reference
+14/14 Test #14: neoeng_host_sdk_reference ................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 14
+
+Label Time Summary:
+dcore           =   9.63 sec*proc (14 tests)
+governance      =   3.17 sec*proc (4 tests)
+host-sdk        =   0.73 sec*proc (4 tests)
+install         =   0.71 sec*proc (1 test)
+release-gate    =   3.17 sec*proc (4 tests)
+smoke           =   6.45 sec*proc (10 tests)
+
+Total Test time (real) =   9.63 sec

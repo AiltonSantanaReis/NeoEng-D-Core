@@ -1,0 +1,38 @@
+# NeoEng D-Core - Plano Fechado de Conclusao
+
+Documento: `NEOENG-DCORE-CLOSURE-PLAN-001`
+Versao: 1.1
+
+O plano fecha o NeoEng D-Core como produto independente. Nao inclui o programa Deep Tech de cinco anos nem renderer, editor, IA, acustica, SDF ou voxel no nucleo horizontal.
+
+## CS008 - Contrato, rastreabilidade e baseline de asseguracao — CONCLUIDO EM 1.8.0
+
+Fonte normativa, padrao de conclusao, matriz de responsabilidade, 36 requisitos, 20 claims, 41 limitacoes, matriz de asseguracao, verificadores fail-closed e regressao do nucleo preservado.
+
+## CS009 - Fechamento integral do escopo ECS Y1-O2
+
+Fechar alocacao geral, arena, copy-on-write e manutencao de indices como uma capacidade unica, com dados brutos, schemas, verificador independente, adulteracao e qualificacao fail-closed.
+
+## CS010 - Determinismo ponta a ponta e referencia distribuida
+
+Duas instancias independentes, mesmos inputs, comparacao, divergencia controlada, localizacao, reconciliacao e evidencia. Transporte/coordenador de referencia fora do estado canonico; consenso, quorum e BFT fora do escopo.
+
+## CS011 - Fechamento numerico
+
+Decisao Y1-O4, containment/overflow no dominio declarado e dominio/fallback do solver de arvores obliquas.
+
+## CS012 - Fechamento temporal e efeitos externos
+
+Replay, rollback de oito frames, correcao tardia, branch/truncamento, recorder duravel, retencao e contrato de efeitos irreversiveis.
+
+## CS013 - Seguranca e evidencia criptografica de producao
+
+Confidencialidade suportada, provider assimetrico ou remocao do claim, autorizacao granular, politica de chaves, protecao de support bundle e anchor adapter.
+
+## CS014 - Release assurance e SDK completo
+
+Fuzzing coverage-guided, sanitizers, analise estatica, SBOM, assinatura, CI, pacote consolidado, ABI compatibility e cobertura horizontal do SDK.
+
+## CS015 - Aceitacao final
+
+Auditoria integral dos ledgers, regressao completa, campanhas nativas executadas quando exigidas, zero gap interno obrigatorio e publicacao de claims estritamente sustentados.

@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 SCHEMA = "neoeng.dcore.qualification-campaign-request.v1"
-PROJECT_VERSION = "1.7.0"
+PROJECT_VERSION = "1.8.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 
@@ -499,7 +499,7 @@ def main() -> int:
         "ecs_scope_evidence_complete": ecs_scope_complete,
         "ecs_scope_artifacts_collected": ecs_scope_artifacts_collected,
         "ecs_scope_artifacts": copied_ecs_scope,
-        "ecs_scope_acceptance_status": "not_implemented_in_1.7.0" if profile == "P1" else "not_required",
+        "ecs_scope_acceptance_status": "not_implemented_in_1.8.0" if profile == "P1" else "not_required",
         "determinism_passed": determinism_passed,
         "serialization_passed": serialization_passed,
         "benchmarks_completed": benchmark_reports_present and raw_samples_present,
@@ -509,7 +509,7 @@ def main() -> int:
         "ecs_samples": ecs_samples,
         "native_profile_qualified": qualification.get("status") == "passed",
         "independent_verification_required": True,
-        "note": "Virtualized and containerized runs are engineering baselines and cannot qualify a profile. P1 complete ECS-scope acceptance is not implemented in 1.7.0.",
+        "note": "Virtualized and containerized runs are engineering baselines and cannot qualify a profile. P1 complete ECS-scope acceptance is not implemented in 1.8.0.",
     }
     write_json(output_dir / "campaign-summary.json", summary)
 

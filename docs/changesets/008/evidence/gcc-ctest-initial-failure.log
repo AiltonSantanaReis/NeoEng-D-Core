@@ -1,0 +1,146 @@
+Internal ctest changing into directory: /mnt/data/cs008_build/NeoEng-D-Core-1.8.0/build/cs008-gcc
+Test project /mnt/data/cs008_build/NeoEng-D-Core-1.8.0/build/cs008-gcc
+      Start  1: neoeng_product_contract_verify
+ 1/62 Test  #1: neoeng_product_contract_verify ............   Passed    0.62 sec
+      Start  2: neoeng_product_contract_self_test
+ 2/62 Test  #2: neoeng_product_contract_self_test .........   Passed    1.13 sec
+      Start  3: neoeng_product_assurance_verify
+ 3/62 Test  #3: neoeng_product_assurance_verify ...........   Passed    0.59 sec
+      Start  4: neoeng_product_assurance_self_test
+ 4/62 Test  #4: neoeng_product_assurance_self_test ........   Passed    0.59 sec
+      Start  5: neoeng_tests
+ 5/62 Test  #5: neoeng_tests ..............................   Passed    0.23 sec
+      Start  6: neoeng_operational_hardening_tests
+ 6/62 Test  #6: neoeng_operational_hardening_tests ........   Passed    0.04 sec
+      Start  7: neoeng_session_recovery_contract_tests
+ 7/62 Test  #7: neoeng_session_recovery_contract_tests ....   Passed    0.00 sec
+      Start  8: neoeng_observability_support_tests
+ 8/62 Test  #8: neoeng_observability_support_tests ........   Passed    0.00 sec
+      Start  9: neoeng_state_evidence_tests
+ 9/62 Test  #9: neoeng_state_evidence_tests ...............   Passed    0.00 sec
+      Start 10: neoeng_hardware_qualification_tests
+10/62 Test #10: neoeng_hardware_qualification_tests .......   Passed    0.00 sec
+      Start 11: neoeng_snapshot_fuzz
+11/62 Test #11: neoeng_snapshot_fuzz ......................   Passed    1.36 sec
+      Start 12: neoeng_network_packet_fuzz_smoke
+12/62 Test #12: neoeng_network_packet_fuzz_smoke ..........   Passed    0.06 sec
+      Start 13: neoeng_session_security_probe
+13/62 Test #13: neoeng_session_security_probe .............   Passed    0.00 sec
+      Start 14: neoeng_session_handshake_fuzz_smoke
+14/62 Test #14: neoeng_session_handshake_fuzz_smoke .......   Passed    0.02 sec
+      Start 15: neoeng_recovery_fault_injection
+15/62 Test #15: neoeng_recovery_fault_injection ...........   Passed    0.00 sec
+      Start 16: neoeng_recovery_contract_probe
+16/62 Test #16: neoeng_recovery_contract_probe ............   Passed    0.00 sec
+      Start 17: neoeng_state_evidence_probe
+17/62 Test #17: neoeng_state_evidence_probe ...............   Passed    0.00 sec
+      Start 18: neoeng_state_evidence_fuzz_smoke
+18/62 Test #18: neoeng_state_evidence_fuzz_smoke ..........   Passed    0.79 sec
+      Start 19: neoeng_support_bundle_probe
+19/62 Test #19: neoeng_support_bundle_probe ...............   Passed    0.00 sec
+      Start 20: neoeng_support_bundle_fuzz_smoke
+20/62 Test #20: neoeng_support_bundle_fuzz_smoke ..........   Passed    0.10 sec
+      Start 21: neoeng_ecs_maintenance_benchmark_smoke
+21/62 Test #21: neoeng_ecs_maintenance_benchmark_smoke ....   Passed    0.00 sec
+      Start 22: neoeng_immutable_fuzz
+22/62 Test #22: neoeng_immutable_fuzz .....................   Passed   11.78 sec
+      Start 23: neoeng_active_fuzz
+23/62 Test #23: neoeng_active_fuzz ........................   Passed    1.34 sec
+      Start 24: neoeng_v06_fuzz
+24/62 Test #24: neoeng_v06_fuzz ...........................   Passed    0.05 sec
+      Start 25: neoeng_v07_fuzz
+25/62 Test #25: neoeng_v07_fuzz ...........................   Passed    0.02 sec
+      Start 26: neoeng_v08_fuzz
+26/62 Test #26: neoeng_v08_fuzz ...........................   Passed    0.03 sec
+      Start 27: neoeng_v09_fuzz
+27/62 Test #27: neoeng_v09_fuzz ...........................   Passed    0.10 sec
+      Start 28: neoeng_v10_fuzz
+28/62 Test #28: neoeng_v10_fuzz ...........................   Passed    0.06 sec
+      Start 29: neoeng_v11_fuzz
+29/62 Test #29: neoeng_v11_fuzz ...........................   Passed    0.07 sec
+      Start 30: neoeng_v12_fuzz
+30/62 Test #30: neoeng_v12_fuzz ...........................   Passed    0.34 sec
+      Start 31: neoeng_v13_fuzz
+31/62 Test #31: neoeng_v13_fuzz ...........................   Passed    0.02 sec
+      Start 32: neoeng_v14_fuzz
+32/62 Test #32: neoeng_v14_fuzz ...........................   Passed    0.01 sec
+      Start 33: neoeng_v15_fuzz
+33/62 Test #33: neoeng_v15_fuzz ...........................   Passed    0.00 sec
+      Start 34: neoeng_v16_fuzz
+34/62 Test #34: neoeng_v16_fuzz ...........................   Passed    0.05 sec
+      Start 35: neoeng_v17_fuzz
+35/62 Test #35: neoeng_v17_fuzz ...........................   Passed    0.06 sec
+      Start 36: neoeng_v18_fuzz
+36/62 Test #36: neoeng_v18_fuzz ...........................   Passed    0.02 sec
+      Start 37: neoeng_v19_fuzz
+37/62 Test #37: neoeng_v19_fuzz ...........................   Passed    0.04 sec
+      Start 38: neoeng_v20_fuzz
+38/62 Test #38: neoeng_v20_fuzz ...........................   Passed    0.03 sec
+      Start 39: neoeng_v21_fuzz
+39/62 Test #39: neoeng_v21_fuzz ...........................   Passed    0.06 sec
+      Start 40: neoeng_v22_fuzz
+40/62 Test #40: neoeng_v22_fuzz ...........................   Passed    0.08 sec
+      Start 41: neoeng_v23_fuzz
+41/62 Test #41: neoeng_v23_fuzz ...........................   Passed    0.09 sec
+      Start 42: neoeng_v24_fuzz
+42/62 Test #42: neoeng_v24_fuzz ...........................   Passed    0.13 sec
+      Start 43: neoeng_v25_fuzz
+43/62 Test #43: neoeng_v25_fuzz ...........................   Passed    0.22 sec
+      Start 44: neoeng_v26_fuzz
+44/62 Test #44: neoeng_v26_fuzz ...........................   Passed    0.01 sec
+      Start 45: neoeng_v27_fuzz
+45/62 Test #45: neoeng_v27_fuzz ...........................   Passed    0.02 sec
+      Start 46: neoeng_v28_raa_allocation_probe
+46/62 Test #46: neoeng_v28_raa_allocation_probe ...........   Passed    0.00 sec
+      Start 47: neoeng_v28_raa_sanitizer_probe
+47/62 Test #47: neoeng_v28_raa_sanitizer_probe ............   Passed    0.02 sec
+      Start 48: neoeng_v28_raa_decomposition_benchmark
+48/62 Test #48: neoeng_v28_raa_decomposition_benchmark ....   Passed    0.29 sec
+      Start 49: neoeng_v28_raa_selective_benchmark
+49/62 Test #49: neoeng_v28_raa_selective_benchmark ........   Passed    0.22 sec
+      Start 50: neoeng_v28_raa_selective_fuzz
+50/62 Test #50: neoeng_v28_raa_selective_fuzz .............   Passed    0.22 sec
+      Start 51: neoeng_v28_interval_arithmetic_audit
+51/62 Test #51: neoeng_v28_interval_arithmetic_audit ......   Passed    0.02 sec
+      Start 52: neoeng_dcore_replay_smoke
+52/62 Test #52: neoeng_dcore_replay_smoke .................   Passed    0.02 sec
+      Start 53: neoeng_dcore_history_smoke
+53/62 Test #53: neoeng_dcore_history_smoke ................   Passed    0.02 sec
+      Start 54: neoeng_dcore_network_smoke
+54/62 Test #54: neoeng_dcore_network_smoke ................   Passed    0.05 sec
+      Start 55: neoeng_v28_active_island_shadow
+55/62 Test #55: neoeng_v28_active_island_shadow ...........   Passed    0.01 sec
+      Start 56: neoeng_host_sdk_install_consumer
+56/62 Test #56: neoeng_host_sdk_install_consumer ..........   Passed    0.32 sec
+      Start 57: neoeng_dcore_view_reference_tests
+57/62 Test #57: neoeng_dcore_view_reference_tests .........   Passed    0.00 sec
+      Start 58: neoeng_dcore_view_lab_integration_tests
+58/62 Test #58: neoeng_dcore_view_lab_integration_tests ...   Passed    0.00 sec
+      Start 59: neoeng_dcore_view_lab_cli_smoke
+59/62 Test #59: neoeng_dcore_view_lab_cli_smoke ...........   Passed    0.30 sec
+      Start 60: neoeng_host_sdk_tests
+60/62 Test #60: neoeng_host_sdk_tests .....................***Failed    0.00 sec
+FAIL: runtime version
+
+      Start 61: neoeng_host_sdk_c_header_test
+61/62 Test #61: neoeng_host_sdk_c_header_test .............   Passed    0.00 sec
+      Start 62: neoeng_host_sdk_reference
+62/62 Test #62: neoeng_host_sdk_reference .................   Passed    0.00 sec
+
+98% tests passed, 1 tests failed out of 62
+
+Label Time Summary:
+dcore           =  21.67 sec*proc (62 tests)
+full            =  17.76 sec*proc (42 tests)
+governance      =   2.92 sec*proc (4 tests)
+host-sdk        =   0.33 sec*proc (4 tests)
+install         =   0.32 sec*proc (1 test)
+release-gate    =   2.92 sec*proc (4 tests)
+smoke           =   1.00 sec*proc (16 tests)
+view-lab        =   0.31 sec*proc (3 tests)
+
+Total Test time (real) =  21.70 sec
+
+The following tests FAILED:
+	 60 - neoeng_host_sdk_tests (Failed)                    dcore host-sdk smoke
+Errors while running CTest

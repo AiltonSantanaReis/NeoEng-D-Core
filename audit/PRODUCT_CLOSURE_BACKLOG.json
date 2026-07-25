@@ -1,0 +1,377 @@
+{
+  "schema": "neoeng.dcore.product-closure-backlog.v1",
+  "project_version": "1.8.0",
+  "known_limitations_count": 41,
+  "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
+  "items": [
+    {
+      "limitation_id": "LIM-001",
+      "title": "Complete ECS Y1-O2 evidence scope is incomplete.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS009",
+      "normative_decision": "Close general allocation, arena, copy-on-write and index-maintenance evidence as one independently verifiable capability; native P1 qualification remains separate."
+    },
+    {
+      "limitation_id": "LIM-002",
+      "title": "Y1-O4 proxy has no final accept/reject decision.",
+      "responsibility": "core_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS011",
+      "normative_decision": "Measure predictive value and cost; accept or remove the runtime claim."
+    },
+    {
+      "limitation_id": "LIM-003",
+      "title": "Global numerical containment and overflow certificate is open.",
+      "responsibility": "core_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS011",
+      "normative_decision": "Define certified domain, composed bounds, extreme tests and fallback."
+    },
+    {
+      "limitation_id": "LIM-004",
+      "title": "General oblique-tree solver is not fully certified.",
+      "responsibility": "core_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS011",
+      "normative_decision": "Close domain/fallback or narrow the product claim."
+    },
+    {
+      "limitation_id": "LIM-005",
+      "title": "Real reference transport for distributed operation is absent.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS010",
+      "normative_decision": "Provide a reference UDP/QUIC-class adapter outside canonical state."
+    },
+    {
+      "limitation_id": "LIM-006",
+      "title": "Current HMAC protocol provides integrity/authenticity but not confidentiality.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS013",
+      "normative_decision": "Define supported encrypted deployment or explicitly bind confidentiality to transport."
+    },
+    {
+      "limitation_id": "LIM-007",
+      "title": "Forward secrecy is not provided.",
+      "responsibility": "accepted_boundary",
+      "category": "accepted_boundary",
+      "status": "accepted",
+      "closure_stage": "CS013",
+      "normative_decision": "Document supported threat model; do not claim forward secrecy unless a new protocol is approved."
+    },
+    {
+      "limitation_id": "LIM-008",
+      "title": "No concrete asymmetric authentication/PKI provider exists.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS013",
+      "normative_decision": "Implement a reference provider or remove State Signature production claims."
+    },
+    {
+      "limitation_id": "LIM-009",
+      "title": "Persistent key custody and rotation storage are not provided by the product.",
+      "responsibility": "deployment_responsibility",
+      "category": "deployment_responsibility",
+      "status": "accepted",
+      "closure_stage": "CS013",
+      "normative_decision": "Publish provider contract and deployment requirements; HSM/TPM remains deployment-specific."
+    },
+    {
+      "limitation_id": "LIM-010",
+      "title": "CSPRNG and trusted time are supplied by the host.",
+      "responsibility": "host_responsibility",
+      "category": "host_responsibility",
+      "status": "accepted",
+      "closure_stage": "CS013",
+      "normative_decision": "Document and test rejection of invalid host values."
+    },
+    {
+      "limitation_id": "LIM-011",
+      "title": "Authorization is role-based rather than command/entity-granular.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS013",
+      "normative_decision": "Define the supported authorization policy and enforce it end to end."
+    },
+    {
+      "limitation_id": "LIM-012",
+      "title": "Volumetric DDoS protection is not in-process.",
+      "responsibility": "deployment_responsibility",
+      "category": "deployment_responsibility",
+      "status": "accepted",
+      "closure_stage": "ACCEPTED_BOUNDARY",
+      "normative_decision": "Keep edge mitigation outside the D-Core and document capacity assumptions."
+    },
+    {
+      "limitation_id": "LIM-013",
+      "title": "A compromised host process is outside the in-process SDK threat boundary.",
+      "responsibility": "accepted_boundary",
+      "category": "accepted_boundary",
+      "status": "accepted",
+      "closure_stage": "ACCEPTED_BOUNDARY",
+      "normative_decision": "State explicitly; do not claim isolation from a privileged or compromised host."
+    },
+    {
+      "limitation_id": "LIM-014",
+      "title": "Session/network structures are not generally thread-safe.",
+      "responsibility": "accepted_boundary",
+      "category": "accepted_boundary",
+      "status": "accepted",
+      "closure_stage": "CS014",
+      "normative_decision": "Retain owner-thread contract and add conformance tests; no silent thread-safety claim."
+    },
+    {
+      "limitation_id": "LIM-015",
+      "title": "Rollback cannot undo irreversible external effects.",
+      "responsibility": "host_responsibility",
+      "category": "host_responsibility",
+      "status": "open",
+      "closure_stage": "CS012",
+      "normative_decision": "Deliver official idempotency/commit/compensation contract and reference test."
+    },
+    {
+      "limitation_id": "LIM-016",
+      "title": "Host SDK does not expose every implemented product capability.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Close SDK coverage for all horizontal claims or remove those claims from the SDK offer."
+    },
+    {
+      "limitation_id": "LIM-017",
+      "title": "Host SDK is static-library only.",
+      "responsibility": "accepted_boundary",
+      "category": "accepted_boundary",
+      "status": "accepted",
+      "closure_stage": "CS014",
+      "normative_decision": "Decide whether shared distribution is commercially required; static delivery remains valid if documented."
+    },
+    {
+      "limitation_id": "LIM-018",
+      "title": "No cross-toolchain C++ ABI guarantee exists.",
+      "responsibility": "accepted_boundary",
+      "category": "accepted_boundary",
+      "status": "accepted",
+      "closure_stage": "ACCEPTED_BOUNDARY",
+      "normative_decision": "C ABI remains the stable boundary."
+    },
+    {
+      "limitation_id": "LIM-019",
+      "title": "Year-1 candidate contract and Host ABI freeze language conflict.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS009",
+      "normative_decision": "Reconcile the public Host C ABI 1.0 with the internal Year-1 replay/schema candidate contract by ADR, versioning rules and migration policy."
+    },
+    {
+      "limitation_id": "LIM-020",
+      "title": "Public canonical state/Host ABI is specialized to Body/InputCommand.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS010",
+      "normative_decision": "Decide and implement the domain-neutral extension boundary required by horizontal product claims without changing canonical authority."
+    },
+    {
+      "limitation_id": "LIM-021",
+      "title": "Time-travel diff and Merkle localization are Body-schema-specific.",
+      "responsibility": "core_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS012",
+      "normative_decision": "Cover all product-promised canonical schemas or narrow the claim."
+    },
+    {
+      "limitation_id": "LIM-022",
+      "title": "Automatic budget instrumentation is not universal.",
+      "responsibility": "core_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS012",
+      "normative_decision": "Instrument every mandatory path and verify correlation."
+    },
+    {
+      "limitation_id": "LIM-023",
+      "title": "Divergence comparison is host-triggered; no reference distributed coordinator exists.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS010",
+      "normative_decision": "Deliver two-instance coordinator and fail-closed reconciliation flow."
+    },
+    {
+      "limitation_id": "LIM-024",
+      "title": "Trace/time-travel retention is bounded and non-durable.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS012",
+      "normative_decision": "Deliver durable recorder/export contract for the product scope."
+    },
+    {
+      "limitation_id": "LIM-025",
+      "title": "View Lab is static/offline and not a live debugger.",
+      "responsibility": "optional_vertical",
+      "category": "optional_vertical",
+      "status": "accepted",
+      "closure_stage": "OPTIONAL_VERTICAL",
+      "normative_decision": "Do not market live remote debugging unless a separate tool is built."
+    },
+    {
+      "limitation_id": "LIM-026",
+      "title": "Evidence chains are not automatically persisted or anchored externally.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS012",
+      "normative_decision": "Provide official recorder/anchor adapter contract; external trust anchor remains deployment-specific."
+    },
+    {
+      "limitation_id": "LIM-027",
+      "title": "No production asymmetric State Signature provider is implemented.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS013",
+      "normative_decision": "Same closure as LIM-008; duplicate technical symptom retained for claim traceability."
+    },
+    {
+      "limitation_id": "LIM-028",
+      "title": "WORM/notary infrastructure is external.",
+      "responsibility": "deployment_responsibility",
+      "category": "deployment_responsibility",
+      "status": "accepted",
+      "closure_stage": "EXTERNAL_ASSURANCE",
+      "normative_decision": "Provide adapter contract; do not claim external immutability without deployment evidence."
+    },
+    {
+      "limitation_id": "LIM-029",
+      "title": "Support bundles have integrity but no built-in confidentiality.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS013",
+      "normative_decision": "Implement optional recipient encryption or explicitly bind secure transfer/storage to deployment."
+    },
+    {
+      "limitation_id": "LIM-030",
+      "title": "Fuzzing is not continuous and coverage-guided across the product.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Integrate coverage-guided fuzzing and corpus management into release gates."
+    },
+    {
+      "limitation_id": "LIM-031",
+      "title": "Sanitizer coverage is limited to subsets.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Define and execute full supported-surface sanitizer matrix."
+    },
+    {
+      "limitation_id": "LIM-032",
+      "title": "Blocking industrial static analysis is not evidenced.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Add reproducible static analysis policy and evidence."
+    },
+    {
+      "limitation_id": "LIM-033",
+      "title": "SBOM, release signing and secure update process are absent.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Deliver release assurance artifacts and policy."
+    },
+    {
+      "limitation_id": "LIM-034",
+      "title": "No published continuous integration pipeline reproduces the full matrix.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Deliver CI definition and offline-reproducible runner."
+    },
+    {
+      "limitation_id": "LIM-035",
+      "title": "Distribution is fragmented as base plus ChangeSets.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Produce a single consolidated release with cumulative notes and manifest."
+    },
+    {
+      "limitation_id": "LIM-036",
+      "title": "Commercial entitlement/licensing enforcement is absent.",
+      "responsibility": "product_module_mandatory",
+      "category": "internal_mandatory",
+      "status": "open",
+      "closure_stage": "CS014",
+      "normative_decision": "Decide delivery model and implement only the minimum commercial entitlement required; never place licensing decisions in canonical state."
+    },
+    {
+      "limitation_id": "LIM-037",
+      "title": "No sector adapters are included.",
+      "responsibility": "optional_vertical",
+      "category": "optional_vertical",
+      "status": "accepted",
+      "closure_stage": "OPTIONAL_VERTICAL",
+      "normative_decision": "Adapters are separate products and do not block horizontal D-Core completion."
+    },
+    {
+      "limitation_id": "LIM-038",
+      "title": "Hard real-time, WCET and safety runtime are absent.",
+      "responsibility": "optional_vertical",
+      "category": "optional_vertical",
+      "status": "accepted",
+      "closure_stage": "OPTIONAL_VERTICAL",
+      "normative_decision": "Required only by a future certified vertical; not a D-Core horizontal promise."
+    },
+    {
+      "limitation_id": "LIM-039",
+      "title": "Consensus, quorum and complete distributed replication are absent.",
+      "responsibility": "out_of_scope",
+      "category": "out_of_scope",
+      "status": "accepted",
+      "closure_stage": "ACCEPTED_BOUNDARY",
+      "normative_decision": "Explicitly exclude them; distributed proof uses a reference coordinator, not a database."
+    },
+    {
+      "limitation_id": "LIM-040",
+      "title": "Independent cryptographic/security audit has not occurred.",
+      "responsibility": "external_assurance",
+      "category": "external_assurance",
+      "status": "open",
+      "closure_stage": "EXTERNAL_ASSURANCE",
+      "normative_decision": "Prepare artifacts internally; completion requires an independent reviewer."
+    },
+    {
+      "limitation_id": "LIM-041",
+      "title": "Sector certifications and compliance attestations have not occurred.",
+      "responsibility": "external_assurance",
+      "category": "external_assurance",
+      "status": "open",
+      "closure_stage": "EXTERNAL_ASSURANCE",
+      "normative_decision": "Never claim certification before the relevant external process is complete."
+    }
+  ]
+}

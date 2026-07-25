@@ -1,0 +1,608 @@
+{
+  "audit_date": "2026-07-24",
+  "audit_environment": {
+    "os": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "architecture": "x86_64",
+    "cmake": "3.31.6",
+    "ninja": "1.12.1",
+    "gcc": "14.2.0",
+    "clang": "17.0.0",
+    "boost": "1.83.0"
+  },
+  "integrity": {
+    "required_source_files": 353,
+    "required_source_files_exact_hash_match": 351,
+    "internal_includes_unresolved": [],
+    "app_sources": 77,
+    "app_sources_referenced_by_cmake": 77,
+    "core_sources": 58,
+    "core_sources_referenced_by_cmake": 58,
+    "y2_render_isolation": "canonical core passed; optional one-way View Lab permitted and hash-verified",
+    "manifest_check": "passed after ChangeSet 008 regeneration",
+    "identity_scan": "passed",
+    "baseline_catalog": {
+      "rows": 899,
+      "divergent_files": 0,
+      "scope": "NeoEng D-Core 1.0.1 baseline before ChangeSet 001"
+    },
+    "manifest_entries": 1235,
+    "package_files_including_manifest": 1236,
+    "required_source_files_authorized_modifications": 2,
+    "authorized_source_modification_ledger": "audit/AUTHORIZED_SOURCE_MODIFICATIONS.json",
+    "year2_extraction_ledger": "audit/YEAR2_EXTRACTION_LEDGER.json",
+    "active_year2_imports_exact_hash": 2,
+    "selected_year2_evidence_exact_hash": 8,
+    "reverse_dependency_from_core_to_view_lab": false,
+    "deferred_validation_ledger": "audit/DEFERRED_VALIDATION_GATES.json",
+    "support_bundle_independent_verifier": "scripts/verify_support_bundle.py",
+    "qualification_campaign_verifier": "scripts/qualification/verify_qualification_campaign.py",
+    "qualification_cross_architecture_comparator": "scripts/qualification/compare_architectures.py",
+    "reverse_dependency_from_core_to_host_sdk": false,
+    "host_sdk_boundary_verifier": "scripts/verify_host_sdk_boundary.py",
+    "host_sdk_gap_analysis": "audit/HOST_SDK_GAP_ANALYSIS_1_6_0.json",
+    "host_sdk_core_invariant_ledger": "audit/CHANGESET_007_CORE_INVARIANT_LEDGER.json",
+    "product_contract_verifier": "scripts/verify_product_contract.py",
+    "product_assurance_verifier": "scripts/verify_product_assurance.py",
+    "changeset_008_core_invariant_ledger": "audit/CHANGESET_008_CORE_INVARIANT_LEDGER.json"
+  },
+  "content_counts": {
+    "headers": 67,
+    "library_cpp": 61,
+    "app_cpp": 78,
+    "test_cpp": 9,
+    "document_records": 166,
+    "campaign_scripts_exact_from_origin": 23,
+    "year1_evidence_files": 433,
+    "year1_evidence_bytes": 106397555,
+    "original_windows_provenance_files": 59,
+    "canonical_core_headers": 64,
+    "canonical_core_cpp": 58,
+    "view_lab_library_cpp": 2,
+    "selected_year2_evidence_files": 8,
+    "view_lab_headers": 2,
+    "host_sdk_public_c_headers": 1,
+    "host_sdk_library_cpp": 1,
+    "host_sdk_reference_c": 1,
+    "host_sdk_test_c": 1
+  },
+  "builds": {
+    "gcc_release": {
+      "configure": "passed",
+      "build": "passed",
+      "executable_files_at_build_root": 84,
+      "tests_registered": 62,
+      "tests_passed": 62,
+      "tests_failed": 0,
+      "real_seconds": 22.46,
+      "executable_files_total": 99
+    },
+    "clang_release": {
+      "configure": "passed",
+      "build": "passed",
+      "executable_files_at_build_root": 84,
+      "tests_registered": 62,
+      "tests_passed": 62,
+      "tests_failed": 0,
+      "real_seconds": 16.44,
+      "executable_files_total": 99
+    },
+    "determinism_probe_gcc_vs_clang": {
+      "status": "identical",
+      "diff_bytes": 0,
+      "canonical_hash": "0x0FBBFF1EDC7B9346"
+    },
+    "dcore_lab_gcc_vs_clang": {
+      "status": "identical",
+      "diff_bytes": 0,
+      "canonical_hash": "0x4D94BB2F3D75FFFE"
+    },
+    "windows_package": {
+      "status": "not executed for 1.8.0",
+      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; proportional 1.8.0 regression remains pending"
+    },
+    "clang_asan_ubsan_critical_subset": {
+      "configure": "passed",
+      "build": "passed",
+      "tests_registered": 14,
+      "tests_passed": 14,
+      "tests_failed": 0,
+      "leak_sanitizer": "disabled; no leak-coverage claim",
+      "tests": [
+        "neoeng_product_contract_verify",
+        "neoeng_product_contract_self_test",
+        "neoeng_product_assurance_verify",
+        "neoeng_product_assurance_self_test",
+        "neoeng_tests",
+        "neoeng_operational_hardening_tests",
+        "neoeng_session_recovery_contract_tests",
+        "neoeng_observability_support_tests",
+        "neoeng_state_evidence_tests",
+        "neoeng_hardware_qualification_tests",
+        "neoeng_host_sdk_install_consumer",
+        "neoeng_host_sdk_tests",
+        "neoeng_host_sdk_c_header_test",
+        "neoeng_host_sdk_reference"
+      ],
+      "real_seconds": 9.63
+    },
+    "support_bundle_probe_gcc_vs_clang": {
+      "status": "identical",
+      "diff_bytes": 0,
+      "manifest_sha256": "51e83a63f1d01e00d14bda60d1609f5194448bcc37e9a6f6f872c1bebc6bb11a",
+      "independent_verifier": "passed_both_compilers"
+    },
+    "support_bundle_tamper_fuzz_gcc_vs_clang": {
+      "status": "identical",
+      "iterations_per_compiler": 100000,
+      "tampered_rejected_per_compiler": 100000,
+      "false_accepts": 0,
+      "diff_bytes": 0,
+      "canonical_manifest_sha256": "7b22c5d7e00da6c4008b6e7f3028ab27be6e60d0e01fa64d9a6d0f9afca30d4b"
+    },
+    "changeset_006_asan_ubsan": {
+      "status": "passed",
+      "tests_registered": 2,
+      "tests_passed": 2,
+      "tests_failed": 0,
+      "tests": [
+        "neoeng_hardware_qualification_tests",
+        "neoeng_ecs_maintenance_benchmark_64_samples"
+      ],
+      "ecs_benchmark_final_hash": "0x92E8E1ACEF6E3D6F",
+      "ecs_benchmark_samples": 64,
+      "timing_is_diagnostic_only": true
+    },
+    "hardware_qualification_harness": {
+      "schema": "neoeng.dcore.hardware-qualification.v2",
+      "gcc_virtualized_p0": "verified_unqualified_engineering_baseline",
+      "clang_virtualized_p0": "verified_unqualified_engineering_baseline",
+      "virtualized_profile_passes": 0,
+      "tampered_campaign": "rejected",
+      "determinism_probe_gcc_clang_sha256": "d787bb9afc9f55a3c7f79803f5cad46bdb181484060214f250109531926a4ade",
+      "state_evidence_probe_gcc_clang_sha256": "fe2e91e747400295a40e47884c2a8cc7acf13cdbb759dd5e5f46748f4d89263e",
+      "native_profiles_qualified": [],
+      "embedded_binaries_verified": 5,
+      "semantic_decision_recomputation": "passed_for_gcc_and_clang_campaigns",
+      "semantically_forged_and_rehashed_passed_result": "rejected",
+      "p1_candidate_artifacts_bypass": "rejected; EcsScopeIncomplete retained"
+    },
+    "host_sdk_reference_gcc_vs_clang": {
+      "status": "identical",
+      "diff_bytes": 0,
+      "output_sha256": "8ad2bd6c8922dde353fb24f386455f82c8f4c6f0afa95c8cd866527f6fa99538"
+    },
+    "host_sdk_install_consumer": {
+      "gcc": "passed",
+      "clang": "passed",
+      "method": "clean prefix install, find_package, build and execute"
+    }
+  },
+  "test_note": "ChangeSet 008 was built and tested on Linux x86_64 with GCC 14.2.0 and Clang 17.0.0. Both full suites passed 62/62. The Clang ASan+UBSan critical subset passed 14/14 with LeakSanitizer disabled. Product-contract and product-assurance verifiers passed and their self-tests rejected 7 and 9 mutation classes respectively. The 122 canonical core files were unchanged. Meta-verification establishes governance and test obligations; it does not claim completion of the 21 internal technical requirements that remain open. Physical Windows evidence is valid for the authoritative 1.7.0 commit, not automatically for 1.8.0. ARM64 and P0-P4 qualification remain pending.",
+  "project": "NeoEng D-Core",
+  "package": "NeoEng-D-Core-Windows-Audited",
+  "rename_validation": {
+    "status": "passed",
+    "cmake_project": "NeoEngDCore",
+    "cmake_library_target": "neoeng_dcore",
+    "cmake_alias": "NeoEng::DCore",
+    "vcpkg_manifest_name": "neoeng-d-core",
+    "windows_runner": "scripts/windows/run-dcore.ps1",
+    "active_previous_identity_references": 0,
+    "historical_evidence_modified": false
+  },
+  "changeset_001": {
+    "id": "001",
+    "title": "operational hardening: hostile input security, observability/time-travel, safe recovery, hardware qualification",
+    "base_version": "1.0.1",
+    "target_version": "1.1.0",
+    "base_archive_sha256": "0739c82ba95e0aa2d41b5e2e9fc649759c23cab0eac6af3a1d7e245aa626bc80",
+    "network_security": {
+      "hmac_sha256_rfc4231": "passed",
+      "all_zero_key_rejected": true,
+      "anti_replay_window_sequences": 64,
+      "rate_limiting": "per-origin integer token bucket",
+      "session_timeout": "implemented",
+      "total_parser": "implemented with caller-provided output span",
+      "external_hostile_datagrams_per_compiler": 100000,
+      "external_fuzz_status": "passed_without_exception"
+    },
+    "observability": {
+      "bounded_trace": "implemented",
+      "correlation": "implemented",
+      "time_travel_api_cli": "implemented",
+      "strictly_increasing_frames": true,
+      "gui": "not implemented"
+    },
+    "recovery": {
+      "logical_fault_injection": "passed",
+      "faults": [
+        "device_lost",
+        "io_stall",
+        "network_unavailable",
+        "malformed_packet",
+        "out_of_memory"
+      ],
+      "physical_fault_injection": "not executed"
+    },
+    "hardware_profiles": {
+      "profiles": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "p1_rollback_p99_limit_ns": 2000000,
+      "p1_ecs_maintenance_p99_limit_ns": 100000,
+      "physical_qualification": "unqualified"
+    },
+    "sanitizers": {
+      "asan_ubsan_reduced_operational_suite": "passed",
+      "full_cmake_sanitizer_build": "not completed; executor time limit; not counted as passed"
+    },
+    "cross_compiler_outputs": {
+      "network_fuzz_diff_bytes": 0,
+      "recovery_diff_bytes": 0,
+      "time_travel_diff_bytes": 0,
+      "determinism_diff_bytes": 0,
+      "dcore_lab_diff_bytes": 0,
+      "hardware_unqualified_diff_bytes": 0
+    },
+    "windows_status": "not executed",
+    "file_delta": {
+      "added": 50,
+      "modified": 9,
+      "deleted": 0,
+      "total_changed_paths": 59
+    }
+  },
+  "changeset_002": {
+    "id": "002",
+    "title": "authenticated session lifecycle and formal host recovery contract",
+    "base_version": "1.1.0",
+    "target_version": "1.2.0",
+    "source_integrity": {
+      "unchanged_required_files": 351,
+      "authorized_modified_required_files": 2,
+      "unlisted_divergences": 0
+    },
+    "session_security": {
+      "wire_format": "client/server hello v1 with exact lengths and reserved-zero validation",
+      "authentication": "HMAC-SHA256 PSK",
+      "confidentiality": false,
+      "forward_secrecy": false,
+      "downgrade_protection": "implemented",
+      "handshake_replay_cache": "implemented and capacity-bounded",
+      "direction_separated_keys": true,
+      "roles": [
+        "player",
+        "spectator",
+        "operator",
+        "service"
+      ],
+      "root_key_lifecycle": [
+        "active",
+        "retired",
+        "revoked"
+      ],
+      "strict_established_session_mode": "implemented; opt-in for compatibility",
+      "hostile_handshakes_per_compiler": 100000,
+      "hostile_handshakes_accepted": 0,
+      "key_schedule_regression_vector": "bc8ff715355b5d4a5f6a62ffe83e029fca5a94124054fc299e842a77fbab5407"
+    },
+    "recovery_contract": {
+      "schema": "neoeng.dcore.recovery.v1",
+      "generation_guard": "implemented",
+      "typed_acknowledgements": "implemented",
+      "checkpoint_frame_validation": "implemented",
+      "actual_checkpoint_restore": "implemented",
+      "time_travel_truncation": "implemented",
+      "terminal_halt": "implemented"
+    },
+    "sanitizers": {
+      "asan_ubsan_operational_hardening_tests": "passed",
+      "asan_ubsan_session_recovery_contract_tests": "passed"
+    },
+    "cross_compiler_outputs": {
+      "session_handshake_fuzz_diff_bytes": 0,
+      "session_security_probe_diff_bytes": 0,
+      "recovery_contract_probe_diff_bytes": 0,
+      "determinism_diff_bytes": 0,
+      "dcore_lab_diff_bytes": 0
+    },
+    "limitations": [
+      "Windows physical execution not performed",
+      "caller-provided CSPRNG required for nonces and session IDs",
+      "session structures require external synchronization for concurrent access",
+      "HSM/TPM, sockets/QUIC and distributed DDoS protection not implemented",
+      "no confidentiality or forward secrecy",
+      "no independent cryptographic audit",
+      "physical device/I/O/OOM fault injection not performed"
+    ]
+  },
+  "changeset_003": {
+    "id": "003",
+    "title": "safe modular extraction of required Year-2 visual diagnostics",
+    "base_version": "1.2.0",
+    "target_version": "1.3.0",
+    "architecture": {
+      "canonical_authority": "neoeng_dcore",
+      "optional_module": "modules/view_lab",
+      "dependency_direction": "view_lab -> neoeng_dcore",
+      "reverse_dependency": false,
+      "default_raw_cmake": "OFF",
+      "official_presets": "ON"
+    },
+    "year2_extraction": {
+      "active_files": 2,
+      "active_files_byte_for_byte": 2,
+      "selected_evidence_files": 8,
+      "selected_evidence_byte_for_byte": 8,
+      "source_archive_sha256": "1bb5276eca6e48a8a097eb1316805b19baed4db6c2b9d4d9850ceded77cdf353",
+      "ledger": "audit/YEAR2_EXTRACTION_LEDGER.json"
+    },
+    "view_lab": {
+      "cpu_visibility_reference": "implemented from exact Year-2 source",
+      "bmp_export": "implemented",
+      "ppm_reference_export": "implemented",
+      "static_html_viewer": "implemented",
+      "entity_and_trace_inspection": "implemented for current Body/TraceEvent schema",
+      "correlation_schema": "neoeng.dcore.visual-correlation.v1",
+      "gpu_backend": "not imported"
+    },
+    "hardware_profiles": {
+      "profiles": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "p4_scope": "8 GB compatibility, safe degradation and evidence collection",
+      "p4_inherits_p1_budgets": false,
+      "physical_qualification": "unqualified"
+    },
+    "validation": {
+      "gcc_ctest": "46/46 passed",
+      "clang_ctest": "46/46 passed",
+      "asan_ubsan_view_lab": "3/3 passed",
+      "view_lab_cross_compiler_files": 33,
+      "view_lab_cross_compiler_sha256": "all identical",
+      "determinism_hash": "0x0FBBFF1EDC7B9346",
+      "dcore_lab_hash": "0x4D94BB2F3D75FFFE"
+    },
+    "limitations": [
+      "Windows physical execution not performed",
+      "no real GPU producer integrated",
+      "no P0-P4 physical qualification performed",
+      "viewer is static/browser-based and read-only",
+      "current entity inspector covers the current Body schema",
+      "GPU/EGL, SDF, voxel and Year-2 research models remain outside the active module"
+    ]
+  },
+  "changeset_004": {
+    "id": "004",
+    "title": "cryptographic state integrity and versioned evidence chain",
+    "base_version": "1.3.0",
+    "target_version": "1.4.0",
+    "architecture": {
+      "canonical_authority": "neoeng_dcore",
+      "stable_hash_role": "fast deterministic comparison; unchanged",
+      "canonical_sha256_role": "checkpoint evidence",
+      "merkle_sha256_role": "structural evidence and inclusion proofs",
+      "automatic_per_tick_execution": false,
+      "view_lab_dependency_direction": "view_lab -> neoeng_dcore only"
+    },
+    "state_evidence": {
+      "schema": "neoeng.dcore.state-evidence-chain.v1",
+      "sha256_incremental": "implemented",
+      "canonical_state_sha256": "implemented over canonical serialization v1",
+      "merkle_domain_separation": "implemented for leaf, padding, internal node and root",
+      "inclusion_proofs": "implemented",
+      "evidence_chain": "implemented",
+      "trusted_anchor": "implemented; must be kept outside chain storage for truncation/append detection",
+      "rollback_branching": "explicit parent hash/frame and branch id",
+      "timestamp_in_canonical_hash": false
+    },
+    "signature_contract": {
+      "external_signer_interface": "implemented",
+      "external_verifier_interface": "implemented",
+      "private_key_storage_in_core": false,
+      "test_provider": "HMAC-SHA256 test-only",
+      "asymmetric_backend": "not implemented",
+      "non_repudiation_claimed": false
+    },
+    "validation": {
+      "gcc_ctest": "49/49 passed",
+      "clang_ctest": "49/49 passed",
+      "asan_ubsan_critical_subset": "3/3 passed",
+      "valid_merkle_proofs_per_compiler": 100000,
+      "tampered_merkle_chunks_rejected_per_compiler": 100000,
+      "cross_compiler_probe_diff_bytes": 0,
+      "cross_compiler_fuzz_diff_bytes": 0,
+      "canonical_sha256": "4f0423c219fcc6f43aa6aaeaa38617114fc8b73abb291b1b4e120c2a981e1730",
+      "merkle_root_sha256": "1d0684929f913733a318d9349890730a53b8a3642fc5c895c0779acd9f98b342",
+      "determinism_hash": "0x0FBBFF1EDC7B9346",
+      "dcore_lab_hash": "0x4D94BB2F3D75FFFE"
+    },
+    "limitations": [
+      "Windows physical execution not performed",
+      "ARM64 execution not performed",
+      "no asymmetric signature backend integrated",
+      "no append-only/WORM storage or external notary integrated",
+      "no independent cryptographic audit",
+      "a party controlling chain storage and its anchor/signing trust domain can rewrite both"
+    ],
+    "file_delta": {
+      "added": 32,
+      "modified": 13,
+      "deleted": 0,
+      "total_changed_paths": 45
+    }
+  },
+  "changeset_005": {
+    "id": "005",
+    "title": "transversal observability, executable budgets, divergence diagnosis and reproducible support bundle",
+    "base_version": "1.4.0",
+    "target_version": "1.5.0",
+    "observability": {
+      "trace_schema": "neoeng.dcore.trace-export.v2",
+      "subsystem_and_severity": true,
+      "budget_sample_and_exceeded_events": true,
+      "runtime_wall_clock_metadata_does_not_affect_canonical_state": true,
+      "divergence_hierarchy": [
+        "stable_hash",
+        "canonical_sha256",
+        "merkle_root",
+        "chunk",
+        "entity_component"
+      ]
+    },
+    "support_bundle": {
+      "schema": "neoeng.dcore.support-bundle.v1",
+      "manifest_sha256": true,
+      "independent_verifier": true,
+      "bounded_export": true,
+      "raw_subject_ids_exported": false,
+      "session_or_private_keys_exported": false,
+      "time_travel_requires_explicit_authorization": true
+    },
+    "deferred_validation": {
+      "schema": "neoeng.dcore.deferred-validation-gates.v1",
+      "native_validation_is_not_implementation_failure": true,
+      "native_gates_block_profile_qualification": true
+    },
+    "validation": {
+      "gcc_tests": "52/52",
+      "clang_tests": "52/52",
+      "asan_ubsan": "4/4",
+      "tamper_iterations_per_compiler": 100000,
+      "false_accepts": 0,
+      "windows_physical": "not_executed",
+      "arm64": "not_executed"
+    },
+    "file_delta": {
+      "added": 42,
+      "modified": 14,
+      "deleted": 0,
+      "total_changed_paths": 56
+    }
+  },
+  "changeset_006": {
+    "id": "006",
+    "title": "strict P0-P4 hardware qualification harness and reproducible native campaign protocol",
+    "base_version": "1.5.0",
+    "target_version": "1.6.0",
+    "contract": {
+      "schema": "neoeng.dcore.hardware-qualification.v2",
+      "native_physical_required_for_pass": true,
+      "virtualized_or_containerized_pass_forbidden": true,
+      "profile_compatibility_required": true,
+      "full_ctest_required": true,
+      "raw_samples_and_hashes_required": true
+    },
+    "p1": {
+      "rollback_p99_limit_ns": 2000000,
+      "ecs_maintenance_p99_limit_ns": 100000,
+      "minimum_samples_each": 1000,
+      "allocation_gate_required": true,
+      "complete_ecs_scope_required": true,
+      "complete_ecs_scope_current_status": "incomplete; index maintenance automated; general allocation, arena and copy-on-write mappings pending"
+    },
+    "validation": {
+      "gcc_tests": "54/54",
+      "clang_tests": "54/54",
+      "asan_ubsan_new_scope": "2/2",
+      "virtualized_p0_gcc": "verified_unqualified_engineering_baseline",
+      "virtualized_p0_clang": "verified_unqualified_engineering_baseline",
+      "tampered_campaign": "rejected",
+      "windows_physical": "not_executed",
+      "arm64": "not_executed",
+      "profiles_qualified": [],
+      "semantic_forgery_with_recomputed_checksums": "rejected",
+      "p1_arbitrary_candidate_scope_files": "collected_and_hashed_but_unqualified"
+    },
+    "file_delta": {
+      "added": 34,
+      "modified": 17,
+      "deleted": 0,
+      "total_changed_paths": 51
+    }
+  },
+  "changeset_007": {
+    "id": "007",
+    "title": "host integration boundary, SDK packaging and ABI governance",
+    "base_version": "1.6.0",
+    "target_version": "1.7.0",
+    "preimplementation_reconciliation": "audit/HOST_SDK_GAP_ANALYSIS_1_6_0.json",
+    "abi": {
+      "language": "C",
+      "major": 1,
+      "minor": 0,
+      "opaque_handles": true,
+      "owner_thread_required": true,
+      "cpp_exceptions_cross_boundary": false,
+      "shared_library_claim": false
+    },
+    "install_package": {
+      "cmake_package": "NeoEngDCore",
+      "targets": [
+        "NeoEng::DCore",
+        "NeoEng::DCoreHostSdk"
+      ],
+      "clean_consumer_test": "passed_gcc_and_clang"
+    },
+    "core_invariants": {
+      "files_compared": 122,
+      "files_changed": 0,
+      "source_list_changed": false,
+      "canonical_state_authority_changed": false,
+      "rollback_semantics_changed": false,
+      "canonical_serialization_changed": false
+    },
+    "validation": {
+      "gcc_tests": "58/58",
+      "clang_tests": "58/58",
+      "asan_ubsan_critical_subset": "6/6",
+      "host_reference_cross_compiler": "identical",
+      "determinism_probe_cross_compiler": "identical",
+      "state_evidence_probe_cross_compiler": "identical",
+      "boundary_verifier": "passed",
+      "isolation_verifier": "passed",
+      "windows_physical": "not_executed",
+      "arm64": "not_executed",
+      "c_abi_symbol_set": "14_identical_symbols_gcc_vs_clang"
+    },
+    "file_delta": {
+      "added": 37,
+      "modified": 17,
+      "deleted": 0,
+      "total_changed_paths": 54
+    }
+  },
+  "changeset_008": {
+    "id": "008",
+    "title": "normative product contract, traceability and assurance baseline",
+    "base_version": "1.7.0",
+    "target_version": "1.8.0",
+    "base_archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
+    "requirements": 36,
+    "claims": 20,
+    "known_limitations": 41,
+    "test_campaigns": 10,
+    "open_internal_requirements": 21,
+    "open_internal_limitations": 25,
+    "commercial_ready": false,
+    "canonical_core_files_compared": 122,
+    "canonical_core_files_changed": 0,
+    "contract_verifier": "passed",
+    "contract_mutations_rejected": 7,
+    "assurance_verifier": "passed",
+    "assurance_mutations_rejected": 9,
+    "gcc_ctest": "62/62 passed",
+    "clang_ctest": "62/62 passed",
+    "clang_asan_ubsan": "14/14 passed; LeakSanitizer disabled",
+    "windows_1_8": "not executed",
+    "arm64": "not executed",
+    "p0_p4_qualified": []
+  }
+}

@@ -18,7 +18,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
-PROJECT_VERSION = "1.7.0"
+PROJECT_VERSION = "1.8.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 
@@ -473,7 +473,7 @@ def recompute_decision(root: Path) -> tuple[int, str, str, dict[str, Any]]:
             inventory.get("observed", {}).get("virtualization", {}).get("detected"))):
         raise VerificationError("native-claim conflict flag mismatch")
 
-    # P1 legacy/experimental files can be collected and hashed, but version 1.7.0
+    # P1 legacy/experimental files can be collected and hashed, but version 1.8.0
     # has no accepted schemas/mappings for the complete Y1-O2 evidence scope.
     ecs_scope_complete = profile != "P1"
 
@@ -599,10 +599,10 @@ def verify_semantics(root: Path) -> None:
     if summary.get("independent_verification_required") is not True:
         raise VerificationError("campaign summary omits independent-verification requirement")
     if expected["profile"] == "P1":
-        if summary.get("ecs_scope_acceptance_status") != "not_implemented_in_1.7.0":
+        if summary.get("ecs_scope_acceptance_status") != "not_implemented_in_1.8.0":
             raise VerificationError("P1 ECS-scope acceptance status is incorrect")
         if status == "passed":
-            raise VerificationError("P1 cannot pass in 1.7.0 before complete ECS-scope validators exist")
+            raise VerificationError("P1 cannot pass in 1.8.0 before complete ECS-scope validators exist")
 
     probe_return = commands["hardware-profile-probe"]["return_code"]
     expected_probe_return = 0 if status == "passed" else 1

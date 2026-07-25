@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 project(NeoEngDCoreHostSdkConsumer LANGUAGES C CXX)
-find_package(NeoEngDCore 1.7 CONFIG REQUIRED)
+find_package(NeoEngDCore 1.8 CONFIG REQUIRED)
 add_executable(neoeng_dcore_installed_consumer main.c)
 target_link_libraries(neoeng_dcore_installed_consumer PRIVATE NeoEng::DCoreHostSdk)
 set_target_properties(neoeng_dcore_installed_consumer PROPERTIES LINKER_LANGUAGE CXX)
