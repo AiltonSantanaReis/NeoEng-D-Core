@@ -13,9 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 1
       - name: Record exact source identity
         run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.base.sha }}"
           git rev-parse HEAD > BASE_COMMIT.txt
           sha256sum MANIFEST.sha256 > BASE_MANIFEST_FILE_SHA256.txt
       - name: Create source archive
