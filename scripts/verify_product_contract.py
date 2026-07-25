@@ -350,7 +350,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "schema": "neoeng.dcore.product-contract-validation.v1",
         "project_version": EXPECTED_VERSION,
         "status": "passed",
-        "source_of_truth_files": {str(FILES[k]): sha256(root / FILES[k]) for k in sorted(FILES)},
+        "source_of_truth_files": {FILES[k].as_posix(): sha256(root / FILES[k]) for k in sorted(FILES)},
         "counts": {
             "requirements": len(req_rows),
             "claims": len(claim_rows),
