@@ -1,0 +1,750 @@
+{
+  "schema": "neoeng.dcore.changeset-core-invariant-ledger.v1",
+  "changeset": "008",
+  "base_version": "1.7.0",
+  "target_version": "1.8.0",
+  "baseline_archive": "NeoEng-D-Core-1.7.0-Authoritative-Baseline.zip",
+  "baseline_archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
+  "scope": [
+    "src/*.cpp",
+    "include/neoeng/core/*"
+  ],
+  "entry_count": 122,
+  "changed_count": 0,
+  "changed_paths": [],
+  "result": "passed",
+  "entries": [
+    {
+      "path": "include/neoeng/core/active_world.hpp",
+      "baseline_sha256": "ab6507eba4a98ac7ba2b70f32c465513ad75cffceaf392b7d534b271cab65884",
+      "current_sha256": "ab6507eba4a98ac7ba2b70f32c465513ad75cffceaf392b7d534b271cab65884",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/advanced_island_solver.hpp",
+      "baseline_sha256": "011d1d0c017e45b4f61781587c396cd3608f92391abad543d8ec81e04cb4b36f",
+      "current_sha256": "011d1d0c017e45b4f61781587c396cd3608f92391abad543d8ec81e04cb4b36f",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/arbitrary_normal_projection.hpp",
+      "baseline_sha256": "2a19e9b551e2ea16e3a89b33cef084f57415db9b5588d1192be81575d3609a4b",
+      "current_sha256": "2a19e9b551e2ea16e3a89b33cef084f57415db9b5588d1192be81575d3609a4b",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/atomic_physics.hpp",
+      "baseline_sha256": "41f429239a6b372b30eefb8642af398673fb25bb96ab2defd279aee8c7d7abe9",
+      "current_sha256": "41f429239a6b372b30eefb8642af398673fb25bb96ab2defd279aee8c7d7abe9",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/atomic_temporal_physics.hpp",
+      "baseline_sha256": "2f09d9686efe039c4098e6e5b7c1e575fb5200ca771b869425a6d13b535c6fc8",
+      "current_sha256": "2f09d9686efe039c4098e6e5b7c1e575fb5200ca771b869425a6d13b535c6fc8",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/authoritative_paged_temporal_physics.hpp",
+      "baseline_sha256": "44fee7733fd5c725cf0433ce421bbef5995c438232f1c9e8b7fa3ec412bd048b",
+      "current_sha256": "44fee7733fd5c725cf0433ce421bbef5995c438232f1c9e8b7fa3ec412bd048b",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/axis_forest_projection.hpp",
+      "baseline_sha256": "790b0abe7c2d44352942ab1c3603272bf0b86b86690a238e7c0cc24da72ae9b8",
+      "current_sha256": "790b0abe7c2d44352942ab1c3603272bf0b86b86690a238e7c0cc24da72ae9b8",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/broadphase.hpp",
+      "baseline_sha256": "a03ffb91191ffc7421aa7dbc7e2ccb36c999adedcdd67098b6459338d7e019f6",
+      "current_sha256": "a03ffb91191ffc7421aa7dbc7e2ccb36c999adedcdd67098b6459338d7e019f6",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/chain_solver.hpp",
+      "baseline_sha256": "43bd803c388d1a0daf12a180f9d5dd8e021c6db0f7354c0c670bed9518279fbe",
+      "current_sha256": "43bd803c388d1a0daf12a180f9d5dd8e021c6db0f7354c0c670bed9518279fbe",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/component_world.hpp",
+      "baseline_sha256": "ab118c7ece86ea6375388ae68040dbf568ad8db6d0de6a302ff6222c7b358a9a",
+      "current_sha256": "ab118c7ece86ea6375388ae68040dbf568ad8db6d0de6a302ff6222c7b358a9a",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/contact_solver.hpp",
+      "baseline_sha256": "9d751de38f25fda6bf2da4f4683c594594a88dbdeb9d3542dca76bec7151403b",
+      "current_sha256": "9d751de38f25fda6bf2da4f4683c594594a88dbdeb9d3542dca76bec7151403b",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/contextual_policy.hpp",
+      "baseline_sha256": "2f94906317b2afb0080a9a2bf093f1277b82703c40cbe8aa1ec2620839fd680a",
+      "current_sha256": "2f94906317b2afb0080a9a2bf093f1277b82703c40cbe8aa1ec2620839fd680a",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/crypto_hash.hpp",
+      "baseline_sha256": "a5276b5a41c61ead898afe721990090d8ba49ee03412ce023bff3d456f76e967",
+      "current_sha256": "a5276b5a41c61ead898afe721990090d8ba49ee03412ce023bff3d456f76e967",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/diagnostics.hpp",
+      "baseline_sha256": "e948914c44cf4aa5a84391e5242726bd2fc8aff1d1380ab07d3a11881f53b14e",
+      "current_sha256": "e948914c44cf4aa5a84391e5242726bd2fc8aff1d1380ab07d3a11881f53b14e",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/dirty.hpp",
+      "baseline_sha256": "98934cd6ad8f31b49a40cb02fa53acaaa8826801790c47fe3863fc027a982a51",
+      "current_sha256": "98934cd6ad8f31b49a40cb02fa53acaaa8826801790c47fe3863fc027a982a51",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/dynamic_island_pair_history.hpp",
+      "baseline_sha256": "cadec71113401b1d0a7adf4cbc64aa9d746e1c4f4c93c093b847ec91dbd77186",
+      "current_sha256": "cadec71113401b1d0a7adf4cbc64aa9d746e1c4f4c93c093b847ec91dbd77186",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/epoch_arena.hpp",
+      "baseline_sha256": "a632a39917371a737ef9d5f43e88a79fe4c04f348d451479e3c7436cf06699e5",
+      "current_sha256": "a632a39917371a737ef9d5f43e88a79fe4c04f348d451479e3c7436cf06699e5",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/exact_oblique_tree_oracle.hpp",
+      "baseline_sha256": "8451f2918ad346b6f39e51d556968128056cf0e8d87de93cfad016282a04ee9b",
+      "current_sha256": "8451f2918ad346b6f39e51d556968128056cf0e8d87de93cfad016282a04ee9b",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed.hpp",
+      "baseline_sha256": "241548c219f626cce7a393e31ed811b81faece26b44cd4c7fcdfb5661944e280",
+      "current_sha256": "241548c219f626cce7a393e31ed811b81faece26b44cd4c7fcdfb5661944e280",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_raa_active_island_shadow.hpp",
+      "baseline_sha256": "08d1916e971c73fab15f03ab337809ca1d2b515e4c3c28f329f0e88f94afe159",
+      "current_sha256": "08d1916e971c73fab15f03ab337809ca1d2b515e4c3c28f329f0e88f94afe159",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_raa_decomposition.hpp",
+      "baseline_sha256": "53794edc7b02b11f352761b80cc0f459dd85c3179b1424211d4c45ab02c1c1e6",
+      "current_sha256": "53794edc7b02b11f352761b80cc0f459dd85c3179b1424211d4c45ab02c1c1e6",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_raa_microkernel.hpp",
+      "baseline_sha256": "552e63ec9d2a9829bf473fa57268f3fa8d0b2ad36f969c62427d4a0a039365a7",
+      "current_sha256": "552e63ec9d2a9829bf473fa57268f3fa8d0b2ad36f969c62427d4a0a039365a7",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_raa_selective_lab.hpp",
+      "baseline_sha256": "56e61fafe19406894ad20c33ddefd0fbf572de8e0bda168d355c05fe4f694e93",
+      "current_sha256": "56e61fafe19406894ad20c33ddefd0fbf572de8e0bda168d355c05fe4f694e93",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_simd.hpp",
+      "baseline_sha256": "1100fbf0d81f4c6d7eb7492d290991487acb5458593aa243f7382c016cb34d12",
+      "current_sha256": "1100fbf0d81f4c6d7eb7492d290991487acb5458593aa243f7382c016cb34d12",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/fixed_slot_allocator.hpp",
+      "baseline_sha256": "bee0080c3f96a283988c73482a3255debd05932951e53cd65e098fbfae8703e2",
+      "current_sha256": "bee0080c3f96a283988c73482a3255debd05932951e53cd65e098fbfae8703e2",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/general_lcp_solver.hpp",
+      "baseline_sha256": "83f4348f223e19eab07c070080f3de2a41708bb3b21633ce96dd4c32f2bf2b75",
+      "current_sha256": "83f4348f223e19eab07c070080f3de2a41708bb3b21633ce96dd4c32f2bf2b75",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/hardware_profile.hpp",
+      "baseline_sha256": "5d660fa3dc349a427e6c0483c25fa27fde5c463befad087566134c1d60d7d078",
+      "current_sha256": "5d660fa3dc349a427e6c0483c25fa27fde5c463befad087566134c1d60d7d078",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/hash.hpp",
+      "baseline_sha256": "ca35ee71d4837a59befed08c621d4aac585b9ca994aac41785c6cc5c1f14f6ee",
+      "current_sha256": "ca35ee71d4837a59befed08c621d4aac585b9ca994aac41785c6cc5c1f14f6ee",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/immutable_rollback.hpp",
+      "baseline_sha256": "d38109909c4b09ae80dfbb511a2133182ca5e27965b7fbc254256936b1d1f774",
+      "current_sha256": "d38109909c4b09ae80dfbb511a2133182ca5e27965b7fbc254256936b1d1f774",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/immutable_world.hpp",
+      "baseline_sha256": "fa44b94acaeab5966352a75a8d11bdb67180716432a6223dadeae9904d6d98a9",
+      "current_sha256": "fa44b94acaeab5966352a75a8d11bdb67180716432a6223dadeae9904d6d98a9",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/indexed_ring.hpp",
+      "baseline_sha256": "44df3a0031da3053aef08a30b4e67466980a8939ee98be68ca4ce7587f04d746",
+      "current_sha256": "44df3a0031da3053aef08a30b4e67466980a8939ee98be68ca4ce7587f04d746",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/interactive_rollback.hpp",
+      "baseline_sha256": "e8b1d33de52174655734b931bd7be18736ef75c2cd9ac846589c34b975b21334",
+      "current_sha256": "e8b1d33de52174655734b931bd7be18736ef75c2cd9ac846589c34b975b21334",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/island_pair_cache.hpp",
+      "baseline_sha256": "2bd6f219aa351492beb455f5a4dc9c224cf1ef8a46b007c6df51e7d564e8a3f1",
+      "current_sha256": "2bd6f219aa351492beb455f5a4dc9c224cf1ef8a46b007c6df51e7d564e8a3f1",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/island_runtime.hpp",
+      "baseline_sha256": "cd974b961cf8f64417471b03eb76ec336d98658aebd8e5d36c2172774db51625",
+      "current_sha256": "cd974b961cf8f64417471b03eb76ec336d98658aebd8e5d36c2172774db51625",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/network_security.hpp",
+      "baseline_sha256": "5282ee188cef204b9cfba408f1187e401b830bb1318013fd0411047a305984ee",
+      "current_sha256": "5282ee188cef204b9cfba408f1187e401b830bb1318013fd0411047a305984ee",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/oblique_star_projection.hpp",
+      "baseline_sha256": "66a7b427c139441971c1f1c7d4b9bdbf6b9f95dac08474248f559ce37e92c9f9",
+      "current_sha256": "66a7b427c139441971c1f1c7d4b9bdbf6b9f95dac08474248f559ce37e92c9f9",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/oblique_tree_grid_dp.hpp",
+      "baseline_sha256": "3f6a204162fe7f227d947832cb49c53950de9dbcb8c6e656fb3b57e3e2dad752",
+      "current_sha256": "3f6a204162fe7f227d947832cb49c53950de9dbcb8c6e656fb3b57e3e2dad752",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/observability.hpp",
+      "baseline_sha256": "722c81195774292153d6a409be2ec00c555e7b94337e8a6f856f711b040eb4d5",
+      "current_sha256": "722c81195774292153d6a409be2ec00c555e7b94337e8a6f856f711b040eb4d5",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/offline_oracle.hpp",
+      "baseline_sha256": "47227b484d8adfa3094d864d27f9b00fea6ed4271c6ca3aab1ef3fd2885a80ff",
+      "current_sha256": "47227b484d8adfa3094d864d27f9b00fea6ed4271c6ca3aab1ef3fd2885a80ff",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/operational_runtime.hpp",
+      "baseline_sha256": "7a6a207cdc8b601bc110b9f3ec32920cdf08cc7a9e87a62e4f7b60110d79246c",
+      "current_sha256": "7a6a207cdc8b601bc110b9f3ec32920cdf08cc7a9e87a62e4f7b60110d79246c",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/paged_atomic_history.hpp",
+      "baseline_sha256": "09e7b13eb7f90d3d0f2a77ee95a06fa995092e90d84c5c162805315f9904faf0",
+      "current_sha256": "09e7b13eb7f90d3d0f2a77ee95a06fa995092e90d84c5c162805315f9904faf0",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/paged_atomic_temporal_physics.hpp",
+      "baseline_sha256": "6c0535558b70ceebd29a53376bedb484472cc00078bdaffee334fae2c4ad5a1e",
+      "current_sha256": "6c0535558b70ceebd29a53376bedb484472cc00078bdaffee334fae2c4ad5a1e",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/paged_segmented_pair_history.hpp",
+      "baseline_sha256": "307a301cfdc8d4ed158a7adb6aeb7f3db8e7a69879fbc3285fd2e96068e42175",
+      "current_sha256": "307a301cfdc8d4ed158a7adb6aeb7f3db8e7a69879fbc3285fd2e96068e42175",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/persistent_checkpoint.hpp",
+      "baseline_sha256": "209cc582127e68f73f60699f1db6ff477ef676d24cbfddf3a72399168ca5e9db",
+      "current_sha256": "209cc582127e68f73f60699f1db6ff477ef676d24cbfddf3a72399168ca5e9db",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/radix_world.hpp",
+      "baseline_sha256": "44bd2f23cabc43f7ddee89f63acc0bb85cdd13ed181a3a382eb04c3a2213f648",
+      "current_sha256": "44bd2f23cabc43f7ddee89f63acc0bb85cdd13ed181a3a382eb04c3a2213f648",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/recovery.hpp",
+      "baseline_sha256": "ae1327464906232192fd1a151455d1b98bbc8f517a7d1416431f75c438816d53",
+      "current_sha256": "ae1327464906232192fd1a151455d1b98bbc8f517a7d1416431f75c438816d53",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/recovery_contract.hpp",
+      "baseline_sha256": "dbe6ee06d6461109c96f0163e796f194ecb819f830921c02d1cd9d671c746d2e",
+      "current_sha256": "dbe6ee06d6461109c96f0163e796f194ecb819f830921c02d1cd9d671c746d2e",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/rollback.hpp",
+      "baseline_sha256": "a15ffda453ba4c2ce4955f4313215caad1bfafd55296ab3f36f6479e75beacf6",
+      "current_sha256": "a15ffda453ba4c2ce4955f4313215caad1bfafd55296ab3f36f6479e75beacf6",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/segmented_authoritative_paged_temporal_physics.hpp",
+      "baseline_sha256": "bc3d6f502d21be424e0611be0cb2b3152bac6992632f5109c02d49ecc317ada2",
+      "current_sha256": "bc3d6f502d21be424e0611be0cb2b3152bac6992632f5109c02d49ecc317ada2",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/segmented_dynamic_pair_history.hpp",
+      "baseline_sha256": "5c9a6b352f633249628ecd9ff350ce988bcd068522ea1af85078712d01e1e2b5",
+      "current_sha256": "5c9a6b352f633249628ecd9ff350ce988bcd068522ea1af85078712d01e1e2b5",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/session_security.hpp",
+      "baseline_sha256": "eec377414630fbc5f994c311f2bffa0b0ed38cd40d130b7484ace0e95d5a5fe2",
+      "current_sha256": "eec377414630fbc5f994c311f2bffa0b0ed38cd40d130b7484ace0e95d5a5fe2",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/simulation.hpp",
+      "baseline_sha256": "9b9865009b14f70753a48a1e39933b87b3e72262cc5720c8e76e5034066d6570",
+      "current_sha256": "9b9865009b14f70753a48a1e39933b87b3e72262cc5720c8e76e5034066d6570",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/small_oblique_grid_oracle.hpp",
+      "baseline_sha256": "b36ab72f19bafc67f2b581c5252589b8e0e7ef19a8ac6608b5348fde859fa4d0",
+      "current_sha256": "b36ab72f19bafc67f2b581c5252589b8e0e7ef19a8ac6608b5348fde859fa4d0",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/snapshot_store.hpp",
+      "baseline_sha256": "0c3a7c3308f24ad179e541fc7b1dcec634b2688aa5aa2d679d6b39a1b65aea08",
+      "current_sha256": "0c3a7c3308f24ad179e541fc7b1dcec634b2688aa5aa2d679d6b39a1b65aea08",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/state_evidence.hpp",
+      "baseline_sha256": "8709d9b6890932c3bd28deb6a52bc6578acdb0e2268b0e25e95b9f4384647e73",
+      "current_sha256": "8709d9b6890932c3bd28deb6a52bc6578acdb0e2268b0e25e95b9f4384647e73",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/support_bundle.hpp",
+      "baseline_sha256": "38c861eba51a02c982db98f3279b4c67a433fad938e5e0562bfb3974b290d791",
+      "current_sha256": "38c861eba51a02c982db98f3279b4c67a433fad938e5e0562bfb3974b290d791",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/temporal_contact.hpp",
+      "baseline_sha256": "c3d17bfa976af12118f6d01ef35dcb52fab270a47d0f574ffad14c276dd0f497",
+      "current_sha256": "c3d17bfa976af12118f6d01ef35dcb52fab270a47d0f574ffad14c276dd0f497",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/types.hpp",
+      "baseline_sha256": "7cbb6510c66fa77180c42211c5699f135244f5c8668be8edd7e62f0da80ddeab",
+      "current_sha256": "7cbb6510c66fa77180c42211c5699f135244f5c8668be8edd7e62f0da80ddeab",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/uncertainty_lab.hpp",
+      "baseline_sha256": "3a7438aa3bcd1970e0159d17f79821a03199107c41d213c17914025ccbdd9976",
+      "current_sha256": "3a7438aa3bcd1970e0159d17f79821a03199107c41d213c17914025ccbdd9976",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/versioned_island_pair_history.hpp",
+      "baseline_sha256": "57dbc4d338d256a8dd191c13a988b598642a7da0dc8cf8088cf435629795af43",
+      "current_sha256": "57dbc4d338d256a8dd191c13a988b598642a7da0dc8cf8088cf435629795af43",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/visual_correlation.hpp",
+      "baseline_sha256": "3eadf9bdf02a51317065287022493bcefd9bf6d8674017765cece5207d01196b",
+      "current_sha256": "3eadf9bdf02a51317065287022493bcefd9bf6d8674017765cece5207d01196b",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/weighted_contact_projection.hpp",
+      "baseline_sha256": "3d596d5159be1813d7083732a5354772a309563472fe723d26f3935bc40b3bc1",
+      "current_sha256": "3d596d5159be1813d7083732a5354772a309563472fe723d26f3935bc40b3bc1",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/weighted_tree_projection.hpp",
+      "baseline_sha256": "d22a54fc3cb18a8ace412d46acd56a1dcc6ad2de7be0e973cab276e16fa497ee",
+      "current_sha256": "d22a54fc3cb18a8ace412d46acd56a1dcc6ad2de7be0e973cab276e16fa497ee",
+      "unchanged": true
+    },
+    {
+      "path": "include/neoeng/core/year1_contract.hpp",
+      "baseline_sha256": "642aa5c557ba6072c186343f4b6eda70e4e1d818cce0431f12c32d614824a866",
+      "current_sha256": "642aa5c557ba6072c186343f4b6eda70e4e1d818cce0431f12c32d614824a866",
+      "unchanged": true
+    },
+    {
+      "path": "src/active_world.cpp",
+      "baseline_sha256": "75a7356ca57f21bf108514ee40f3a6deb0f446e13252f56b3fd1029c11ebda1e",
+      "current_sha256": "75a7356ca57f21bf108514ee40f3a6deb0f446e13252f56b3fd1029c11ebda1e",
+      "unchanged": true
+    },
+    {
+      "path": "src/advanced_island_solver.cpp",
+      "baseline_sha256": "c2f6b83333d1a3604052316f4ba305dd0576b502fae134546ce6e171824dafbe",
+      "current_sha256": "c2f6b83333d1a3604052316f4ba305dd0576b502fae134546ce6e171824dafbe",
+      "unchanged": true
+    },
+    {
+      "path": "src/arbitrary_normal_projection.cpp",
+      "baseline_sha256": "550859038943e538d1d9df0bc246901aac392a188fb5b447e81e5818bafc107a",
+      "current_sha256": "550859038943e538d1d9df0bc246901aac392a188fb5b447e81e5818bafc107a",
+      "unchanged": true
+    },
+    {
+      "path": "src/atomic_physics.cpp",
+      "baseline_sha256": "378cc9be4b647a49ecca7bc2a8fdd2ae5f2b86cf093d3e712f2a8db8cdab008a",
+      "current_sha256": "378cc9be4b647a49ecca7bc2a8fdd2ae5f2b86cf093d3e712f2a8db8cdab008a",
+      "unchanged": true
+    },
+    {
+      "path": "src/atomic_temporal_physics.cpp",
+      "baseline_sha256": "2422a30ff8ecf12ad2eeee422a2df28e2d28b34a0367998270a97cfe401f147c",
+      "current_sha256": "2422a30ff8ecf12ad2eeee422a2df28e2d28b34a0367998270a97cfe401f147c",
+      "unchanged": true
+    },
+    {
+      "path": "src/authoritative_paged_temporal_physics.cpp",
+      "baseline_sha256": "4ff180e5a23ca205f208663cf54465d23d765edb209562608c8d11f3b34ae53d",
+      "current_sha256": "4ff180e5a23ca205f208663cf54465d23d765edb209562608c8d11f3b34ae53d",
+      "unchanged": true
+    },
+    {
+      "path": "src/axis_forest_projection.cpp",
+      "baseline_sha256": "b9c9587d55f4d1f48bb10ec0d8f2845664933e634c348ba5be53c82c6c37258b",
+      "current_sha256": "b9c9587d55f4d1f48bb10ec0d8f2845664933e634c348ba5be53c82c6c37258b",
+      "unchanged": true
+    },
+    {
+      "path": "src/broadphase.cpp",
+      "baseline_sha256": "0b4ad874f2fb4312fcbdaecc601cdd2b9bd6dd985e77f404b5404cac5e95c6d8",
+      "current_sha256": "0b4ad874f2fb4312fcbdaecc601cdd2b9bd6dd985e77f404b5404cac5e95c6d8",
+      "unchanged": true
+    },
+    {
+      "path": "src/chain_solver.cpp",
+      "baseline_sha256": "c27886261d71a439fbd13cebeb4ec999560e3f09e76258c17cb731207fa4af68",
+      "current_sha256": "c27886261d71a439fbd13cebeb4ec999560e3f09e76258c17cb731207fa4af68",
+      "unchanged": true
+    },
+    {
+      "path": "src/component_world.cpp",
+      "baseline_sha256": "932f6bb26185158885cf716d62fe2792dad3ceb95d53075e1d352a7f5c4f0174",
+      "current_sha256": "932f6bb26185158885cf716d62fe2792dad3ceb95d53075e1d352a7f5c4f0174",
+      "unchanged": true
+    },
+    {
+      "path": "src/contact_solver.cpp",
+      "baseline_sha256": "7e98d192b182f0170926358e21ad7c547b4cbf33cb6c9387e380515606518ee2",
+      "current_sha256": "7e98d192b182f0170926358e21ad7c547b4cbf33cb6c9387e380515606518ee2",
+      "unchanged": true
+    },
+    {
+      "path": "src/contextual_policy.cpp",
+      "baseline_sha256": "cb9bc635da88bb95b1a9035adec182133d4b286c64fe997840cb6ce3a7fdd681",
+      "current_sha256": "cb9bc635da88bb95b1a9035adec182133d4b286c64fe997840cb6ce3a7fdd681",
+      "unchanged": true
+    },
+    {
+      "path": "src/crypto_hash.cpp",
+      "baseline_sha256": "490f803e98167fc6ec9ca8856b475e91b7b4d27ab57097b36569348f4cc76c6f",
+      "current_sha256": "490f803e98167fc6ec9ca8856b475e91b7b4d27ab57097b36569348f4cc76c6f",
+      "unchanged": true
+    },
+    {
+      "path": "src/diagnostics.cpp",
+      "baseline_sha256": "35acd3dfd242bc27a8118638abc906ad24bbf4a3c66ce6ac27d42c0cca8c8933",
+      "current_sha256": "35acd3dfd242bc27a8118638abc906ad24bbf4a3c66ce6ac27d42c0cca8c8933",
+      "unchanged": true
+    },
+    {
+      "path": "src/dynamic_island_pair_history.cpp",
+      "baseline_sha256": "f1227358c8aaaf9659d85d162c290fd0f114c4bb730678c060ee8f726d8db0f0",
+      "current_sha256": "f1227358c8aaaf9659d85d162c290fd0f114c4bb730678c060ee8f726d8db0f0",
+      "unchanged": true
+    },
+    {
+      "path": "src/epoch_arena.cpp",
+      "baseline_sha256": "494ee8a8f75c2021b1673709f46bb57d6cc2537c9778c22425080a3a4623a624",
+      "current_sha256": "494ee8a8f75c2021b1673709f46bb57d6cc2537c9778c22425080a3a4623a624",
+      "unchanged": true
+    },
+    {
+      "path": "src/exact_oblique_tree_oracle.cpp",
+      "baseline_sha256": "34e67bd8177ade2cf568160a1d9620e46e2fb4b11bca96fe6374346f62a573be",
+      "current_sha256": "34e67bd8177ade2cf568160a1d9620e46e2fb4b11bca96fe6374346f62a573be",
+      "unchanged": true
+    },
+    {
+      "path": "src/fixed_raa_active_island_shadow.cpp",
+      "baseline_sha256": "9fe05efda71dd51343af1a1634822e59c4b06a1b3b3e7f2603b6218d93df6c92",
+      "current_sha256": "9fe05efda71dd51343af1a1634822e59c4b06a1b3b3e7f2603b6218d93df6c92",
+      "unchanged": true
+    },
+    {
+      "path": "src/fixed_raa_decomposition.cpp",
+      "baseline_sha256": "093f86a88ef6a529b1d404db6dd00184e8a67a49dc0de473e6c3e99100349e3e",
+      "current_sha256": "093f86a88ef6a529b1d404db6dd00184e8a67a49dc0de473e6c3e99100349e3e",
+      "unchanged": true
+    },
+    {
+      "path": "src/fixed_raa_microkernel.cpp",
+      "baseline_sha256": "73ebd147236ca3dc57fd2a1a89bf0acf2b27fa70a6ed1533e7ef52d0b52b2df4",
+      "current_sha256": "73ebd147236ca3dc57fd2a1a89bf0acf2b27fa70a6ed1533e7ef52d0b52b2df4",
+      "unchanged": true
+    },
+    {
+      "path": "src/fixed_simd.cpp",
+      "baseline_sha256": "ae2d670d1919d10651e31be2f9446c1d3a38416873f880c2da42a112fbaa91d6",
+      "current_sha256": "ae2d670d1919d10651e31be2f9446c1d3a38416873f880c2da42a112fbaa91d6",
+      "unchanged": true
+    },
+    {
+      "path": "src/fixed_slot_allocator.cpp",
+      "baseline_sha256": "a044b2944213f20809a5ddad3c23d275355c5089a2007d4f76f52a24d9143189",
+      "current_sha256": "a044b2944213f20809a5ddad3c23d275355c5089a2007d4f76f52a24d9143189",
+      "unchanged": true
+    },
+    {
+      "path": "src/general_lcp_solver.cpp",
+      "baseline_sha256": "10eea3ac0987af188e4a45329dae093a5049b172a6ed468b98f9685c75a74beb",
+      "current_sha256": "10eea3ac0987af188e4a45329dae093a5049b172a6ed468b98f9685c75a74beb",
+      "unchanged": true
+    },
+    {
+      "path": "src/hardware_profile.cpp",
+      "baseline_sha256": "03c122350f31e3e58382c3c1e3080558521195a25d0198ed00f39a0039ef4f77",
+      "current_sha256": "03c122350f31e3e58382c3c1e3080558521195a25d0198ed00f39a0039ef4f77",
+      "unchanged": true
+    },
+    {
+      "path": "src/hash.cpp",
+      "baseline_sha256": "e865e9b9fc8b14aaf58e077c2b75c57ee55c31ae2b0ca58b35e65ed35ff585fd",
+      "current_sha256": "e865e9b9fc8b14aaf58e077c2b75c57ee55c31ae2b0ca58b35e65ed35ff585fd",
+      "unchanged": true
+    },
+    {
+      "path": "src/immutable_rollback.cpp",
+      "baseline_sha256": "0d364909234b5d65a0bd8ff13ee2bbed3539e5c7c4b04a9fee2277098bcd3155",
+      "current_sha256": "0d364909234b5d65a0bd8ff13ee2bbed3539e5c7c4b04a9fee2277098bcd3155",
+      "unchanged": true
+    },
+    {
+      "path": "src/immutable_world.cpp",
+      "baseline_sha256": "a5b3502412f339fca95db39fd302c3660ae9928559db1edb486b8025e69be488",
+      "current_sha256": "a5b3502412f339fca95db39fd302c3660ae9928559db1edb486b8025e69be488",
+      "unchanged": true
+    },
+    {
+      "path": "src/interactive_rollback.cpp",
+      "baseline_sha256": "bdc106db924ca0195bfa8e1aa796b4776b77d985271ce2229e7cdd0c42f12015",
+      "current_sha256": "bdc106db924ca0195bfa8e1aa796b4776b77d985271ce2229e7cdd0c42f12015",
+      "unchanged": true
+    },
+    {
+      "path": "src/island_pair_cache.cpp",
+      "baseline_sha256": "affec9dbc1a5bc4111fc302ad2e3e26a5ed46e227637bd8f14ec2d505af64c82",
+      "current_sha256": "affec9dbc1a5bc4111fc302ad2e3e26a5ed46e227637bd8f14ec2d505af64c82",
+      "unchanged": true
+    },
+    {
+      "path": "src/island_runtime.cpp",
+      "baseline_sha256": "bc93bb902efd619d26779cfb3e6650f746771bc2c423f955a75d8eb845c2770f",
+      "current_sha256": "bc93bb902efd619d26779cfb3e6650f746771bc2c423f955a75d8eb845c2770f",
+      "unchanged": true
+    },
+    {
+      "path": "src/network_security.cpp",
+      "baseline_sha256": "7e5f2aea83804c9a48af9080a987046db3b2b647ef57cb0a8fd9a0980db18831",
+      "current_sha256": "7e5f2aea83804c9a48af9080a987046db3b2b647ef57cb0a8fd9a0980db18831",
+      "unchanged": true
+    },
+    {
+      "path": "src/oblique_star_projection.cpp",
+      "baseline_sha256": "7949eac3625bd33c270f756d0bd0e6f9f309de4811dc3a061ffa8479fb3aa765",
+      "current_sha256": "7949eac3625bd33c270f756d0bd0e6f9f309de4811dc3a061ffa8479fb3aa765",
+      "unchanged": true
+    },
+    {
+      "path": "src/oblique_tree_grid_dp.cpp",
+      "baseline_sha256": "464badc4390e69a18a99d21730d556ef8dc458a39746d18f56013ccd6ce7e67c",
+      "current_sha256": "464badc4390e69a18a99d21730d556ef8dc458a39746d18f56013ccd6ce7e67c",
+      "unchanged": true
+    },
+    {
+      "path": "src/observability.cpp",
+      "baseline_sha256": "145642b0477a9776d37b7ac11782fd362bb7b6d7e61518359337a76707bc0cb8",
+      "current_sha256": "145642b0477a9776d37b7ac11782fd362bb7b6d7e61518359337a76707bc0cb8",
+      "unchanged": true
+    },
+    {
+      "path": "src/offline_oracle.cpp",
+      "baseline_sha256": "b7b08c2dc73cf7056c2cd7e002646aec7d08728380c831d73aa82f7d38f4732c",
+      "current_sha256": "b7b08c2dc73cf7056c2cd7e002646aec7d08728380c831d73aa82f7d38f4732c",
+      "unchanged": true
+    },
+    {
+      "path": "src/operational_runtime.cpp",
+      "baseline_sha256": "5eec67aa1c85edcea1a1b806fb69f0c9a5858aa3a4b52b89b284bff0274c9d96",
+      "current_sha256": "5eec67aa1c85edcea1a1b806fb69f0c9a5858aa3a4b52b89b284bff0274c9d96",
+      "unchanged": true
+    },
+    {
+      "path": "src/paged_atomic_history.cpp",
+      "baseline_sha256": "be62d32422fce698e6366ccdd5348a2e588229e0630c16430b6003b1f5ef8394",
+      "current_sha256": "be62d32422fce698e6366ccdd5348a2e588229e0630c16430b6003b1f5ef8394",
+      "unchanged": true
+    },
+    {
+      "path": "src/paged_atomic_temporal_physics.cpp",
+      "baseline_sha256": "0e6fc145f8bc07b25b1a6b95ad990ee1a9aee13001b8d177155b38e43247806b",
+      "current_sha256": "0e6fc145f8bc07b25b1a6b95ad990ee1a9aee13001b8d177155b38e43247806b",
+      "unchanged": true
+    },
+    {
+      "path": "src/paged_segmented_pair_history.cpp",
+      "baseline_sha256": "adea590ced0e0f25891b032c355f5ba25d1f26a1bc839b62068bea5881060291",
+      "current_sha256": "adea590ced0e0f25891b032c355f5ba25d1f26a1bc839b62068bea5881060291",
+      "unchanged": true
+    },
+    {
+      "path": "src/persistent_checkpoint.cpp",
+      "baseline_sha256": "a5c3419d579d0ea66316fbb4cac498d1e44f97c133818113c6fb96fe296428df",
+      "current_sha256": "a5c3419d579d0ea66316fbb4cac498d1e44f97c133818113c6fb96fe296428df",
+      "unchanged": true
+    },
+    {
+      "path": "src/radix_world.cpp",
+      "baseline_sha256": "2fa24f52269aec5675258f9fbed03595459ef3cd48cc96397c7c8c53aff943f9",
+      "current_sha256": "2fa24f52269aec5675258f9fbed03595459ef3cd48cc96397c7c8c53aff943f9",
+      "unchanged": true
+    },
+    {
+      "path": "src/recovery.cpp",
+      "baseline_sha256": "7469765737fcd116bb36a96785cc4885101b3689c400da237032572744217818",
+      "current_sha256": "7469765737fcd116bb36a96785cc4885101b3689c400da237032572744217818",
+      "unchanged": true
+    },
+    {
+      "path": "src/recovery_contract.cpp",
+      "baseline_sha256": "16af829e7f7bb0ebdc7f08fa3034a934b16e911da45d58996203d22f0de34902",
+      "current_sha256": "16af829e7f7bb0ebdc7f08fa3034a934b16e911da45d58996203d22f0de34902",
+      "unchanged": true
+    },
+    {
+      "path": "src/rollback.cpp",
+      "baseline_sha256": "b3d8b50b97772182973aa5429a97cefaf8165047355e3914279ebe095a0e5bce",
+      "current_sha256": "b3d8b50b97772182973aa5429a97cefaf8165047355e3914279ebe095a0e5bce",
+      "unchanged": true
+    },
+    {
+      "path": "src/segmented_authoritative_paged_temporal_physics.cpp",
+      "baseline_sha256": "12bb979d9fe067d4fad5ab9606122fa40aa1e1c78d94c8a4db71e9773e9c796a",
+      "current_sha256": "12bb979d9fe067d4fad5ab9606122fa40aa1e1c78d94c8a4db71e9773e9c796a",
+      "unchanged": true
+    },
+    {
+      "path": "src/segmented_dynamic_pair_history.cpp",
+      "baseline_sha256": "9301f6b3a48f0937ab87c6ef22b835f5f391ef408417e2a3ccbd9991b67f033f",
+      "current_sha256": "9301f6b3a48f0937ab87c6ef22b835f5f391ef408417e2a3ccbd9991b67f033f",
+      "unchanged": true
+    },
+    {
+      "path": "src/session_security.cpp",
+      "baseline_sha256": "f2a22d79c7498bd92c431f202e78b07dc13091843ddafcfd3f47c18a9fbb5f65",
+      "current_sha256": "f2a22d79c7498bd92c431f202e78b07dc13091843ddafcfd3f47c18a9fbb5f65",
+      "unchanged": true
+    },
+    {
+      "path": "src/simulation.cpp",
+      "baseline_sha256": "68128615d26e87c6affb57148a23e31e0608e4b9d71dec5467399c8b0df3e695",
+      "current_sha256": "68128615d26e87c6affb57148a23e31e0608e4b9d71dec5467399c8b0df3e695",
+      "unchanged": true
+    },
+    {
+      "path": "src/small_oblique_grid_oracle.cpp",
+      "baseline_sha256": "cfc33b9387630e93d31cd1f882e860fd23ed895bc96ea766012d6d00abc13b20",
+      "current_sha256": "cfc33b9387630e93d31cd1f882e860fd23ed895bc96ea766012d6d00abc13b20",
+      "unchanged": true
+    },
+    {
+      "path": "src/snapshot_store.cpp",
+      "baseline_sha256": "d96886b06164e587497f389fe0c237fc12e276fec06258c62485c62ba10082c8",
+      "current_sha256": "d96886b06164e587497f389fe0c237fc12e276fec06258c62485c62ba10082c8",
+      "unchanged": true
+    },
+    {
+      "path": "src/state_evidence.cpp",
+      "baseline_sha256": "517a4e26ce5c07a245d8435df577b0074a6c2a3492b9076329e87b2d6e2c3b93",
+      "current_sha256": "517a4e26ce5c07a245d8435df577b0074a6c2a3492b9076329e87b2d6e2c3b93",
+      "unchanged": true
+    },
+    {
+      "path": "src/support_bundle.cpp",
+      "baseline_sha256": "e312ad1b74b3212348df5083f2cd8eeb40928ac184eeb893f37035cdb21566ab",
+      "current_sha256": "e312ad1b74b3212348df5083f2cd8eeb40928ac184eeb893f37035cdb21566ab",
+      "unchanged": true
+    },
+    {
+      "path": "src/temporal_contact.cpp",
+      "baseline_sha256": "7dcc527ed81474f91d3800264064991346392648c3b400848040f79647694032",
+      "current_sha256": "7dcc527ed81474f91d3800264064991346392648c3b400848040f79647694032",
+      "unchanged": true
+    },
+    {
+      "path": "src/uncertainty_lab.cpp",
+      "baseline_sha256": "c1f0b2b6c7bd4a9549502938499aa6085c44f900e75f3374135b8f505ddd776e",
+      "current_sha256": "c1f0b2b6c7bd4a9549502938499aa6085c44f900e75f3374135b8f505ddd776e",
+      "unchanged": true
+    },
+    {
+      "path": "src/versioned_island_pair_history.cpp",
+      "baseline_sha256": "af37d949351d894a3fb1f1bc41fc64ec183b1083ca39837e24b428a71be52c2c",
+      "current_sha256": "af37d949351d894a3fb1f1bc41fc64ec183b1083ca39837e24b428a71be52c2c",
+      "unchanged": true
+    },
+    {
+      "path": "src/visual_correlation.cpp",
+      "baseline_sha256": "a83ed5da08968d1ee41874220719c383e48107e3c912201eef2993d97ed33179",
+      "current_sha256": "a83ed5da08968d1ee41874220719c383e48107e3c912201eef2993d97ed33179",
+      "unchanged": true
+    },
+    {
+      "path": "src/weighted_contact_projection.cpp",
+      "baseline_sha256": "bef47e89f4078c12e2130df9001bb450f420c564bb29c6a81baeca04c37d35d7",
+      "current_sha256": "bef47e89f4078c12e2130df9001bb450f420c564bb29c6a81baeca04c37d35d7",
+      "unchanged": true
+    },
+    {
+      "path": "src/weighted_tree_projection.cpp",
+      "baseline_sha256": "729306462d7ede3a6f06d17f5b9c81f904b5805aaaab3a936e7a1f7f4c86bb8d",
+      "current_sha256": "729306462d7ede3a6f06d17f5b9c81f904b5805aaaab3a936e7a1f7f4c86bb8d",
+      "unchanged": true
+    }
+  ]
+}

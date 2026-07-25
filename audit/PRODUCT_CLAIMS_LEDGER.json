@@ -1,0 +1,231 @@
+{
+  "schema": "neoeng.dcore.product-claims-ledger.v1",
+  "project_version": "1.8.0",
+  "status_vocabulary": [
+    "implemented",
+    "verified",
+    "native_qualified",
+    "independently_audited",
+    "certified",
+    "planned",
+    "unsupported",
+    "removed"
+  ],
+  "policy": "No claim may be presented above its recorded status and scope.",
+  "claims": [
+    {
+      "claim_id": "CLAIM-SCOPE-001",
+      "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
+      "status": "verified",
+      "scope": "product governance baseline 1.8.0",
+      "evidence": [
+        "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
+      ],
+      "public_use": "allowed"
+    },
+    {
+      "claim_id": "CLAIM-AUTH-001",
+      "statement": "The D-Core is the sole authority over canonical state in the homologated architecture.",
+      "status": "implemented",
+      "scope": "official APIs and in-process integration contract",
+      "evidence": [
+        "docs/architecture/HOST_SDK_BOUNDARY.md",
+        "docs/contracts/HOST_SDK_C_ABI_V1.md"
+      ],
+      "public_use": "allowed_with_scope"
+    },
+    {
+      "claim_id": "CLAIM-DET-001",
+      "statement": "Canonical transitions are deterministic in the declared corpus on Linux x86_64 across GCC and Clang.",
+      "status": "verified",
+      "scope": "recorded GCC 14.2 and Clang 17 x86_64 corpus",
+      "evidence": [
+        "docs/changesets/007/evidence/determinism-gcc.txt",
+        "docs/changesets/007/evidence/determinism-clang.txt"
+      ],
+      "public_use": "allowed_with_environment"
+    },
+    {
+      "claim_id": "CLAIM-XARCH-001",
+      "statement": "x86_64 and ARM64 produce identical canonical state.",
+      "status": "planned",
+      "scope": "native cross-architecture campaign not executed",
+      "evidence": [
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "public_use": "prohibited_as_current_capability"
+    },
+    {
+      "claim_id": "CLAIM-REPLAY-001",
+      "statement": "The runtime supports deterministic replay and retained historical reconstruction.",
+      "status": "implemented",
+      "scope": "declared schemas and retained window",
+      "evidence": [
+        "docs/TRACEABILITY_YEAR1.md",
+        "docs/VALIDATION_REPORT.md"
+      ],
+      "public_use": "allowed_with_retention_limits"
+    },
+    {
+      "claim_id": "CLAIM-ROLLBACK-001",
+      "statement": "The runtime supports correction and deterministic resimulation across an eight-frame rollback window.",
+      "status": "verified",
+      "scope": "functional corpus; physical P1 latency qualification pending",
+      "evidence": [
+        "docs/TRACEABILITY_YEAR1.md",
+        "docs/changesets/007/evidence/host-sdk-reference-gcc.txt"
+      ],
+      "public_use": "allowed_without_unqualified_latency_claim"
+    },
+    {
+      "claim_id": "CLAIM-ROLLBACK-P99-001",
+      "statement": "Rollback p99 is at or below 2 ms on the contractual P1 profile.",
+      "status": "planned",
+      "scope": "P1 native campaign not executed",
+      "evidence": [
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "public_use": "prohibited_as_current_result"
+    },
+    {
+      "claim_id": "CLAIM-ECS-001",
+      "statement": "ECS maintenance is at or below 0.1 ms/frame with zero critical allocation on P1.",
+      "status": "planned",
+      "scope": "index-maintenance workload exists; complete ECS evidence scope and native P1 qualification remain open",
+      "evidence": [
+        "audit/DEFERRED_VALIDATION_GATES.json",
+        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+      ],
+      "public_use": "prohibited_as_current_result"
+    },
+    {
+      "claim_id": "CLAIM-TT-001",
+      "statement": "Time-travel navigation and semantic state diff are available for the current Body-based canonical schema.",
+      "status": "verified",
+      "scope": "bounded in-memory history and current schema",
+      "evidence": [
+        "docs/changesets/001/OBSERVABILITY_TIME_TRAVEL.md",
+        "docs/changesets/005/CHANGESET.md"
+      ],
+      "public_use": "allowed_with_schema_and_retention_limits"
+    },
+    {
+      "claim_id": "CLAIM-DIV-001",
+      "statement": "A requested comparison can locate the first observed divergence through stable hash, SHA-256, Merkle chunk and known semantic component.",
+      "status": "verified",
+      "scope": "current canonical Body schema; host must orchestrate comparison",
+      "evidence": [
+        "docs/changesets/005/CHANGESET.md",
+        "tests/observability_support_tests.cpp"
+      ],
+      "public_use": "allowed_with_orchestration_scope"
+    },
+    {
+      "claim_id": "CLAIM-DIST-001",
+      "statement": "The product provides complete distributed synchronization over a real transport.",
+      "status": "planned",
+      "scope": "reference transport/orchestrator not yet complete; consensus is out of scope",
+      "evidence": [
+        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+      ],
+      "public_use": "prohibited_as_current_capability"
+    },
+    {
+      "claim_id": "CLAIM-HASH-001",
+      "statement": "Canonical SHA-256, Merkle roots, inclusion proofs and chained evidence are implemented and verified in the declared corpus.",
+      "status": "verified",
+      "scope": "GCC/Clang Linux x86_64 corpus",
+      "evidence": [
+        "docs/contracts/STATE_EVIDENCE_V1.md",
+        "docs/changesets/004/evidence/state-evidence-gcc.txt",
+        "docs/changesets/004/evidence/state-evidence-clang.txt"
+      ],
+      "public_use": "allowed_with_environment"
+    },
+    {
+      "claim_id": "CLAIM-SIGN-001",
+      "statement": "A production asymmetric State Signature provider is included.",
+      "status": "unsupported",
+      "scope": "interfaces exist; no concrete asymmetric provider",
+      "evidence": [
+        "docs/contracts/STATE_EVIDENCE_V1.md",
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "public_use": "prohibited"
+    },
+    {
+      "claim_id": "CLAIM-SUPPORT-001",
+      "statement": "Support bundles are integrity-checked and independently verifiable.",
+      "status": "verified",
+      "scope": "bundle integrity and tamper detection; confidentiality not included",
+      "evidence": [
+        "docs/contracts/SUPPORT_BUNDLE_V1.md",
+        "scripts/verify_support_bundle.py"
+      ],
+      "public_use": "allowed_with_confidentiality_limit"
+    },
+    {
+      "claim_id": "CLAIM-SDK-001",
+      "statement": "An installable C Host SDK provides opaque-handle lifecycle and selected runtime capabilities.",
+      "status": "verified",
+      "scope": "static library; Linux x86_64 GCC/Clang installation test",
+      "evidence": [
+        "docs/contracts/HOST_SDK_C_ABI_V1.md",
+        "docs/changesets/007/TEST_STATUS.md"
+      ],
+      "public_use": "allowed_with_platform_and_surface_limits"
+    },
+    {
+      "claim_id": "CLAIM-NUM-CERT-001",
+      "statement": "The full numerical pipeline is globally certified for containment and overflow.",
+      "status": "planned",
+      "scope": "local evidence exists; global certificate remains open",
+      "evidence": [
+        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+      ],
+      "public_use": "prohibited_as_current_capability"
+    },
+    {
+      "claim_id": "CLAIM-PROD-READY-001",
+      "statement": "The NeoEng D-Core is ready for unrestricted production use in mission-critical sectors.",
+      "status": "unsupported",
+      "scope": "internal gaps, native qualification and external assurance remain",
+      "evidence": [
+        "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json",
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "public_use": "prohibited"
+    },
+    {
+      "claim_id": "CLAIM-SECTOR-001",
+      "statement": "The horizontal D-Core can be adapted to games, simulation, robotics, digital twins, defense, aerospace and finance.",
+      "status": "implemented",
+      "scope": "architectural applicability only; sector adapters and certifications are separate",
+      "evidence": [
+        "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json",
+        "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
+      ],
+      "public_use": "allowed_as_architectural_applicability_only"
+    },
+    {
+      "claim_id": "CLAIM-ROI-001",
+      "statement": "The product demonstrably reduces engineering cost or incident resolution by the percentages in historical commercial material.",
+      "status": "unsupported",
+      "scope": "no customer study or independent benchmark currently supports those percentages",
+      "evidence": [
+        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+      ],
+      "public_use": "prohibited_until_commercial_evidence"
+    },
+    {
+      "claim_id": "CLAIM-CERT-001",
+      "statement": "The product is certified under ISO 27001, SOC 2, IEC 61508, ISO 26262 or DO-178C.",
+      "status": "unsupported",
+      "scope": "certifications are future external assurance",
+      "evidence": [
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "public_use": "prohibited"
+    }
+  ]
+}

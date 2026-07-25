@@ -1,0 +1,58 @@
+{
+  "schema": "neoeng.dcore.product-scope-responsibility-matrix.v1",
+  "project_version": "1.8.0",
+  "product_scope": "Independent deterministic state-assurance runtime derived from Year-1 technical work; not the five-year engine program.",
+  "classes": {
+    "core_mandatory": "Must be implemented inside the canonical D-Core library without violating canonical authority.",
+    "product_module_mandatory": "Must be delivered by an official one-way companion module or tool to satisfy the product contract.",
+    "host_responsibility": "Must be supplied or orchestrated by the embedding process under a documented contract.",
+    "deployment_responsibility": "Must be supplied by the operational environment or infrastructure.",
+    "native_qualification": "Implementation may be ready, but the claim requires execution on designated physical hardware.",
+    "external_assurance": "Requires an independent auditor, certification body or external legal/technical authority.",
+    "optional_vertical": "Belongs to a separately licensed sector adapter and is not required to complete the horizontal D-Core product.",
+    "accepted_boundary": "A deliberate product boundary that is documented and tested as a boundary rather than implemented internally.",
+    "out_of_scope": "Not part of the D-Core product; public material must not imply that it is provided."
+  },
+  "boundaries": [
+    {
+      "area": "canonical state and transition",
+      "class": "core_mandatory"
+    },
+    {
+      "area": "rollback, replay, canonical serialization and state evidence",
+      "class": "core_mandatory"
+    },
+    {
+      "area": "reference orchestration, independent verifiers, durable recorder and release tooling",
+      "class": "product_module_mandatory"
+    },
+    {
+      "area": "CSPRNG inputs, trusted time source and irreversible side-effect adapter",
+      "class": "host_responsibility"
+    },
+    {
+      "area": "DDoS edge protection, WORM storage, HSM/TPM custody and secure OS",
+      "class": "deployment_responsibility"
+    },
+    {
+      "area": "Windows/ARM64/P0-P4 physical performance claims",
+      "class": "native_qualification"
+    },
+    {
+      "area": "cryptographic audit, ISO/SOC/IEC/DO certification",
+      "class": "external_assurance"
+    },
+    {
+      "area": "Unreal, Unity, ROS 2, aerospace, defense and financial adapters",
+      "class": "optional_vertical"
+    },
+    {
+      "area": "consensus, quorum, BFT, leader election and distributed database",
+      "class": "out_of_scope"
+    },
+    {
+      "area": "renderer, SDF, voxel, editor, acoustics and AI from the five-year program",
+      "class": "out_of_scope"
+    }
+  ]
+}

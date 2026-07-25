@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.7.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.8.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -417,6 +417,20 @@ if(NEOENG_GNU_LD_WRAP_SUPPORTED AND NEOENG_DCORE_BUILD_RESEARCH_TOOLS)
 endif()
 
 if(BUILD_TESTING)
+  find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+  add_test(NAME neoeng_product_contract_verify
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_contract.py --check-report)
+  add_test(NAME neoeng_product_contract_self_test
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_contract.py --self-test)
+  add_test(NAME neoeng_product_assurance_verify
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --check-report)
+  add_test(NAME neoeng_product_assurance_self_test
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --self-test)
+  set_tests_properties(
+    neoeng_product_contract_verify neoeng_product_contract_self_test
+    neoeng_product_assurance_verify neoeng_product_assurance_self_test
+    PROPERTIES LABELS "governance;release-gate;dcore")
+
   add_executable(neoeng_tests tests/test_main.cpp)
   target_link_libraries(neoeng_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_tests)

@@ -1,0 +1,185 @@
+{
+  "schema": "neoeng.dcore.windows-evidence-independent-verification.v1",
+  "verified_at_utc": "2026-07-24T00:00:00Z",
+  "raw_evidence_archive": {
+    "file": "NeoEng-Validation.zip",
+    "sha256": "df554c2c029aeb5a1ebe286a94a1249e610d9d0d2ff2891c9ad00c9bb0e1b8eb",
+    "archive_files": 6888,
+    "uncompressed_bytes": 336885012,
+    "zip_integrity": "passed"
+  },
+  "windows_validation_identity": {
+    "version": "1.7.0",
+    "git_commit": "fb8362602e1b3f6530d3efe8733bc76fc6de9f3e",
+    "git_tree": "eb5f1ac2f772cc34937062343d3ec7ce21c4868e",
+    "git_parent": "7dffd0b8737f31d4db2fabdaf45a7100331347cf",
+    "git_fsck": "passed",
+    "tracked_files": 280,
+    "working_tree_content_matches_head_ignoring_crlf": true,
+    "environment": "Windows 11 Pro 10.0.26200; AMD Ryzen 7 5700X3D; 32 GiB; NVIDIA RTX 3070 Ti; clang 22.1.0; CMake 4.3.1-msvc1; Ninja 1.13.2"
+  },
+  "campaigns": [
+    {
+      "campaign": "run-01-20260723-173228",
+      "manifest_entries": 41,
+      "manifest_verified": 41,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 73,
+      "verification_checks_passed": 73,
+      "executions": 11,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-02a-20260723-180959",
+      "manifest_entries": 39,
+      "manifest_verified": 39,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 233,
+      "verification_checks_passed": 233,
+      "executions": 6,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-02b-20260723-183232",
+      "manifest_entries": 40,
+      "manifest_verified": 40,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 332,
+      "verification_checks_passed": 332,
+      "executions": 7,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-03-20260723-184637",
+      "manifest_entries": 23,
+      "manifest_verified": 23,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 187,
+      "verification_checks_passed": 187,
+      "executions": 3,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-04-20260723-191421",
+      "manifest_entries": 22,
+      "manifest_verified": 22,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 200,
+      "verification_checks_passed": 200,
+      "executions": 3,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-05-20260723-200027",
+      "manifest_entries": 19,
+      "manifest_verified": 19,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 57,
+      "verification_checks_passed": 57,
+      "executions": 2,
+      "unexpected_exit_codes": []
+    },
+    {
+      "campaign": "run-06-20260723-204317",
+      "manifest_entries": 167,
+      "manifest_verified": 167,
+      "missing": [],
+      "size_mismatch": [],
+      "hash_mismatch": [],
+      "verification_checks": 226,
+      "verification_checks_passed": 226,
+      "executions": 5,
+      "unexpected_exit_codes": []
+    }
+  ],
+  "totals": {
+    "campaigns": 7,
+    "manifest_entries": 351,
+    "manifest_entries_verified": 351,
+    "verification_checks": 1308,
+    "verification_checks_passed": 1308,
+    "executions": 37,
+    "unexpected_exit_codes": 0
+  },
+  "baseline_comparison": {
+    "reconstructed_tracked_files_compared": 280,
+    "exact_matches": 275,
+    "equivalent_after_line_ending_normalization": 0,
+    "missing": [],
+    "content_divergences": [
+      {
+        "path": ".gitignore",
+        "reconstructed_sha256": "40807ef8b5b1508e30739d84bc01f66544512a25e57c927f7730f65b555246ca",
+        "tested_commit_sha256": "562cf8ecea7cf036b563ca21c89908e6a0cac6660745960bfb4398ae1cda7fca",
+        "classification": "repository hygiene only"
+      },
+      {
+        "path": "cmake/NeoEngDCoreConfig.cmake.in",
+        "reconstructed_sha256": "73258e8c417a44b8c28a60148c20d1a822626e87c3749ed0eaf72a6f349de867",
+        "tested_commit_sha256": "6a39d15023998e84499fd73df1d102988246bb0a11b86ee8150f03ce4cd2c642",
+        "classification": "Windows clang-cl compiler-rt package dependency"
+      },
+      {
+        "path": "modules/view_lab/CMakeLists.txt",
+        "reconstructed_sha256": "8fff5f38e132a4082699256df1fe9dbbe9c090b31e1d722df8e610b3ca952731",
+        "tested_commit_sha256": "7a5fb0a555088258f7971a721f48f413a920a7fabffe08ae14934925534bd3b5",
+        "classification": "Windows clang-cl builtins linkage for View Lab"
+      },
+      {
+        "path": "scripts/windows/build.ps1",
+        "reconstructed_sha256": "4ff71730af89661ef6db6da7112c9dd839621e7603414760f574e3aec8abf597",
+        "tested_commit_sha256": "c67019dfc8669937f43f9e19c3bf3dcdc58a1ad736d19b69321661157c50a9b9",
+        "classification": "force C and C++ frontends to clang-cl"
+      },
+      {
+        "path": "tests/cmake/run_host_sdk_install_consumer.cmake",
+        "reconstructed_sha256": "565ce0f21cdcd992313bfc5f52de5dda905bcd10d7e9b2f67791cc0015f0d5b4",
+        "tested_commit_sha256": "2e46ff6be44949ae2ef535a2512dfa4c871047682f9382b43f6a01d908d6faf4",
+        "classification": "Windows vcpkg prefix and consumer executable resolution"
+      }
+    ],
+    "canonical_core_runtime_source_divergence": false,
+    "conclusion": "Five build, packaging, integration or repository-hygiene files differ; canonical core runtime sources and headers match."
+  },
+  "recovered_authoritative_baseline": {
+    "archive": "NeoEng-D-Core-1.7.0-Authoritative-Baseline.zip",
+    "archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
+    "manifest_entries": 1187,
+    "manifest_sha256": "702bdf68f1db68658f6db34c17db096a8cc13f2864d850b74d11137c9bd66991",
+    "manifest_verification_failures": [],
+    "patch": "NeoEng-D-Core-1.7.0-Baseline-Reconciliation.patch",
+    "patch_sha256": "77485f1898bb08180937419368249247e3ee766301548cae4bdff48d15ee6bf9",
+    "tested_source_archive": "NeoEng-D-Core-1.7.0-Tested-Source-fb836260.zip",
+    "tested_source_archive_sha256": "a6d25003ad2fb60da9b979e9b9c5a7d8fe4e0661c8dcd983c2a897437332b104"
+  },
+  "qualification_boundary": {
+    "p1": "UNQUALIFIED",
+    "reason": "Campaign 05 intentionally exits fail-closed because ECS evidence, serialization/full-test evidence, source manifest, thermal and clock-policy records are incomplete.",
+    "windows_binaries_reexecuted_in_linux": false,
+    "statement": "This verification checks archive integrity, manifests, recorded outputs, git objects and baseline equivalence. It does not rerun Windows PE binaries on Linux."
+  },
+  "binary_hash_cross_check": {
+    "execution_rows_with_executable_sha256": 30,
+    "matching_binary_files_found": 30,
+    "mismatches": 0
+  },
+  "ctest_evidence": {
+    "full_windows_log_preserved": true,
+    "preserved_full_log_result": "58/58 passed, 0 failed",
+    "summary_claims_two_full_runs": true,
+    "two_separate_full_logs_preserved": false,
+    "interpretation": "One complete 58/58 log can be independently inspected. The second full run is asserted by validation-summary.txt but is not preserved as a distinct full CTest log in the archive."
+  }
+}

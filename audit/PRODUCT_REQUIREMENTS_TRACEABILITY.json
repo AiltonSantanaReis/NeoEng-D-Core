@@ -1,0 +1,462 @@
+{
+  "schema": "neoeng.dcore.product-requirements-traceability.v1",
+  "project_version": "1.8.0",
+  "status_vocabulary": [
+    "complete",
+    "partial",
+    "planned",
+    "externally_blocked",
+    "accepted_boundary",
+    "out_of_scope",
+    "removed"
+  ],
+  "requirements": [
+    {
+      "requirement_id": "DCORE-SCOPE-001",
+      "description": "Independent D-Core product scope is explicit and separated from the five-year program.",
+      "responsibility": "product_module_mandatory",
+      "status": "complete",
+      "implementation": [
+        "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
+      ],
+      "tests_or_evidence": [
+        "scripts/verify_product_contract.py"
+      ],
+      "closure_stage": "CS008"
+    },
+    {
+      "requirement_id": "DCORE-ARCH-001",
+      "description": "Canonical state authority and one-way consumer boundary are preserved.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "include/neoeng/core",
+        "src",
+        "docs/architecture/HOST_SDK_BOUNDARY.md"
+      ],
+      "tests_or_evidence": [
+        "scripts/verify_isolation.py",
+        "scripts/verify_host_sdk_boundary.py"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-DET-001",
+      "description": "Canonical transition validates and orders inputs before state mutation.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/simulation.cpp",
+        "include/neoeng/core/simulation.hpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_tests",
+        "neoeng_determinism_probe"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-DET-002",
+      "description": "Canonical serialization and hashes are versioned and reproducible.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/hash.cpp",
+        "src/crypto_hash.cpp",
+        "src/state_evidence.cpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_state_evidence_tests",
+        "neoeng_state_evidence_probe"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-DET-003",
+      "description": "Cross-compiler determinism is verified in the declared x86_64 corpus.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "apps/determinism_probe.cpp"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/007/evidence/determinism-gcc.txt",
+        "docs/changesets/007/evidence/determinism-clang.txt"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-DET-004",
+      "description": "Cross-architecture x86_64/ARM64 equivalence is qualified.",
+      "responsibility": "native_qualification",
+      "status": "externally_blocked",
+      "implementation": [
+        "scripts/qualification/compare_architectures.py"
+      ],
+      "tests_or_evidence": [
+        "audit/DEFERRED_VALIDATION_GATES.json"
+      ],
+      "closure_stage": "NATIVE_CAMPAIGN"
+    },
+    {
+      "requirement_id": "DCORE-DIST-001",
+      "description": "Two independent instances can be orchestrated end to end, compared, diverged deliberately and reconciled through a reference module.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS010"
+    },
+    {
+      "requirement_id": "DCORE-NET-001",
+      "description": "Network/session inputs are authenticated, integrity-protected, replay-limited and bounded.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/network_security.cpp",
+        "src/session_security.cpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_operational_hardening_tests",
+        "neoeng_session_recovery_contract_tests"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-NET-002",
+      "description": "A real reference transport and reconnect/backpressure adapter demonstrates the distributed product promise.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS010"
+    },
+    {
+      "requirement_id": "DCORE-ECS-001",
+      "description": "Sparse index maintenance workload and raw samples are integrated into qualification.",
+      "responsibility": "product_module_mandatory",
+      "status": "complete",
+      "implementation": [
+        "apps/ecs_maintenance_benchmark.cpp",
+        "scripts/qualification/run_qualification_campaign.py"
+      ],
+      "tests_or_evidence": [
+        "neoeng_ecs_maintenance_benchmark_smoke"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-ECS-002",
+      "description": "General-allocation evidence is semantically mapped and independently verified.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "apps/ecs_maintenance_benchmark.cpp",
+        "scripts/qualification/run_qualification_campaign.py"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS009"
+    },
+    {
+      "requirement_id": "DCORE-ECS-003",
+      "description": "Arena behavior evidence is semantically mapped and independently verified.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "apps/ecs_maintenance_benchmark.cpp",
+        "include/neoeng/core/epoch_arena.hpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS009"
+    },
+    {
+      "requirement_id": "DCORE-ECS-004",
+      "description": "Copy-on-write evidence is semantically mapped and independently verified.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "apps/ecs_maintenance_benchmark.cpp",
+        "include/neoeng/core/component_world.hpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS009"
+    },
+    {
+      "requirement_id": "DCORE-NUM-001",
+      "description": "Y1-O4 proxy is accepted with predictive evidence or formally rejected and removed from runtime claims.",
+      "responsibility": "core_mandatory",
+      "status": "planned",
+      "implementation": [
+        "src/uncertainty_lab.cpp",
+        "src/fixed_raa_microkernel.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS011"
+    },
+    {
+      "requirement_id": "DCORE-NUM-002",
+      "description": "Containment and overflow are closed for the declared numerical domain.",
+      "responsibility": "core_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/fixed_raa_microkernel.cpp",
+        "apps/v28_interval_arithmetic_audit.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS011"
+    },
+    {
+      "requirement_id": "DCORE-NUM-003",
+      "description": "General oblique-tree solver scope, fallback and certification status are decided and documented.",
+      "responsibility": "core_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/oblique_tree_grid_dp.cpp",
+        "src/exact_oblique_tree_oracle.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS011"
+    },
+    {
+      "requirement_id": "DCORE-TIME-001",
+      "description": "Eight-frame rollback, correction, resimulation and branch truncation work end to end.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/rollback.cpp",
+        "src/interactive_rollback.cpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_tests",
+        "neoeng_host_sdk_reference"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-TIME-002",
+      "description": "Replay/time-travel retention, export and durable recorder responsibilities are closed.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/observability.cpp",
+        "apps/dcore_time_travel_cli.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS012"
+    },
+    {
+      "requirement_id": "DCORE-TIME-003",
+      "description": "Irreversible external effects have an explicit idempotency/commit/compensation contract.",
+      "responsibility": "host_responsibility",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS012"
+    },
+    {
+      "requirement_id": "DCORE-DIV-001",
+      "description": "Divergence localization works for the current canonical Body schema.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/diagnostics.cpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_observability_support_tests"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-DIV-002",
+      "description": "Diff and Merkle localization cover every product-promised canonical component schema.",
+      "responsibility": "core_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/diagnostics.cpp",
+        "src/state_evidence.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS012"
+    },
+    {
+      "requirement_id": "DCORE-OBS-001",
+      "description": "Budget and trace instrumentation cover every mandatory product path.",
+      "responsibility": "core_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/observability.cpp",
+        "src/diagnostics.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS012"
+    },
+    {
+      "requirement_id": "DCORE-CRYPTO-001",
+      "description": "Canonical SHA-256, Merkle proofs and evidence chains are verified.",
+      "responsibility": "core_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/crypto_hash.cpp",
+        "src/state_evidence.cpp"
+      ],
+      "tests_or_evidence": [
+        "neoeng_state_evidence_tests",
+        "neoeng_state_evidence_fuzz_smoke"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-CRYPTO-002",
+      "description": "Production asymmetric State Signature claim is implemented or removed.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [
+        "include/neoeng/core/state_evidence.hpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS013"
+    },
+    {
+      "requirement_id": "DCORE-SEC-001",
+      "description": "Command-level authorization and key lifecycle scope are closed for the supported deployment model.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "src/session_security.cpp"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS013"
+    },
+    {
+      "requirement_id": "DCORE-BUNDLE-001",
+      "description": "Support bundle integrity and independent verification are complete.",
+      "responsibility": "product_module_mandatory",
+      "status": "complete",
+      "implementation": [
+        "src/support_bundle.cpp",
+        "scripts/verify_support_bundle.py"
+      ],
+      "tests_or_evidence": [
+        "neoeng_support_bundle_probe",
+        "neoeng_support_bundle_fuzz_smoke"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-BUNDLE-002",
+      "description": "Support-bundle confidentiality policy and optional encrypted transport are explicitly closed.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS013"
+    },
+    {
+      "requirement_id": "DCORE-SDK-001",
+      "description": "C Host SDK lifecycle, immutable views, hashes, traces and recovery are installable.",
+      "responsibility": "product_module_mandatory",
+      "status": "complete",
+      "implementation": [
+        "modules/host_sdk",
+        "cmake/NeoEngDCoreConfig.cmake.in"
+      ],
+      "tests_or_evidence": [
+        "neoeng_host_sdk_install_consumer"
+      ],
+      "closure_stage": "REGRESSION"
+    },
+    {
+      "requirement_id": "DCORE-SDK-002",
+      "description": "Every capability marketed as part of the horizontal product is reachable through a supported SDK or official tool.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "modules/host_sdk"
+      ],
+      "tests_or_evidence": [],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-GOV-001",
+      "description": "Year-1 candidate contract and Host ABI version/freeze policy are reconciled.",
+      "responsibility": "product_module_mandatory",
+      "status": "complete",
+      "implementation": [
+        "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+        "docs/governance/PRODUCT_COMPLETION_STANDARD.md",
+        "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json",
+        "audit/PRODUCT_CLAIMS_LEDGER.json",
+        "audit/PRODUCT_CLOSURE_BACKLOG.json",
+        "scripts/verify_product_contract.py",
+        "scripts/verify_product_assurance.py"
+      ],
+      "tests_or_evidence": [
+        "scripts/verify_product_contract.py",
+        "scripts/verify_product_assurance.py",
+        "neoeng_product_contract_verify",
+        "neoeng_product_contract_self_test",
+        "neoeng_product_assurance_verify",
+        "neoeng_product_assurance_self_test"
+      ],
+      "closure_stage": "CS008"
+    },
+    {
+      "requirement_id": "DCORE-REL-001",
+      "description": "A single consolidated release replaces the base-plus-patches distribution.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-REL-002",
+      "description": "Coverage-guided fuzzing, full-scope sanitizer policy and blocking static analysis are reproducible.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-REL-003",
+      "description": "SBOM, provenance, release signature and secure update policy are delivered.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-REL-004",
+      "description": "Continuous integration can reproduce the normative validation matrix.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-COM-001",
+      "description": "Commercial technical claims are generated from the claims ledger and contain no unsupported metrics.",
+      "responsibility": "product_module_mandatory",
+      "status": "partial",
+      "implementation": [
+        "audit/PRODUCT_CLAIMS_LEDGER.json"
+      ],
+      "tests_or_evidence": [
+        "scripts/verify_product_contract.py"
+      ],
+      "closure_stage": "CS014"
+    },
+    {
+      "requirement_id": "DCORE-ACCEPT-001",
+      "description": "Final product acceptance reports zero internal mandatory gaps and zero unsupported public claims.",
+      "responsibility": "product_module_mandatory",
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
+      "closure_stage": "CS015"
+    }
+  ]
+}

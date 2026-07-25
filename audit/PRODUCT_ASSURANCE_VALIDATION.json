@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dcore.product-assurance-validation.v1",
+  "project_version": "1.8.0",
+  "status": "passed",
+  "requirements_sha256": "54ed75a33f889b4429e9047f07276d65f6e641f3bd99fa2b7230210412cf1e6d",
+  "assurance_matrix_sha256": "4da111fc67368b0a0553f4d557ddbc4680ba3619d388de1068dbef819c9c3e28",
+  "test_campaigns_sha256": "388fda7ec9c077af0bab5313e70311b6f07540ad7c8cbd1decf91e86c243dc21",
+  "requirements_covered": 36,
+  "campaigns": 10,
+  "assurance_status_counts": {
+    "evidenced": 13,
+    "external_or_native_pending": 1,
+    "planned_or_partial": 22
+  },
+  "campaign_status_counts": {
+    "executed_cs008_linux_gcc_clang": 2,
+    "planned": 8
+  },
+  "capability_proof_completed_by_this_meta_test": false,
+  "reason": "The verifier proves traceability, campaign coverage and fail-closed test obligations, not unexecuted technical campaigns."
+}

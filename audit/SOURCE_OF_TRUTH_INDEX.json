@@ -1,0 +1,44 @@
+{
+  "schema": "neoeng.dcore.source-of-truth-index.v1",
+  "project_version": "1.8.0",
+  "required_for_every_changeset": true,
+  "primary_document": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+  "precedence": [
+    "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json",
+    "docs/governance/PRODUCT_COMPLETION_STANDARD.md",
+    "docs/governance/PRODUCT_ASSURANCE_TEST_STANDARD.md",
+    "docs/governance/PRODUCT_CLOSURE_PLAN.md",
+    "docs/contracts",
+    "docs/records",
+    "docs/changesets",
+    "docs/original"
+  ],
+  "machine_ledgers": [
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json",
+    "audit/DEFERRED_VALIDATION_GATES.json"
+  ],
+  "verifiers": [
+    "scripts/verify_product_contract.py",
+    "scripts/verify_product_assurance.py"
+  ],
+  "conflict_policy": "Higher-precedence documents control. Conflicts stop the affected claim or implementation until reconciled by a ChangeSet.",
+  "scope_statement": "NeoEng D-Core is an independent product based on consolidated Year-1 technical work and is not the five-year engine program.",
+  "authoritative_input_baseline": {
+    "version": "1.7.0",
+    "archive": "NeoEng-D-Core-1.7.0-Authoritative-Baseline.zip",
+    "archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
+    "tested_commit": "fb8362602e1b3f6530d3efe8733bc76fc6de9f3e"
+  }
+}
