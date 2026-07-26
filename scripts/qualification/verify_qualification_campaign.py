@@ -12,13 +12,14 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import importlib.util
 import json
 import sys
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
-PROJECT_VERSION = "1.8.0"
+PROJECT_VERSION = "1.9.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 
@@ -266,6 +267,7 @@ def command_map(root: Path) -> dict[str, dict[str, Any]]:
         "determinism-probe",
         "state-evidence-probe",
         "ecs-benchmark",
+        "ecs-scope-verifier",
         "rollback-benchmark",
         "hardware-profile-probe",
     }
@@ -282,41 +284,33 @@ def percentile_rank(values: list[int], numerator: int, denominator: int) -> int:
     return ordered[max(1, rank) - 1]
 
 
-def read_ecs_benchmark(root: Path) -> tuple[dict[str, Any], int, int]:
-    summary = load_json(root / "ecs-benchmark" / "summary.json")
-    if summary.get("schema") != "neoeng.dcore.ecs-maintenance-benchmark.v1":
-        raise VerificationError("ECS benchmark schema mismatch")
-    csv_path = root / "ecs-benchmark" / "ecs_maintenance_samples.csv"
-    durations: list[int] = []
-    with csv_path.open("r", encoding="utf-8", newline="") as stream:
-        reader = csv.DictReader(stream)
-        expected_columns = {
-            "sample", "duration_ns", "component_pages_allocated", "directories_allocated",
-            "component_values_copied", "directory_entries_copied", "candidate_bodies_scanned",
-            "changed_bodies",
-        }
-        if set(reader.fieldnames or []) != expected_columns:
-            raise VerificationError("ECS sample columns mismatch")
-        for index, row in enumerate(reader):
-            if int(row["sample"]) != index:
-                raise VerificationError("ECS sample sequence mismatch")
-            duration = int(row["duration_ns"])
-            if duration < 0:
-                raise VerificationError("negative ECS duration")
-            durations.append(duration)
-    measured = require_positive_int(summary, "measured_samples")
-    if measured != len(durations):
-        raise VerificationError("ECS measured-sample count mismatch")
-    p99 = percentile_rank(durations, 99, 100)
-    if require_nonnegative_int(summary, "p99_ns") != p99:
-        raise VerificationError("ECS p99 does not match raw samples")
-    if require_nonnegative_int(summary, "maximum_ns") != max(durations):
-        raise VerificationError("ECS maximum does not match raw samples")
-    final_hash = summary.get("final_hash")
-    if not isinstance(final_hash, str) or not final_hash.startswith("0x"):
-        raise VerificationError("ECS final hash is invalid")
-    return summary, measured, p99
+def load_ecs_scope_verifier(project_root: Path):
+    verifier_path = project_root / "scripts" / "qualification" / "verify_ecs_scope_evidence.py"
+    spec = importlib.util.spec_from_file_location("neoeng_ecs_scope_verifier", verifier_path)
+    if spec is None or spec.loader is None:
+        raise VerificationError("cannot load independent ECS scope verifier")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
+
+def read_ecs_benchmark(root: Path) -> tuple[dict[str, Any], dict[str, Any], int, int]:
+    project_root = Path(__file__).resolve().parents[2]
+    verifier = load_ecs_scope_verifier(project_root)
+    try:
+        report = verifier.verify_directory(root / "ecs-benchmark", verify_saved_report=True)
+    except Exception as error:  # verifier owns its precise structural/semantic exceptions
+        raise VerificationError(f"ECS scope verification failed: {error}") from error
+    summary = load_json(root / "ecs-benchmark" / "summary.json")
+    measured = require_positive_int(summary, "measured_samples")
+    if report.get("sample_count") != measured:
+        raise VerificationError("ECS scope report sample count mismatch")
+    p99 = require_nonnegative_int(report, "p99_ns")
+    if require_nonnegative_int(summary, "p99_ns") != p99:
+        raise VerificationError("ECS summary p99 differs from independent scope verification")
+    if report.get("final_hash") != summary.get("final_hash"):
+        raise VerificationError("ECS final hash differs from independent scope verification")
+    return summary, report, measured, p99
 
 def read_rollback_benchmark(root: Path) -> tuple[dict[str, Any], int, int, bool, bool]:
     summary = load_json(root / "rollback-benchmark" / "summary.json")
@@ -436,9 +430,17 @@ def recompute_decision(root: Path) -> tuple[int, str, str, dict[str, Any]]:
     if inventory.get("profile") != profile or inventory.get("execution_kind_declared") != execution:
         raise VerificationError("inventory profile/execution mismatch")
 
-    ecs_summary, ecs_samples, ecs_p99 = read_ecs_benchmark(root)
-    rollback_summary, rollback_samples, rollback_p99, migration, allocation_gate = \
+    ecs_summary, ecs_scope_report, ecs_samples, ecs_p99 = read_ecs_benchmark(root)
+    rollback_summary, rollback_samples, rollback_p99, migration, rollback_allocation_gate = \
         read_rollback_benchmark(root)
+    ecs_scope_complete = bool(ecs_scope_report.get("scope_complete")) \
+        and ecs_scope_report.get("status") == "passed"
+    ecs_general_allocation_zero = bool(ecs_scope_report.get("general_allocation_zero"))
+    ecs_arena_overflow_zero = bool(ecs_scope_report.get("arena_overflow_zero"))
+    ecs_cow_valid = bool(ecs_scope_report.get("copy_on_write_semantics_valid"))
+    ecs_index_valid = bool(ecs_scope_report.get("index_maintenance_semantics_valid"))
+    allocation_gate = rollback_allocation_gate and ecs_general_allocation_zero \
+        and ecs_arena_overflow_zero and ecs_cow_valid and ecs_index_valid
 
     ctest_scope = require_text(campaign, "ctest_scope")
     full_report_present = (root / commands["ctest"]["stdout_file"]).is_file() and \
@@ -447,8 +449,16 @@ def recompute_decision(root: Path) -> tuple[int, str, str, dict[str, Any]]:
     determinism_passed = commands["determinism-probe"]["return_code"] == 0
     serialization_passed = commands["state-evidence-probe"]["return_code"] == 0
     benchmark_reports_present = (root / "ecs-benchmark" / "summary.json").is_file() and \
+        (root / "ecs-benchmark" / "ecs_scope_verification.json").is_file() and \
         (root / "rollback-benchmark" / "summary.json").is_file()
-    raw_samples_present = (root / "ecs-benchmark" / "ecs_maintenance_samples.csv").is_file() and \
+    ecs_streams = (
+        "ecs_maintenance_samples.csv",
+        "index_maintenance_samples.csv",
+        "general_allocation_samples.csv",
+        "arena_samples.csv",
+        "copy_on_write_samples.csv",
+    )
+    raw_samples_present = all((root / "ecs-benchmark" / name).is_file() for name in ecs_streams) and \
         (root / "rollback-benchmark" / "rollback_samples.csv").is_file()
     binary_hashes_present = (root / "binary-hashes.json").is_file()
     source_manifest_present = (root / "source-MANIFEST.sha256").is_file()
@@ -472,10 +482,6 @@ def recompute_decision(root: Path) -> tuple[int, str, str, dict[str, Any]]:
     if native_conflict != (execution == "native_physical" and bool(
             inventory.get("observed", {}).get("virtualization", {}).get("detected"))):
         raise VerificationError("native-claim conflict flag mismatch")
-
-    # P1 legacy/experimental files can be collected and hashed, but version 1.8.0
-    # has no accepted schemas/mappings for the complete Y1-O2 evidence scope.
-    ecs_scope_complete = profile != "P1"
 
     mask = 0
     if not baseline_complete(environment):
@@ -562,6 +568,10 @@ def recompute_decision(root: Path) -> tuple[int, str, str, dict[str, Any]]:
         "serialization_passed": serialization_passed,
         "ecs_scope_evidence_complete": ecs_scope_complete,
         "allocation_gate_passed": allocation_gate,
+        "ecs_general_allocation_zero": ecs_general_allocation_zero,
+        "ecs_arena_overflow_zero": ecs_arena_overflow_zero,
+        "ecs_copy_on_write_semantics_valid": ecs_cow_valid,
+        "ecs_index_maintenance_semantics_valid": ecs_index_valid,
     }
     # Suppress unused local warning by making workload IDs part of consistency checks.
     if ecs_summary.get("workload_id") != "Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1" \
@@ -594,15 +604,20 @@ def verify_semantics(root: Path) -> None:
                 "ecs_scope_evidence_complete"):
         if summary.get(key) != expected[key]:
             raise VerificationError(f"campaign summary differs from recomputed {key}")
+    for key in ("ecs_general_allocation_zero", "ecs_arena_overflow_zero",
+                "ecs_copy_on_write_semantics_valid", "ecs_index_maintenance_semantics_valid"):
+        if summary.get(key) != expected[key]:
+            raise VerificationError(f"campaign summary differs from recomputed {key}")
     if summary.get("native_profile_qualified") is not (status == "passed"):
         raise VerificationError("native_profile_qualified does not match status")
     if summary.get("independent_verification_required") is not True:
         raise VerificationError("campaign summary omits independent-verification requirement")
-    if expected["profile"] == "P1":
-        if summary.get("ecs_scope_acceptance_status") != "not_implemented_in_1.8.0":
-            raise VerificationError("P1 ECS-scope acceptance status is incorrect")
-        if status == "passed":
-            raise VerificationError("P1 cannot pass in 1.8.0 before complete ECS-scope validators exist")
+    expected_scope_status = "verified_complete_v1" if expected["ecs_scope_evidence_complete"] \
+        else "verification_failed"
+    if summary.get("ecs_scope_acceptance_status") != expected_scope_status:
+        raise VerificationError("ECS-scope acceptance status is incorrect")
+    if summary.get("allocation_gate_passed") != expected["allocation_gate_passed"]:
+        raise VerificationError("campaign summary allocation gate differs from independent recomputation")
 
     probe_return = commands["hardware-profile-probe"]["return_code"]
     expected_probe_return = 0 if status == "passed" else 1
@@ -660,9 +675,15 @@ def main() -> int:
         "campaign-request.json", "hardware-inventory.json", "thermal-record.json",
         "clock-policy.json", "binary-hashes.json", "source-MANIFEST.sha256",
         "ctest.stdout.txt", "ctest.stderr.txt", "determinism-probe.stdout.txt",
-        "state-evidence-probe.stdout.txt", "ecs-benchmark/summary.json",
-        "ecs-benchmark/ecs_maintenance_samples.csv", "rollback-benchmark/summary.json",
-        "rollback-benchmark/rollback_samples.csv",
+        "state-evidence-probe.stdout.txt", "ecs-scope-verifier.stdout.txt",
+        "ecs-scope-verifier.stderr.txt", "ecs-benchmark/summary.json",
+        "ecs-benchmark/ecs_scope_verification.json",
+        "ecs-benchmark/ecs_maintenance_samples.csv",
+        "ecs-benchmark/index_maintenance_samples.csv",
+        "ecs-benchmark/general_allocation_samples.csv",
+        "ecs-benchmark/arena_samples.csv",
+        "ecs-benchmark/copy_on_write_samples.csv",
+        "rollback-benchmark/summary.json", "rollback-benchmark/rollback_samples.csv",
     }
     if not required_predecision.issubset(evidence_paths):
         raise VerificationError(

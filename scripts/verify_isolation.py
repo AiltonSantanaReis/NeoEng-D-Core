@@ -170,8 +170,8 @@ cs004_required = [
 for rel in cs004_required:
     if not (root/rel).is_file():
         errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
-if 'project(NeoEngDCore VERSION 1.8.0 ' not in cmake:
-    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.8.0')
+if 'project(NeoEngDCore VERSION 1.9.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.9.0')
 for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
     if rel not in cmake:
         errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
@@ -310,7 +310,7 @@ if profile_registry_path.is_file():
         registry = json.loads(profile_registry_path.read_text(encoding='utf-8'))
         if registry.get('schema') != 'neoeng.dcore.hardware-profile-registry.v2':
             errors.append('schema do registro P0-P4 divergente')
-        if registry.get('project_version') != '1.8.0':
+        if registry.get('project_version') != '1.9.0':
             errors.append('versão do registro P0-P4 divergente')
         profiles = {row.get('profile'): row for row in registry.get('profiles', [])}
         if set(profiles) != {'P0', 'P1', 'P2', 'P3', 'P4'}:
@@ -335,7 +335,7 @@ if request_template_path.is_file():
         request_template = json.loads(request_template_path.read_text(encoding='utf-8'))
         if request_template.get('schema') != 'neoeng.dcore.qualification-campaign-request.v1':
             errors.append('schema do request de campanha divergente')
-        if request_template.get('project_version') != '1.8.0':
+        if request_template.get('project_version') != '1.9.0':
             errors.append('versão do request de campanha divergente')
     except Exception as exc:
         errors.append(f'template de campanha inválido: {exc}')
@@ -357,7 +357,7 @@ if workload_registry_path.is_file():
 if gates_path.is_file():
     try:
         gates = json.loads(gates_path.read_text(encoding='utf-8'))
-        if gates.get('project_version') != '1.8.0':
+        if gates.get('project_version') != '1.9.0':
             errors.append('versão do ledger diferido divergente para CS006')
         rows = {row.get('gate_id'): row for row in gates.get('gates', [])}
         for gate_id in ('PROFILE-P0-001', 'PROFILE-P1-NVIDIA-001', 'PROFILE-P2-AMD-001',
@@ -365,8 +365,8 @@ if gates_path.is_file():
             if gate_id not in rows:
                 errors.append(f'gate obrigatório CS006 ausente: {gate_id}')
         ecs_gap = rows.get('ECS-SCOPE-COMPLETE-001', {})
-        if ecs_gap.get('category') != 'implementation_gap' or ecs_gap.get('blocking_for_profile_qualification') is not True:
-            errors.append('lacuna de escopo ECS não bloqueia formalmente a qualificação P1')
+        if ecs_gap.get('category') != 'native_validation_pending' or not str(ecs_gap.get('implementation_status', '')).startswith('complete_in_1.9.0') or ecs_gap.get('blocking_for_profile_qualification') is not True:
+            errors.append('contrato ECS 1.9.0 ou gate nativo P1 divergente')
     except Exception as exc:
         errors.append(f'ledger diferido CS006 inválido: {exc}')
 
@@ -442,6 +442,38 @@ if host_contract.is_file():
         if phrase not in contract_text:
             errors.append(f'contrato Host SDK incompleto: {phrase}')
 
+# ChangeSet 009 complete ECS evidence scope and contract reconciliation.
+cs009_required = [
+    'docs/contracts/ECS_SCOPE_EVIDENCE_V1.md',
+    'docs/architecture/ECS_EVIDENCE_BOUNDARY.md',
+    'docs/records/ADR-009-YEAR1-CONTRACT-VS-HOST-ABI.md',
+    'docs/changesets/009/CHANGESET.md',
+    'docs/changesets/009/TEST_STATUS.md',
+    'scripts/qualification/verify_ecs_scope_evidence.py',
+    'audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json',
+]
+for rel in cs009_required:
+    if not (root / rel).is_file():
+        errors.append(f'arquivo obrigatório do ChangeSet 009 ausente: {rel}')
+if 'neoeng_ecs_scope_evidence_verifier_smoke' not in cmake or 'neoeng_ecs_scope_evidence_verifier_self_test' not in cmake:
+    errors.append('verificador ECS CS009 sem cobertura CTest')
+runner_path = root/'scripts/qualification/run_qualification_campaign.py'
+if runner_path.is_file():
+    runner_text = runner_path.read_text(encoding='utf-8', errors='replace')
+    for token in ('write_source_manifest(', 'verify_ecs_scope_evidence.py', 'ecs_scope_artifacts is deprecated'):
+        if token not in runner_text:
+            errors.append(f'runner de qualificação CS009 incompleto: {token}')
+try:
+    invariant = json.loads((root/'audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json').read_text(encoding='utf-8'))
+    if invariant.get('changeset') != '009' or invariant.get('result', {}).get('status') != 'passed':
+        errors.append('ledger de invariantes CS009 não aprovado')
+    if invariant.get('result', {}).get('changed_files') != ['include/neoeng/core/year1_contract.hpp']:
+        errors.append('alterações canônicas CS009 divergem da autorização normativa')
+    if invariant.get('result', {}).get('canonical_source_units_unchanged') is not True:
+        errors.append('unidades canônicas foram alteradas no CS009')
+except Exception as exc:
+    errors.append(f'ledger de invariantes CS009 inválido: {exc}')
+
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render/Host SDK; companions View Lab e Host SDK verificados.")
+print(f"OK: {len(expected)} arquivos obrigatórios cobertos ({exact_source_matches} idênticos à origem; {authorized_source_modifications} modificações autorizadas e hashadas); núcleo NeoEng D-Core sem dependência reversa de render/Host SDK; companions View Lab/Host SDK, fonte normativa CS008 e fechamento ECS CS009 verificados.")

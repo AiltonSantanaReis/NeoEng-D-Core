@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-test-campaigns.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "policy": {
     "all_requirements_must_be_covered": true,
     "planned_campaign_is_not_execution_evidence": true,
@@ -13,8 +13,7 @@
       "closure_stage": "CS008",
       "description": "Re-run governance and assurance fail-closed verification for every future ChangeSet.",
       "requirement_ids": [
-        "DCORE-SCOPE-001",
-        "DCORE-GOV-001"
+        "DCORE-SCOPE-001"
       ],
       "status": "executed_cs008_linux_gcc_clang",
       "required_test_classes": [
@@ -47,24 +46,28 @@
     {
       "campaign_id": "TEST-CS009-001",
       "closure_stage": "CS009",
-      "description": "Prove complete ECS evidence scope: general allocation, arena, copy-on-write and index maintenance.",
+      "description": "Prove complete ECS evidence scope and reconcile the internal Year-1 replay/schema contract with public Host C ABI 1.0.",
       "requirement_ids": [
         "DCORE-ECS-002",
         "DCORE-ECS-003",
-        "DCORE-ECS-004"
+        "DCORE-ECS-004",
+        "DCORE-GOV-001"
       ],
-      "status": "planned",
+      "status": "executed_cs009_linux_gcc_clang_virtualized_unqualified_native",
       "required_test_classes": [
-        "adversarial",
-        "cross_architecture_if_applicable",
-        "cross_compiler",
-        "evidence_integrity",
-        "fault_injection",
-        "independent_verification",
-        "long_run",
-        "negative",
         "positive",
-        "recovery"
+        "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
+        "adversarial",
+        "fault_injection",
+        "recovery",
+        "long_run",
+        "cross_compiler",
+        "cross_architecture_if_applicable",
+        "independent_verification",
+        "evidence_integrity"
       ],
       "mandatory_artifacts": [
         "source-identity",
@@ -76,8 +79,18 @@
         "independent-verification",
         "limitations"
       ],
-      "evidence": [],
-      "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
+      "evidence": [
+        "docs/changesets/009/evidence/gcc-ctest.log",
+        "docs/changesets/009/evidence/clang-ctest.log",
+        "docs/changesets/009/evidence/clang-asan-ubsan-ctest.log",
+        "docs/changesets/009/evidence/ecs-scope-verifier-self-test.log",
+        "docs/changesets/009/evidence/p0-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/p1-virtualized-qualification-result.json",
+        "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json",
+        "docs/records/ADR-009-YEAR1-CONTRACT-VS-HOST-ABI.md"
+      ],
+      "acceptance_rule": "The four-stream ECS evidence contract and independent verifier must pass all mutation tests and cross-compiler regression. P1 remains UNQUALIFIED unless native hardware, sample count, timing, thermal/clock and zero-allocation gates all pass.",
       "native_or_external_results_may_be_inferred": false
     },
     {

@@ -1,7 +1,7 @@
 {
-  "audit_date": "2026-07-24",
+  "audit_date": "2026-07-25",
   "audit_environment": {
-    "os": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "os": "Linux 6.12.13 x86_64 (containerized)",
     "architecture": "x86_64",
     "cmake": "3.31.6",
     "ninja": "1.12.1",
@@ -11,23 +11,23 @@
   },
   "integrity": {
     "required_source_files": 353,
-    "required_source_files_exact_hash_match": 351,
+    "required_source_files_exact_hash_match": 350,
     "internal_includes_unresolved": [],
     "app_sources": 77,
     "app_sources_referenced_by_cmake": 77,
     "core_sources": 58,
     "core_sources_referenced_by_cmake": 58,
     "y2_render_isolation": "canonical core passed; optional one-way View Lab permitted and hash-verified",
-    "manifest_check": "passed after ChangeSet 008 regeneration",
+    "manifest_check": "passed on Linux with component-wise path ordering; POSIX and Windows path-model outputs are byte-identical; physical Windows execution remains pending",
     "identity_scan": "passed",
     "baseline_catalog": {
       "rows": 899,
       "divergent_files": 0,
       "scope": "NeoEng D-Core 1.0.1 baseline before ChangeSet 001"
     },
-    "manifest_entries": 1235,
-    "package_files_including_manifest": 1236,
-    "required_source_files_authorized_modifications": 2,
+    "manifest_entries": 1281,
+    "package_files_including_manifest": 1282,
+    "required_source_files_authorized_modifications": 3,
     "authorized_source_modification_ledger": "audit/AUTHORIZED_SOURCE_MODIFICATIONS.json",
     "year2_extraction_ledger": "audit/YEAR2_EXTRACTION_LEDGER.json",
     "active_year2_imports_exact_hash": 2,
@@ -43,7 +43,18 @@
     "host_sdk_core_invariant_ledger": "audit/CHANGESET_007_CORE_INVARIANT_LEDGER.json",
     "product_contract_verifier": "scripts/verify_product_contract.py",
     "product_assurance_verifier": "scripts/verify_product_assurance.py",
-    "changeset_008_core_invariant_ledger": "audit/CHANGESET_008_CORE_INVARIANT_LEDGER.json"
+    "changeset_008_core_invariant_ledger": "audit/CHANGESET_008_CORE_INVARIANT_LEDGER.json",
+    "changeset_009_core_invariant_ledger": "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json",
+    "manifest_ordering_contract": {
+      "sort_key": "tuple(path.relative_to(root).parts)",
+      "case_sensitive": true,
+      "path_output": "relative.as_posix()",
+      "encoding": "UTF-8 bytes",
+      "line_ending": "LF",
+      "linux_check": "passed",
+      "pure_windows_path_model": "passed; byte-identical to POSIX model",
+      "physical_windows_check": "not executed; required in user validation"
+    }
   },
   "content_counts": {
     "headers": 67,
@@ -70,21 +81,39 @@
       "configure": "passed",
       "build": "passed",
       "executable_files_at_build_root": 84,
-      "tests_registered": 62,
-      "tests_passed": 62,
+      "tests_registered": 64,
+      "tests_passed": 64,
       "tests_failed": 0,
-      "real_seconds": 22.46,
-      "executable_files_total": 99
+      "real_seconds": 9.25,
+      "executable_files_total": 99,
+      "repeat_tests_passed": 64,
+      "repeat_tests_failed": 0,
+      "repeat_real_seconds": 9.13,
+      "verified_run_seconds": [
+        10.36,
+        9.13,
+        9.25
+      ],
+      "verified_runs": 3
     },
     "clang_release": {
       "configure": "passed",
       "build": "passed",
       "executable_files_at_build_root": 84,
-      "tests_registered": 62,
-      "tests_passed": 62,
+      "tests_registered": 64,
+      "tests_passed": 64,
       "tests_failed": 0,
-      "real_seconds": 16.44,
-      "executable_files_total": 99
+      "real_seconds": 7.51,
+      "executable_files_total": 99,
+      "repeat_tests_passed": 64,
+      "repeat_tests_failed": 0,
+      "repeat_real_seconds": 7.59,
+      "verified_run_seconds": [
+        9.06,
+        7.59,
+        7.51
+      ],
+      "verified_runs": 3
     },
     "determinism_probe_gcc_vs_clang": {
       "status": "identical",
@@ -97,33 +126,19 @@
       "canonical_hash": "0x4D94BB2F3D75FFFE"
     },
     "windows_package": {
-      "status": "not executed for 1.8.0",
-      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; proportional 1.8.0 regression remains pending"
+      "status": "not executed for 1.9.0",
+      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; proportional 1.9.0 regression remains pending"
     },
     "clang_asan_ubsan_critical_subset": {
       "configure": "passed",
       "build": "passed",
-      "tests_registered": 14,
-      "tests_passed": 14,
+      "tests_registered": 17,
+      "tests_passed": 17,
       "tests_failed": 0,
       "leak_sanitizer": "disabled; no leak-coverage claim",
-      "tests": [
-        "neoeng_product_contract_verify",
-        "neoeng_product_contract_self_test",
-        "neoeng_product_assurance_verify",
-        "neoeng_product_assurance_self_test",
-        "neoeng_tests",
-        "neoeng_operational_hardening_tests",
-        "neoeng_session_recovery_contract_tests",
-        "neoeng_observability_support_tests",
-        "neoeng_state_evidence_tests",
-        "neoeng_hardware_qualification_tests",
-        "neoeng_host_sdk_install_consumer",
-        "neoeng_host_sdk_tests",
-        "neoeng_host_sdk_c_header_test",
-        "neoeng_host_sdk_reference"
-      ],
-      "real_seconds": 9.63
+      "real_seconds": 2.68,
+      "scope": "selected critical tests including governance, ECS evidence, host SDK, operational, recovery, observability, state evidence and qualification",
+      "execution_anomaly": "An initial local build-directory collision caused a dependency-file error. The failed log is retained outside the authoritative tree. A clean isolated rebuild then completed 80/80 steps and the exact 17-test scope passed."
     },
     "support_bundle_probe_gcc_vs_clang": {
       "status": "identical",
@@ -154,7 +169,7 @@
     },
     "hardware_qualification_harness": {
       "schema": "neoeng.dcore.hardware-qualification.v2",
-      "gcc_virtualized_p0": "verified_unqualified_engineering_baseline",
+      "gcc_virtualized_p0": "verified_unqualified_incomplete",
       "clang_virtualized_p0": "verified_unqualified_engineering_baseline",
       "virtualized_profile_passes": 0,
       "tampered_campaign": "rejected",
@@ -164,7 +179,58 @@
       "embedded_binaries_verified": 5,
       "semantic_decision_recomputation": "passed_for_gcc_and_clang_campaigns",
       "semantically_forged_and_rehashed_passed_result": "rejected",
-      "p1_candidate_artifacts_bypass": "rejected; EcsScopeIncomplete retained"
+      "p1_candidate_artifacts_bypass": "rejected; complete evidence is required and AllocationGateFailed is retained when allocation occurs",
+      "cs009_p0_virtualized": {
+        "status": "unqualified",
+        "evidence_disposition": "incomplete",
+        "execution_kind": "virtualized",
+        "failure_mask": 262274,
+        "failure_reasons": [
+          "EnvironmentMismatch",
+          "NativeExecutionRequired",
+          "ClockPolicyMissing"
+        ],
+        "ecs_p99_ns": 5200,
+        "rollback_p99_ns": 1202243,
+        "samples": 32,
+        "ecs_scope_complete": true,
+        "profile_compatibility_confirmed": true,
+        "profile_compatibility_reasons": [],
+        "native_profile_qualified": false
+      },
+      "cs009_p1_virtualized": {
+        "status": "unqualified",
+        "evidence_disposition": "incomplete",
+        "execution_kind": "virtualized",
+        "failure_mask": 1409154,
+        "failure_reasons": [
+          "EnvironmentMismatch",
+          "NativeExecutionRequired",
+          "ProfileCompatibilityFailed",
+          "InsufficientSamples",
+          "ClockPolicyMissing",
+          "AllocationGateFailed"
+        ],
+        "ecs_p99_ns": 6763,
+        "rollback_p99_ns": 1205388,
+        "samples": 32,
+        "minimum_samples": 1000,
+        "ecs_scope_complete": true,
+        "general_allocation_events": 672,
+        "general_allocation_bytes": 901376,
+        "arena_overflow_zero": true,
+        "copy_on_write_semantics_valid": true,
+        "index_semantics_valid": true,
+        "final_hash": "0x3562ED2079D86CF7",
+        "profile_compatibility_confirmed": false,
+        "profile_compatibility_reasons": [
+          "P1 requires NVIDIA GPU vendor",
+          "P1 requires at least 16 GiB GPU memory",
+          "P1 requires at least 16 physical CPU cores",
+          "P1 requires NVMe PCIe 4.0/5.0 storage"
+        ],
+        "native_profile_qualified": false
+      }
     },
     "host_sdk_reference_gcc_vs_clang": {
       "status": "identical",
@@ -177,7 +243,7 @@
       "method": "clean prefix install, find_package, build and execute"
     }
   },
-  "test_note": "ChangeSet 008 was built and tested on Linux x86_64 with GCC 14.2.0 and Clang 17.0.0. Both full suites passed 62/62. The Clang ASan+UBSan critical subset passed 14/14 with LeakSanitizer disabled. Product-contract and product-assurance verifiers passed and their self-tests rejected 7 and 9 mutation classes respectively. The 122 canonical core files were unchanged. Meta-verification establishes governance and test obligations; it does not claim completion of the 21 internal technical requirements that remain open. Physical Windows evidence is valid for the authoritative 1.7.0 commit, not automatically for 1.8.0. ARM64 and P0-P4 qualification remain pending.",
+  "test_note": "ChangeSet 009 is validated on Linux x86_64 with GCC and Clang after closing the four-stream ECS evidence contract. Virtualized P0/P1 campaigns remain incomplete and unqualified. Native Windows 1.9.0, ARM64 and P0-P4 qualification are not claimed.",
   "project": "NeoEng D-Core",
   "package": "NeoEng-D-Core-Windows-Audited",
   "rename_validation": {
@@ -604,5 +670,34 @@
     "windows_1_8": "not executed",
     "arm64": "not executed",
     "p0_p4_qualified": []
+  },
+  "package_version": "1.9.0",
+  "changeset_009": {
+    "id": "009",
+    "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",
+    "base_version": "1.8.0",
+    "target_version": "1.9.0",
+    "requirements_closed": [
+      "DCORE-ECS-002",
+      "DCORE-ECS-003",
+      "DCORE-ECS-004",
+      "DCORE-GOV-001"
+    ],
+    "limitations_closed": [
+      "LIM-001",
+      "LIM-019"
+    ],
+    "ecs_evidence_contract": "neoeng.dcore.ecs-scope-evidence.v1",
+    "canonical_source_units_changed": 0,
+    "authorized_canonical_header_changes": 1,
+    "gcc_ctest": "64/64 passed",
+    "clang_ctest": "64/64 passed",
+    "clang_asan_ubsan": "17/17 passed; LeakSanitizer disabled",
+    "p0_virtualized_status": "unqualified; incomplete",
+    "p1_virtualized_status": "unqualified; incomplete; allocation gate failed",
+    "native_p1_status": "unqualified",
+    "windows_1_9_execution": "not performed",
+    "arm64_execution": "not performed",
+    "commercial_ready": false
   }
 }

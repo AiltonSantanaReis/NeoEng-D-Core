@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.8.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.9.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -473,6 +473,15 @@ if(BUILD_TESTING)
     add_test(NAME neoeng_support_bundle_fuzz_smoke COMMAND neoeng_support_bundle_fuzz 25000)
     add_test(NAME neoeng_ecs_maintenance_benchmark_smoke
       COMMAND neoeng_ecs_maintenance_benchmark ${CMAKE_BINARY_DIR}/ecs_maintenance_smoke 256 16 32 4)
+    add_test(NAME neoeng_ecs_scope_evidence_verifier_smoke
+      COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_ecs_scope_evidence.py
+        ${CMAKE_BINARY_DIR}/ecs_maintenance_smoke --write-report)
+    add_test(NAME neoeng_ecs_scope_evidence_verifier_self_test
+      COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_ecs_scope_evidence.py --self-test)
+    set_tests_properties(neoeng_ecs_scope_evidence_verifier_smoke
+      PROPERTIES DEPENDS neoeng_ecs_maintenance_benchmark_smoke LABELS "full;dcore;ecs-scope")
+    set_tests_properties(neoeng_ecs_scope_evidence_verifier_self_test
+      PROPERTIES LABELS "smoke;dcore;ecs-scope")
     add_test(NAME neoeng_immutable_fuzz COMMAND neoeng_immutable_fuzz)
     add_test(NAME neoeng_active_fuzz COMMAND neoeng_active_fuzz)
     add_test(NAME neoeng_v06_fuzz COMMAND neoeng_v06_fuzz 500)

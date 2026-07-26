@@ -1,9 +1,9 @@
 # NeoEng D-Core - Fonte Normativa de Verdade do Produto
 
 Documento normativo: `NEOENG-DCORE-SOT-001`
-Versao normativa: 1.1
+Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.8.0
+Baseline desta fonte: 1.9.0
 
 ## 1. Autoridade
 
@@ -52,13 +52,15 @@ Cada ChangeSet deve declarar requisitos fechados, baseline verificavel, nao obje
 
 Pendencias somente podem permanecer como `native_qualification`, `external_assurance`, `host_responsibility`, `deployment_responsibility`, `optional_vertical`, `accepted_boundary` ou `out_of_scope`.
 
-## 7. Estado da baseline 1.8.0
+## 7. Estado da baseline 1.9.0
 
-A 1.8.0 estabelece governanca, rastreabilidade, claims, responsabilidades, backlog finito e gates de asseguracao. O nucleo canonico da 1.7.0 permanece inalterado.
+A 1.8.0 estabeleceu governanca, rastreabilidade, claims, responsabilidades, backlog finito e gates de asseguracao, preservando o nucleo canonico da 1.7.0.
 
-A 1.8.0 **nao declara o produto comercialmente concluido**. Requisitos internos permanecem abertos e devem ser fechados em ChangeSets completos. O escopo ECS de alocacao geral, arena, copy-on-write e manutencao de indices permanece para o CS009. O determinismo ponta a ponta entre duas instancias permanece para o CS010.
+O CS009, incorporado na baseline 1.9.0, fecha o escopo de evidencia ECS Y1-O2 como uma capacidade unica e verificavel: alocacao geral, arena, copy-on-write e manutencao de indices geram streams versionados, vinculados a identidade de fonte/build/configuracao e recalculados por verificador independente. Tambem reconcilia a ABI C publica 1.0 do Host SDK com o contrato interno de replay/schema do Ano 1.
 
-A evidencia Windows fisica recebida e valida para a fonte 1.7.0 identificada pelo commit `fb8362602e1b3f6530d3efe8733bc76fc6de9f3e`; ela nao e automaticamente promovida para a 1.8.0.
+A 1.9.0 **nao declara qualificacao P1**. A execucao virtualizada observada permanece `unqualified` quando amostras, ambiente nativo, termica, clocks, timing ou zero-alocacao nao satisfazem o contrato. A regressao Windows fisica recebida permanece valida para a fonte 1.7.0 identificada pelo commit `fb8362602e1b3f6530d3efe8733bc76fc6de9f3e`; ela nao e automaticamente promovida para a 1.9.0.
+
+O produto ainda nao esta comercialmente concluido. O proximo fechamento normativo e o CS010, determinismo ponta a ponta entre duas instancias independentes, sem incorporar consenso, quorum, BFT ou banco distribuido ao estado canonico.
 
 ## 8. Regra de conflito
 

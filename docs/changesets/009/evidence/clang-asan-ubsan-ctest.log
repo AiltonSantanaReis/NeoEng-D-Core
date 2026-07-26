@@ -1,0 +1,52 @@
+Internal ctest changing into directory: /mnt/data/cs009_candidate/build/asan-final
+Test project /mnt/data/cs009_candidate/build/asan-final
+      Start 21: neoeng_ecs_maintenance_benchmark_smoke
+      Start  1: neoeng_product_contract_verify
+      Start  2: neoeng_product_contract_self_test
+      Start  3: neoeng_product_assurance_verify
+ 1/17 Test #21: neoeng_ecs_maintenance_benchmark_smoke .........   Passed    0.01 sec
+      Start  4: neoeng_product_assurance_self_test
+ 2/17 Test  #3: neoeng_product_assurance_verify ................   Passed    0.96 sec
+      Start  5: neoeng_tests
+ 3/17 Test  #4: neoeng_product_assurance_self_test .............   Passed    1.01 sec
+      Start  6: neoeng_operational_hardening_tests
+ 4/17 Test  #1: neoeng_product_contract_verify .................   Passed    1.19 sec
+      Start  7: neoeng_session_recovery_contract_tests
+ 5/17 Test  #7: neoeng_session_recovery_contract_tests .........   Passed    0.01 sec
+      Start  8: neoeng_observability_support_tests
+ 6/17 Test  #8: neoeng_observability_support_tests .............   Passed    0.01 sec
+      Start  9: neoeng_state_evidence_tests
+ 7/17 Test  #9: neoeng_state_evidence_tests ....................   Passed    0.01 sec
+      Start 10: neoeng_hardware_qualification_tests
+ 8/17 Test  #6: neoeng_operational_hardening_tests .............   Passed    0.21 sec
+      Start 22: neoeng_ecs_scope_evidence_verifier_smoke
+ 9/17 Test #10: neoeng_hardware_qualification_tests ............   Passed    0.01 sec
+      Start 23: neoeng_ecs_scope_evidence_verifier_self_test
+10/17 Test  #5: neoeng_tests ...................................   Passed    0.99 sec
+      Start 58: neoeng_host_sdk_install_consumer
+11/17 Test #22: neoeng_ecs_scope_evidence_verifier_smoke .......   Passed    0.85 sec
+      Start 62: neoeng_host_sdk_tests
+12/17 Test #62: neoeng_host_sdk_tests ..........................   Passed    0.01 sec
+      Start 63: neoeng_host_sdk_c_header_test
+13/17 Test #63: neoeng_host_sdk_c_header_test ..................   Passed    0.00 sec
+      Start 64: neoeng_host_sdk_reference
+14/17 Test #64: neoeng_host_sdk_reference ......................   Passed    0.01 sec
+15/17 Test #23: neoeng_ecs_scope_evidence_verifier_self_test ...   Passed    0.88 sec
+16/17 Test #58: neoeng_host_sdk_install_consumer ...............   Passed    0.60 sec
+17/17 Test  #2: neoeng_product_contract_self_test ..............   Passed    2.67 sec
+
+100% tests passed, 0 tests failed out of 17
+
+Label Time Summary:
+dcore           =   9.42 sec*proc (17 tests)
+ecs-scope       =   1.73 sec*proc (2 tests)
+full            =   0.86 sec*proc (2 tests)
+governance      =   5.83 sec*proc (4 tests)
+host-sdk        =   0.62 sec*proc (4 tests)
+install         =   0.60 sec*proc (1 test)
+release-gate    =   5.83 sec*proc (4 tests)
+smoke           =   2.73 sec*proc (11 tests)
+
+Total Test time (real) =   2.68 sec
+
+WALL_SECONDS=2.68

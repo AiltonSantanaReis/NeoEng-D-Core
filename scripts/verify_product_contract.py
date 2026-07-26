@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.8.0"
+EXPECTED_VERSION = "1.9.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -166,8 +166,10 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.9.0" in primary_text.lower() or "cs009 - fechamento" in primary_text.lower() and "concluido" in primary_text.lower():
-        errors.append("source of truth still contains discarded 1.9.0/CS009 completion state")
+    if "baseline 1.9.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.9.0 baseline")
+    if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
+        errors.append("source of truth does not record the CS009 ECS closure")
 
     req_rows = docs["requirements"].get("requirements")
     if not isinstance(req_rows, list) or len(req_rows) != 36:
@@ -319,19 +321,23 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
             errors.append(f"required deferred gate missing: {required_gate}")
     for gate in gates:
         if gate.get("blocking_for_current_changeset") is not False:
-            errors.append(f"deferred gate incorrectly blocks governance-only CS008: {gate.get('gate_id')}")
+            errors.append(f"deferred gate incorrectly blocks the current implementation ChangeSet: {gate.get('gate_id')}")
         if gate.get("category") == "native_validation_pending" and gate.get("blocking_for_profile_qualification") is not True:
             errors.append(f"native gate does not block profile qualification: {gate.get('gate_id')}")
 
-    # The discarded CS009 state must remain open in the real CS008 baseline.
+    # CS009 closes implementation scope only; native qualification remains separate.
     req_by_id = {r.get("requirement_id"): r for r in req_rows if isinstance(r, dict)}
-    for rid in ("DCORE-ECS-002", "DCORE-ECS-003", "DCORE-ECS-004"):
-        if req_by_id.get(rid, {}).get("status") not in {"partial", "planned"}:
-            errors.append(f"CS009 ECS requirement was incorrectly pre-closed in CS008: {rid}")
+    for rid in ("DCORE-ECS-002", "DCORE-ECS-003", "DCORE-ECS-004", "DCORE-GOV-001"):
+        if req_by_id.get(rid, {}).get("status") != "complete":
+            errors.append(f"CS009 required closure is not complete: {rid}")
     backlog_by_id = {r.get("limitation_id"): r for r in backlog_rows if isinstance(r, dict)}
     for lid in ("LIM-001", "LIM-019"):
-        if backlog_by_id.get(lid, {}).get("status") != "open":
-            errors.append(f"discarded CS009 limitation was incorrectly closed in CS008: {lid}")
+        row = backlog_by_id.get(lid, {})
+        if row.get("status") != "closed" or not row.get("closure_evidence"):
+            errors.append(f"CS009 limitation closure is incomplete: {lid}")
+    ecs_gate = next((g for g in gates if g.get("gate_id") == "ECS-SCOPE-COMPLETE-001"), {})
+    if ecs_gate.get("category") != "native_validation_pending" or ecs_gate.get("blocking_for_profile_qualification") is not True:
+        errors.append("ECS implementation closure does not preserve the native P1 qualification gate")
 
     return errors
 
@@ -361,7 +367,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS008 establishes governance and fail-closed closure controls; mandatory technical requirements remain open.",
+        "reason": "CS009 closes the complete ECS evidence scope and contract reconciliation; mandatory technical, native and external requirements remain open.",
     }
 
 
@@ -376,10 +382,10 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
 
     add("verified claim without evidence", lambda d: d["claims"]["claims"][0].update(status="verified", evidence=[]))
     add("duplicate requirement id", lambda d: d["requirements"]["requirements"][1].update(requirement_id=d["requirements"]["requirements"][0]["requirement_id"]))
-    add("pre-close ECS scope", lambda d: next(r for r in d["requirements"]["requirements"] if r["requirement_id"] == "DCORE-ECS-002").update(status="complete", tests_or_evidence=[]))
-    add("close limitation without evidence", lambda d: next(r for r in d["backlog"]["items"] if r["limitation_id"] == "LIM-001").update(status="closed"))
+    add("remove ECS closure evidence", lambda d: next(r for r in d["requirements"]["requirements"] if r["requirement_id"] == "DCORE-ECS-002").update(tests_or_evidence=[]))
+    add("close limitation without evidence", lambda d: next(r for r in d["backlog"]["items"] if r["limitation_id"] == "LIM-001").update(closure_evidence=[]))
     add("elevate ARM64 claim", lambda d: next(r for r in d["claims"]["claims"] if r["claim_id"] == "CLAIM-XARCH-001").update(status="verified"))
-    add("wrong baseline version", lambda d: d["index"].update(project_version="1.9.0"))
+    add("wrong baseline version", lambda d: d["index"].update(project_version="1.8.0"))
     add("missing backlog stage", lambda d: [r.update(closure_stage="CS999") for r in d["backlog"]["items"] if r.get("closure_stage") == "CS010"])
 
     for name, mutated in mutations:

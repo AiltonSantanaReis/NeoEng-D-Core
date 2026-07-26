@@ -4,9 +4,9 @@ Este pacote preserva o **NeoEng D-Core como autoridade canônica** sobre estado 
 
 A fonte normativa obrigatória está em `docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`, apoiada pelos ledgers de máquina em `audit/`. Os documentos originais permanecem como proveniência histórica e não prevalecem quando houver conflito.
 
-## Fonte de verdade e estado atual — ChangeSet 008
+## Fonte de verdade e estado atual — ChangeSet 009
 
-A versão 1.8.0 estabelece a governança de fechamento do produto sem alterar a semântica do núcleo canônico da 1.7.0:
+A versão 1.9.0 preserva a governança de fechamento estabelecida na 1.8.0 e fecha o escopo de evidência ECS Y1-O2 sem alterar a autoridade canônica, a transição, o fixed tick, o rollback, a serialização ou os hashes:
 
 - fonte normativa obrigatória e hierarquia de precedência;
 - 36 requisitos rastreáveis, 20 claims classificados e 41 limitações conhecidas;
@@ -14,7 +14,9 @@ A versão 1.8.0 estabelece a governança de fechamento do produto sem alterar a 
 - padrão normativo de conclusão e padrão de testes/asseguração;
 - verificadores fail-closed com autotestes de adulteração;
 - regra explícita de que meta-verificação não substitui prova técnica da capacidade;
-- reconhecimento de que CS009, CS010 e etapas posteriores permanecem abertos.
+- fechamento verificável de alocação geral, arena, copy-on-write e manutenção de índices;
+- reconciliação entre o contrato interno do Ano 1 e a ABI C pública 1.0;
+- CS010 e etapas posteriores permanecem abertos.
 
 Comandos de verificação:
 
@@ -42,14 +44,14 @@ Para compilar toda a superfície e executar a suíte Year-1 registrada:
 .\scripts\windows\run-dcore.ps1 -BootstrapDependencies -FullTestSuite
 ```
 
-O Windows é a plataforma operacional inicial. A fonte autoritativa 1.7.0 foi compilada e exercitada em Windows físico, com evidência independente preservada em `docs/changesets/008/evidence/WINDOWS_1_7_0_INDEPENDENT_VERIFICATION.md`. A baseline 1.8.0 deste ChangeSet foi validada em Linux x86_64 com GCC e Clang; **a regressão proporcional 1.8.0 ainda não foi executada em Windows físico**.
+O Windows é a plataforma operacional inicial. A fonte autoritativa 1.7.0 foi compilada e exercitada em Windows físico, com evidência independente preservada em `docs/changesets/008/evidence/WINDOWS_1_7_0_INDEPENDENT_VERIFICATION.md`. A baseline 1.9.0 deste ChangeSet foi validada em Linux x86_64 com GCC e Clang; **a regressão proporcional 1.9.0 ainda não foi executada em Windows físico**.
 
 ## Conteúdo auditado
 
 - 64 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
 - 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
 - 78 fontes de aplicações/benchmarks/fuzz/probes no pacote (77 em `apps/` e o CLI do View Lab), todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 8 fontes C++ de teste, 2 verificadores normativos Python e 62 testes CTest registrados quando o toolset completo, o View Lab e o Host SDK estão ativos;
+- 8 fontes C++ de teste, 3 verificadores normativos Python e 64 testes CTest registrados quando o toolset completo, o View Lab e o Host SDK estão ativos;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -188,3 +190,13 @@ A versão 1.7.0 formaliza a fronteira de integração já prevista sem alterar a
 - verificadores de fronteira e ledger que comprovam que os 122 arquivos canônicos do núcleo permaneceram byte a byte inalterados.
 
 O Host SDK recebe comandos confiáveis de um adapter no mesmo processo; dados de rede hostis continuam obrigatoriamente no gateway autenticado existente. Unreal, Unity e outras verticais não foram incorporados. Documentação: `docs/contracts/HOST_SDK_C_ABI_V1.md`, `docs/architecture/HOST_SDK_BOUNDARY.md` e `docs/changesets/007/`.
+
+## ChangeSet 009 — evidência ECS completa e reconciliação de contratos
+
+O benchmark ECS produz quatro streams aceitos pelo contrato `neoeng.dcore.ecs-scope-evidence.v1`: alocação geral, arena, copy-on-write e manutenção de índices. `scripts/qualification/verify_ecs_scope_evidence.py` recalcula sem confiar no benchmark as sequências, percentis, alocações, capacidade/overflow, reconstrução copy-on-write, hashes e vínculos de identidade.
+
+A presença do pipeline completo não promove automaticamente o perfil P1. Campanhas sem hardware nativo, amostras mínimas, térmica, clocks ou zero-alocação permanecem `UNQUALIFIED`.
+
+### Manifest portability correction
+
+The CS009 rebuilt distribution also updates `scripts/generate_manifest.py` to use a case-sensitive, component-wise relative path key. The emitted path remains POSIX-formatted and the manifest is read and written as byte-exact UTF-8/LF content. This prevents host `WindowsPath` ordering from changing the release identity.

@@ -1,0 +1,28 @@
+{
+  "arena_overflow_zero": true,
+  "copy_on_write_semantics_valid": true,
+  "final_hash": "0x3562ED2079D86CF7",
+  "general_allocation_bytes": 901376,
+  "general_allocation_events": 672,
+  "general_allocation_zero": false,
+  "index_maintenance_semantics_valid": true,
+  "maximum_ns": 6763,
+  "p50_ns": 6563,
+  "p95_ns": 6699,
+  "p99_ns": 6763,
+  "project_version": "1.9.0",
+  "qualification_policy": "Evidence completeness does not imply native P1 timing or zero-allocation qualification.",
+  "sample_count": 32,
+  "schema": "neoeng.dcore.ecs-scope-evidence-verification.v1",
+  "scope_complete": true,
+  "status": "passed",
+  "stream_sha256": {
+    "arena_samples.csv": "3ac5aa49d3259da7343b95188d306d5a18ece3d315d86cec876ad4a6d3d1d813",
+    "copy_on_write_samples.csv": "7681674ac316ce2b303bb53e73911cee58f2417b64ac6e4ffc0d6c862356afd0",
+    "ecs_maintenance_samples.csv": "649be825e047044a102c999cb06bdda7330ca1ea7e932d4abad6f1ea267c5fb5",
+    "general_allocation_samples.csv": "f08c9bce037a4e17eeba6320d44022256bc3d4a079534d4a3909665ad59e94d0",
+    "index_maintenance_samples.csv": "a30c51658a3a7ab621d3db0a5468646b03079ce2fbd4d718887efa0297c3deb7",
+    "summary.json": "4b63dc50f277a2c25b1873a60753f9eae4d464c816a4aa85f35ac7d546f3faf6"
+  },
+  "workload_id": "Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1"
+}

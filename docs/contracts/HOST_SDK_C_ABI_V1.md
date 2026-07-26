@@ -1,6 +1,6 @@
 # NeoEng D-Core Host SDK C ABI v1
 
-Status: active in NeoEng D-Core 1.8.0
+Status: active in NeoEng D-Core 1.9.0
 Public header: `neoeng/dcore_host.h`
 CMake target: `NeoEng::DCoreHostSdk`
 
@@ -16,7 +16,7 @@ The Host SDK is a one-way integration boundary over capabilities that already ex
 
 - ABI major: 1
 - ABI minor: 0
-- Runtime version: 1.8.0
+- Runtime version: 1.9.0
 - All public integer fields use fixed-width C integer types.
 - The ABI exposes opaque handles; it exposes no STL objects, C++ exceptions, references, templates, internal pointers or allocator ownership.
 - ABI 1.x structure layouts are frozen. Extending or reordering a public structure requires a new ABI major. The `struct_size` field is descriptive and allows runtime inspection; it is not permission to enlarge a structure within ABI 1.x.
@@ -109,10 +109,21 @@ Consumer projects use `find_package(NeoEngDCore 1.7 CONFIG REQUIRED)` and link t
 
 ## Deliberate exclusions in v1
 
-- no shared-library distribution claim; the companion target is packaged as a static library in 1.8.0;
+- no shared-library distribution claim; the companion target is packaged as a static library in 1.9.0;
 - no Unreal or Unity adapter implementation;
 - no network socket or UDP/QUIC transport;
 - no callbacks into arbitrary host code;
 - no general domain schema system;
 - no asynchronous API;
 - no qualification or certification claim.
+## Relationship to the internal Year-1 contract
+
+The public Host SDK C ABI and the internal Year-1 replay/schema contract are independently versioned:
+
+- Host SDK C ABI `1.0` governs binary layout and C-call compatibility;
+- `include/neoeng/core/year1_contract.hpp` governs internal replay/schema compatibility and source-level C++ contract constants;
+- a runtime release may advance from 1.8.0 to 1.9.0 without changing Host ABI 1.0;
+- changing frozen public C layouts requires a new Host ABI major;
+- changing internal replay/schema compatibility requires an explicit internal contract version, migration policy and ADR.
+
+The normative decision is recorded in `docs/records/ADR-009-YEAR1-CONTRACT-VS-HOST-ABI.md`.

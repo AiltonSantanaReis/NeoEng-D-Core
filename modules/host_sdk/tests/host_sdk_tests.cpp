@@ -46,7 +46,7 @@ void test_version_and_creation_guards() {
             "get version");
     require(version.abi_major == 1U && version.abi_minor == 0U,
             "ABI version");
-    require(version.runtime_major == 1U && version.runtime_minor == 8U,
+    require(version.runtime_major == 1U && version.runtime_minor == 9U,
             "runtime version");
     require((version.capabilities & NEOENG_DCORE_CAPABILITY_ROLLBACK) != 0U,
             "rollback capability");
@@ -233,6 +233,6 @@ int main() {
     test_state_rollback_and_buffers();
     test_recovery_contract();
     test_thread_ownership_and_input_guards();
-    std::cout << "host_sdk_tests=PASS abi=1.0 runtime=1.8.0\n";
+    std::cout << "host_sdk_tests=PASS abi=1.0 runtime=1.9.0\n";
     return 0;
 }

@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 SCHEMA = "neoeng.dcore.qualification-campaign-request.v1"
-PROJECT_VERSION = "1.8.0"
+PROJECT_VERSION = "1.9.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 
@@ -207,6 +207,31 @@ def manifest_rows(root: Path, excluded: Iterable[str] = ()) -> list[dict[str, An
     return rows
 
 
+def write_source_manifest(project_root: Path, destination: Path) -> None:
+    """Capture the exact non-build project tree used by the campaign.
+
+    The project-level MANIFEST may represent a release baseline and can be stale
+    while a ChangeSet is under construction. Qualification evidence therefore
+    computes its source identity directly at campaign execution time.
+    """
+    excluded_parts = {"build", ".deps", ".git", "__pycache__"}
+    excluded_files = {"MANIFEST.sha256"}
+    rows: list[str] = []
+    for path in sorted(project_root.rglob("*")):
+        if not path.is_file():
+            continue
+        relative_path = path.relative_to(project_root)
+        if any(part in excluded_parts for part in relative_path.parts):
+            continue
+        if path.name in excluded_files or path.suffix == ".pyc":
+            continue
+        relative = relative_path.as_posix()
+        rows.append(f"{sha256_file(path)}  {relative}")
+    if not rows:
+        raise CampaignError("source tree manifest would be empty")
+    destination.write_text("\n".join(rows) + "\n", encoding="ascii", newline="\n")
+
+
 def bool_word(value: bool) -> str:
     return "1" if value else "0"
 
@@ -281,26 +306,17 @@ def main() -> int:
     write_json(output_dir / "thermal-record.json", thermal)
     write_json(output_dir / "clock-policy.json", clock)
     write_json(output_dir / "campaign-request.json", request)
-    shutil.copy2(project_root / "MANIFEST.sha256", output_dir / "source-MANIFEST.sha256")
+    write_source_manifest(project_root, output_dir / "source-MANIFEST.sha256")
 
-    ecs_scope = campaign.get("ecs_scope_artifacts", {})
-    if not isinstance(ecs_scope, dict):
-        raise CampaignError("ecs_scope_artifacts must be an object")
-    copied_ecs_scope: dict[str, str] = {}
-    ecs_scope_dir = output_dir / "ecs-scope"
-    for key in ("general_allocation", "arena", "copy_on_write"):
-        value = ecs_scope.get(key, "")
-        if value in (None, ""):
-            continue
-        if not isinstance(value, str):
-            raise CampaignError(f"ecs_scope_artifacts.{key} must be a path string")
-        source = Path(value).expanduser().resolve()
-        if not source.is_file():
-            raise CampaignError(f"ECS scope artifact not found: {source}")
-        ecs_scope_dir.mkdir(parents=True, exist_ok=True)
-        destination = ecs_scope_dir / f"{key}{source.suffix or '.dat'}"
-        shutil.copy2(source, destination)
-        copied_ecs_scope[key] = destination.relative_to(output_dir).as_posix()
+    # ChangeSet 009 makes benchmark-generated, independently verified evidence
+    # authoritative. Arbitrary externally supplied files are rejected so a P1
+    # decision cannot be influenced by untyped or semantically unmapped data.
+    legacy_ecs_scope = campaign.get("ecs_scope_artifacts")
+    if legacy_ecs_scope not in (None, {}):
+        raise CampaignError(
+            "ecs_scope_artifacts is deprecated and must be omitted; "
+            "the campaign generates and independently verifies all ECS streams"
+        )
 
     executables = {
         "hardware_probe": find_executable(build_dir, "neoeng_hardware_profile_probe"),
@@ -357,6 +373,12 @@ def main() -> int:
         ],
         output_dir,
     ))
+    ecs_scope_verifier = project_root / "scripts" / "qualification" / "verify_ecs_scope_evidence.py"
+    results.append(run_command(
+        "ecs-scope-verifier",
+        [sys.executable, str(ecs_scope_verifier), str(ecs_output), "--write-report"],
+        output_dir,
+    ))
 
     rollback_output = output_dir / "rollback-benchmark"
     rollback_command = [
@@ -372,8 +394,11 @@ def main() -> int:
         rollback_command.append(str(cpu_index))
     results.append(run_command("rollback-benchmark", rollback_command, output_dir))
     ecs_summary_path = ecs_output / "summary.json"
+    ecs_scope_report_path = ecs_output / "ecs_scope_verification.json"
     rollback_summary_path = rollback_output / "summary.json"
     ecs_summary = json.loads(ecs_summary_path.read_text(encoding="utf-8")) if ecs_summary_path.is_file() else {}
+    ecs_scope_report = json.loads(ecs_scope_report_path.read_text(encoding="utf-8")) \
+        if ecs_scope_report_path.is_file() else {}
     rollback_summary = json.loads(rollback_summary_path.read_text(encoding="utf-8")) if rollback_summary_path.is_file() else {}
 
     thermal_method = thermal.get("measurement_method")
@@ -391,8 +416,16 @@ def main() -> int:
     full_tests_passed = results[0].passed and ctest_scope == "full"
     determinism_passed = results[1].passed
     serialization_passed = results[2].passed
-    benchmark_reports_present = ecs_summary_path.is_file() and rollback_summary_path.is_file()
-    raw_samples_present = (ecs_output / "ecs_maintenance_samples.csv").is_file() \
+    benchmark_reports_present = ecs_summary_path.is_file() and ecs_scope_report_path.is_file() \
+        and rollback_summary_path.is_file()
+    ecs_raw_streams = (
+        "ecs_maintenance_samples.csv",
+        "index_maintenance_samples.csv",
+        "general_allocation_samples.csv",
+        "arena_samples.csv",
+        "copy_on_write_samples.csv",
+    )
+    raw_samples_present = all((ecs_output / name).is_file() for name in ecs_raw_streams) \
         and (rollback_output / "rollback_samples.csv").is_file()
     campaign_inputs_complete = all(path.is_file() for path in (
         output_dir / "hardware-inventory.json",
@@ -420,16 +453,17 @@ def main() -> int:
     ecs_p99_ns = int(ecs_summary.get("p99_ns", 0))
     ecs_samples = int(ecs_summary.get("measured_samples", 0))
     cpu_migration = bool(rollback_summary.get("cpu_migration_detected", False))
+    ecs_scope_complete = bool(ecs_scope_report.get("scope_complete", False)) \
+        and ecs_scope_report.get("status") == "passed" \
+        and results[4].passed
+    ecs_general_allocation_zero = bool(ecs_scope_report.get("general_allocation_zero", False))
+    ecs_arena_overflow_zero = bool(ecs_scope_report.get("arena_overflow_zero", False))
+    ecs_cow_valid = bool(ecs_scope_report.get("copy_on_write_semantics_valid", False))
+    ecs_index_valid = bool(ecs_scope_report.get("index_maintenance_semantics_valid", False))
     allocation_gate = bool(rollback_summary.get("semantic_gate_passed", False)) \
-        and bool(rollback_summary.get("allocation_probe_calibrated", False))
-    ecs_scope_artifacts_collected = set(copied_ecs_scope) == {
-        "general_allocation", "arena", "copy_on_write"
-    }
-    # ChangeSet 006 can collect and hash legacy/experimental artifacts, but it does
-    # not yet define accepted schemas and mappings for the complete Y1-O2 scope.
-    # P1 therefore remains unqualified by construction until a later contract
-    # version supplies those validators.
-    ecs_scope_complete = profile != "P1"
+        and bool(rollback_summary.get("allocation_probe_calibrated", False)) \
+        and ecs_general_allocation_zero and ecs_arena_overflow_zero \
+        and ecs_cow_valid and ecs_index_valid
 
     probe_options = [
         "--profile", profile,
@@ -497,9 +531,13 @@ def main() -> int:
         "full_test_report_present": full_test_report_present,
         "full_tests_passed": full_tests_passed,
         "ecs_scope_evidence_complete": ecs_scope_complete,
-        "ecs_scope_artifacts_collected": ecs_scope_artifacts_collected,
-        "ecs_scope_artifacts": copied_ecs_scope,
-        "ecs_scope_acceptance_status": "not_implemented_in_1.8.0" if profile == "P1" else "not_required",
+        "ecs_scope_acceptance_status": "verified_complete_v1" if ecs_scope_complete else "verification_failed",
+        "ecs_scope_verification_report": "ecs-benchmark/ecs_scope_verification.json",
+        "ecs_general_allocation_zero": ecs_general_allocation_zero,
+        "ecs_arena_overflow_zero": ecs_arena_overflow_zero,
+        "ecs_copy_on_write_semantics_valid": ecs_cow_valid,
+        "ecs_index_maintenance_semantics_valid": ecs_index_valid,
+        "allocation_gate_passed": allocation_gate,
         "determinism_passed": determinism_passed,
         "serialization_passed": serialization_passed,
         "benchmarks_completed": benchmark_reports_present and raw_samples_present,
@@ -509,7 +547,7 @@ def main() -> int:
         "ecs_samples": ecs_samples,
         "native_profile_qualified": qualification.get("status") == "passed",
         "independent_verification_required": True,
-        "note": "Virtualized and containerized runs are engineering baselines and cannot qualify a profile. P1 complete ECS-scope acceptance is not implemented in 1.8.0.",
+        "note": "Virtualized and containerized runs are engineering baselines and cannot qualify a profile. Complete ECS evidence does not waive native P1 timing, zero-allocation or environment gates.",
     }
     write_json(output_dir / "campaign-summary.json", summary)
 

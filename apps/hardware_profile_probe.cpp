@@ -186,9 +186,7 @@ int main(int argc, char** argv) {
             .serialization_compatibility_passed = boolean_value(options, "--serialization-passed"),
             .full_test_report_present = boolean_value(options, "--full-test-report-present"),
             .full_test_suite_passed = boolean_value(options, "--full-tests-passed"),
-            .ecs_scope_evidence_complete = profile == HardwareProfileId::P1NvidiaTarget
-                ? false
-                : ecs_scope_claim,
+            .ecs_scope_evidence_complete = ecs_scope_claim,
             .benchmark_report_present = boolean_value(options, "--benchmark-report-present"),
             .raw_samples_present = boolean_value(options, "--raw-samples-present"),
             .binary_hashes_present = boolean_value(options, "--binary-hashes-present"),
@@ -203,7 +201,7 @@ int main(int argc, char** argv) {
         const HardwareQualificationResult result = evaluate_hardware_qualification(baseline, measurement);
         std::cout << "{\n"
                   << "  \"schema\": \"neoeng.dcore.hardware-qualification.v2\",\n"
-                  << "  \"project_version\": \"1.8.0\",\n"
+                  << "  \"project_version\": \"1.9.0\",\n"
                   << "  \"independent_verification_required\": true,\n"
                   << "  \"profile\": \"" << to_string(profile) << "\",\n"
                   << "  \"environment_id\": \"" << json_escape(baseline.environment_id) << "\",\n"
