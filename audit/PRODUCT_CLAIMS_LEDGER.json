@@ -132,7 +132,9 @@
         "docs/contracts/DISTRIBUTED_REFERENCE_V1.md",
         "neoeng_distributed_reference_tests",
         "neoeng_distributed_reference_probe",
-        "docs/changesets/010/TEST_STATUS.md"
+        "docs/changesets/010/TEST_STATUS.md",
+        "docs/changesets/010/evidence/cross-compiler-20260726/cross-compiler-summary.json",
+        "docs/changesets/010/evidence/github-actions-run-30187433814.json"
       ],
       "public_use": "allowed_only_with_reference_loopback_and_single_authority_scope"
     },

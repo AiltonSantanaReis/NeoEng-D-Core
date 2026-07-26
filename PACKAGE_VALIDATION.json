@@ -725,7 +725,7 @@
     "domain_neutral_boundary": "ReplicaAdapter with explicit schema id and opaque correction payload",
     "canonical_state_authority_changed": false,
     "windows_x86_64_clang_local_scope": "19/19 minimal configured tests passed, including installed consumer and 4096-frame probe",
-    "cross_compiler_evidence": "recorded by .github/workflows/cs010-cross-compiler.yml",
+    "cross_compiler_evidence": "GitHub Actions run 30187433814 passed GCC, Clang, independent verification and byte-identical comparison for commit c3efbcc54e8317da82e645f7b223d49e25b3d579",
     "arm64_execution": "not performed",
     "production_remote_transport": "not claimed",
     "commercial_ready": false

@@ -1,0 +1,13 @@
+{
+  "divergence_frame": 1024,
+  "frames": 4096,
+  "instances": 2,
+  "machine": "AMD64",
+  "maximum_datagram_bytes": 1472,
+  "maximum_pending_datagrams": 64,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "project_version": "1.10.0",
+  "schema": "neoeng.dcore.distributed-reference-configuration.v1",
+  "transport": "udp-loopback"
+}

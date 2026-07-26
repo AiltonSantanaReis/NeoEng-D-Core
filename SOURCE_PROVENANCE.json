@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; proportional 1.10.0 Windows regression in progress under CS010",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS010 1.10.0 module campaign passed on the recorded physical Windows x86_64 host; full proportional 1.10.0 Windows release regression remains pending",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -241,7 +241,8 @@
     "host_c_abi_version": "1.0 unchanged",
     "consensus_or_multiwriter_added": false,
     "production_remote_transport_claimed": false,
-    "windows_x86_64_host_local_execution": "performed during CS010 development; immutable campaign evidence recorded separately",
+    "windows_x86_64_host_local_execution": "passed for commit c3efbcc54e8317da82e645f7b223d49e25b3d579; 19/19 minimal configured tests and immutable campaign evidence recorded under docs/changesets/010/evidence/windows-x86_64-clang-20260726",
+    "linux_x86_64_cross_compiler_execution": "GitHub Actions run 30187433814 passed GCC, Clang, independent evidence verification and byte-identical semantic comparison",
     "arm64_execution": "not performed; cross-architecture claim remains planned",
     "commercial_product_complete": false
   }

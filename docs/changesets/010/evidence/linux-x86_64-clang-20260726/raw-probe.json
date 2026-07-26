@@ -1,0 +1,12 @@
+{
+  "schema": "neoeng.dcore.distributed-reference-result.v1",
+  "transport": "udp-loopback",
+  "instances": 2,
+  "frames": 4096,
+  "divergence_frame": 1024,
+  "before": "divergent",
+  "localized": true,
+  "first_divergent_component": "position.x",
+  "after": "converged",
+  "canonical_state_equal": true
+}

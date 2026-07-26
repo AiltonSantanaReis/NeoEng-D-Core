@@ -2,9 +2,9 @@
   "schema": "neoeng.dcore.product-assurance-validation.v1",
   "project_version": "1.10.0",
   "status": "passed",
-  "requirements_sha256": "68f9ad72b9a7630dbe0b5b0aaa3d1428f0e3179e921ac53972f3e4bfadedd913",
-  "assurance_matrix_sha256": "ffaa38f045ef9bc1a0e25fd5955f46a10bf8e242dfd1b99e138586b80013e36d",
-  "test_campaigns_sha256": "8a273c0fa32d570a7ae83b40a7c2f0028c4cb3e971826360858fbe5962366e0f",
+  "requirements_sha256": "d2d566e6daf838038ceae4d6b324fe863f545ba8b93b6931f94e7cd2d14dfb90",
+  "assurance_matrix_sha256": "a3be9dbb32db7736ad6ea5fd8ccd38d79de2281c17595031fe733d996d7e6b20",
+  "test_campaigns_sha256": "c4ee6e212029d2c5365de11e52a8e68df490ecadb14c5d9903bbd7d483272828",
   "requirements_covered": 36,
   "campaigns": 10,
   "assurance_status_counts": {

@@ -1,0 +1,3 @@
+distributed_reference_tests=passed
+transport=udp_loopback
+canonical_authority=preserved

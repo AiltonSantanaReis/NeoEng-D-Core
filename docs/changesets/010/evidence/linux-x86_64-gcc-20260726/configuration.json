@@ -1,0 +1,13 @@
+{
+  "divergence_frame": 1024,
+  "frames": 4096,
+  "instances": 2,
+  "machine": "x86_64",
+  "maximum_datagram_bytes": 1472,
+  "maximum_pending_datagrams": 64,
+  "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "project_version": "1.10.0",
+  "schema": "neoeng.dcore.distributed-reference-configuration.v1",
+  "transport": "udp-loopback"
+}
