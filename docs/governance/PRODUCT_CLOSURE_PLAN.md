@@ -1,7 +1,7 @@
 # NeoEng D-Core - Plano Fechado de Conclusao
 
 Documento: `NEOENG-DCORE-CLOSURE-PLAN-001`
-Versao: 1.1
+Versao: 1.2
 
 O plano fecha o NeoEng D-Core como produto independente. Nao inclui o programa Deep Tech de cinco anos nem renderer, editor, IA, acustica, SDF ou voxel no nucleo horizontal.
 
@@ -9,9 +9,9 @@ O plano fecha o NeoEng D-Core como produto independente. Nao inclui o programa D
 
 Fonte normativa, padrao de conclusao, matriz de responsabilidade, 36 requisitos, 20 claims, 41 limitacoes, matriz de asseguracao, verificadores fail-closed e regressao do nucleo preservado.
 
-## CS009 - Fechamento integral do escopo ECS Y1-O2
+## CS009 - Fechamento integral do escopo ECS Y1-O2 — CONCLUIDO EM 1.9.0
 
-Fechar alocacao geral, arena, copy-on-write e manutencao de indices como uma capacidade unica, com dados brutos, schemas, verificador independente, adulteracao e qualificacao fail-closed.
+Alocacao geral, arena, copy-on-write e manutencao de indices foram fechados como uma capacidade unica de evidencia, com streams brutos versionados, identidade de fonte/build/configuracao, verificador independente, autotestes de adulteracao e decisao fail-closed. A qualificacao nativa P1 continua separada e `UNQUALIFIED` ate satisfazer hardware, amostras, termica, clocks, timing e zero-alocacao.
 
 ## CS010 - Determinismo ponta a ponta e referencia distribuida
 

@@ -1,0 +1,15 @@
+{
+  "ecs_maintenance_p99_ns": 5200,
+  "ecs_samples": 32,
+  "environment_id": "CS009-R2-LINUX-VIRTUAL-P0",
+  "evidence_disposition": "incomplete",
+  "execution_kind": "virtualized",
+  "failure_mask": 262274,
+  "independent_verification_required": true,
+  "profile": "P0",
+  "project_version": "1.9.0",
+  "rollback_p99_ns": 1202243,
+  "rollback_samples": 32,
+  "schema": "neoeng.dcore.hardware-qualification.v2",
+  "status": "unqualified"
+}

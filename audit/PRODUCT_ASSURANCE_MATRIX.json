@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-assurance-matrix.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "policy": {
     "meta_validation_is_not_capability_proof": true,
     "complete_requires_existing_evidence_paths": true,
@@ -218,13 +218,16 @@
     },
     {
       "requirement_id": "DCORE-ECS-002",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS009",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -234,18 +237,27 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
-      "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
+      "current_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/contracts/ECS_SCOPE_EVIDENCE_V1.md",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/ecs-scope-verifier-self-test.log"
+      ],
+      "closure_rule": "Implementation closure requires positive, negative, fail-closed, adversarial, integrity, regression and reproducibility evidence; native performance/zero-allocation qualification remains a separate gate."
     },
     {
       "requirement_id": "DCORE-ECS-003",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS009",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -255,18 +267,25 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
-      "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
+      "current_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json"
+      ],
+      "closure_rule": "Implementation closure requires positive, negative, fail-closed, adversarial, integrity, regression and reproducibility evidence; native performance/zero-allocation qualification remains a separate gate."
     },
     {
       "requirement_id": "DCORE-ECS-004",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS009",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -276,8 +295,12 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
-      "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
+      "current_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json"
+      ],
+      "closure_rule": "Implementation closure requires positive, negative, fail-closed, adversarial, integrity, regression and reproducibility evidence; native performance/zero-allocation qualification remains a separate gate."
     },
     {
       "requirement_id": "DCORE-NUM-001",
@@ -607,24 +630,30 @@
       "requirement_id": "DCORE-GOV-001",
       "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
-      "closure_stage": "CS008",
+      "closure_stage": "CS009",
       "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
         "fail_closed",
         "regression",
-        "reproducibility"
+        "reproducibility",
+        "adversarial",
+        "fault_injection",
+        "recovery",
+        "long_run",
+        "cross_compiler",
+        "cross_architecture_if_applicable",
+        "independent_verification",
+        "evidence_integrity"
       ],
       "current_evidence": [
         "scripts/verify_product_contract.py",
-        "scripts/verify_product_assurance.py",
-        "neoeng_product_contract_verify",
-        "neoeng_product_contract_self_test",
-        "neoeng_product_assurance_verify",
-        "neoeng_product_assurance_self_test"
+        "scripts/verify_host_sdk_boundary.py",
+        "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json",
+        "docs/changesets/009/CHANGESET.md"
       ],
-      "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
+      "closure_rule": "Implementation closure requires positive, negative, fail-closed, adversarial, integrity, regression and reproducibility evidence; native performance/zero-allocation qualification remains a separate gate."
     },
     {
       "requirement_id": "DCORE-REL-001",

@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.hardware-profile-registry.v2",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "warning": "Template only. No profile is qualified until a native physical campaign is complete and independently verified.",
   "profiles": [
     {
@@ -56,7 +56,10 @@
       "environment_id": "",
       "requirements": {
         "native_physical": true,
-        "architecture": ["aarch64", "arm64"],
+        "architecture": [
+          "aarch64",
+          "arm64"
+        ],
         "determinism": true,
         "serialization": true,
         "performance_reported_separately": true

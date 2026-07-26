@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-closure-backlog.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "known_limitations_count": 41,
   "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
   "items": [
@@ -9,9 +9,16 @@
       "title": "Complete ECS Y1-O2 evidence scope is incomplete.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS009",
-      "normative_decision": "Close general allocation, arena, copy-on-write and index-maintenance evidence as one independently verifiable capability; native P1 qualification remains separate."
+      "normative_decision": "Closed in 1.9.0 with generated four-stream evidence and independent semantic verification; native P1 timing and zero-allocation qualification remain separate.",
+      "closure_evidence": [
+        "docs/contracts/ECS_SCOPE_EVIDENCE_V1.md",
+        "scripts/qualification/verify_ecs_scope_evidence.py",
+        "apps/ecs_maintenance_benchmark.cpp",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/ecs-scope-verifier-self-test.log"
+      ]
     },
     {
       "limitation_id": "LIM-002",
@@ -171,9 +178,15 @@
       "title": "Year-1 candidate contract and Host ABI freeze language conflict.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS009",
-      "normative_decision": "Reconcile the public Host C ABI 1.0 with the internal Year-1 replay/schema candidate contract by ADR, versioning rules and migration policy."
+      "normative_decision": "Closed in 1.9.0: Host C ABI 1.0 is public binary ABI; Year-1 contract constants govern internal replay/schema and source-level C++ compatibility.",
+      "closure_evidence": [
+        "docs/records/ADR-009-YEAR1-CONTRACT-VS-HOST-ABI.md",
+        "include/neoeng/core/year1_contract.hpp",
+        "docs/contracts/HOST_SDK_C_ABI_V1.md",
+        "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json"
+      ]
     },
     {
       "limitation_id": "LIM-020",

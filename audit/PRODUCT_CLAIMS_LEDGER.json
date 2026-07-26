@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-claims-ledger.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "status_vocabulary": [
     "implemented",
     "verified",
@@ -17,7 +17,7 @@
       "claim_id": "CLAIM-SCOPE-001",
       "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
       "status": "verified",
-      "scope": "product governance baseline 1.8.0",
+      "scope": "product governance baseline 1.9.0",
       "evidence": [
         "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
       ],
@@ -91,10 +91,12 @@
       "claim_id": "CLAIM-ECS-001",
       "statement": "ECS maintenance is at or below 0.1 ms/frame with zero critical allocation on P1.",
       "status": "planned",
-      "scope": "index-maintenance workload exists; complete ECS evidence scope and native P1 qualification remain open",
+      "scope": "complete four-stream evidence pipeline is verified; native P1 p99 and zero-allocation qualification have not been executed or achieved",
       "evidence": [
+        "docs/contracts/ECS_SCOPE_EVIDENCE_V1.md",
         "audit/DEFERRED_VALIDATION_GATES.json",
-        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/p1-virtualized-campaign-summary.json"
       ],
       "public_use": "prohibited_as_current_result"
     },

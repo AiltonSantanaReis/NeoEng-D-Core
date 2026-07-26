@@ -1,6 +1,6 @@
 {
   "project": "NeoEng D-Core",
-  "audit_date": "2026-07-22",
+  "audit_date": "2026-07-25",
   "source_archive": {
     "name": "v0342.zip",
     "sha256": "1bb5276eca6e48a8a097eb1316805b19baed4db6c2b9d4d9850ceded77cdf353"
@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; 1.8.0 proportional Windows regression pending",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; proportional 1.9.0 Windows regression pending",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.8.0",
+  "package_version": "1.9.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
@@ -191,5 +191,42 @@
     "windows_1_8_execution": "not performed",
     "linux_gcc_clang_execution": "performed",
     "commercial_product_complete": false
+  },
+  "product_scope_governance": {
+    "normative_source": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+    "scope": "independent NeoEng D-Core product derived from consolidated Year-1 work; not the five-year engine program",
+    "precedence_index": "audit/SOURCE_OF_TRUTH_INDEX.json"
+  },
+  "changeset_009": {
+    "base_version": "1.8.0",
+    "target_version": "1.9.0",
+    "scope": "complete Y1-O2 ECS evidence contract, generated four-stream evidence, independent verification and Year-1/Host ABI governance reconciliation",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "host_c_abi_version": "1.0 unchanged",
+    "ecs_evidence_scope": "complete_in_1.9.0",
+    "p1_native_qualification": "not performed; timing and zero-allocation gates remain pending",
+    "linux_gcc_ctest": "64/64 passed in three runs; 10.36 s, 9.13 s and 9.25 s",
+    "linux_clang_ctest": "64/64 passed in three runs; 9.06 s, 7.59 s and 7.51 s",
+    "clang_asan_ubsan_selected_scope": "17/17 exact selected scope passed in 2.68 s after clean isolated 80-step rebuild; LeakSanitizer disabled; initial build-directory collision retained separately",
+    "p0_virtualized_campaign": "unqualified; incomplete; independently verified; ECS p99 5200 ns; rollback p99 1202243 ns",
+    "p1_virtualized_campaign": "unqualified; incomplete; profile incompatible; allocation gate failed; independently verified; ECS p99 6763 ns; rollback p99 1205388 ns",
+    "windows_1_9_execution": "not performed",
+    "arm64_execution": "not performed",
+    "commercial_product_complete": false,
+    "base_commit": "5879f9d9ac35e96625a763ad6b46a556b2f08cfd",
+    "base_manifest_sha256": "9c6e3a14f23026b6e85c8a2b43393f8b0d43bff61051312e431228608645ddc2",
+    "base_product_contract_verifier_sha256": "960feaa5d910e82007bf63448bfa44b7e18fdf3a33ae50cc7361ba97f37bcf3b",
+    "complete_tree_transport_archive": "NeoEng-D-Core.rar",
+    "complete_tree_transport_sha256": "559d3ef704aa722a43f7d430041c4a752a4a3bbf544cbd9de532b705d9582e42",
+    "reconstruction_policy": "Functional CS009 delta reapplied to exact corrected 1.8.0 baseline; manifest generator revised to component-wise cross-platform ordering; all package identities regenerated.",
+    "manifest_generator_revision": {
+      "reason": "WindowsPath ordering diverged from Linux PosixPath ordering in the prior rebuilt package",
+      "implementation": "tuple(path.relative_to(root).parts) with as_posix output and byte-exact UTF-8/LF I/O",
+      "linux_validation": "passed",
+      "windows_path_model_validation": "passed",
+      "physical_windows_validation": "pending"
+    }
   }
 }

@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.8.0"
+EXPECTED_VERSION = "1.9.0"
 REQUIREMENTS = ROOT / "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"
 MATRIX = ROOT / "audit/PRODUCT_ASSURANCE_MATRIX.json"
 CAMPAIGNS = ROOT / "audit/PRODUCT_TEST_CAMPAIGNS.json"

@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.deferred-validation-gates.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "policy": {
     "native_validation_pending_is_not_an_implementation_failure": true,
     "virtualized_results_are_engineering_baselines": true,
@@ -11,9 +11,9 @@
       "gate_id": "NATIVE-WIN-X64-001",
       "category": "native_validation_pending",
       "target": "Windows x86_64 physical",
-      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit; the 1.8.0 governance-only baseline still requires proportional Windows regression before release publication.",
-      "implementation_status": "1.7.0 physical Windows core regression independently verified; 1.8.0 regression pending",
-      "execution_status": "executed_for_1.7.0_not_1.8.0",
+      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit; the 1.9.0 baseline requires proportional Windows regression before release publication.",
+      "implementation_status": "1.7.0 physical Windows core regression independently verified; 1.9.0 proportional Windows regression pending",
+      "execution_status": "executed_for_1.7.0_not_1.9.0",
       "required_profile": "P1 or P4",
       "required_artifacts": [
         "build-log",
@@ -70,7 +70,7 @@
       "category": "native_validation_pending",
       "target": "P1 NVIDIA target hardware",
       "reason": "Contractual rollback and ECS limits require execution on the designated P1 hardware.",
-      "implementation_status": "qualification_harness_v2_ready; complete_ecs_scope_artifacts_required",
+      "implementation_status": "qualification_harness_v2_ready; ecs_scope_evidence_v1_complete; native execution and performance/allocation gates pending",
       "execution_status": "not_executed",
       "required_profile": "P1",
       "required_artifacts": [
@@ -133,7 +133,7 @@
       "gate_id": "PROFILE-P4-8GB-001",
       "category": "native_validation_pending",
       "target": "P4 8 GB compatibility hardware",
-      "reason": "Historical physical evidence is retained as provenance, but the current 1.7.0 qualification campaign has not been executed.",
+      "reason": "Historical physical evidence is retained as provenance, but the current 1.9.0 qualification campaign has not been executed.",
       "implementation_status": "qualification_harness_v2_ready; historical_evidence_retained_as_provenance_only",
       "execution_status": "not_executed",
       "required_profile": "P4",
@@ -215,18 +215,19 @@
     },
     {
       "gate_id": "ECS-SCOPE-COMPLETE-001",
-      "category": "implementation_gap",
+      "category": "native_validation_pending",
       "target": "Complete Y1-O2 ECS evidence scope for P1",
-      "reason": "The deterministic sparse ComponentSoA index-maintenance benchmark is automated, but accepted evidence mappings for general allocation, arena behavior and copy-on-write behavior are not yet consolidated into the qualification campaign.",
-      "implementation_status": "partial_automation; index_maintenance_ready; general_allocation_arena_and_copy_on_write_mapping_pending",
-      "execution_status": "not_complete",
+      "reason": "The complete Y1-O2 evidence contract and independent verifier are implemented in 1.9.0. P1 still requires native execution and must satisfy timing and zero-allocation gates.",
+      "implementation_status": "complete_in_1.9.0; four_generated_streams_and_independent_verifier",
+      "execution_status": "native_p1_campaign_not_executed",
       "required_profile": "P1",
       "required_artifacts": [
-        "ecs-general-allocation-evidence",
-        "ecs-arena-evidence",
-        "ecs-copy-on-write-evidence",
-        "ecs-index-maintenance-raw-samples",
-        "ecs-scope-review"
+        "ecs-benchmark/summary.json",
+        "ecs-benchmark/ecs_scope_verification.json",
+        "ecs-benchmark/general_allocation_samples.csv",
+        "ecs-benchmark/arena_samples.csv",
+        "ecs-benchmark/copy_on_write_samples.csv",
+        "ecs-benchmark/index_maintenance_samples.csv"
       ],
       "blocking_for_current_changeset": false,
       "blocking_for_profile_qualification": true

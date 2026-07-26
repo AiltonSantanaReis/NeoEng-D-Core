@@ -1,0 +1,28 @@
+{
+  "schema": "neoeng.dcore.authorized-source-modifications.v1",
+  "project": "NeoEng D-Core",
+  "policy": "Every divergence from the supplied Year-1 source corpus must be explicitly listed with original and current SHA-256; unlisted divergence fails isolation validation.",
+  "entries": [
+    {
+      "path": "include/neoeng/core/rollback.hpp",
+      "original_source_sha256": "7cbeafa47f2f3c3b3148e7579929bfa781fe54964fbb24dce4432255fffa21ec",
+      "authorized_changeset": "002",
+      "reason": "add explicit restore_checkpoint API for host-acknowledged recovery",
+      "current_sha256": "a15ffda453ba4c2ce4955f4313215caad1bfafd55296ab3f36f6479e75beacf6"
+    },
+    {
+      "path": "include/neoeng/core/year1_contract.hpp",
+      "original_source_sha256": "642aa5c557ba6072c186343f4b6eda70e4e1d818cce0431f12c32d614824a866",
+      "authorized_changeset": "009",
+      "reason": "reconcile the internal Year-1 replay/schema source contract with the separately versioned public Host C ABI without changing canonical state or transition semantics",
+      "current_sha256": "44bbd48ff8765799ad19a00104222689faad94115fd90ceb84a5ddf063a59dab"
+    },
+    {
+      "path": "src/rollback.cpp",
+      "original_source_sha256": "6bf6a3244d9c50979c34a4761441f22cbc399f24b10232e78b6e26dbfbdb6214",
+      "authorized_changeset": "002",
+      "reason": "implement deterministic restore of an existing authorized checkpoint",
+      "current_sha256": "b3d8b50b97772182973aa5429a97cefaf8165047355e3914279ebe095a0e5bce"
+    }
+  ]
+}

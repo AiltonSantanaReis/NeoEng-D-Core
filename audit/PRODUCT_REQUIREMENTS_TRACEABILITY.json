@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-requirements-traceability.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "status_vocabulary": [
     "complete",
     "partial",
@@ -149,36 +149,53 @@
       "requirement_id": "DCORE-ECS-002",
       "description": "General-allocation evidence is semantically mapped and independently verified.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "apps/ecs_maintenance_benchmark.cpp",
+        "scripts/qualification/verify_ecs_scope_evidence.py",
         "scripts/qualification/run_qualification_campaign.py"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/contracts/ECS_SCOPE_EVIDENCE_V1.md",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json",
+        "docs/changesets/009/evidence/ecs-scope-verifier-self-test.log"
+      ],
       "closure_stage": "CS009"
     },
     {
       "requirement_id": "DCORE-ECS-003",
       "description": "Arena behavior evidence is semantically mapped and independently verified.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "apps/ecs_maintenance_benchmark.cpp",
-        "include/neoeng/core/epoch_arena.hpp"
+        "include/neoeng/core/epoch_arena.hpp",
+        "scripts/qualification/verify_ecs_scope_evidence.py"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json"
+      ],
       "closure_stage": "CS009"
     },
     {
       "requirement_id": "DCORE-ECS-004",
       "description": "Copy-on-write evidence is semantically mapped and independently verified.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "apps/ecs_maintenance_benchmark.cpp",
-        "include/neoeng/core/component_world.hpp"
+        "include/neoeng/core/component_world.hpp",
+        "scripts/qualification/verify_ecs_scope_evidence.py"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_ecs_scope_evidence_verifier_smoke",
+        "neoeng_ecs_scope_evidence_verifier_self_test",
+        "docs/changesets/009/evidence/p1-ecs-scope-verification.json"
+      ],
       "closure_stage": "CS009"
     },
     {
@@ -382,23 +399,17 @@
       "responsibility": "product_module_mandatory",
       "status": "complete",
       "implementation": [
-        "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
-        "docs/governance/PRODUCT_COMPLETION_STANDARD.md",
-        "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json",
-        "audit/PRODUCT_CLAIMS_LEDGER.json",
-        "audit/PRODUCT_CLOSURE_BACKLOG.json",
-        "scripts/verify_product_contract.py",
-        "scripts/verify_product_assurance.py"
+        "docs/records/ADR-009-YEAR1-CONTRACT-VS-HOST-ABI.md",
+        "include/neoeng/core/year1_contract.hpp",
+        "modules/host_sdk/include/neoeng/dcore_host.h"
       ],
       "tests_or_evidence": [
         "scripts/verify_product_contract.py",
-        "scripts/verify_product_assurance.py",
-        "neoeng_product_contract_verify",
-        "neoeng_product_contract_self_test",
-        "neoeng_product_assurance_verify",
-        "neoeng_product_assurance_self_test"
+        "scripts/verify_host_sdk_boundary.py",
+        "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json",
+        "docs/changesets/009/CHANGESET.md"
       ],
-      "closure_stage": "CS008"
+      "closure_stage": "CS009"
     },
     {
       "requirement_id": "DCORE-REL-001",

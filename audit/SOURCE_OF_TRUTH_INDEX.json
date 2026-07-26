@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.source-of-truth-index.v1",
-  "project_version": "1.8.0",
+  "project_version": "1.9.0",
   "required_for_every_changeset": true,
   "primary_document": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
   "precedence": [
@@ -36,9 +36,12 @@
   "conflict_policy": "Higher-precedence documents control. Conflicts stop the affected claim or implementation until reconciled by a ChangeSet.",
   "scope_statement": "NeoEng D-Core is an independent product based on consolidated Year-1 technical work and is not the five-year engine program.",
   "authoritative_input_baseline": {
-    "version": "1.7.0",
-    "archive": "NeoEng-D-Core-1.7.0-Authoritative-Baseline.zip",
-    "archive_sha256": "4cba06b214c9f224a216ebb86b29f371b557bb3ee21f6d404d9f048fa602b2c0",
-    "tested_commit": "fb8362602e1b3f6530d3efe8733bc76fc6de9f3e"
+    "version": "1.8.0",
+    "git_commit": "5879f9d9ac35e96625a763ad6b46a556b2f08cfd",
+    "manifest_sha256": "9c6e3a14f23026b6e85c8a2b43393f8b0d43bff61051312e431228608645ddc2",
+    "product_contract_verifier_sha256": "960feaa5d910e82007bf63448bfa44b7e18fdf3a33ae50cc7361ba97f37bcf3b",
+    "transport_archive": "NeoEng-D-Core.rar",
+    "transport_archive_sha256": "559d3ef704aa722a43f7d430041c4a752a4a3bbf544cbd9de532b705d9582e42",
+    "transport_note": "User-supplied complete working-tree transport; baseline authority is the commit plus manifest and verifier hashes."
   }
 }
