@@ -19,6 +19,8 @@ Close the Y1-O2 evidence-completeness gap without changing canonical state or tr
 
 Evidence completeness is deliberately separate from qualification. A complete report may prove that allocation occurred and must then fail the allocation gate instead of being mislabeled as incomplete evidence.
 
+Hardware profile constraints are likewise separate from general project compatibility. P1 and P2 describe named reference targets for comparable campaigns; they are not universal minimum system requirements. Results produced on another recorded machine remain valid for that exact environment, but cannot be extrapolated to machines with nominally lower or higher specifications.
+
 ## Existing capabilities confirmed before implementation
 
 The project already contained the ECS workload, arena implementation, copy-on-write behavior, maintenance timing, P0–P4 qualification harness and fail-closed decision engine. They were reused. This ChangeSet did not create duplicate ECS, rollback, hashing, state, qualification or Host SDK subsystems.

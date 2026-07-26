@@ -78,6 +78,8 @@ ctest --test-dir build/windows-clang-release -R "operational_hardening|network_p
 
 Para registrar uma qualificação de hardware no Windows, use `scripts/windows/qualify-hardware-profile.ps1`. O script recusa aprovação quando o baseline está incompleto, o ambiente não coincide ou as medições obrigatórias estão ausentes. Os perfis permanecem `UNQUALIFIED` até campanha em hardware físico.
 
+Os perfis P0–P4 são alvos de medição e comparação, não requisitos mínimos universais para executar o NeoEng D-Core. Um resultado descreve somente o ambiente registrado — CPU, GPU, memória, armazenamento, Windows, driver, energia e condições observadas. Máquinas diferentes, inclusive mais simples ou mais potentes, podem produzir resultados melhores ou piores; qualquer comparação exige uma nova execução e não pode ser inferida apenas pelas especificações.
+
 
 ## ChangeSet 002 — sessão autenticada e recuperação formal
 
@@ -195,7 +197,7 @@ O Host SDK recebe comandos confiáveis de um adapter no mesmo processo; dados de
 
 O benchmark ECS produz quatro streams aceitos pelo contrato `neoeng.dcore.ecs-scope-evidence.v1`: alocação geral, arena, copy-on-write e manutenção de índices. `scripts/qualification/verify_ecs_scope_evidence.py` recalcula sem confiar no benchmark as sequências, percentis, alocações, capacidade/overflow, reconstrução copy-on-write, hashes e vínculos de identidade.
 
-A presença do pipeline completo não promove automaticamente o perfil P1. Campanhas sem hardware nativo, amostras mínimas, térmica, clocks ou zero-alocação permanecem `UNQUALIFIED`.
+A presença do pipeline completo não promove automaticamente o perfil P1. Campanhas sem hardware nativo, amostras mínimas, térmica, clocks ou zero-alocação permanecem `UNQUALIFIED`. Isso limita apenas a declaração de qualificação do perfil nomeado; não transforma a classe de hardware P1 em requisito para uso, compatibilidade ou testes do projeto.
 
 ### Manifest portability correction
 
