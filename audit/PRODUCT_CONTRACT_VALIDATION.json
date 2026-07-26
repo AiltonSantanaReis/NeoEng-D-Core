@@ -1,27 +1,25 @@
 {
   "schema": "neoeng.dcore.product-contract-validation.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "6f8c14cada119585489a9487bf2ddd984015c566ca9153e34036d3d9f1490d8e",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "437febdd3f932ef8e9056fee5b5f7da1707e1010a33480bca98a7533a45c48dc",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "3e8c5ea8a6804adeb7cb2c0e95445bb57af01495649ef679679dfc695d9236bd",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "8203658f2a54359092e502a16db43ea6fd8eb9889814056ef2b793512ed854d9",
-    "audit/DEFERRED_VALIDATION_GATES.json": "63e54d5a98d199d7a91774e8716611b731b65c2a36c68a48de7c79d2eaf26cb0",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "a3cd8f629a9a1e413bd0f1cca03b833cd0b0b062fb5a9404e68d8100860bf4cf",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "12d27a4822470f2a577d9072fc593323f895bbc71a65a9c3eafe8bf779995615",
-    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "a5aefbecbd35f49894e9ea7b89d8785cf712eec7f6ef33fb4d286716110d34c4"
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "ffaa38f045ef9bc1a0e25fd5955f46a10bf8e242dfd1b99e138586b80013e36d",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "854b508cb4be635fa89a0bf63c925cb0ab3715a56c5c1228b85d07549fee24d1",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "8a273c0fa32d570a7ae83b40a7c2f0028c4cb3e971826360858fbe5962366e0f",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "234cfa72519f468def19cbe6f82576d6cc3e88c72f14fc05062693cdbec689f5",
+    "audit/DEFERRED_VALIDATION_GATES.json": "df409540d14c151cc2231929551caa48fe7fc85786646472b3905a33120595de",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "eca91d2a5058ac084d708f03a4cf27b427eddb6f9dcffbb207624f5e15ed431d",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "68f9ad72b9a7630dbe0b5b0aaa3d1428f0e3179e921ac53972f3e4bfadedd913",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "35dd6c29c54aa63ff8a82f3c6feac17815c1a4196db50f15bae215d2570c03ca"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 18,
-    "open_internal_limitations": 23
+    "open_internal_requirements": 16,
+    "open_internal_limitations": 20
   },
   "open_internal_requirement_ids": [
-    "DCORE-DIST-001",
-    "DCORE-NET-002",
     "DCORE-NUM-001",
     "DCORE-NUM-002",
     "DCORE-NUM-003",
@@ -43,15 +41,12 @@
     "LIM-002",
     "LIM-003",
     "LIM-004",
-    "LIM-005",
     "LIM-006",
     "LIM-008",
     "LIM-011",
     "LIM-016",
-    "LIM-020",
     "LIM-021",
     "LIM-022",
-    "LIM-023",
     "LIM-024",
     "LIM-026",
     "LIM-027",
@@ -65,5 +60,5 @@
     "LIM-036"
   ],
   "commercial_ready": false,
-  "reason": "CS009 closes the complete ECS evidence scope and contract reconciliation; mandatory technical, native and external requirements remain open."
+  "reason": "CS010 closes the two-instance reference transport and reconciliation scope while production transport, native ARM64, other mandatory technical work and external assurance remain open."
 }

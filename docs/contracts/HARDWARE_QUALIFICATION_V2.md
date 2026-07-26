@@ -36,7 +36,7 @@ Virtualized and containerized campaigns are always `unqualified`. A complete one
 
 ## Complete ECS evidence scope for P1
 
-The project plan requires the Y1-O2 metric to distinguish general allocation, arena, copy-on-write and index maintenance. NeoEng D-Core 1.9.0 implements the accepted `neoeng.dcore.ecs-scope-evidence.v1` contract.
+The project plan requires the Y1-O2 metric to distinguish general allocation, arena, copy-on-write and index maintenance. NeoEng D-Core 1.10.0 preserves the accepted `neoeng.dcore.ecs-scope-evidence.v1` contract implemented in 1.9.0.
 
 The campaign itself generates all four streams from one execution and invokes `scripts/qualification/verify_ecs_scope_evidence.py`. User-supplied candidate files are rejected. The verifier recomputes sample counts, percentiles, cross-stream mappings, allocation-probe calibration, arena overflow and COW/index semantics from raw CSV files.
 

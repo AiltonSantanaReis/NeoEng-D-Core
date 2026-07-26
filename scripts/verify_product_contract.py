@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import hashlib
 import json
 import re
@@ -11,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.9.0"
+EXPECTED_VERSION = "1.10.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -73,6 +74,16 @@ def cmake_version(root: Path) -> str:
     return match.group(1)
 
 
+@functools.lru_cache(maxsize=1)
+def cmake_registry_text(root: Path) -> str:
+    excluded = {"build", ".git", ".deps"}
+    return "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for path in root.rglob("CMakeLists.txt")
+        if not excluded.intersection(path.relative_to(root).parts)
+    )
+
+
 def evidence_reference_exists(root: Path, reference: str) -> bool:
     if not reference or not isinstance(reference, str):
         return False
@@ -81,8 +92,7 @@ def evidence_reference_exists(root: Path, reference: str) -> bool:
         return True
     # Simple identifiers are allowed only when they are registered in CMake/CTest.
     if "/" not in reference and "\\" not in reference and "." not in reference:
-        cmake = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in root.rglob("CMakeLists.txt"))
-        return reference in cmake
+        return reference in cmake_registry_text(root)
     return False
 
 
@@ -166,8 +176,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.9.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.9.0 baseline")
+    if "baseline 1.10.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.10.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -339,6 +349,22 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     if ecs_gate.get("category") != "native_validation_pending" or ecs_gate.get("blocking_for_profile_qualification") is not True:
         errors.append("ECS implementation closure does not preserve the native P1 qualification gate")
 
+    # CS010 closes the internal reference-distribution scope without elevating
+    # native ARM64 or production-transport claims.
+    for rid in ("DCORE-DIST-001", "DCORE-NET-002"):
+        if req_by_id.get(rid, {}).get("status") != "complete":
+            errors.append(f"CS010 required closure is not complete: {rid}")
+    for lid in ("LIM-005", "LIM-020", "LIM-023"):
+        row = backlog_by_id.get(lid, {})
+        if row.get("status") != "closed" or not row.get("closure_evidence"):
+            errors.append(f"CS010 limitation closure is incomplete: {lid}")
+    distributed_claim = claims_by_id.get("CLAIM-DIST-001", {})
+    if (
+        distributed_claim.get("status") != "verified"
+        or "loopback" not in str(distributed_claim.get("scope", "")).lower()
+    ):
+        errors.append("CS010 distributed claim exceeds or omits its reference-loopback scope")
+
     return errors
 
 
@@ -367,7 +393,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS009 closes the complete ECS evidence scope and contract reconciliation; mandatory technical, native and external requirements remain open.",
+        "reason": "CS010 closes the two-instance reference transport and reconciliation scope while production transport, native ARM64, other mandatory technical work and external assurance remain open.",
     }
 
 
@@ -386,7 +412,7 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
     add("close limitation without evidence", lambda d: next(r for r in d["backlog"]["items"] if r["limitation_id"] == "LIM-001").update(closure_evidence=[]))
     add("elevate ARM64 claim", lambda d: next(r for r in d["claims"]["claims"] if r["claim_id"] == "CLAIM-XARCH-001").update(status="verified"))
     add("wrong baseline version", lambda d: d["index"].update(project_version="1.8.0"))
-    add("missing backlog stage", lambda d: [r.update(closure_stage="CS999") for r in d["backlog"]["items"] if r.get("closure_stage") == "CS010"])
+    add("missing backlog stage", lambda d: [r.update(closure_stage="CS999") for r in d["backlog"]["items"] if r.get("closure_stage") == "CS011"])
 
     for name, mutated in mutations:
         if not validate_documents(root, mutated):

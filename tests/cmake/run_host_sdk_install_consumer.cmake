@@ -1,8 +1,10 @@
 if(NOT DEFINED NEOENG_SOURCE_DIR OR NOT DEFINED NEOENG_BUILD_DIR)
   message(FATAL_ERROR "NEOENG_SOURCE_DIR and NEOENG_BUILD_DIR are required")
 endif()
-set(prefix "${NEOENG_BUILD_DIR}/host-sdk-install-prefix")
-set(consumer_build "${NEOENG_BUILD_DIR}/host-sdk-consumer-build")
+# Keep the nested consumer build short enough for Windows rc.exe and Ninja.
+# The repository path may already be close to MAX_PATH and may contain UTF-8.
+set(prefix "${NEOENG_SOURCE_DIR}/tmp/sdk-i")
+set(consumer_build "${NEOENG_SOURCE_DIR}/tmp/sdk-c")
 file(REMOVE_RECURSE "${prefix}" "${consumer_build}")
 
 set(config_args)
@@ -39,6 +41,23 @@ if(WIN32)
             break()
         endif()
     endforeach()
+
+    if(
+        _neoeng_vcpkg_triplet_prefix STREQUAL ""
+        AND DEFINED NEOENG_BOOST_DIR
+        AND IS_DIRECTORY "${NEOENG_BOOST_DIR}"
+    )
+        get_filename_component(
+            _neoeng_vcpkg_share_prefix
+            "${NEOENG_BOOST_DIR}"
+            DIRECTORY
+        )
+        get_filename_component(
+            _neoeng_vcpkg_triplet_prefix
+            "${_neoeng_vcpkg_share_prefix}"
+            DIRECTORY
+        )
+    endif()
 
     if(_neoeng_vcpkg_triplet_prefix STREQUAL "")
         message(
@@ -80,6 +99,13 @@ set(configure_command
   "-DCMAKE_PREFIX_PATH=${prefix}"
   "-DCMAKE_C_COMPILER=${NEOENG_C_COMPILER}"
   "-DCMAKE_CXX_COMPILER=${NEOENG_CXX_COMPILER}")
+if(
+  DEFINED NEOENG_TEST_CONFIG
+  AND NOT NEOENG_TEST_CONFIG STREQUAL ""
+  AND NOT NEOENG_CMAKE_GENERATOR MATCHES "Visual Studio|Xcode|Multi-Config"
+)
+  list(APPEND configure_command "-DCMAKE_BUILD_TYPE=${NEOENG_TEST_CONFIG}")
+endif()
 execute_process(
   COMMAND ${configure_command}
   RESULT_VARIABLE configure_result
@@ -170,4 +196,42 @@ execute_process(
 if(NOT run_result EQUAL 0)
   message(FATAL_ERROR "installed consumer failed\n${run_output}\n${run_error}")
 endif()
-message(STATUS "installed NeoEng D-Core host SDK consumer passed")
+
+set(distributed_executable_candidates)
+if(WIN32)
+  if(DEFINED NEOENG_TEST_CONFIG AND NOT NEOENG_TEST_CONFIG STREQUAL "")
+    list(APPEND distributed_executable_candidates
+      "${consumer_build}/${NEOENG_TEST_CONFIG}/neoeng_dcore_distributed_installed_consumer.exe")
+  endif()
+  list(APPEND distributed_executable_candidates
+    "${consumer_build}/neoeng_dcore_distributed_installed_consumer.exe")
+else()
+  if(DEFINED NEOENG_TEST_CONFIG AND NOT NEOENG_TEST_CONFIG STREQUAL "")
+    list(APPEND distributed_executable_candidates
+      "${consumer_build}/${NEOENG_TEST_CONFIG}/neoeng_dcore_distributed_installed_consumer")
+  endif()
+  list(APPEND distributed_executable_candidates
+    "${consumer_build}/neoeng_dcore_distributed_installed_consumer")
+endif()
+set(distributed_executable "")
+foreach(candidate IN LISTS distributed_executable_candidates)
+  if(EXISTS "${candidate}")
+    set(distributed_executable "${candidate}")
+    break()
+  endif()
+endforeach()
+if(distributed_executable STREQUAL "")
+  message(FATAL_ERROR "installed distributed-reference consumer executable was not found")
+endif()
+execute_process(
+  COMMAND "${distributed_executable}"
+  RESULT_VARIABLE distributed_run_result
+  OUTPUT_VARIABLE distributed_run_output
+  ERROR_VARIABLE distributed_run_error)
+if(NOT distributed_run_result EQUAL 0)
+  message(FATAL_ERROR
+    "installed distributed-reference consumer failed\n"
+    "${distributed_run_output}\n${distributed_run_error}")
+endif()
+file(REMOVE_RECURSE "${prefix}" "${consumer_build}")
+message(STATUS "installed NeoEng D-Core host SDK and distributed-reference consumers passed")

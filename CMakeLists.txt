@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.9.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.10.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -7,6 +7,8 @@ option(NEOENG_DCORE_BUILD_FULL_TOOLSET "Build all portable Year-1 historical too
 option(NEOENG_DCORE_BUILD_RESEARCH_TOOLS "Build Year-1 v0.28 gate/research tools" ON)
 option(NEOENG_DCORE_BUILD_VIEW_LAB "Build the optional read-only visual diagnostics companion" OFF)
 option(NEOENG_DCORE_BUILD_HOST_SDK "Build the stable C host integration boundary" ON)
+option(NEOENG_DCORE_BUILD_DISTRIBUTED_REFERENCE
+  "Build the CS010 real-transport distributed reference module" ON)
 option(NEOENG_DCORE_ENABLE_INSTALL "Enable SDK installation and CMake package export" ON)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -104,6 +106,7 @@ add_library(neoeng_dcore ${NEOENG_DCORE_CORE_SOURCES})
 add_library(NeoEng::DCore ALIAS neoeng_dcore)
 set_target_properties(neoeng_dcore PROPERTIES EXPORT_NAME DCore POSITION_INDEPENDENT_CODE ON)
 target_include_directories(neoeng_dcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_compile_features(neoeng_dcore PUBLIC cxx_std_23)
 if(TARGET Boost::headers)
   target_link_libraries(neoeng_dcore PUBLIC Boost::headers)
 elseif(TARGET Boost::boost)
@@ -373,11 +376,17 @@ endif()
 if(NEOENG_DCORE_BUILD_HOST_SDK)
   add_subdirectory(modules/host_sdk)
 endif()
+if(NEOENG_DCORE_BUILD_DISTRIBUTED_REFERENCE)
+  add_subdirectory(modules/distributed_reference)
+endif()
 
 if(NEOENG_DCORE_ENABLE_INSTALL)
   set(NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore)
   if(TARGET neoeng_dcore_host_sdk)
     list(APPEND NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore_host_sdk)
+  endif()
+  if(TARGET neoeng_dcore_distributed_reference)
+    list(APPEND NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore_distributed_reference)
   endif()
   install(TARGETS ${NEOENG_DCORE_INSTALL_TARGETS}
     EXPORT NeoEngDCoreTargets
@@ -388,6 +397,10 @@ if(NEOENG_DCORE_ENABLE_INSTALL)
   install(DIRECTORY include/neoeng/core DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/neoeng)
   if(TARGET neoeng_dcore_host_sdk)
     install(FILES modules/host_sdk/include/neoeng/dcore_host.h
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/neoeng)
+  endif()
+  if(TARGET neoeng_dcore_distributed_reference)
+    install(DIRECTORY modules/distributed_reference/include/neoeng/
       DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/neoeng)
   endif()
   configure_package_config_file(
@@ -426,9 +439,23 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --check-report)
   add_test(NAME neoeng_product_assurance_self_test
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --self-test)
+  add_test(NAME neoeng_distributed_reference_evidence_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_distributed_reference_evidence.py
+      --self-test)
+  add_test(NAME neoeng_distributed_reference_boundary_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_distributed_reference_boundary.py)
+  add_test(NAME neoeng_distributed_reference_boundary_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_distributed_reference_boundary.py
+      --self-test)
   set_tests_properties(
     neoeng_product_contract_verify neoeng_product_contract_self_test
     neoeng_product_assurance_verify neoeng_product_assurance_self_test
+    neoeng_distributed_reference_evidence_verifier_self_test
+    neoeng_distributed_reference_boundary_verify
+    neoeng_distributed_reference_boundary_self_test
     PROPERTIES LABELS "governance;release-gate;dcore")
 
   add_executable(neoeng_tests tests/test_main.cpp)
@@ -570,6 +597,7 @@ if(BUILD_TESTING AND NEOENG_DCORE_BUILD_HOST_SDK AND NEOENG_DCORE_ENABLE_INSTALL
       -DNEOENG_CMAKE_GENERATOR=${CMAKE_GENERATOR}
       -DNEOENG_C_COMPILER=${CMAKE_C_COMPILER}
       -DNEOENG_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+      -DNEOENG_BOOST_DIR=${Boost_DIR}
       -P ${CMAKE_SOURCE_DIR}/tests/cmake/run_host_sdk_install_consumer.cmake)
   set_tests_properties(neoeng_host_sdk_install_consumer
     PROPERTIES LABELS "smoke;dcore;host-sdk;install")

@@ -19,7 +19,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
-PROJECT_VERSION = "1.9.0"
+PROJECT_VERSION = "1.10.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 

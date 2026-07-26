@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; proportional 1.9.0 Windows regression pending",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; proportional 1.10.0 Windows regression in progress under CS010",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.9.0",
+  "package_version": "1.10.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
@@ -228,5 +228,21 @@
       "windows_path_model_validation": "passed",
       "physical_windows_validation": "pending"
     }
+  },
+  "changeset_010": {
+    "base_version": "1.9.0",
+    "target_version": "1.10.0",
+    "scope": "bounded real UDP loopback transport, domain-neutral replica boundary, two-instance divergence localization and fail-closed reconciliation",
+    "new_companion_target": "NeoEng::DCoreDistributedReference",
+    "dependency_direction": "host/campaign -> distributed reference -> NeoEng::DCore",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "host_c_abi_version": "1.0 unchanged",
+    "consensus_or_multiwriter_added": false,
+    "production_remote_transport_claimed": false,
+    "windows_x86_64_host_local_execution": "performed during CS010 development; immutable campaign evidence recorded separately",
+    "arm64_execution": "not performed; cross-architecture claim remains planned",
+    "commercial_product_complete": false
   }
 }

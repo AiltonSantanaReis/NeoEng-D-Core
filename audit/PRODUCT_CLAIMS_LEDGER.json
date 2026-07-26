@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-claims-ledger.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "status_vocabulary": [
     "implemented",
     "verified",
@@ -17,7 +17,7 @@
       "claim_id": "CLAIM-SCOPE-001",
       "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
       "status": "verified",
-      "scope": "product governance baseline 1.9.0",
+      "scope": "product governance baseline 1.10.0",
       "evidence": [
         "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
       ],
@@ -115,22 +115,26 @@
       "claim_id": "CLAIM-DIV-001",
       "statement": "A requested comparison can locate the first observed divergence through stable hash, SHA-256, Merkle chunk and known semantic component.",
       "status": "verified",
-      "scope": "current canonical Body schema; host must orchestrate comparison",
+      "scope": "current canonical Body schema; CS010 reference coordinator orchestrates fingerprint comparison and DCoreReplicaAdapter invokes semantic localization",
       "evidence": [
         "docs/changesets/005/CHANGESET.md",
-        "tests/observability_support_tests.cpp"
+        "tests/observability_support_tests.cpp",
+        "neoeng_distributed_reference_probe"
       ],
       "public_use": "allowed_with_orchestration_scope"
     },
     {
       "claim_id": "CLAIM-DIST-001",
-      "statement": "The product provides complete distributed synchronization over a real transport.",
-      "status": "planned",
-      "scope": "reference transport/orchestrator not yet complete; consensus is out of scope",
+      "statement": "The product provides a two-instance reference synchronization flow over real UDP loopback transport.",
+      "status": "verified",
+      "scope": "single-authority correction, x86_64 campaign, UDP loopback reference; remote production transport, multiwriter ordering and consensus are out of scope",
       "evidence": [
-        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+        "docs/contracts/DISTRIBUTED_REFERENCE_V1.md",
+        "neoeng_distributed_reference_tests",
+        "neoeng_distributed_reference_probe",
+        "docs/changesets/010/TEST_STATUS.md"
       ],
-      "public_use": "prohibited_as_current_capability"
+      "public_use": "allowed_only_with_reference_loopback_and_single_authority_scope"
     },
     {
       "claim_id": "CLAIM-HASH-001",

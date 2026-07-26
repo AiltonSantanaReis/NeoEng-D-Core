@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-requirements-traceability.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "status_vocabulary": [
     "complete",
     "partial",
@@ -102,9 +102,19 @@
       "requirement_id": "DCORE-DIST-001",
       "description": "Two independent instances can be orchestrated end to end, compared, diverged deliberately and reconciled through a reference module.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "modules/distributed_reference",
+        "docs/contracts/DISTRIBUTED_REFERENCE_V1.md",
+        "docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md"
+      ],
+      "tests_or_evidence": [
+        "neoeng_distributed_reference_tests",
+        "neoeng_distributed_reference_probe",
+        "neoeng_host_sdk_install_consumer",
+        "scripts/verify_distributed_reference_boundary.py",
+        "scripts/qualification/verify_distributed_reference_evidence.py"
+      ],
       "closure_stage": "CS010"
     },
     {
@@ -126,9 +136,19 @@
       "requirement_id": "DCORE-NET-002",
       "description": "A real reference transport and reconnect/backpressure adapter demonstrates the distributed product promise.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "modules/distributed_reference/src/distributed_reference.cpp",
+        "modules/distributed_reference/include/neoeng/distributed_reference.hpp",
+        "docs/contracts/DISTRIBUTED_REFERENCE_V1.md"
+      ],
+      "tests_or_evidence": [
+        "neoeng_distributed_reference_tests",
+        "neoeng_distributed_reference_probe",
+        "neoeng_host_sdk_install_consumer",
+        "scripts/verify_distributed_reference_boundary.py",
+        "scripts/qualification/verify_distributed_reference_evidence.py"
+      ],
       "closure_stage": "CS010"
     },
     {

@@ -4,9 +4,9 @@ Este pacote preserva o **NeoEng D-Core como autoridade canônica** sobre estado 
 
 A fonte normativa obrigatória está em `docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`, apoiada pelos ledgers de máquina em `audit/`. Os documentos originais permanecem como proveniência histórica e não prevalecem quando houver conflito.
 
-## Fonte de verdade e estado atual — ChangeSet 009
+## Fonte de verdade e estado atual — ChangeSet 010
 
-A versão 1.9.0 preserva a governança de fechamento estabelecida na 1.8.0 e fecha o escopo de evidência ECS Y1-O2 sem alterar a autoridade canônica, a transição, o fixed tick, o rollback, a serialização ou os hashes:
+A versão 1.10.0 preserva os fechamentos anteriores e adiciona a referência distribuída sem alterar a autoridade canônica, a transição, o fixed tick, a serialização ou os hashes:
 
 - fonte normativa obrigatória e hierarquia de precedência;
 - 36 requisitos rastreáveis, 20 claims classificados e 41 limitações conhecidas;
@@ -16,7 +16,11 @@ A versão 1.9.0 preserva a governança de fechamento estabelecida na 1.8.0 e fec
 - regra explícita de que meta-verificação não substitui prova técnica da capacidade;
 - fechamento verificável de alocação geral, arena, copy-on-write e manutenção de índices;
 - reconciliação entre o contrato interno do Ano 1 e a ABI C pública 1.0;
-- CS010 e etapas posteriores permanecem abertos.
+- transporte UDP loopback real, limitado, com reconnect, epoch, anti-replay e backpressure;
+- duas instâncias independentes, divergência deliberada, localização e reconciliação por rollback/ressimulação;
+- fronteira `ReplicaAdapter` neutra de domínio, com schema explícito e payload opaco;
+- 16 requisitos internos obrigatórios, 20 limitações internas, 17 requisitos de assurance parciais/planejados e 6 campanhas permanecem abertos após o CS010;
+- CS011–CS015 permanecem abertos.
 
 Comandos de verificação:
 
@@ -44,14 +48,14 @@ Para compilar toda a superfície e executar a suíte Year-1 registrada:
 .\scripts\windows\run-dcore.ps1 -BootstrapDependencies -FullTestSuite
 ```
 
-O Windows é a plataforma operacional inicial. A fonte autoritativa 1.7.0 foi compilada e exercitada em Windows físico, com evidência independente preservada em `docs/changesets/008/evidence/WINDOWS_1_7_0_INDEPENDENT_VERIFICATION.md`. A baseline 1.9.0 deste ChangeSet foi validada em Linux x86_64 com GCC e Clang; **a regressão proporcional 1.9.0 ainda não foi executada em Windows físico**.
+O Windows é a plataforma operacional inicial. A fonte autoritativa 1.7.0 foi compilada e exercitada em Windows físico, com evidência independente preservada em `docs/changesets/008/evidence/WINDOWS_1_7_0_INDEPENDENT_VERIFICATION.md`. O módulo CS010 da baseline 1.10.0 é exercitado no host Windows x86_64 registrado; a matriz GCC/Clang x86_64 e a regressão proporcional são registradas separadamente. Nenhum resultado ARM64 ou qualificação universal de hardware é inferido.
 
 ## Conteúdo auditado
 
-- 64 headers canônicos do núcleo e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
-- 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`) e 2 fontes do View Lab;
-- 78 fontes de aplicações/benchmarks/fuzz/probes no pacote (77 em `apps/` e o CLI do View Lab), todas cobertas pelo CMake; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
-- 8 fontes C++ de teste, 3 verificadores normativos Python e 64 testes CTest registrados quando o toolset completo, o View Lab e o Host SDK estão ativos;
+- 64 headers canônicos do núcleo, 2 headers do módulo distribuído e 2 headers do View Lab, incluindo 1 header Year-2 preservado byte a byte;
+- 58 fontes da biblioteca `neoeng_dcore` (`NeoEng::DCore`), 2 fontes do módulo distribuído e 2 fontes do View Lab;
+- probes, benchmarks e fuzzers cobertos pelo CMake, incluindo a campanha distribuída longa; nove benchmarks de alocação usam `GNU ld --wrap` e ficam explicitamente indisponíveis no Windows;
+- testes C/C++, verificadores normativos Python e autotestes fail-closed registrados no CTest;
 - 166 registros documentais exatos do Ano 1;
 - 23 scripts de campanha no caminho operacional original;
 - evidências originais v0.12-v0.28 preservadas;
@@ -204,3 +208,20 @@ A validação Windows executada no PC registrado em 25 de julho de 2026 está em
 ### Manifest portability correction
 
 The CS009 rebuilt distribution also updates `scripts/generate_manifest.py` to use a case-sensitive, component-wise relative path key. The emitted path remains POSIX-formatted and the manifest is read and written as byte-exact UTF-8/LF content. This prevents host `WindowsPath` ordering from changing the release identity.
+
+## ChangeSet 010 — referência distribuída ponta a ponta
+
+A versão 1.10.0 adiciona `NeoEng::DCoreDistributedReference`, um módulo
+companheiro que depende do núcleo em sentido único. O transporte usa sockets
+UDP loopback reais, envelope versionado, SHA-256, limites de payload/fila,
+backpressure, timeout, reconnect por epoch e rejeição de replay.
+
+O coordenador compara schema, frame e SHA-256 de duas instâncias; o adaptador
+D-Core localiza a divergência Body e aplica a correção somente por
+`correct_input_and_resimulate`. O sucesso de transporte não basta: a operação
+só termina como convergente após nova comparação canônica.
+
+Esse fechamento não declara transporte remoto de produção, autenticação ou
+cifragem do UDP de referência, consenso, quorum, BFT, multiwriter ou
+equivalência ARM64. Consulte `docs/contracts/DISTRIBUTED_REFERENCE_V1.md` e
+`docs/changesets/010/TEST_STATUS.md`.

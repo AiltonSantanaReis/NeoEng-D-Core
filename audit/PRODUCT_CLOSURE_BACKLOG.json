@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-closure-backlog.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "known_limitations_count": 41,
   "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
   "items": [
@@ -52,9 +52,14 @@
       "title": "Real reference transport for distributed operation is absent.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS010",
-      "normative_decision": "Provide a reference UDP/QUIC-class adapter outside canonical state."
+      "normative_decision": "Closed in 1.10.0 by the bounded UDP loopback reference adapter outside canonical state.",
+      "closure_evidence": [
+        "modules/distributed_reference",
+        "docs/contracts/DISTRIBUTED_REFERENCE_V1.md",
+        "docs/changesets/010/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-006",
@@ -193,9 +198,13 @@
       "title": "Public canonical state/Host ABI is specialized to Body/InputCommand.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS010",
-      "normative_decision": "Decide and implement the domain-neutral extension boundary required by horizontal product claims without changing canonical authority."
+      "normative_decision": "Closed in 1.10.0 by the domain-neutral ReplicaAdapter boundary with explicit schema id and opaque correction payload; the Body adapter remains one implementation and canonical authority is unchanged.",
+      "closure_evidence": [
+        "modules/distributed_reference/include/neoeng/distributed_reference.hpp",
+        "docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md"
+      ]
     },
     {
       "limitation_id": "LIM-021",
@@ -220,9 +229,14 @@
       "title": "Divergence comparison is host-triggered; no reference distributed coordinator exists.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS010",
-      "normative_decision": "Deliver two-instance coordinator and fail-closed reconciliation flow."
+      "normative_decision": "Closed in 1.10.0 by TwoInstanceCoordinator with schema/frame checks, real transport, official rollback correction and mandatory post-reconciliation comparison.",
+      "closure_evidence": [
+        "modules/distributed_reference/src/distributed_reference.cpp",
+        "neoeng_distributed_reference_tests",
+        "docs/changesets/010/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-024",

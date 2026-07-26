@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import hashlib
 import json
 import sys
@@ -10,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.9.0"
+EXPECTED_VERSION = "1.10.0"
 REQUIREMENTS = ROOT / "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"
 MATRIX = ROOT / "audit/PRODUCT_ASSURANCE_MATRIX.json"
 CAMPAIGNS = ROOT / "audit/PRODUCT_TEST_CAMPAIGNS.json"
@@ -39,11 +40,21 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+@functools.lru_cache(maxsize=1)
+def cmake_registry_text() -> str:
+    excluded = {"build", ".git", ".deps"}
+    return "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for path in ROOT.rglob("CMakeLists.txt")
+        if not excluded.intersection(path.relative_to(ROOT).parts)
+    )
+
+
 def ref_exists(ref: str) -> bool:
     if (ROOT / ref).exists():
         return True
     if "/" not in ref and "\\" not in ref and "." not in ref:
-        return any(ref in path.read_text(encoding="utf-8", errors="replace") for path in ROOT.rglob("CMakeLists.txt"))
+        return ref in cmake_registry_text()
     return False
 
 
