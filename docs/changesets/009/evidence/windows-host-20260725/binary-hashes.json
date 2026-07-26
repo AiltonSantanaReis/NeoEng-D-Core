@@ -1,0 +1,47 @@
+[
+  {
+    "path": "build/windows-clang-release/neoeng_tests.exe",
+    "size_bytes": 834560,
+    "sha256": "e374896e07a5c5717c9e6b2bed1e60b2462c6dfd1253bb96d8b715ee9703aa30"
+  },
+  {
+    "path": "build/windows-clang-release/neoeng_hardware_qualification_tests.exe",
+    "size_bytes": 23040,
+    "sha256": "47b06ba284cb258e4558dcee407d0c50fdeacd5bee46cf1aca013d66fcb4ecd2"
+  },
+  {
+    "path": "build/windows-clang-release/neoeng_determinism_probe.exe",
+    "size_bytes": 215040,
+    "sha256": "598ba9b64217e6762c51972009c0637f5489497cfe4b79838692d30185a9588f"
+  },
+  {
+    "path": "build/windows-clang-release/neoeng_v28_raa_allocation_probe.exe",
+    "size_bytes": 35328,
+    "sha256": "234d53bbcd222d4b5bffa8522322758c1d80a4c5f23937add43c25b12b82f545"
+  },
+  {
+    "path": "build/windows-clang-release/neoeng_ecs_maintenance_benchmark.exe",
+    "size_bytes": 132608,
+    "sha256": "9478a612c56dd93059d2489eda8ba0a7c3b0e44a3957ec56f8a2897ec9763294"
+  },
+  {
+    "path": "build/windows-clang-release/neoeng_hardware_profile_probe.exe",
+    "size_bytes": 41984,
+    "sha256": "f67bd0fa4f9a335e48f493240ecc155c691b73c9cfacb7f3005d0f3969dcb415"
+  },
+  {
+    "path": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_tests.exe",
+    "size_bytes": 142336,
+    "sha256": "b06f4c525dea5b7f75c177a258dbce0ab4a03ce4f756f5f5f61a10533a15b60d"
+  },
+  {
+    "path": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_c_header_test.exe",
+    "size_bytes": 87040,
+    "sha256": "ae990cf7533cb6f6c64811b9889fc2922a83c61efd5d5d1cb39be35bda813567"
+  },
+  {
+    "path": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_reference.exe",
+    "size_bytes": 121856,
+    "sha256": "c008087389cf21366d5496e4d23823a653d9f1209134d3517e0f86987ff92d29"
+  }
+]

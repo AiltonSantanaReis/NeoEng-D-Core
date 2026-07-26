@@ -1,0 +1,253 @@
+{
+  "schema": "neoeng.dcore.cs009.windows-host-validation.v1",
+  "generated_at": "2026-07-25T23:42:45.4521246-03:00",
+  "tested_source_commit": "ec46d4d3c74303ba60a601066c4a7462091dc712",
+  "branch": "changeset-009-r2",
+  "build_origin_commit": "c2f80d4863f73d8f9c89687f24b462eb07e116bb",
+  "runtime_source_unchanged_since_build": true,
+  "runtime_source_diff": [],
+  "execution_scope": "Windows host-local execution on the recorded PC",
+  "qualification_status": "not_claimed",
+  "qualification_reason": "Windows reports HypervisorPresent=true; thermal/clock qualification was not performed; general allocation was observed.",
+  "cross_machine_disclaimer": "Results apply only to the recorded machine and conditions. Lower- or higher-spec machines may perform better or worse and require their own campaign.",
+  "official_workload": {
+    "body_count": 10000,
+    "active_body_count": 100,
+    "measured_samples": 1000,
+    "warmup_samples": 128
+  },
+  "direct_tests": [
+    {
+      "name": "01-core-tests",
+      "executable": "build/windows-clang-release/neoeng_tests.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "",
+      "pattern_passed": true,
+      "elapsed_ms": 361,
+      "passed": true
+    },
+    {
+      "name": "02-hardware-qualification-tests",
+      "executable": "build/windows-clang-release/neoeng_hardware_qualification_tests.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "hardware_qualification_tests=passed",
+      "pattern_passed": true,
+      "elapsed_ms": 45,
+      "passed": true
+    },
+    {
+      "name": "03-host-sdk-tests",
+      "executable": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_tests.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "host_sdk_tests=PASS",
+      "pattern_passed": true,
+      "elapsed_ms": 45,
+      "passed": true
+    },
+    {
+      "name": "04-host-sdk-c-header",
+      "executable": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_c_header_test.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "",
+      "pattern_passed": true,
+      "elapsed_ms": 44,
+      "passed": true
+    },
+    {
+      "name": "05-host-sdk-reference",
+      "executable": "build/windows-clang-release/modules/host_sdk/neoeng_host_sdk_reference.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "",
+      "pattern_passed": true,
+      "elapsed_ms": 44,
+      "passed": true
+    },
+    {
+      "name": "06-determinism-probe",
+      "executable": "build/windows-clang-release/neoeng_determinism_probe.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "active_component_soa_canonical=",
+      "pattern_passed": true,
+      "elapsed_ms": 1184,
+      "passed": true
+    },
+    {
+      "name": "07-raa-allocation-probe",
+      "executable": "build/windows-clang-release/neoeng_v28_raa_allocation_probe.exe",
+      "arguments": [],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "",
+      "pattern_passed": true,
+      "elapsed_ms": 218,
+      "passed": true
+    },
+    {
+      "name": "08-ecs-official-run-1",
+      "executable": "build/windows-clang-release/neoeng_ecs_maintenance_benchmark.exe",
+      "arguments": [
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-official-run-1",
+        "10000",
+        "100",
+        "1000",
+        "128"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "ecs_scope_evidence_complete=1",
+      "pattern_passed": true,
+      "elapsed_ms": 385,
+      "passed": true
+    },
+    {
+      "name": "09-ecs-verifier-run-1",
+      "executable": "<PYTHON_EXECUTABLE>",
+      "arguments": [
+        "scripts/qualification/verify_ecs_scope_evidence.py",
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-official-run-1",
+        "--write-report"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "ecs_scope_evidence_verification=passed",
+      "pattern_passed": true,
+      "elapsed_ms": 486,
+      "passed": true
+    },
+    {
+      "name": "10-ecs-official-run-2",
+      "executable": "build/windows-clang-release/neoeng_ecs_maintenance_benchmark.exe",
+      "arguments": [
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-official-run-2",
+        "10000",
+        "100",
+        "1000",
+        "128"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "ecs_scope_evidence_complete=1",
+      "pattern_passed": true,
+      "elapsed_ms": 44,
+      "passed": true
+    },
+    {
+      "name": "11-ecs-verifier-run-2",
+      "executable": "<PYTHON_EXECUTABLE>",
+      "arguments": [
+        "scripts/qualification/verify_ecs_scope_evidence.py",
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-official-run-2",
+        "--write-report"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "exit_code_passed": true,
+      "expected_pattern": "ecs_scope_evidence_verification=passed",
+      "pattern_passed": true,
+      "elapsed_ms": 268,
+      "passed": true
+    },
+    {
+      "name": "12-ecs-invalid-zero",
+      "executable": "build/windows-clang-release/neoeng_ecs_maintenance_benchmark.exe",
+      "arguments": [
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-invalid-zero",
+        "0",
+        "0",
+        "1",
+        "1"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "exit_code_passed": true,
+      "expected_pattern": "body_count must be a positive integer",
+      "pattern_passed": true,
+      "elapsed_ms": 22,
+      "passed": true
+    },
+    {
+      "name": "13-ecs-active-exceeds-body",
+      "executable": "build/windows-clang-release/neoeng_ecs_maintenance_benchmark.exe",
+      "arguments": [
+        "docs/changesets/009/evidence/windows-host-20260725/ecs-invalid-active",
+        "16",
+        "17",
+        "1",
+        "1"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "exit_code_passed": true,
+      "expected_pattern": "active_count exceeds body_count",
+      "pattern_passed": true,
+      "elapsed_ms": 23,
+      "passed": true
+    },
+    {
+      "name": "14-hardware-probe-no-args",
+      "executable": "build/windows-clang-release/neoeng_hardware_profile_probe.exe",
+      "arguments": [],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "exit_code_passed": true,
+      "expected_pattern": "options must be key/value pairs",
+      "pattern_passed": true,
+      "elapsed_ms": 43,
+      "passed": true
+    },
+    {
+      "name": "15-hardware-probe-unknown-option",
+      "executable": "build/windows-clang-release/neoeng_hardware_profile_probe.exe",
+      "arguments": [
+        "--unknown",
+        "value"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "exit_code_passed": true,
+      "expected_pattern": "unknown option: --unknown",
+      "pattern_passed": true,
+      "elapsed_ms": 21,
+      "passed": true
+    }
+  ],
+  "repeatability": {
+    "workload_id_equal": true,
+    "final_hash_equal": true,
+    "sample_count_equal": true,
+    "scope_complete_both": true,
+    "verifier_status_both_passed": true,
+    "run_1_p99_ns": 8200,
+    "run_2_p99_ns": 8500,
+    "run_1_final_hash": "0x89FF0A43B7F5C573",
+    "run_2_final_hash": "0x89FF0A43B7F5C573",
+    "general_allocation_zero_run_1": false,
+    "general_allocation_zero_run_2": false,
+    "passed": true
+  },
+  "all_direct_tests_passed": true,
+  "all_passed": true,
+  "privacy": "Repository-relative paths only; no user names, serial numbers, device IDs or network identifiers."
+}

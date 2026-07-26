@@ -6,6 +6,8 @@ Schema: `neoeng.dcore.hardware-qualification.v2`
 
 This contract qualifies the NeoEng D-Core canonical runtime on a recorded hardware profile. It does not qualify the complete NeoEng product, a renderer, a final Year-2 scene, a commercial SLA or a platform that was not executed.
 
+The profile definitions are measurement and comparison targets, not universal minimum system requirements for running, integrating or testing NeoEng D-Core. A result applies only to the exact recorded environment and campaign conditions. A machine with lower or higher nominal specifications may perform better or worse because CPU architecture, memory behavior, drivers, firmware, power policy, thermals and background load all affect wall-clock measurements. No cross-machine result may be inferred from component specifications alone.
+
 ## Non-negotiable decision rule
 
 A profile can return `passed` only when all of the following are true:
@@ -27,7 +29,7 @@ Virtualized and containerized campaigns are always `unqualified`. A complete one
 ## Profiles
 
 - **P0** - fixed reference laboratory machine for reproducibility and daily regression.
-- **P1** - NVIDIA primary D-Core performance target. Requires the hardware class declared in the project plan, 1,000 rollback samples, 1,000 ECS samples, rollback p99 <= 2,000,000 ns, ECS maintenance p99 <= 100,000 ns, zero-allocation semantic gate and the complete ECS evidence scope.
+- **P1** - NVIDIA primary D-Core reference performance target. Qualification under the name P1 requires the target class declared in the project plan, 1,000 rollback samples, 1,000 ECS samples, rollback p99 <= 2,000,000 ns, ECS maintenance p99 <= 100,000 ns, zero-allocation semantic gate and the complete ECS evidence scope. These constraints do not prohibit execution or evidence collection on other hardware.
 - **P2** - AMD semantic portability and separately qualified performance. P1 limits are not inherited.
 - **P3** - native ARM64 determinism and serialization compatibility. Performance is reported separately.
 - **P4** - approximately 8 GiB compatibility and safe-degradation evidence. P1 limits are not inherited.
@@ -39,6 +41,8 @@ The project plan requires the Y1-O2 metric to distinguish general allocation, ar
 The campaign itself generates all four streams from one execution and invokes `scripts/qualification/verify_ecs_scope_evidence.py`. User-supplied candidate files are rejected. The verifier recomputes sample counts, percentiles, cross-stream mappings, allocation-probe calibration, arena overflow and COW/index semantics from raw CSV files.
 
 A verified complete scope removes `EcsScopeIncomplete`; it does not make P1 pass. P1 still requires native physical execution, the declared hardware/environment, at least 1,000 samples, rollback p99 <= 2,000,000 ns, ECS p99 <= 100,000 ns and a true zero-allocation gate. A complete report that observes allocations correctly fails `AllocationGateFailed` rather than being mislabeled as incomplete evidence.
+
+Runs outside the P1 target class remain valid environment-specific engineering evidence when their machine inventory, binaries, parameters and limitations are recorded. They must be reported as observed results for that machine rather than generalized as P1 performance or as a promise for other machines.
 
 The detailed contract is `docs/contracts/ECS_SCOPE_EVIDENCE_V1.md`.
 

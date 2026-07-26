@@ -19,6 +19,8 @@ Close the Y1-O2 evidence-completeness gap without changing canonical state or tr
 
 Evidence completeness is deliberately separate from qualification. A complete report may prove that allocation occurred and must then fail the allocation gate instead of being mislabeled as incomplete evidence.
 
+Hardware profile constraints are likewise separate from general project compatibility. P1 and P2 describe named reference targets for comparable campaigns; they are not universal minimum system requirements. Results produced on another recorded machine remain valid for that exact environment, but cannot be extrapolated to machines with nominally lower or higher specifications.
+
 ## Existing capabilities confirmed before implementation
 
 The project already contained the ECS workload, arena implementation, copy-on-write behavior, maintenance timing, P0–P4 qualification harness and fail-closed decision engine. They were reused. This ChangeSet did not create duplicate ECS, rollback, hashing, state, qualification or Host SDK subsystems.
@@ -125,6 +127,12 @@ The complete comparison is in `audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json`.
 - failures: `EnvironmentMismatch`, `NativeExecutionRequired`, `ProfileCompatibilityFailed`, `InsufficientSamples`, `ClockPolicyMissing`, `AllocationGateFailed`.
 
 The observed timing values are diagnostic only because the campaigns were virtualized, had 32 samples, lacked native clock/thermal qualification and failed the allocation gate.
+
+### Windows host-local follow-up
+
+A subsequent Windows 11 host-local campaign on an AMD Ryzen 7 5700X3D, NVIDIA GeForce RTX 3070 Ti and 32 GiB DDR4 system passed all 15 direct binary tests. Two official 1,000-sample ECS executions passed independent verification, produced p99 values of 8,200 ns and 8,500 ns and converged on the identical deterministic hash `0x89FF0A43B7F5C573`.
+
+The machine-specific results are retained under `docs/changesets/009/evidence/windows-host-20260725/`. They do not claim P1: both runs observed general allocation, controlled thermal/clock qualification was not performed and Windows reported `HypervisorPresent=true`. The measurements apply only to the recorded environment; other machines may perform better or worse regardless of nominal component class.
 
 ## Honest product status
 

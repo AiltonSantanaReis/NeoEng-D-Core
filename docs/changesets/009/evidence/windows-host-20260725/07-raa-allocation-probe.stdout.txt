@@ -1,0 +1,18 @@
+{
+  "probe": "fixed_raa_operations",
+  "iterations": 256,
+  "maximum_terms": 8,
+  "compressions": 91904,
+  "rounding_guard_raw": 514048,
+  "disjoint_product_cases": 256,
+  "cpp_allocations": 0,
+  "cpp_bytes": 0,
+  "allocation_probe_calibrated": true,
+  "calibration_cpp_allocations": 2,
+  "calibration_c_allocations": 0,
+  "c_probe_supported": false,
+  "c_allocations": 0,
+  "c_bytes": 0,
+  "hash": "0x606B0E0E1D15EF25",
+  "passed": true
+}

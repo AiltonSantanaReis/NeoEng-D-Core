@@ -1,7 +1,13 @@
 {
   "schema": "neoeng.dcore.hardware-profile-registry.v2",
   "project_version": "1.9.0",
-  "warning": "Template only. No profile is qualified until a native physical campaign is complete and independently verified.",
+  "warning": "Template only. Profiles are named measurement targets, not universal project system requirements. No profile is qualified until a native physical campaign is complete and independently verified.",
+  "result_interpretation": {
+    "applies_only_to_exact_recorded_environment": true,
+    "cross_machine_performance_inference_permitted": false,
+    "lower_or_higher_spec_machines_may_perform_better_or_worse": true,
+    "profile_constraints_are_project_runtime_requirements": false
+  },
   "profiles": [
     {
       "profile": "P0",
@@ -18,7 +24,7 @@
     {
       "profile": "P1",
       "status": "UNQUALIFIED",
-      "purpose": "Primary NVIDIA performance target",
+      "purpose": "Primary NVIDIA reference performance target; not a universal runtime minimum",
       "environment_id": "",
       "requirements": {
         "native_physical": true,
@@ -36,7 +42,7 @@
     {
       "profile": "P2",
       "status": "UNQUALIFIED",
-      "purpose": "AMD semantic portability and separately qualified performance",
+      "purpose": "AMD reference target for semantic portability and separately measured performance",
       "environment_id": "",
       "requirements": {
         "native_physical": true,
@@ -52,7 +58,7 @@
     {
       "profile": "P3",
       "status": "UNQUALIFIED",
-      "purpose": "ARM64 determinism and serialization compatibility",
+      "purpose": "ARM64 reference target for determinism and serialization compatibility",
       "environment_id": "",
       "requirements": {
         "native_physical": true,
@@ -68,7 +74,7 @@
     {
       "profile": "P4",
       "status": "UNQUALIFIED",
-      "purpose": "8 GB compatibility, safe degradation and evidence collection",
+      "purpose": "Approximately 8 GiB reference target for compatibility, safe degradation and evidence collection",
       "environment_id": "",
       "requirements": {
         "native_physical": true,
