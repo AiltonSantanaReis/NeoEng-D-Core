@@ -33,7 +33,9 @@ template <typename T>
     using U = std::make_unsigned_t<T>;
     U bits{};
     for (std::size_t index = 0U; index < sizeof(U); ++index) {
-        bits |= static_cast<U>(input[cursor++]) << (index * 8U);
+        bits = static_cast<U>(
+            bits | static_cast<U>(
+                static_cast<std::uint64_t>(input[cursor++]) << (index * 8U)));
     }
     value = static_cast<T>(bits);
     return true;
