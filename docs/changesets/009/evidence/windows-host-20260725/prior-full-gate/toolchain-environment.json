@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-07-25T22:56:48.5221728-03:00",
+  "visual_studio_installation": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools",
+  "vsdevcmd": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+  "tools": {
+    "link": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\link.exe",
+    "rc": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64\\rc.exe",
+    "mt": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64\\mt.exe",
+    "clang_cl": "C:\\Program Files\\LLVM\\bin\\clang-cl.exe",
+    "cmake": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+    "ctest": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+    "ninja": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe"
+  },
+  "windows_sdk_dir": "C:\\Program Files (x86)\\Windows Kits\\10\\",
+  "windows_sdk_version": "10.0.26100.0\\",
+  "vctools_install_dir": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\",
+  "platform": "x64",
+  "requested_target_arch": "amd64",
+  "requested_host_arch": "amd64",
+  "host_arch": "x64"
+}

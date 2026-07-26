@@ -1,0 +1,123 @@
+{
+  "schema": "neoeng.dcore.windows-host-inventory.v1",
+  "collected_at": "2026-07-25T23:43:23.1548868-03:00",
+  "privacy": "No serial numbers, user names, device IDs, network identifiers or file paths are included.",
+  "evidence_classification": "windows_host_local_hypervisor_present",
+  "virtualization": {
+    "hypervisor_present": true,
+    "interpretation": "HypervisorPresent=true prevents a native_physical qualification claim under hardware-qualification.v2, but does not invalidate host-local functional and benchmark evidence."
+  },
+  "operating_system": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200",
+    "build_number": "26200",
+    "architecture": "64 bits"
+  },
+  "system": {
+    "manufacturer": "Gigabyte Technology Co., Ltd.",
+    "model": "B550M AORUS ELITE",
+    "system_family": "B550 MB",
+    "system_type": "x64-based PC"
+  },
+  "processor": [
+    {
+      "name": "AMD Ryzen 7 5700X3D 8-Core Processor",
+      "physical_cores": 8,
+      "logical_processors": 16,
+      "reported_max_clock_mhz": 3001
+    }
+  ],
+  "graphics": {
+    "nvidia_smi": [
+      {
+        "name": "NVIDIA GeForce RTX 3070 Ti",
+        "memory_total_mib": 8192,
+        "driver_version": "610.47"
+      }
+    ],
+    "wmi": [
+      {
+        "name": "NVIDIA GeForce RTX 3070 Ti",
+        "driver_version": "32.0.16.1047",
+        "video_processor": "NVIDIA GeForce RTX 3070 Ti"
+      }
+    ]
+  },
+  "memory": {
+    "total_physical_bytes": 34278793216,
+    "modules": [
+      {
+        "capacity_bytes": 8589934592,
+        "configured_clock_mhz": 3200,
+        "manufacturer": "Unknown",
+        "part_number": "CMK16GX4M2B3200C16"
+      },
+      {
+        "capacity_bytes": 8589934592,
+        "configured_clock_mhz": 3200,
+        "manufacturer": "Unknown",
+        "part_number": "CMK16GX4M2B3200C16"
+      },
+      {
+        "capacity_bytes": 8589934592,
+        "configured_clock_mhz": 3200,
+        "manufacturer": "Unknown",
+        "part_number": "CMK16GX4M2B3200C16"
+      },
+      {
+        "capacity_bytes": 8589934592,
+        "configured_clock_mhz": 3200,
+        "manufacturer": "Unknown",
+        "part_number": "CMK16GX4M2B3200C16"
+      }
+    ]
+  },
+  "storage": {
+    "wmi": [
+      {
+        "model": "KINGSTON SFYRSK1000G",
+        "interface_type": "SCSI",
+        "media_type": "Fixed hard disk media",
+        "size_bytes": 1000202273280
+      },
+      {
+        "model": "ST4000LM024-2AN17V",
+        "interface_type": "IDE",
+        "media_type": "Fixed hard disk media",
+        "size_bytes": 4000784417280
+      }
+    ],
+    "physical_disk": [
+      {
+        "friendly_name": "KINGSTON SFYRSK1000G",
+        "media_type": "SSD",
+        "bus_type": "NVMe",
+        "size_bytes": 1000204886016,
+        "health_status": "Healthy"
+      },
+      {
+        "friendly_name": "ST4000LM024-2AN17V",
+        "media_type": "HDD",
+        "bus_type": "SATA",
+        "size_bytes": 4000787030016,
+        "health_status": "Healthy"
+      }
+    ]
+  },
+  "motherboard": {
+    "manufacturer": "Gigabyte Technology Co., Ltd.",
+    "product": "B550M AORUS ELITE"
+  },
+  "firmware": {
+    "manufacturer": "American Megatrends International, LLC.",
+    "smbios_version": "FHb",
+    "release_date": "2026-04-13"
+  },
+  "power": {
+    "active_scheme": "GUID do Esquema de Energia: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (Alto desempenho)"
+  },
+  "thermal": {
+    "measured": false,
+    "note": "No controlled thermal campaign was performed."
+  }
+}

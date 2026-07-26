@@ -128,6 +128,12 @@ The complete comparison is in `audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json`.
 
 The observed timing values are diagnostic only because the campaigns were virtualized, had 32 samples, lacked native clock/thermal qualification and failed the allocation gate.
 
+### Windows host-local follow-up
+
+A subsequent Windows 11 host-local campaign on an AMD Ryzen 7 5700X3D, NVIDIA GeForce RTX 3070 Ti and 32 GiB DDR4 system passed all 15 direct binary tests. Two official 1,000-sample ECS executions passed independent verification, produced p99 values of 8,200 ns and 8,500 ns and converged on the identical deterministic hash `0x89FF0A43B7F5C573`.
+
+The machine-specific results are retained under `docs/changesets/009/evidence/windows-host-20260725/`. They do not claim P1: both runs observed general allocation, controlled thermal/clock qualification was not performed and Windows reported `HypervisorPresent=true`. The measurements apply only to the recorded environment; other machines may perform better or worse regardless of nominal component class.
+
 ## Honest product status
 
 The ECS evidence pipeline is complete, independently verifiable and fail-closed. The current campaign does not prove the public P1 ECS claim and does not satisfy zero allocation. No native P0–P4, Windows 1.9.0, ARM64, certification or external audit is claimed.

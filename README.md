@@ -199,6 +199,8 @@ O benchmark ECS produz quatro streams aceitos pelo contrato `neoeng.dcore.ecs-sc
 
 A presença do pipeline completo não promove automaticamente o perfil P1. Campanhas sem hardware nativo, amostras mínimas, térmica, clocks ou zero-alocação permanecem `UNQUALIFIED`. Isso limita apenas a declaração de qualificação do perfil nomeado; não transforma a classe de hardware P1 em requisito para uso, compatibilidade ou testes do projeto.
 
+A validação Windows executada no PC registrado em 25 de julho de 2026 está em `docs/changesets/009/evidence/windows-host-20260725/REPORT.md`. Ela registra o hardware, os hashes dos binários, duas execuções oficiais com 1.000 amostras, resultados positivos e negativos e as limitações observadas. Como o Windows informou um hipervisor ativo, a evidência é host-local e não uma qualificação `native_physical`.
+
 ### Manifest portability correction
 
 The CS009 rebuilt distribution also updates `scripts/generate_manifest.py` to use a case-sensitive, component-wise relative path key. The emitted path remains POSIX-formatted and the manifest is read and written as byte-exact UTF-8/LF content. This prevents host `WindowsPath` ordering from changing the release identity.

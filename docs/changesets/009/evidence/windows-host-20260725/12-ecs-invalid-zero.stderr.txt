@@ -1,0 +1,1 @@
+ECS maintenance benchmark failed: body_count must be a positive integer

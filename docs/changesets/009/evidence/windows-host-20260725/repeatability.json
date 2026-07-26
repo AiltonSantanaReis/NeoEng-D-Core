@@ -1,0 +1,14 @@
+{
+  "workload_id_equal": true,
+  "final_hash_equal": true,
+  "sample_count_equal": true,
+  "scope_complete_both": true,
+  "verifier_status_both_passed": true,
+  "run_1_p99_ns": 8200,
+  "run_2_p99_ns": 8500,
+  "run_1_final_hash": "0x89FF0A43B7F5C573",
+  "run_2_final_hash": "0x89FF0A43B7F5C573",
+  "general_allocation_zero_run_1": false,
+  "general_allocation_zero_run_2": false,
+  "passed": true
+}

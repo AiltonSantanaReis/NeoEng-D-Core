@@ -1,0 +1,3 @@
+ecs_scope_evidence_verification=passed
+scope_complete=1
+general_allocation_zero=0

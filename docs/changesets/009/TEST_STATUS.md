@@ -68,6 +68,23 @@ An initial local ASan/UBSan build attempt collided with another process using th
 
 The 32-sample campaigns exercise the complete decision and evidence pipeline. Their timing values are diagnostic only and do not satisfy native P1 qualification.
 
+## Windows host-local validation — 2026-07-25
+
+The CS009 binaries were subsequently executed directly on a recorded Windows 11 PC:
+
+- AMD Ryzen 7 5700X3D, 8 physical cores / 16 logical processors;
+- NVIDIA GeForce RTX 3070 Ti, 8 GiB, driver 610.47;
+- 32 GiB DDR4-3200;
+- 1 TB Kingston NVMe SSD;
+- Windows 11 Pro build 26200;
+- high-performance power scheme.
+
+All 15 direct positive and negative binary tests passed. The official ECS workload was executed twice with 10,000 bodies, 100 active bodies, 1,000 measured samples and 128 warmup samples. Both independent verifications passed, with p99 values of 8,200 ns and 8,500 ns and the identical deterministic hash `0x89FF0A43B7F5C573`.
+
+Both runs observed general allocation, so zero allocation and P1 qualification are not claimed. Windows also reported `HypervisorPresent=true`; the evidence is therefore classified as `windows_host_local_hypervisor_present`, not `native_physical`. Full inventory, raw streams, logs, binary hashes and checksums are retained under `docs/changesets/009/evidence/windows-host-20260725/`.
+
+These measurements describe only the recorded PC and conditions. Hardware with lower or higher nominal specifications may perform better or worse and requires its own campaign.
+
 ## Cross-compiler deterministic outputs
 
 | Output | GCC versus Clang | SHA-256 |
@@ -103,10 +120,9 @@ The corresponding diff files are empty.
 
 ## Not executed or not claimed
 
-- Windows physical regression for 1.9.0;
+- Windows host-local execution was performed, but native-physical qualification is not claimed because a hypervisor was reported;
 - ARM64;
 - native P0–P4 campaigns;
-- PowerShell execution;
 - LeakSanitizer;
 - external security or cryptographic audit;
 - regulatory or production certification.
