@@ -271,7 +271,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: cs014-raw-*
-          path: evidence/raw
+          path: ${{ runner.temp }}/cs014-evidence-raw
           merge-multiple: true
       - name: Verify public claims
         run: python3 scripts/generate_public_claims.py --check
@@ -338,7 +338,7 @@ jobs:
           CS014_RUN_ATTEMPT: ${{ github.run_attempt }}
         run: >
           python3 scripts/qualification/assemble_release_assurance_evidence.py
-          --raw evidence/raw
+          --raw "$RUNNER_TEMP/cs014-evidence-raw"
           --release release
           --output evidence/campaign
       - name: Upload consolidated release
