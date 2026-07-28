@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import difflib
 import hashlib
 import json
 import sys
@@ -358,8 +359,24 @@ def main() -> int:
     if args.write_report:
         REPORT.write_text(serialized, encoding="utf-8", newline="\n")
     if args.check_report:
-        if not REPORT.is_file() or REPORT.read_text(encoding="utf-8") != serialized:
+        stored = (
+            REPORT.read_text(encoding="utf-8")
+            if REPORT.is_file()
+            else ""
+        )
+        if stored != serialized:
             print("stored final-acceptance report diverges from recalculation")
+            print(
+                "".join(
+                    difflib.unified_diff(
+                        stored.splitlines(keepends=True),
+                        serialized.splitlines(keepends=True),
+                        fromfile="stored/audit/FINAL_ACCEPTANCE_VALIDATION.json",
+                        tofile="recalculated/audit/FINAL_ACCEPTANCE_VALIDATION.json",
+                    )
+                ),
+                end="",
+            )
             return 1
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0 if result["status"] == "passed" else 1
