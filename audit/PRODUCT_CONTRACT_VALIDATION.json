@@ -3,13 +3,14 @@
   "project_version": "1.14.0",
   "status": "passed",
   "source_of_truth_files": {
+    "audit/FINAL_ACCEPTANCE_POLICY.json": "224a775c9442318c4b3cfffee7bd1aeb632ba0f8089fb4a78a125f421f68a427",
     "audit/PRODUCT_ASSURANCE_MATRIX.json": "169406ae641f34b37bbc9659f6fcb0d4115260d0dafd5eebf25b6b47c5c1370c",
     "audit/PRODUCT_CLOSURE_BACKLOG.json": "c2c2a066a689da55e5023e0157fa2ef694028187436ef26e96f147f19def1232",
     "audit/PRODUCT_TEST_CAMPAIGNS.json": "c3da199e099d3faf24379a54118241e590127820c87637c931530bbdb2e91b3c",
     "audit/PRODUCT_CAPABILITY_SURFACE.json": "a50bc40488d88d7fd413bf652f741138904435b6e2c613d7b2d6f6e4dbc23567",
     "audit/PRODUCT_CLAIMS_LEDGER.json": "a4a3ae746624374143322026f5abfabfd3504ded2e04ed612c326ad3baffc8e2",
     "audit/DEFERRED_VALIDATION_GATES.json": "98a525ae860124a126de228c824a52c8a8e65c0a273472782de5869500b0eb74",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "d45518ad2cc4dead39c9e42220d59c4c910a6136548f56efa97faadc4f996ab7",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "f2042b3afcfce2fd053d20aa21542fca583f17c1467882d335f3146def7575f3",
     "audit/RELEASE_ASSURANCE_POLICY.json": "903433441900b8906f29394141d165e3789e2c9c5dac8026fcaad8760cc145c3",
     "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "fd0afcd8f51a58fbbf79bcb01fe10c75ade303f32ea4957110401787d386e5da",
     "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "f7a6f71879f4a4c508974fc29a79906c1ffa7b4a274d422fc68cc654bf3a1543"
@@ -26,5 +27,5 @@
   ],
   "open_internal_limitation_ids": [],
   "commercial_ready": false,
-  "reason": "CS014 is closed by immutable Windows and Linux GCC/Clang release-assurance evidence plus independently verified public Sigstore bundles; final CS015 acceptance, native ARM64/profile qualification and external assurance remain open."
+  "reason": "CS014 release assurance is closed; DCORE-ACCEPT-001 remains the only open internal requirement until immutable CS015 evidence is recorded. Native ARM64/profile qualification and external assurance remain separate nonblocking gates."
 }

@@ -1,0 +1,162 @@
+name: CS015 final acceptance
+
+on:
+  push:
+    branches:
+      - changeset-015
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-regression:
+    name: Linux regression (${{ matrix.compiler }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build
+      - name: Select compiler
+        id: compiler
+        shell: bash
+        run: |
+          if [[ "${{ matrix.compiler }}" == "gcc" ]]; then
+            echo "cc=gcc" >> "$GITHUB_OUTPUT"
+            echo "cxx=g++" >> "$GITHUB_OUTPUT"
+          else
+            echo "cc=clang" >> "$GITHUB_OUTPUT"
+            echo "cxx=clang++" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Configure
+        env:
+          CC: ${{ steps.compiler.outputs.cc }}
+          CXX: ${{ steps.compiler.outputs.cxx }}
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Record build identity
+        env:
+          CXX: ${{ steps.compiler.outputs.cxx }}
+        shell: bash
+        run: |
+          {
+            "$CXX" --version
+            cmake --version
+            ninja --version
+            uname -a
+          } > "build/linux-${{ matrix.compiler }}-build-identity.txt"
+      - name: Test supported surface
+        run: >
+          ctest --test-dir build -C Release --output-on-failure -L dcore
+          --output-log build/linux-${{ matrix.compiler }}-ctest.txt
+      - name: Upload Linux evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs015-raw-linux-${{ matrix.compiler }}
+          path: |
+            build/linux-${{ matrix.compiler }}-ctest.txt
+            build/linux-${{ matrix.compiler }}-build-identity.txt
+          if-no-files-found: error
+
+  windows-regression:
+    name: Windows regression (clang-cl)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Checkout pinned vcpkg registry
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          ref: 0878b5224d4a4968940ee296a2e7fae2d3b62983
+          path: .vcpkg
+          fetch-depth: 1
+      - name: Bootstrap pinned vcpkg
+        shell: pwsh
+        run: .\.vcpkg\bootstrap-vcpkg.bat -disableMetrics
+      - name: Configure
+        shell: pwsh
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=clang-cl
+          -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Record build identity
+        shell: pwsh
+        run: |
+          @(
+            (& clang-cl --version | Out-String)
+            (& cmake --version | Out-String)
+            (& ninja --version | Out-String)
+            [System.Environment]::OSVersion.VersionString
+          ) | Set-Content build/windows-clang-cl-build-identity.txt
+      - name: Test supported surface
+        run: >
+          ctest --test-dir build -C Release --output-on-failure -L dcore
+          --output-log build/windows-clang-cl-ctest.txt
+      - name: Upload Windows evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs015-raw-windows-clang-cl
+          path: |
+            build/windows-clang-cl-ctest.txt
+            build/windows-clang-cl-build-identity.txt
+          if-no-files-found: error
+
+  final-acceptance:
+    name: Fail-closed final acceptance
+    runs-on: ubuntu-latest
+    needs:
+      - linux-regression
+      - windows-regression
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download regression evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cs015-raw-*
+          path: ${{ runner.temp }}/cs015-raw
+          merge-multiple: true
+      - name: Assemble independently verifiable evidence
+        env:
+          CS015_REPOSITORY: ${{ github.repository }}
+          CS015_COMMIT: ${{ github.sha }}
+          CS015_REF: ${{ github.ref }}
+          CS015_RUN_ID: ${{ github.run_id }}
+          CS015_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: >
+          python3 scripts/qualification/assemble_final_acceptance_evidence.py
+          --raw "$RUNNER_TEMP/cs015-raw"
+          --output evidence/campaign
+      - name: Upload final acceptance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs015-final-acceptance-evidence
+          path: evidence/campaign
+          if-no-files-found: error
