@@ -1,3 +1,4 @@
+749c83cece7e055c493f9034d102a97dd4249c2e995322ee3354ad4b19b1a975  .gitattributes
 9e77041ba1e8e53cd791f8ff6aa453d3b9e81a38b954900b070b6cbbeca94602  .github/workflows/cs010-cross-compiler.yml
 3093715b023d831e6ab9e958e159e53cf2377dadda47c7990d3149bc9ec6138a  .github/workflows/cs011-cross-compiler.yml
 94e141bdb5de4464e57b377a10ad4248aa1c2fdc613dc3d893e061958f90d9e4  .github/workflows/cs012-cross-compiler.yml
