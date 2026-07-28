@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -24,7 +25,11 @@ def source_texts(root: Path) -> tuple[str, str, str]:
 
 def validate(root_cmake: str, module_cmake: str, canonical: str) -> list[str]:
     errors: list[str] = []
-    if "project(NeoEngDCore VERSION 1.10.0 LANGUAGES C CXX)" not in root_cmake:
+    version = re.search(
+        r"project\(NeoEngDCore VERSION (\d+)\.(\d+)\.(\d+) LANGUAGES C CXX\)",
+        root_cmake,
+    )
+    if version is None or tuple(map(int, version.groups())) < (1, 10, 0):
         errors.append("unexpected project baseline")
     if "add_subdirectory(modules/distributed_reference)" not in root_cmake:
         errors.append("distributed reference module is not integrated")

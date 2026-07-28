@@ -1,16 +1,16 @@
 {
   "schema": "neoeng.dcore.product-contract-validation.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "a3be9dbb32db7736ad6ea5fd8ccd38d79de2281c17595031fe733d996d7e6b20",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "854b508cb4be635fa89a0bf63c925cb0ab3715a56c5c1228b85d07549fee24d1",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "c4ee6e212029d2c5365de11e52a8e68df490ecadb14c5d9903bbd7d483272828",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "f2809f8e65d9d8289b17538b8d22f5efff925a03b0c73482509bfa8b3f59f233",
-    "audit/DEFERRED_VALIDATION_GATES.json": "df409540d14c151cc2231929551caa48fe7fc85786646472b3905a33120595de",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "eca91d2a5058ac084d708f03a4cf27b427eddb6f9dcffbb207624f5e15ed431d",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "d2d566e6daf838038ceae4d6b324fe863f545ba8b93b6931f94e7cd2d14dfb90",
-    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "35dd6c29c54aa63ff8a82f3c6feac17815c1a4196db50f15bae215d2570c03ca"
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "c44127893c28703ce33ddbc95a08eb7e3f596217ee9fac1f12d6abb6399a7221",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "9f1b180aee2a481aaf0ba82c30986fa92166ce1f14ce4253903b3f612ba98601",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "49bfe73eb1d69ef3e74b6d500f54e676e3d20359b48ae2863ace0cb341f0731f",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "43be5b0cd19761c0f73f480f2c7c2dc9d56f981137bc02028ab565baac5abf2c",
+    "audit/DEFERRED_VALIDATION_GATES.json": "d2028f5653d455d1a1ac7ad63a52e2475926424e9527fce1f37a224a01f3c1cb",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "5d5cd7c4dba9d52dd827714a2f368b04cd9bfc676f1bf2c69d8d9ae47e1fb7e5",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "d139f3eaf63c37d879dfe0d59f74087a2097cd4b969fbc661cc84896ed460ef7",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "419d302d86e25f17f536e8e8a87adf2e956df4cc3a3deca666d502f65e2bd794"
   },
   "counts": {
     "requirements": 36,

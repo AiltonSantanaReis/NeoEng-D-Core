@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 if ([string]::IsNullOrWhiteSpace($Prefix)) {
-    $Prefix = Join-Path $Root "artifacts\sdk\NeoEng-D-Core-1.10.0-$Configuration"
+    $Prefix = Join-Path $Root "artifacts\sdk\NeoEng-D-Core-1.11.0-$Configuration"
 }
 & (Join-Path $PSScriptRoot 'build.ps1') `
     -Configuration $Configuration `
