@@ -6,6 +6,7 @@ import copy
 import functools
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -50,9 +51,39 @@ def cmake_registry_text() -> str:
     )
 
 
+@functools.lru_cache(maxsize=1)
+def registered_source_paths() -> tuple[str, ...]:
+    git_result = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "-z"],
+        check=False,
+        capture_output=True,
+    )
+    if git_result.returncode == 0:
+        return tuple(
+            item.decode("utf-8").replace("\\", "/")
+            for item in git_result.stdout.split(b"\0")
+            if item
+        )
+    source_manifest = ROOT / "MANIFEST.sha256"
+    if source_manifest.is_file():
+        return tuple(
+            line.split("  ", 1)[1]
+            for line in source_manifest.read_text(
+                encoding="utf-8", errors="replace"
+            ).splitlines()
+            if "  " in line
+        )
+    return ()
+
+
 def ref_exists(ref: str) -> bool:
     if (ROOT / ref).exists():
-        return True
+        normalized = ref.replace("\\", "/").rstrip("/")
+        prefix = normalized + "/"
+        return any(
+            item == normalized or item.startswith(prefix)
+            for item in registered_source_paths()
+        )
     if "/" not in ref and "\\" not in ref and "." not in ref:
         return ref in cmake_registry_text()
     return False

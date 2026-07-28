@@ -7,6 +7,7 @@ import functools
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -86,12 +87,46 @@ def cmake_registry_text(root: Path) -> str:
     )
 
 
+@functools.lru_cache(maxsize=1)
+def registered_source_paths(root: Path) -> tuple[str, ...]:
+    git_result = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z"],
+        check=False,
+        capture_output=True,
+    )
+    if git_result.returncode == 0:
+        return tuple(
+            item.decode("utf-8").replace("\\", "/")
+            for item in git_result.stdout.split(b"\0")
+            if item
+        )
+    source_manifest = root / "MANIFEST.sha256"
+    if source_manifest.is_file():
+        return tuple(
+            line.split("  ", 1)[1]
+            for line in source_manifest.read_text(
+                encoding="utf-8", errors="replace"
+            ).splitlines()
+            if "  " in line
+        )
+    return ()
+
+
+def source_reference_registered(root: Path, reference: str) -> bool:
+    normalized = reference.replace("\\", "/").rstrip("/")
+    prefix = normalized + "/"
+    return any(
+        item == normalized or item.startswith(prefix)
+        for item in registered_source_paths(root)
+    )
+
+
 def evidence_reference_exists(root: Path, reference: str) -> bool:
     if not reference or not isinstance(reference, str):
         return False
     candidate = root / reference
     if candidate.exists():
-        return True
+        return source_reference_registered(root, reference)
     # Simple identifiers are allowed only when they are registered in CMake/CTest.
     if "/" not in reference and "\\" not in reference and "." not in reference:
         return reference in cmake_registry_text(root)
@@ -220,7 +255,11 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
             if not impl or not evidence:
                 errors.append(f"complete requirement lacks implementation or evidence: {rid}")
             for rel in impl:
-                if not isinstance(rel, str) or not (root / rel).exists():
+                if (
+                    not isinstance(rel, str)
+                    or not (root / rel).exists()
+                    or not source_reference_registered(root, rel)
+                ):
                     errors.append(f"complete requirement implementation path missing: {rid}: {rel}")
             for ref in evidence:
                 if not evidence_reference_exists(root, ref):

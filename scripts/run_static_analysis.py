@@ -53,6 +53,18 @@ def main() -> int:
     if not compile_commands.is_file():
         print(f"compile_commands.json missing: {compile_commands}", file=sys.stderr)
         return 1
+    help_result = subprocess.run(
+        [executable, "--help"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    exclude_header_filter_supported = (
+        "--exclude-header-filter" in help_result.stdout
+    )
     sources = sorted(
         path for scope in SCOPES for path in scope.glob("*.cpp")
         if path.is_file()
@@ -78,13 +90,16 @@ def main() -> int:
             str(source),
             f"--checks={source_checks}",
             f"--header-filter={HEADER_FILTER}",
-            f"--exclude-header-filter={EXCLUDE_HEADER_FILTER}",
             f"--line-filter={line_filter}",
             "--warnings-as-errors=*",
             "--quiet",
             "-p",
             str(args.build_dir),
         ]
+        if exclude_header_filter_supported:
+            command.insert(
+                4, f"--exclude-header-filter={EXCLUDE_HEADER_FILTER}"
+            )
         completed = subprocess.run(
             command,
             cwd=ROOT,
@@ -126,6 +141,8 @@ def main() -> int:
         "checks": CHECKS,
         "header_filter": HEADER_FILTER,
         "exclude_header_filter": EXCLUDE_HEADER_FILTER,
+        "exclude_header_filter_supported":
+            exclude_header_filter_supported,
         "diagnostic_scope": "supported implementation source files",
         "documented_suppressions": [{
             "source": source,

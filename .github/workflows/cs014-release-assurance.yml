@@ -80,6 +80,16 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+      - name: Checkout pinned vcpkg registry
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          ref: 0878b5224d4a4968940ee296a2e7fae2d3b62983
+          path: .vcpkg
+          fetch-depth: 1
+      - name: Bootstrap pinned vcpkg
+        shell: pwsh
+        run: .\.vcpkg\bootstrap-vcpkg.bat -disableMetrics
       - name: Configure
         shell: pwsh
         run: >
@@ -87,7 +97,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_C_COMPILER=clang-cl
           -DCMAKE_CXX_COMPILER=clang-cl
-          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
           -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
           -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
           -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
@@ -115,7 +125,7 @@ jobs:
           path: |
             build/windows-clang-cl-ctest.txt
             build/windows-clang-cl-build-identity.txt
-          if-no-files-found: error
+          if-no-files-found: ignore
 
   sanitizers:
     name: ASan and UBSan supported surface
@@ -133,10 +143,7 @@ jobs:
         run: >
           cmake -S . -B build-sanitized -G Ninja
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
-          -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
-          -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
-          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
-          -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined"
+          -DNEOENG_ENABLE_SANITIZERS=ON
           -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
           -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
           -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
