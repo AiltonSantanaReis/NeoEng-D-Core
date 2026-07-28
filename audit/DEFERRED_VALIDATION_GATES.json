@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.deferred-validation-gates.v1",
-  "project_version": "1.12.0",
+  "project_version": "1.13.0",
   "policy": {
     "native_validation_pending_is_not_an_implementation_failure": true,
     "virtualized_results_are_engineering_baselines": true,

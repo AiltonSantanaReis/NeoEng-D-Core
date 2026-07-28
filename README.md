@@ -4,9 +4,9 @@
 
 O NeoEng D-Core é um núcleo C++23 standalone que atua como autoridade canônica sobre estado imutável, transições determinísticas, física numérica, checkpoints, replay e rollback. O projeto mantém renderização, GPU, UI, SDF, voxel e integrações verticais fora do núcleo, preservando uma arquitetura horizontal, auditável e reutilizável.
 
-> **Estado atual:** baseline estável **1.12.0 / ChangeSet 012 concluído**. O
-> ciclo fechou persistência temporal, cobertura canônica, instrumentação
-> obrigatória e o contrato de efeitos externos.
+> **Estado atual:** baseline **1.13.0 / ChangeSet 013 em validação**. O ciclo
+> fecha segurança de produção, autorização granular e proteção de bundles sem
+> promover providers externos ou test-only a claims criptográficos incluídos.
 
 ## Visão geral
 
@@ -39,9 +39,9 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline publicada | `1.12.0` |
-| Último ChangeSet concluído | `CS012` — fechamento temporal e efeitos externos |
-| Próximo ciclo | `CS013` — segurança e evidência criptográfica |
+| Baseline em validação | `1.13.0` |
+| ChangeSet corrente | `CS013` — segurança e evidência criptográfica |
+| Último ciclo concluído | `CS012` — fechamento temporal e efeitos externos |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |
 | Qualificação P0–P4 | Não promovida automaticamente; depende de campanha específica |
@@ -143,7 +143,7 @@ NeoEng::DCoreDistributedReference
 Consumo por pacote CMake:
 
 ```cmake
-find_package(NeoEngDCore 1.10 CONFIG REQUIRED)
+find_package(NeoEngDCore 1.13 CONFIG REQUIRED)
 target_link_libraries(
     my_host
     PRIVATE
@@ -201,6 +201,21 @@ Os resultados pertencem à fonte e aos ambientes registrados. ARM64, desempenho
 universal, âncora externa e execução `exactly once` sem host conforme não são
 inferidos.
 
+## ChangeSet 013 — em validação
+
+O CS013 introduz a fronteira oficial de segurança de produção:
+
+- transporte confidencial autenticado e channel binding declarados pelo host;
+- autorização deny-by-default por comando, entidade, origem, role, chave,
+  epoch e intervalo de validade;
+- proteção canônica de support bundles por provider AEAD externo;
+- política explícita para chaves provider-backed e não exportáveis;
+- adapter de anchor externo sem afirmar WORM, notário ou trust incluído.
+
+O claim de provider assimétrico State Signature incluído é removido. Providers
+test-only demonstram integração e rejeição de adulteração, mas não comprovam
+força criptográfica, PKI, custódia, forward secrecy ou auditoria independente.
+
 ## Estrutura do repositório
 
 ```text
@@ -229,6 +244,8 @@ cmake/                   suporte de build e exportação
 - [Fronteira da referência distribuída](docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md)
 - [Contrato de fechamento temporal](docs/contracts/TEMPORAL_CLOSURE_V1.md)
 - [Fronteira de fechamento temporal](docs/architecture/TEMPORAL_CLOSURE_BOUNDARY.md)
+- [Contrato de segurança de produção](docs/contracts/PRODUCTION_SECURITY_V1.md)
+- [Fronteira de segurança de produção](docs/architecture/PRODUCTION_SECURITY_BOUNDARY.md)
 - [Fronteira do View Lab](docs/architecture/VIEW_LAB_BOUNDARY.md)
 
 ## Roadmap normativo
@@ -238,7 +255,7 @@ cmake/                   suporte de build e exportação
 | CS010 | Determinismo ponta a ponta e referência distribuída | Concluído em 1.10.0 |
 | CS011 | Fechamento numérico | Concluído em 1.11.0 |
 | CS012 | Fechamento temporal e efeitos externos | Concluído em 1.12.0 |
-| CS013 | Segurança e evidência criptográfica de produção | Pendente |
+| CS013 | Segurança e evidência criptográfica de produção | Em validação em 1.13.0 |
 | CS014 | Release assurance e SDK completo | Pendente |
 | CS015 | Aceitação final | Pendente |
 

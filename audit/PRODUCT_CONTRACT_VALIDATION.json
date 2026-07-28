@@ -1,16 +1,16 @@
 {
   "schema": "neoeng.dcore.product-contract-validation.v1",
-  "project_version": "1.12.0",
+  "project_version": "1.13.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "b48eed218cf6c226631c3efc34e5980e064808e76944cb059de640dad8b67682",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "84f0c30e96649f985c137c5789007cf84c4b361ca4b194b7dceabe9334800e2a",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "f56e5bdbda6f1b9d99831b4b743dfb94e52a8d0ca3a07233cbaabf81c7df8c9a",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "18a844d41403800599a7f4fb4adab3831da7d484b112d3e433b9725f5dbc249e",
-    "audit/DEFERRED_VALIDATION_GATES.json": "e7e98e1469a0933d9d5d26d8811086d9b1c060aa82df8c66ddc8d301cf6db014",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "8976b130d8b433389adf217c61a87e75358ce22285e0a2dbe8f13db105c54100",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "92a2c06a3e8d68da87a48b8858600519f4f043970882a154adfa0aa2ad7ac408",
-    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "abac5e71dc253985d02b9f9d1b33b2c5131220139bfc2b477ff51e9f45bacfd6"
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "aed7d8f51847e546b317338db7e047f72c9299af8cc925e4b8895e82a6188d2a",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "a1ea1d02b4c32853338c165e47a0850f26e098dd843f8929feec8285d1bf2e2a",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "2e73e59fb5e29f95be3af0acfc834466d9413400ec9a0d0330db65f2bed872be",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "c9f782e00d4358254f0791fea4257cbc74a65bcde950b01ee32ad4c8c3af6ff7",
+    "audit/DEFERRED_VALIDATION_GATES.json": "be7d35bea535eba5454b187a4c2c30d27f4e1c918b3a7de3b2345099031658a3",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "852e744ee6350c52b3ab8a44fe5e5f4f06bac5af88ac47d44d77de25750096eb",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "1ea843b73f02a8c09422e8fc9ca56190c57b375be5a2d7375cf88a1d74ab0f65",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "9117c859d1736d0c395a9ee1c3f7ef517b3743ecc795bca86f4461a3033cc94d"
   },
   "counts": {
     "requirements": 36,
@@ -47,5 +47,5 @@
     "LIM-036"
   ],
   "commercial_ready": false,
-  "reason": "CS012 closes the declared temporal recorder, WorldState v1 localization, mandatory-path instrumentation and external-effects boundary; native ARM64, other mandatory technical work and external assurance remain open."
+  "reason": "CS013 implements the candidate production-security boundary, but its three requirements remain open until immutable Windows and Linux GCC/Clang campaign evidence is approved; native ARM64, other mandatory technical work and external assurance also remain open."
 }

@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.12.0",
+  "package_version": "1.13.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
@@ -278,6 +278,23 @@
     "arm64_execution": "not performed",
     "external_trust_anchor": "not performed; deployment-specific",
     "exactly_once_without_conforming_host": "not claimed",
+    "commercial_product_complete": false
+  },
+  "changeset_013": {
+    "base_version": "1.12.0",
+    "target_version": "1.13.0",
+    "scope": "confidential transport attestation, granular authorization, external provider key policy, protected support-bundle framing and external anchor adapter",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "stable_hash_changed": false,
+    "host_c_abi_version": "1.0 unchanged",
+    "asymmetric_state_signature_provider": "not included; product claim removed",
+    "cryptographic_provider_model": "external provider interface; deterministic provider is test-only",
+    "windows_x86_64_execution": "implementation validation pending immutable clean-source campaign",
+    "linux_x86_64_cross_compiler_execution": "pending",
+    "arm64_execution": "not performed",
+    "external_security_audit": "not performed",
     "commercial_product_complete": false
   }
 }

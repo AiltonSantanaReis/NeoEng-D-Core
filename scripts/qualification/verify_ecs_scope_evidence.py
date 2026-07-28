@@ -21,7 +21,7 @@ from typing import Any
 SCHEMA = "neoeng.dcore.ecs-scope-evidence-verification.v1"
 BENCHMARK_SCHEMA = "neoeng.dcore.ecs-maintenance-benchmark.v2"
 SCOPE_SCHEMA = "neoeng.dcore.ecs-scope-evidence.v1"
-PROJECT_VERSION = "1.12.0"
+PROJECT_VERSION = "1.13.0"
 WORKLOAD = "Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1"
 REQUIRED_STREAMS = {
     "ecs_maintenance_samples.csv",

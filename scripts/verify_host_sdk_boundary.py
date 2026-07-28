@@ -40,8 +40,8 @@ for rel in required:
 
 cmake_path = root / 'CMakeLists.txt'
 cmake = cmake_path.read_text(encoding='utf-8', errors='replace')
-if 'project(NeoEngDCore VERSION 1.12.0 LANGUAGES C CXX)' not in cmake:
-    errors.append('identidade/versão CMake 1.12.0 com C e CXX ausente')
+if 'project(NeoEngDCore VERSION 1.13.0 LANGUAGES C CXX)' not in cmake:
+    errors.append('identidade/versão CMake 1.13.0 com C e CXX ausente')
 for token in (
     'add_subdirectory(modules/host_sdk)',
     'NeoEngDCoreConfig.cmake.in',

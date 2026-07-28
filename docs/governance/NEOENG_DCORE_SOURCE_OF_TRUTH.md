@@ -3,7 +3,7 @@
 Documento normativo: `NEOENG-DCORE-SOT-001`
 Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.12.0
+Baseline desta fonte: 1.13.0
 
 ## 1. Autoridade
 
@@ -52,7 +52,7 @@ Cada ChangeSet deve declarar requisitos fechados, baseline verificavel, nao obje
 
 Pendencias somente podem permanecer como `native_qualification`, `external_assurance`, `host_responsibility`, `deployment_responsibility`, `optional_vertical`, `accepted_boundary` ou `out_of_scope`.
 
-## 7. Estado da baseline 1.12.0
+## 7. Estado da baseline 1.13.0
 
 A 1.8.0 estabeleceu governanca, rastreabilidade, claims, responsabilidades, backlog finito e gates de asseguracao, preservando o nucleo canonico da 1.7.0.
 
@@ -71,6 +71,10 @@ Esses resultados descrevem somente os ambientes registrados e nao promovem ARM64
 O CS012, incorporado na baseline 1.12.0, fecha o contrato temporal por um recorder append-only duravel e encadeado por SHA-256, recuperacao/verificacao fail-closed, cobertura declarada de todos os campos do unico schema canonico prometido (`WorldState v1`) e budgets automaticos nos nove caminhos obrigatorios. Efeitos externos seguem prepare/confirm/commit/compensate com chave de idempotencia; rollback descarta intents preparados, mas nunca afirma desfazer efeito irreversivel ja confirmado.
 
 As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a fonte `7dc8a6f66190382adf7ee45097745d3b1c811e42`, com resultado semantico GCC/Clang byte a byte identico. O anchor externo e o armazenamento idempotente do executor continuam responsabilidades de deployment/host explicitamente limitadas. Resultados descrevem somente a fonte, ambiente e configuracao registrados e nao promovem ARM64 nem desempenho universal. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS013.
+
+O CS013, proposto para a baseline 1.13.0, remove do produto o claim de provider assimetrico State Signature incluido e preserva somente a interface externa. O modelo de producao exige transporte confidencial autenticado e channel binding, autorizacao por comando/entidade/origem/role/chave/tempo, descritores externos de ciclo de chaves, protecao canonica de support bundles por provider AEAD e adapter explicito para anchor externo.
+
+Providers test-only demonstram somente integracao e rejeicao fail-closed; nao provam forca criptografica, PKI, custodia, forward secrecy, nao repudio, trust externo ou auditoria independente. Esses limites permanecem responsabilidades de host/deployment ou assurance externa e nao podem ser inferidos da campanha interna.
 
 ## 8. Regra de conflito
 

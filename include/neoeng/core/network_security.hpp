@@ -65,6 +65,10 @@ struct AuthenticatedPacketView final {
     std::uint64_t session_id{};
     std::uint64_t sequence{};
     std::uint64_t sent_at_ms{};
+    OriginId origin{};
+    std::uint32_t key_id{};
+    std::uint32_t key_epoch{};
+    std::uint8_t authorized_role{};
     std::span<const std::uint8_t> payload{};
 };
 

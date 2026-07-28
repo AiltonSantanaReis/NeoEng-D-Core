@@ -297,7 +297,7 @@ int main(int argc, char** argv) {
         summary << "{\n"
                 << "  \"schema\": \"neoeng.dcore.ecs-maintenance-benchmark.v2\",\n"
                 << "  \"ecs_scope_schema\": \"neoeng.dcore.ecs-scope-evidence.v1\",\n"
-                << "  \"project_version\": \"1.12.0\",\n"
+                << "  \"project_version\": \"1.13.0\",\n"
                 << "  \"workload_id\": \"Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1\",\n"
                 << "  \"body_count\": " << body_count << ",\n"
                 << "  \"active_body_count\": " << active_count << ",\n"

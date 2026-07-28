@@ -3,6 +3,7 @@
 #include "neoeng/core/diagnostics.hpp"
 #include "neoeng/core/network_security.hpp"
 #include "neoeng/core/observability.hpp"
+#include "neoeng/core/production_security.hpp"
 #include "neoeng/core/recovery.hpp"
 #include "neoeng/core/recovery_contract.hpp"
 #include "neoeng/core/rollback.hpp"
@@ -32,6 +33,7 @@ struct OperationalStepResult final {
     bool advanced{};
     PacketRejectReason packet_reason{PacketRejectReason::None};
     InputPayloadRejectReason payload_reason{InputPayloadRejectReason::None};
+    AuthorizationReason authorization_reason{AuthorizationReason::None};
     RecoverySignal recovery{};
     RecoveryContractEvent recovery_event{};
     std::uint64_t resulting_frame{};
@@ -50,6 +52,13 @@ public:
         std::uint64_t now_ms,
         CorrelationId correlation_id,
         std::span<const std::uint8_t> datagram);
+    [[nodiscard]] OperationalStepResult ingest_authorized_input(
+        OriginId origin,
+        std::uint64_t now_ms,
+        CorrelationId correlation_id,
+        std::span<const std::uint8_t> datagram,
+        const TransportSecurityContext& transport,
+        const CommandAuthorizationPolicy& authorization);
 
     [[nodiscard]] RecoverySignal report_external_fault(
         FaultKind fault,
@@ -94,6 +103,13 @@ public:
     }
 
 private:
+    [[nodiscard]] OperationalStepResult ingest_input(
+        OriginId origin,
+        std::uint64_t now_ms,
+        CorrelationId correlation_id,
+        std::span<const std::uint8_t> datagram,
+        const TransportSecurityContext* transport,
+        const CommandAuthorizationPolicy* authorization);
     void record_network_rejection(
         CorrelationId correlation_id,
         PacketRejectReason reason,
