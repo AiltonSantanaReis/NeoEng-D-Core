@@ -441,7 +441,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open.",
+        "reason": "CS014 is closed by immutable Windows and Linux GCC/Clang release-assurance evidence plus independently verified public Sigstore bundles; final CS015 acceptance, native ARM64/profile qualification and external assurance remain open.",
     }
 
 
@@ -466,8 +466,7 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
             row
             for row in d["backlog"]["items"]
             if row.get("category") == "internal_mandatory"
-            and row.get("status") == "open"
-        ).update(closure_stage=""),
+        ).update(status="open", closure_stage=""),
     )
 
     for name, mutated in mutations:

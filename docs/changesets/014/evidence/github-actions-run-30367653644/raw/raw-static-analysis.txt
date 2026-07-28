@@ -1,0 +1,256 @@
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/distributed_reference/src/dcore_replica_adapter.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/distributed_reference/src/dcore_replica_adapter.cpp","lines":[[1,164]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/distributed_reference/src/distributed_reference.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/distributed_reference/src/distributed_reference.cpp","lines":[[1,574]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/host_sdk/src/dcore_host.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/modules/host_sdk/src/dcore_host.cpp","lines":[[1,954]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/active_world.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/active_world.cpp","lines":[[1,281]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/advanced_island_solver.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/advanced_island_solver.cpp","lines":[[1,405]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/arbitrary_normal_projection.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/arbitrary_normal_projection.cpp","lines":[[1,402]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/atomic_physics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/atomic_physics.cpp","lines":[[1,279]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/atomic_temporal_physics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/atomic_temporal_physics.cpp","lines":[[1,1165]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/authoritative_paged_temporal_physics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/authoritative_paged_temporal_physics.cpp","lines":[[1,86]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/axis_forest_projection.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/axis_forest_projection.cpp","lines":[[1,258]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/broadphase.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/broadphase.cpp","lines":[[1,274]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/chain_solver.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/chain_solver.cpp","lines":[[1,621]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/component_world.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/component_world.cpp","lines":[[1,710]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/contact_solver.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/contact_solver.cpp","lines":[[1,1424]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/contextual_policy.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/contextual_policy.cpp","lines":[[1,144]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/crypto_hash.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/crypto_hash.cpp","lines":[[1,161]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/diagnostics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/diagnostics.cpp","lines":[[1,206]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/dynamic_island_pair_history.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/dynamic_island_pair_history.cpp","lines":[[1,415]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/epoch_arena.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/epoch_arena.cpp","lines":[[1,66]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/exact_oblique_tree_oracle.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.*,-clang-analyzer-security.ArrayBound --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/exact_oblique_tree_oracle.cpp","lines":[[1,498]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_active_island_shadow.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_active_island_shadow.cpp","lines":[[1,363]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_decomposition.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_decomposition.cpp","lines":[[1,533]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_microkernel.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_raa_microkernel.cpp","lines":[[1,1348]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_simd.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_simd.cpp","lines":[[1,126]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_slot_allocator.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/fixed_slot_allocator.cpp","lines":[[1,140]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/general_lcp_solver.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/general_lcp_solver.cpp","lines":[[1,933]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/hardware_profile.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/hardware_profile.cpp","lines":[[1,270]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/hash.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/hash.cpp","lines":[[1,93]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/immutable_rollback.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/immutable_rollback.cpp","lines":[[1,95]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/immutable_world.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/immutable_world.cpp","lines":[[1,520]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/interactive_rollback.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/interactive_rollback.cpp","lines":[[1,207]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/island_pair_cache.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/island_pair_cache.cpp","lines":[[1,168]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/island_runtime.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/island_runtime.cpp","lines":[[1,576]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/network_security.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/network_security.cpp","lines":[[1,543]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/numeric_contract.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/numeric_contract.cpp","lines":[[1,108]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/oblique_star_projection.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/oblique_star_projection.cpp","lines":[[1,184]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/oblique_tree_grid_dp.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/oblique_tree_grid_dp.cpp","lines":[[1,298]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/observability.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/observability.cpp","lines":[[1,414]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/offline_oracle.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/offline_oracle.cpp","lines":[[1,143]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/operational_runtime.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/operational_runtime.cpp","lines":[[1,448]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_atomic_history.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_atomic_history.cpp","lines":[[1,533]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_atomic_temporal_physics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_atomic_temporal_physics.cpp","lines":[[1,146]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_segmented_pair_history.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/paged_segmented_pair_history.cpp","lines":[[1,839]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/persistent_checkpoint.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/persistent_checkpoint.cpp","lines":[[1,144]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/production_security.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/production_security.cpp","lines":[[1,679]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/radix_world.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/radix_world.cpp","lines":[[1,390]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/recovery.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/recovery.cpp","lines":[[1,213]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/recovery_contract.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/recovery_contract.cpp","lines":[[1,257]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/rollback.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/rollback.cpp","lines":[[1,78]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/segmented_authoritative_paged_temporal_physics.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/segmented_authoritative_paged_temporal_physics.cpp","lines":[[1,85]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/segmented_dynamic_pair_history.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/segmented_dynamic_pair_history.cpp","lines":[[1,591]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/session_security.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/session_security.cpp","lines":[[1,603]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/simulation.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/simulation.cpp","lines":[[1,106]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/small_oblique_grid_oracle.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/small_oblique_grid_oracle.cpp","lines":[[1,114]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/snapshot_store.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/snapshot_store.cpp","lines":[[1,1066]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/state_evidence.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/state_evidence.cpp","lines":[[1,696]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/support_bundle.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/support_bundle.cpp","lines":[[1,446]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/temporal_contact.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/temporal_contact.cpp","lines":[[1,474]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/temporal_contract.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/temporal_contract.cpp","lines":[[1,774]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/uncertainty_lab.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/uncertainty_lab.cpp","lines":[[1,356]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/versioned_island_pair_history.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/versioned_island_pair_history.cpp","lines":[[1,422]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/visual_correlation.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/visual_correlation.cpp","lines":[[1,85]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/weighted_contact_projection.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/weighted_contact_projection.cpp","lines":[[1,637]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0
+$ /usr/bin/clang-tidy /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/weighted_tree_projection.cpp --checks=-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.* --header-filter=[\\/](include[\\/]neoeng|modules[\\/](host_sdk|distributed_reference)[\\/](include|src))[\\/] --line-filter=[{"name":"/home/runner/work/NeoEng-D-Core/NeoEng-D-Core/src/weighted_tree_projection.cpp","lines":[[1,418]]}] --warnings-as-errors=* --quiet -p build-analysis
+
+
+exit_code=0

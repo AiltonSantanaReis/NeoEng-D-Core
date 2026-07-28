@@ -530,11 +530,16 @@
       "requirement_id": "DCORE-SDK-002",
       "description": "Every capability marketed as part of the horizontal product is reachable through a supported SDK or official tool.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
-        "modules/host_sdk"
+        "modules/host_sdk",
+        "audit/PRODUCT_CAPABILITY_SURFACE.json",
+        "docs/commercial/PUBLIC_CLAIMS.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "scripts/verify_release_assurance.py",
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
+      ],
       "closure_stage": "CS014"
     },
     {
@@ -559,48 +564,79 @@
       "requirement_id": "DCORE-REL-001",
       "description": "A single consolidated release replaces the base-plus-patches distribution.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "scripts/create_consolidated_release.py",
+        "scripts/verify_consolidated_release.py",
+        "docs/contracts/RELEASE_ASSURANCE_V1.md"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
+      ],
       "closure_stage": "CS014"
     },
     {
       "requirement_id": "DCORE-REL-002",
       "description": "Coverage-guided fuzzing, full-scope sanitizer policy and blocking static analysis are reproducible.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        ".github/workflows/cs014-release-assurance.yml",
+        "scripts/run_static_analysis.py",
+        "fuzz"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
+      ],
       "closure_stage": "CS014"
     },
     {
       "requirement_id": "DCORE-REL-003",
       "description": "SBOM, provenance, release signature and secure update policy are delivered.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        "docs/contracts/RELEASE_ASSURANCE_V1.md",
+        "scripts/create_consolidated_release.py",
+        "scripts/qualification/write_sigstore_verification_receipt.py"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/independent-verification.json"
+      ],
       "closure_stage": "CS014"
     },
     {
       "requirement_id": "DCORE-REL-004",
       "description": "Continuous integration can reproduce the normative validation matrix.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        ".github/workflows/cs014-release-assurance.yml"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
+      ],
       "closure_stage": "CS014"
     },
     {
       "requirement_id": "DCORE-COM-001",
       "description": "Commercial technical claims are generated from the claims ledger and contain no unsupported metrics.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
-        "audit/PRODUCT_CLAIMS_LEDGER.json"
+        "audit/PRODUCT_CLAIMS_LEDGER.json",
+        "audit/PRODUCT_CAPABILITY_SURFACE.json",
+        "scripts/generate_public_claims.py",
+        "docs/commercial/PUBLIC_CLAIMS.md"
       ],
       "tests_or_evidence": [
-        "scripts/verify_product_contract.py"
+        "scripts/verify_product_contract.py",
+        "scripts/verify_release_assurance.py",
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
       ],
       "closure_stage": "CS014"
     },

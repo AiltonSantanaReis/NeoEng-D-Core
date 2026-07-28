@@ -298,7 +298,7 @@ def self_test(req: dict[str, Any], matrix: dict[str, Any], campaigns: dict[str, 
         cases.append((name, r, m, c))
 
     add("remove a requirement row", lambda r, m, c: m["requirements"].pop())
-    add("mark partial requirement evidenced", lambda r, m, c: next(x for x in m["requirements"] if x["requirement_status"] == "partial").update(assurance_status="evidenced"))
+    add("mark open requirement evidenced", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial").update(assurance_status="evidenced"))
     add("drop adversarial future class", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial")["required_test_classes"].remove("adversarial"))
     add("claim meta-test is capability proof", lambda r, m, c: m["policy"].update(meta_validation_is_not_capability_proof=False))
     add("diverge current evidence", lambda r, m, c: m["requirements"][0].update(current_evidence=[]))

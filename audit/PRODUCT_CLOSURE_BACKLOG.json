@@ -195,9 +195,14 @@
       "title": "Host SDK does not expose every implemented product capability.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Close SDK coverage for all horizontal claims or remove those claims from the SDK offer."
+      "normative_decision": "Closed in 1.14.0 by mapping every public horizontal claim to an installed SDK or official tool and generating public claims only from the verified ledger.",
+      "closure_evidence": [
+        "audit/PRODUCT_CAPABILITY_SURFACE.json",
+        "docs/commercial/PUBLIC_CLAIMS.md",
+        "docs/changesets/014/evidence/github-actions-run-30367653644"
+      ]
     },
     {
       "limitation_id": "LIM-017",
@@ -367,63 +372,101 @@
       "title": "Fuzzing is not continuous and coverage-guided across the product.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Integrate coverage-guided fuzzing and corpus management into release gates."
+      "normative_decision": "Closed in 1.14.0 with two continuous 120-second LLVM libFuzzer release gates covering hostile network-packet and session-handshake byte ingress.",
+      "closure_evidence": [
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        ".github/workflows/cs014-release-assurance.yml",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/raw/network-packet.txt",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/raw/session-handshake.txt"
+      ]
     },
     {
       "limitation_id": "LIM-031",
       "title": "Sanitizer coverage is limited to subsets.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Define and execute full supported-surface sanitizer matrix."
+      "normative_decision": "Closed in 1.14.0 by executing ASan and UBSan over the complete supported release test surface, including the installed SDK consumer.",
+      "closure_evidence": [
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/raw/sanitizer-ctest.txt"
+      ]
     },
     {
       "limitation_id": "LIM-032",
       "title": "Blocking industrial static analysis is not evidenced.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Add reproducible static analysis policy and evidence."
+      "normative_decision": "Closed in 1.14.0 by a blocking clang-tidy gate over all 64 supported implementation units with one scoped and documented third-party false-positive suppression.",
+      "closure_evidence": [
+        "scripts/run_static_analysis.py",
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/raw/static-analysis-summary.json"
+      ]
     },
     {
       "limitation_id": "LIM-033",
       "title": "SBOM, release signing and secure update process are absent.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Deliver release assurance artifacts and policy."
+      "normative_decision": "Closed in 1.14.0 with an SPDX 2.3 SBOM, deterministic provenance, SHA-256 manifests, fail-closed update policy and two keyless Sigstore bundles verified against Fulcio and public Rekor.",
+      "closure_evidence": [
+        "docs/contracts/RELEASE_ASSURANCE_V1.md",
+        "audit/RELEASE_ASSURANCE_POLICY.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/independent-verification.json"
+      ]
     },
     {
       "limitation_id": "LIM-034",
       "title": "No published continuous integration pipeline reproduces the full matrix.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Deliver CI definition and offline-reproducible runner."
+      "normative_decision": "Closed in 1.14.0 by the committed GitHub Actions matrix that reproduced Windows clang-cl, Linux GCC/Clang, sanitizer, fuzzing, static-analysis and release gates from one clean source commit.",
+      "closure_evidence": [
+        ".github/workflows/cs014-release-assurance.yml",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/source-identity.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/result-summary.json"
+      ]
     },
     {
       "limitation_id": "LIM-035",
       "title": "Distribution is fragmented as base plus ChangeSets.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Produce a single consolidated release with cumulative notes and manifest."
+      "normative_decision": "Closed in 1.14.0 by one cumulative deterministic source ZIP; base-plus-patches distribution is prohibited by the release contract.",
+      "closure_evidence": [
+        "scripts/create_consolidated_release.py",
+        "scripts/verify_consolidated_release.py",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/release-artifacts.json",
+        "docs/changesets/014/evidence/github-actions-run-30367653644/archive-reproducibility.txt"
+      ]
     },
     {
       "limitation_id": "LIM-036",
       "title": "Commercial entitlement/licensing enforcement is absent.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS014",
-      "normative_decision": "Decide delivery model and implement only the minimum commercial entitlement required; never place licensing decisions in canonical state."
+      "normative_decision": "Closed in 1.14.0 by selecting distribution-and-contract-controlled entitlement. No runtime licensing decision or entitlement server enters canonical state, and no redistribution permission is inferred.",
+      "closure_evidence": [
+        "docs/governance/COMMERCIAL_DELIVERY_POLICY.md",
+        "docs/contracts/RELEASE_ASSURANCE_V1.md",
+        "audit/RELEASE_ASSURANCE_POLICY.json"
+      ]
     },
     {
       "limitation_id": "LIM-037",

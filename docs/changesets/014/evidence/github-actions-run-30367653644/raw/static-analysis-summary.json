@@ -1,0 +1,24 @@
+{
+  "blocking": true,
+  "checks": "-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,clang-analyzer-security.*",
+  "diagnostic_scope": "supported implementation source files",
+  "documented_suppressions": [
+    {
+      "checks": [
+        "clang-analyzer-security.ArrayBound"
+      ],
+      "reason": "LLVM 22 false positive is emitted inside the Boost multiprecision unchecked cpp_int implementation; all other analyzer checks remain blocking for this translation unit",
+      "source": "src/exact_oblique_tree_oracle.cpp"
+    }
+  ],
+  "engine": "clang-tidy",
+  "exclude_header_filter": "[\\\\/](vcpkg_installed|usr[\\\\/]include)[\\\\/]",
+  "exclude_header_filter_supported": false,
+  "failed_sources": [],
+  "header_filter": "[\\\\/](include[\\\\/]neoeng|modules[\\\\/](host_sdk|distributed_reference)[\\\\/](include|src))[\\\\/]",
+  "parallel_jobs": 2,
+  "project_version": "1.14.0",
+  "schema": "neoeng.dcore.static-analysis-summary.v1",
+  "sources_analyzed": 64,
+  "status": "passed"
+}

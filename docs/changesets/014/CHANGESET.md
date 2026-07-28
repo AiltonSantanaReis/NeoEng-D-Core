@@ -4,6 +4,8 @@ Target baseline: `1.14.0`
 
 Campaign: `TEST-CS014-001`
 
+Status: concluded by GitHub Actions run `30367653644`
+
 ## Scope
 
 - reconcile every public claim with an installed SDK or official tool;

@@ -29,9 +29,9 @@ Recorder temporal append-only duravel e encadeado por SHA-256, recuperacao e adu
 
 O claim de provider assimetrico State Signature incluido foi removido. O contrato de producao exige transporte confidencial autenticado e channel binding, autorizacao granular deny-by-default, descritores externos de ciclo de chaves, protecao canonica de support bundles por provider AEAD e adapter de anchor externo. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas sobre a mesma fonte, com resultado semantico GCC/Clang byte a byte identico; ARM64, provider criptografico de producao, PKI, custodia, trust externo e auditoria independente nao foram inferidos.
 
-## CS014 - Release assurance e SDK completo — EM VALIDACAO PARA 1.14.0
+## CS014 - Release assurance e SDK completo — CONCLUIDO EM 1.14.0
 
-Mapa claim-para-SDK/ferramenta oficial, fuzzing coverage-guided, sanitizers, analise estatica bloqueante, SBOM SPDX, proveniencia, atestacao externa assinada, CI reproduzivel, pacote cumulativo consolidado, compatibilidade ABI e politica comercial fora do estado canonico.
+Mapa claim-para-SDK/ferramenta oficial, fuzzing coverage-guided, sanitizers, analise estatica bloqueante, SBOM SPDX, proveniencia, duas atestacoes keyless Sigstore publicas, CI reproduzivel, pacote cumulativo consolidado e politica comercial fora do estado canonico. Campanha Windows clang-cl, Linux GCC/Clang e verificacao independente aprovadas no run `30367653644`; ARM64, certificacao, auditoria externa e desempenho universal nao foram inferidos.
 
 ## CS015 - Aceitacao final
 

@@ -76,11 +76,13 @@ O CS013, incorporado na baseline 1.13.0, remove do produto o claim de provider a
 
 Providers test-only demonstram somente integracao e rejeicao fail-closed; nao provam forca criptografica, PKI, custodia, forward secrecy, nao repudio, trust externo ou auditoria independente. Esses limites permanecem responsabilidades de host/deployment ou assurance externa e nao podem ser inferidos da campanha interna.
 
-As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a fonte `28c990174742b1da1885750bc72c29a4614997a0`, com resultado semantico GCC/Clang byte a byte identico no run `30354055225`. Os resultados descrevem somente a fonte, ambientes, configuracoes e hardware registrados; nao promovem ARM64 nem uma regra de desempenho para outra maquina. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS014.
+As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a fonte `28c990174742b1da1885750bc72c29a4614997a0`, com resultado semantico GCC/Clang byte a byte identico no run `30354055225`. Os resultados descrevem somente a fonte, ambientes, configuracoes e hardware registrados; nao promovem ARM64 nem uma regra de desempenho para outra maquina.
 
-O CS014, proposto para a baseline 1.14.0, fecha a superficie publica por um mapa claim-para-SDK/ferramenta oficial, substitui a distribuicao base-mais-patches por arquivo cumulativo deterministico e exige fuzzing coverage-guided nos ingressos binarios hostis, ASan/UBSan na superficie suportada, analise estatica bloqueante, SBOM SPDX, proveniencia, manifesto e verificacao independente.
+O CS014, incorporado na baseline 1.14.0, fecha a superficie publica por um mapa claim-para-SDK/ferramenta oficial, substitui a distribuicao base-mais-patches por arquivo cumulativo deterministico e exige fuzzing coverage-guided nos ingressos binarios hostis, ASan/UBSan na superficie suportada, analise estatica bloqueante, SBOM SPDX, proveniencia, manifesto e verificacao independente.
 
-A publicacao exige atestacao externa assinada do artefato; nenhuma chave privada e incluida e um candidato local sem atestacao nao e publicavel. Entitlement permanece controlado pela distribuicao e contrato comercial, sem decisao de licenca no estado canonico. Certificacao, auditoria externa, ARM64 e qualificacao de hardware nao sao inferidas.
+A campanha Windows clang-cl, Linux GCC/Clang, sanitizers, dois fuzzers de 120 segundos, clang-tidy e release deterministico foi aprovada sobre a fonte `82580064cd38be07af9f5264599165cbf48c218b` no run `30367653644`. Proveniencia e SBOM foram atestados por Fulcio/Rekor e verificados por Cosign no runner e novamente no host Windows do usuario.
+
+A publicacao exige os bundles keyless Sigstore do artefato; nenhuma chave privada e incluida e um candidato local sem atestacao nao e publicavel. Entitlement permanece controlado pela distribuicao e contrato comercial, sem decisao de licenca no estado canonico. Certificacao, auditoria externa, ARM64, qualificacao de hardware e desempenho universal nao sao inferidos. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS015.
 
 ## 8. Regra de conflito
 
