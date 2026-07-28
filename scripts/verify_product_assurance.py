@@ -6,12 +6,13 @@ import copy
 import functools
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.13.0"
+EXPECTED_VERSION = "1.14.0"
 REQUIREMENTS = ROOT / "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"
 MATRIX = ROOT / "audit/PRODUCT_ASSURANCE_MATRIX.json"
 CAMPAIGNS = ROOT / "audit/PRODUCT_TEST_CAMPAIGNS.json"
@@ -37,7 +38,11 @@ def load(path: Path) -> dict[str, Any]:
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Keep stored assurance reports identical across Git checkouts whose
+    # platform policy materializes JSON with CRLF or LF line endings.
+    return hashlib.sha256(
+        path.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
 
 
 @functools.lru_cache(maxsize=1)
@@ -50,9 +55,39 @@ def cmake_registry_text() -> str:
     )
 
 
+@functools.lru_cache(maxsize=1)
+def registered_source_paths() -> tuple[str, ...]:
+    git_result = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "-z"],
+        check=False,
+        capture_output=True,
+    )
+    if git_result.returncode == 0:
+        return tuple(
+            item.decode("utf-8").replace("\\", "/")
+            for item in git_result.stdout.split(b"\0")
+            if item
+        )
+    source_manifest = ROOT / "MANIFEST.sha256"
+    if source_manifest.is_file():
+        return tuple(
+            line.split("  ", 1)[1]
+            for line in source_manifest.read_text(
+                encoding="utf-8", errors="replace"
+            ).splitlines()
+            if "  " in line
+        )
+    return ()
+
+
 def ref_exists(ref: str) -> bool:
     if (ROOT / ref).exists():
-        return True
+        normalized = ref.replace("\\", "/").rstrip("/")
+        prefix = normalized + "/"
+        return any(
+            item == normalized or item.startswith(prefix)
+            for item in registered_source_paths()
+        )
     if "/" not in ref and "\\" not in ref and "." not in ref:
         return ref in cmake_registry_text()
     return False
@@ -263,7 +298,7 @@ def self_test(req: dict[str, Any], matrix: dict[str, Any], campaigns: dict[str, 
         cases.append((name, r, m, c))
 
     add("remove a requirement row", lambda r, m, c: m["requirements"].pop())
-    add("mark partial requirement evidenced", lambda r, m, c: next(x for x in m["requirements"] if x["requirement_status"] == "partial").update(assurance_status="evidenced"))
+    add("mark open requirement evidenced", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial").update(assurance_status="evidenced"))
     add("drop adversarial future class", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial")["required_test_classes"].remove("adversarial"))
     add("claim meta-test is capability proof", lambda r, m, c: m["policy"].update(meta_validation_is_not_capability_proof=False))
     add("diverge current evidence", lambda r, m, c: m["requirements"][0].update(current_evidence=[]))

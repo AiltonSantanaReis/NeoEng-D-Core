@@ -156,7 +156,7 @@ int main() {
             .pseudonymization_salt = "cs013-probe-salt",
         };
         const SupportBundleContext context{
-            .project_version = "1.13.0",
+            .project_version = "1.14.0",
             .environment_id = "recorded-campaign",
             .hardware_profile = "not-qualified",
             .seed = 13U,

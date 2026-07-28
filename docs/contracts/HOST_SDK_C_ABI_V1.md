@@ -1,6 +1,6 @@
 # NeoEng D-Core Host SDK C ABI v1
 
-Status: active in NeoEng D-Core 1.10.0
+Status: active in NeoEng D-Core 1.14.0
 Public header: `neoeng/dcore_host.h`
 CMake target: `NeoEng::DCoreHostSdk`
 
@@ -16,7 +16,7 @@ The Host SDK is a one-way integration boundary over capabilities that already ex
 
 - ABI major: 1
 - ABI minor: 0
-- Runtime version: 1.10.0
+- Runtime version: 1.14.0
 - All public integer fields use fixed-width C integer types.
 - The ABI exposes opaque handles; it exposes no STL objects, C++ exceptions, references, templates, internal pointers or allocator ownership.
 - ABI 1.x structure layouts are frozen. Extending or reordering a public structure requires a new ABI major. The `struct_size` field is descriptive and allows runtime inspection; it is not permission to enlarge a structure within ABI 1.x.
@@ -109,7 +109,7 @@ Consumer projects use `find_package(NeoEngDCore 1.7 CONFIG REQUIRED)` and link t
 
 ## Deliberate exclusions in v1
 
-- no shared-library distribution claim; the companion target is packaged as a static library in 1.10.0;
+- no shared-library distribution claim; the companion target is packaged as a static library in 1.14.0;
 - no Unreal or Unity adapter implementation;
 - no network socket or UDP/QUIC transport;
 - no callbacks into arbitrary host code;

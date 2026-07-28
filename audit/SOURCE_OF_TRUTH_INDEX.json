@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.source-of-truth-index.v1",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "required_for_every_changeset": true,
   "primary_document": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
   "precedence": [
@@ -12,6 +12,8 @@
     "audit/PRODUCT_CLOSURE_BACKLOG.json",
     "audit/PRODUCT_ASSURANCE_MATRIX.json",
     "audit/PRODUCT_TEST_CAMPAIGNS.json",
+    "audit/PRODUCT_CAPABILITY_SURFACE.json",
+    "audit/RELEASE_ASSURANCE_POLICY.json",
     "docs/governance/PRODUCT_COMPLETION_STANDARD.md",
     "docs/governance/PRODUCT_ASSURANCE_TEST_STANDARD.md",
     "docs/governance/PRODUCT_CLOSURE_PLAN.md",
@@ -27,6 +29,8 @@
     "audit/PRODUCT_CLOSURE_BACKLOG.json",
     "audit/PRODUCT_ASSURANCE_MATRIX.json",
     "audit/PRODUCT_TEST_CAMPAIGNS.json",
+    "audit/PRODUCT_CAPABILITY_SURFACE.json",
+    "audit/RELEASE_ASSURANCE_POLICY.json",
     "audit/DEFERRED_VALIDATION_GATES.json"
   ],
   "verifiers": [
@@ -39,7 +43,10 @@
     "scripts/verify_temporal_closure_boundary.py",
     "scripts/qualification/verify_temporal_closure_evidence.py",
     "scripts/verify_production_security_boundary.py",
-    "scripts/qualification/verify_production_security_evidence.py"
+    "scripts/qualification/verify_production_security_evidence.py",
+    "scripts/verify_release_assurance.py",
+    "scripts/verify_consolidated_release.py",
+    "scripts/qualification/verify_release_assurance_evidence.py"
   ],
   "conflict_policy": "Higher-precedence documents control. Conflicts stop the affected claim or implementation until reconciled by a ChangeSet.",
   "scope_statement": "NeoEng D-Core is an independent product based on consolidated Year-1 technical work and is not the five-year engine program.",

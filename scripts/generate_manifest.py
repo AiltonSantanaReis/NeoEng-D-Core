@@ -1,17 +1,11 @@
 from pathlib import Path
 import argparse
 import hashlib
+import subprocess
 import sys
 
 root = Path(__file__).resolve().parents[1]
 manifest = root / "MANIFEST.sha256"
-
-exclude_parts = {
-    "build",
-    ".deps",
-    ".git",
-    "__pycache__",
-}
 
 exclude_files = {
     "MANIFEST.sha256",
@@ -25,18 +19,31 @@ def manifest_sort_key(path: Path) -> tuple[str, ...]:
 
 def rows() -> list[str]:
     output: list[str] = []
-    paths = sorted(root.rglob("*"), key=manifest_sort_key)
+    completed = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z"],
+        check=False,
+        capture_output=True,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(
+            "git ls-files failed; MANIFEST.sha256 must be generated from "
+            "the version-controlled source set"
+        )
+    paths = sorted(
+        (
+            root / item.decode("utf-8")
+            for item in completed.stdout.split(b"\0")
+            if item
+        ),
+        key=manifest_sort_key,
+    )
 
     for path in paths:
         relative = path.relative_to(root)
 
         if not path.is_file():
             continue
-        if any(part in exclude_parts for part in relative.parts):
-            continue
         if path.name in exclude_files:
-            continue
-        if path.suffix == ".pyc":
             continue
 
         relative_text = relative.as_posix()

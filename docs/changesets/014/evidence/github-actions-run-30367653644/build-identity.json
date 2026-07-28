@@ -1,0 +1,18 @@
+{
+  "assembly_runner": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "fuzzing_engine": "LLVM libFuzzer",
+  "project_version": "1.14.0",
+  "release_compiler_identity_artifacts": [
+    "raw/linux-gcc-build-identity.txt",
+    "raw/linux-clang-build-identity.txt",
+    "raw/windows-clang-cl-build-identity.txt"
+  ],
+  "sanitizer_configuration": [
+    "address",
+    "undefined"
+  ],
+  "schema": "neoeng.dcore.release-assurance-build-identity.v1",
+  "static_analysis_engine": "clang-tidy",
+  "workflow_run_attempt": "1",
+  "workflow_run_id": "30367653644"
+}

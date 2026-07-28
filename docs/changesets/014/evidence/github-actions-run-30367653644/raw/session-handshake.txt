@@ -1,0 +1,26 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 4065977566
+INFO: Loaded 1 modules   (18 inline 8-bit counters): 18 [0x556bce323f38, 0x556bce323f4a), 
+INFO: Loaded 1 PC tables (18 PCs): 18 [0x556bce323f50,0x556bce324070), 
+INFO:        1 files found in fuzz/corpus/session_handshake
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
+INFO: seed corpus: files: 1 min: 5b max: 5b total: 5b rss: 41Mb
+#2	INITED cov: 9 ft: 9 corp: 1/5b exec/s: 0 rss: 42Mb
+#13	REDUCE cov: 9 ft: 9 corp: 1/4b lim: 5 exec/s: 0 rss: 42Mb L: 4/4 MS: 1 EraseBytes-
+#15	REDUCE cov: 9 ft: 11 corp: 2/7b lim: 5 exec/s: 0 rss: 44Mb L: 3/4 MS: 2 ShuffleBytes-EraseBytes-
+#16	NEW    cov: 9 ft: 13 corp: 3/9b lim: 5 exec/s: 0 rss: 44Mb L: 2/4 MS: 1 EraseBytes-
+#33	NEW    cov: 9 ft: 15 corp: 4/10b lim: 5 exec/s: 0 rss: 44Mb L: 1/4 MS: 2 ChangeBit-EraseBytes-
+#456	REDUCE cov: 9 ft: 17 corp: 5/18b lim: 9 exec/s: 0 rss: 44Mb L: 8/8 MS: 3 ChangeByte-ChangeBit-InsertRepeatedBytes-
+#458	NEW    cov: 9 ft: 18 corp: 6/27b lim: 9 exec/s: 0 rss: 44Mb L: 9/9 MS: 2 ChangeBit-CopyPart-
+#1071	NEW    cov: 9 ft: 19 corp: 7/40b lim: 15 exec/s: 0 rss: 45Mb L: 13/13 MS: 3 ChangeByte-ShuffleBytes-InsertRepeatedBytes-
+#1084	NEW    cov: 9 ft: 20 corp: 8/54b lim: 15 exec/s: 0 rss: 45Mb L: 14/14 MS: 3 ShuffleBytes-CrossOver-InsertByte-
+#1121	NEW    cov: 9 ft: 21 corp: 9/69b lim: 15 exec/s: 0 rss: 45Mb L: 15/15 MS: 2 ChangeByte-CopyPart-
+#1427	NEW    cov: 9 ft: 23 corp: 10/85b lim: 18 exec/s: 0 rss: 45Mb L: 16/16 MS: 1 InsertRepeatedBytes-
+#1048576	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 424Mb
+#2097152	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 424Mb
+#4194304	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 425Mb
+#8388608	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 425Mb
+#16777216	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 541200 rss: 425Mb
+#33554432	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 532610 rss: 425Mb
+#63994778	DONE   cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 528882 rss: 425Mb
+Done 63994778 runs in 121 second(s)

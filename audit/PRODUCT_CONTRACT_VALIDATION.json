@@ -1,43 +1,30 @@
 {
   "schema": "neoeng.dcore.product-contract-validation.v1",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "38b4c41c2203d4246ec0df265583a7961a6b36f1cae1e2f0353ab7b6b68f7f78",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "a9660358745198c231d1be6e4cf5992c87bde48c1934a68cbc1c19d0890d013e",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "85012b3772a50cf91729034618c95d896a3350b4e5992a1883522e1e2cc84345",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "fa80d81f0a3a5b3476f722dee4fbc455c14bbc8f2d737fe3d651cc5d4c0e3d56",
-    "audit/DEFERRED_VALIDATION_GATES.json": "a730ef55a9bb2cd0a340f1752c675237450bb336b0f7465f2723e8c068886a9d",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "852e744ee6350c52b3ab8a44fe5e5f4f06bac5af88ac47d44d77de25750096eb",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "67c8e0adf7960adc76fe66272b125f6cc2cb6415153fe70cd7028adf221763d4",
-    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "9117c859d1736d0c395a9ee1c3f7ef517b3743ecc795bca86f4461a3033cc94d"
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "169406ae641f34b37bbc9659f6fcb0d4115260d0dafd5eebf25b6b47c5c1370c",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "c2c2a066a689da55e5023e0157fa2ef694028187436ef26e96f147f19def1232",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "c3da199e099d3faf24379a54118241e590127820c87637c931530bbdb2e91b3c",
+    "audit/PRODUCT_CAPABILITY_SURFACE.json": "a50bc40488d88d7fd413bf652f741138904435b6e2c613d7b2d6f6e4dbc23567",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "a4a3ae746624374143322026f5abfabfd3504ded2e04ed612c326ad3baffc8e2",
+    "audit/DEFERRED_VALIDATION_GATES.json": "98a525ae860124a126de228c824a52c8a8e65c0a273472782de5869500b0eb74",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "d45518ad2cc4dead39c9e42220d59c4c910a6136548f56efa97faadc4f996ab7",
+    "audit/RELEASE_ASSURANCE_POLICY.json": "903433441900b8906f29394141d165e3789e2c9c5dac8026fcaad8760cc145c3",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "fd0afcd8f51a58fbbf79bcb01fe10c75ade303f32ea4957110401787d386e5da",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "f7a6f71879f4a4c508974fc29a79906c1ffa7b4a274d422fc68cc654bf3a1543"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 7,
-    "open_internal_limitations": 8
+    "open_internal_requirements": 1,
+    "open_internal_limitations": 0
   },
   "open_internal_requirement_ids": [
-    "DCORE-SDK-002",
-    "DCORE-REL-001",
-    "DCORE-REL-002",
-    "DCORE-REL-003",
-    "DCORE-REL-004",
-    "DCORE-COM-001",
     "DCORE-ACCEPT-001"
   ],
-  "open_internal_limitation_ids": [
-    "LIM-016",
-    "LIM-030",
-    "LIM-031",
-    "LIM-032",
-    "LIM-033",
-    "LIM-034",
-    "LIM-035",
-    "LIM-036"
-  ],
+  "open_internal_limitation_ids": [],
   "commercial_ready": false,
-  "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open."
+  "reason": "CS014 is closed by immutable Windows and Linux GCC/Clang release-assurance evidence plus independently verified public Sigstore bundles; final CS015 acceptance, native ARM64/profile qualification and external assurance remain open."
 }

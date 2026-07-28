@@ -7,12 +7,13 @@ import functools
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.13.0"
+EXPECTED_VERSION = "1.14.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -21,6 +22,8 @@ FILES = {
     "backlog": Path("audit/PRODUCT_CLOSURE_BACKLOG.json"),
     "assurance": Path("audit/PRODUCT_ASSURANCE_MATRIX.json"),
     "campaigns": Path("audit/PRODUCT_TEST_CAMPAIGNS.json"),
+    "capabilities": Path("audit/PRODUCT_CAPABILITY_SURFACE.json"),
+    "release": Path("audit/RELEASE_ASSURANCE_POLICY.json"),
     "deferred": Path("audit/DEFERRED_VALIDATION_GATES.json"),
 }
 REPORT = ROOT / "audit/PRODUCT_CONTRACT_VALIDATION.json"
@@ -59,11 +62,11 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def sha256(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            h.update(block)
-    return h.hexdigest()
+    # Git may materialize text files with CRLF on Windows. Governance hashes
+    # identify normative content, so line endings are canonicalized to LF.
+    return hashlib.sha256(
+        path.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
 
 
 def cmake_version(root: Path) -> str:
@@ -84,12 +87,46 @@ def cmake_registry_text(root: Path) -> str:
     )
 
 
+@functools.lru_cache(maxsize=1)
+def registered_source_paths(root: Path) -> tuple[str, ...]:
+    git_result = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z"],
+        check=False,
+        capture_output=True,
+    )
+    if git_result.returncode == 0:
+        return tuple(
+            item.decode("utf-8").replace("\\", "/")
+            for item in git_result.stdout.split(b"\0")
+            if item
+        )
+    source_manifest = root / "MANIFEST.sha256"
+    if source_manifest.is_file():
+        return tuple(
+            line.split("  ", 1)[1]
+            for line in source_manifest.read_text(
+                encoding="utf-8", errors="replace"
+            ).splitlines()
+            if "  " in line
+        )
+    return ()
+
+
+def source_reference_registered(root: Path, reference: str) -> bool:
+    normalized = reference.replace("\\", "/").rstrip("/")
+    prefix = normalized + "/"
+    return any(
+        item == normalized or item.startswith(prefix)
+        for item in registered_source_paths(root)
+    )
+
+
 def evidence_reference_exists(root: Path, reference: str) -> bool:
     if not reference or not isinstance(reference, str):
         return False
     candidate = root / reference
     if candidate.exists():
-        return True
+        return source_reference_registered(root, reference)
     # Simple identifiers are allowed only when they are registered in CMake/CTest.
     if "/" not in reference and "\\" not in reference and "." not in reference:
         return reference in cmake_registry_text(root)
@@ -120,6 +157,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
         "backlog": "neoeng.dcore.product-closure-backlog.v1",
         "assurance": "neoeng.dcore.product-assurance-matrix.v1",
         "campaigns": "neoeng.dcore.product-test-campaigns.v1",
+        "capabilities": "neoeng.dcore.product-capability-surface.v1",
+        "release": "neoeng.dcore.release-assurance-policy.v1",
         "deferred": "neoeng.dcore.deferred-validation-gates.v1",
     }
     for key, schema in expected_schemas.items():
@@ -176,8 +215,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.13.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.13.0 baseline")
+    if "baseline 1.14.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.14.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -216,7 +255,11 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
             if not impl or not evidence:
                 errors.append(f"complete requirement lacks implementation or evidence: {rid}")
             for rel in impl:
-                if not isinstance(rel, str) or not (root / rel).exists():
+                if (
+                    not isinstance(rel, str)
+                    or not (root / rel).exists()
+                    or not source_reference_registered(root, rel)
+                ):
                     errors.append(f"complete requirement implementation path missing: {rid}: {rel}")
             for ref in evidence:
                 if not evidence_reference_exists(root, ref):
@@ -398,7 +441,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open.",
+        "reason": "CS014 is closed by immutable Windows and Linux GCC/Clang release-assurance evidence plus independently verified public Sigstore bundles; final CS015 acceptance, native ARM64/profile qualification and external assurance remain open.",
     }
 
 
@@ -423,8 +466,7 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
             row
             for row in d["backlog"]["items"]
             if row.get("category") == "internal_mandatory"
-            and row.get("status") == "open"
-        ).update(closure_stage=""),
+        ).update(status="open", closure_stage=""),
     )
 
     for name, mutated in mutations:

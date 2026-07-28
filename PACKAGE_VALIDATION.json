@@ -11,23 +11,23 @@
   },
   "integrity": {
     "required_source_files": 353,
-    "required_source_files_exact_hash_match": 350,
+    "required_source_files_exact_hash_match": 348,
     "internal_includes_unresolved": [],
     "app_sources": 77,
     "app_sources_referenced_by_cmake": 77,
     "core_sources": 58,
     "core_sources_referenced_by_cmake": 58,
     "y2_render_isolation": "canonical core passed; optional one-way View Lab permitted and hash-verified",
-    "manifest_check": "passed on Linux with component-wise path ordering; POSIX and Windows path-model outputs are byte-identical; physical Windows execution remains pending",
+    "manifest_check": "passed on physical Windows with component-wise path ordering; POSIX and Windows path-model outputs remain byte-identical by contract",
     "identity_scan": "passed",
     "baseline_catalog": {
       "rows": 899,
       "divergent_files": 0,
       "scope": "NeoEng D-Core 1.0.1 baseline before ChangeSet 001"
     },
-    "manifest_entries": 1428,
-    "package_files_including_manifest": 1429,
-    "required_source_files_authorized_modifications": 3,
+    "manifest_entries": 1535,
+    "package_files_including_manifest": 1536,
+    "required_source_files_authorized_modifications": 5,
     "authorized_source_modification_ledger": "audit/AUTHORIZED_SOURCE_MODIFICATIONS.json",
     "year2_extraction_ledger": "audit/YEAR2_EXTRACTION_LEDGER.json",
     "active_year2_imports_exact_hash": 2,
@@ -46,6 +46,9 @@
     "host_sdk_core_invariant_ledger": "audit/CHANGESET_007_CORE_INVARIANT_LEDGER.json",
     "product_contract_verifier": "scripts/verify_product_contract.py",
     "product_assurance_verifier": "scripts/verify_product_assurance.py",
+    "release_assurance_verifier": "scripts/verify_release_assurance.py",
+    "consolidated_release_verifier": "scripts/verify_consolidated_release.py",
+    "release_assurance_evidence_verifier": "scripts/qualification/verify_release_assurance_evidence.py",
     "changeset_008_core_invariant_ledger": "audit/CHANGESET_008_CORE_INVARIANT_LEDGER.json",
     "changeset_009_core_invariant_ledger": "audit/CHANGESET_009_CORE_INVARIANT_LEDGER.json",
     "manifest_ordering_contract": {
@@ -56,7 +59,7 @@
       "line_ending": "LF",
       "linux_check": "passed",
       "pure_windows_path_model": "passed; byte-identical to POSIX model",
-      "physical_windows_check": "not executed; required in user validation"
+      "physical_windows_check": "passed on 2026-07-28; generated manifest verified byte-for-byte on the physical Windows host"
     }
   },
   "content_counts": {
@@ -678,7 +681,7 @@
     "arm64": "not executed",
     "p0_p4_qualified": []
   },
-  "package_version": "1.13.0",
+  "package_version": "1.14.0",
   "changeset_009": {
     "id": "009",
     "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",
@@ -809,6 +812,39 @@
     "linux_x86_64_cross_compiler": "GCC and Clang passed with byte-identical semantic output in GitHub Actions run 30354055225",
     "arm64_execution": "not performed; no equivalence inferred",
     "external_security_audit": "not performed",
+    "commercial_ready": false
+  },
+  "changeset_014": {
+    "id": "014",
+    "title": "release assurance and complete supported product surface",
+    "base_version": "1.13.0",
+    "target_version": "1.14.0",
+    "requirements_targeted": [
+      "DCORE-SDK-002",
+      "DCORE-REL-001",
+      "DCORE-REL-002",
+      "DCORE-REL-003",
+      "DCORE-REL-004",
+      "DCORE-COM-001"
+    ],
+    "limitations_targeted": [
+      "LIM-016",
+      "LIM-030",
+      "LIM-031",
+      "LIM-032",
+      "LIM-033",
+      "LIM-034",
+      "LIM-035",
+      "LIM-036"
+    ],
+    "windows_x86_64_preliminary": "supported release build passed; 51/51 dcore tests and 64/64 blocking static-analysis units passed on the physical Windows host",
+    "cross_platform_campaign": "pending committed GitHub Actions execution",
+    "package_model": "single deterministic cumulative ZIP; repeated byte comparison required",
+    "sbom": "SPDX 2.3 with packaged-file SHA-256 coverage",
+    "release_authenticity": "external signed provenance and SBOM attestations required; unsigned local candidates are not publishable",
+    "hardware_interpretation": "results apply only to the recorded source, host and configuration; weaker or stronger machines may differ for better or worse",
+    "arm64_execution": "not performed; no equivalence inferred",
+    "external_security_audit_or_certification": "not performed",
     "commercial_ready": false
   }
 }

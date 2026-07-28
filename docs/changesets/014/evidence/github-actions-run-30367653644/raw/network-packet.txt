@@ -1,0 +1,19 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 3206085450
+INFO: Loaded 1 modules   (9 inline 8-bit counters): 9 [0x555d4624df00, 0x555d4624df09), 
+INFO: Loaded 1 PC tables (9 PCs): 9 [0x555d4624df10,0x555d4624dfa0), 
+INFO:        1 files found in fuzz/corpus/network_packet
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
+INFO: seed corpus: files: 1 min: 5b max: 5b total: 5b rss: 43Mb
+#2	INITED cov: 4 ft: 4 corp: 1/5b exec/s: 0 rss: 46Mb
+#9	REDUCE cov: 4 ft: 4 corp: 1/3b lim: 5 exec/s: 0 rss: 46Mb L: 3/3 MS: 2 ChangeBinInt-EraseBytes-
+#10	REDUCE cov: 4 ft: 4 corp: 1/2b lim: 5 exec/s: 0 rss: 46Mb L: 2/2 MS: 1 EraseBytes-
+#17	REDUCE cov: 4 ft: 4 corp: 1/1b lim: 5 exec/s: 0 rss: 46Mb L: 1/1 MS: 2 ChangeByte-EraseBytes-
+#2097152	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 699050 rss: 445Mb
+#4194304	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 838860 rss: 445Mb
+#8388608	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 762600 rss: 445Mb
+#16777216	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 729444 rss: 445Mb
+#33554432	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 729444 rss: 445Mb
+#67108864	pulse  cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 729444 rss: 446Mb
+#87753155	DONE   cov: 4 ft: 4 corp: 1/1b lim: 4096 exec/s: 725232 rss: 446Mb
+Done 87753155 runs in 121 second(s)

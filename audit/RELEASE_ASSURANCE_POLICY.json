@@ -1,0 +1,106 @@
+{
+  "schema": "neoeng.dcore.release-assurance-policy.v1",
+  "project_version": "1.14.0",
+  "status": "normative_candidate",
+  "supported_release_surface": [
+    "neoeng_dcore",
+    "neoeng_dcore_host_sdk",
+    "neoeng_dcore_distributed_reference",
+    "installed_public_headers",
+    "official_release_tools",
+    "governance_and_independent_verifiers"
+  ],
+  "coverage_guided_fuzzing": {
+    "engine": "LLVM libFuzzer",
+    "sanitizers": ["address", "undefined"],
+    "targets": [
+      "neoeng_network_packet_libfuzzer",
+      "neoeng_session_handshake_libfuzzer"
+    ],
+    "seed_corpora": [
+      "fuzz/corpus/network_packet",
+      "fuzz/corpus/session_handshake"
+    ],
+    "continuous_ci_seconds_per_target": 120,
+    "untrusted_binary_ingress_covered": true
+  },
+  "structured_fuzzing": {
+    "targets": [
+      "neoeng_network_packet_fuzz_smoke",
+      "neoeng_session_handshake_fuzz_smoke",
+      "neoeng_state_evidence_fuzz_smoke",
+      "neoeng_support_bundle_fuzz_smoke"
+    ],
+    "purpose": "bounded model and semantic fuzzing for structured surfaces"
+  },
+  "sanitizer_gate": {
+    "compilers": ["clang"],
+    "sanitizers": ["address", "undefined"],
+    "ctest_label": "dcore",
+    "full_supported_surface": true,
+    "research_and_historical_tools_are_not_release_surface": true
+  },
+  "static_analysis_gate": {
+    "engine": "clang-tidy",
+    "blocking": true,
+    "scope": [
+      "src",
+      "modules/host_sdk/src",
+      "modules/distributed_reference/src"
+    ],
+    "checks": [
+      "clang-analyzer-core.*",
+      "clang-analyzer-cplusplus.*",
+      "clang-analyzer-deadcode.*",
+      "clang-analyzer-security.*"
+    ],
+    "documented_suppressions": [
+      {
+        "source": "src/exact_oblique_tree_oracle.cpp",
+        "check": "clang-analyzer-security.ArrayBound",
+        "scope": "src/exact_oblique_tree_oracle.cpp translation unit; alert originates in Boost multiprecision unchecked cpp_int",
+        "reason": "LLVM 22 reports an out-of-bounds path inside the third-party Boost 1.88 header; the suppression is translation-unit-specific and all other analyzer checks remain blocking."
+      }
+    ]
+  },
+  "consolidated_release": {
+    "archive_format": "zip",
+    "single_cumulative_source_distribution": true,
+    "base_plus_patches_prohibited": true,
+    "required_generated_artifacts": [
+      "RELEASE_METADATA.json",
+      "PROVENANCE.json",
+      "SBOM.spdx.json",
+      "PUBLIC_CLAIMS.md",
+      "SHA256SUMS.txt"
+    ],
+    "archive_digest": "SHA-256"
+  },
+  "release_authenticity": {
+    "publication_requires_external_signed_attestation": true,
+    "provider": "Sigstore Public Good Instance (Fulcio and Rekor) via Cosign 3.0.6",
+    "verification_tool": "cosign verify-blob-attestation",
+    "verification_bundle_format": "Sigstore bundle",
+    "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+    "public_transparency_log_required": true,
+    "workflow": ".github/workflows/cs014-release-assurance.yml",
+    "public_metadata_disclosure": "The repository name, workflow, ref and commit identity are published in the public transparency log; source contents are not published.",
+    "github_artifact_attestations_constraint": "Unavailable to this user-owned private repository without GitHub Enterprise Cloud; not used as the closure provider.",
+    "private_signing_key_in_repository": false,
+    "local_unsigned_candidate_is_publishable": false
+  },
+  "secure_update": {
+    "verify_attestation_before_archive_use": true,
+    "verify_archive_sha256": true,
+    "verify_internal_manifest_before_install": true,
+    "downgrade_requires_explicit_operator_approval": true,
+    "automatic_execution_of_downloaded_content": false
+  },
+  "commercial_entitlement": {
+    "model": "distribution_and_contract_controlled",
+    "runtime_entitlement_enforcement_included": false,
+    "canonical_state_contains_entitlement_decisions": false,
+    "sector_adapters_may_be_separately_licensed": true,
+    "public_redistribution_permission_inferred": false
+  }
+}

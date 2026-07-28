@@ -1,0 +1,10 @@
+{
+  "errors": [],
+  "external_attestation_verified_by_local_tool": false,
+  "local_unsigned_candidate_publishable": false,
+  "manifest_entries_verified": 653,
+  "project_version": "1.14.0",
+  "sbom_entries_verified": 652,
+  "schema": "neoeng.dcore.consolidated-release-verification.v1",
+  "status": "passed"
+}

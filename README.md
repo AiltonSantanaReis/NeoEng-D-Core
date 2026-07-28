@@ -4,9 +4,9 @@
 
 O NeoEng D-Core é um núcleo C++23 standalone que atua como autoridade canônica sobre estado imutável, transições determinísticas, física numérica, checkpoints, replay e rollback. O projeto mantém renderização, GPU, UI, SDF, voxel e integrações verticais fora do núcleo, preservando uma arquitetura horizontal, auditável e reutilizável.
 
-> **Estado atual:** baseline **1.13.0 / ChangeSet 013 em validação**. O ciclo
-> fecha segurança de produção, autorização granular e proteção de bundles sem
-> promover providers externos ou test-only a claims criptográficos incluídos.
+> **Estado atual:** baseline **1.14.0 / ChangeSet 014 concluído**. O próximo
+> ciclo é o CS015 de aceitação final. O fechamento não promove certificação,
+> auditoria externa, ARM64 nem equivalência de desempenho entre máquinas.
 
 ## Visão geral
 
@@ -39,9 +39,9 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline vigente | `1.13.0` |
-| Próximo ChangeSet | `CS014` — release assurance e SDK completo |
-| Último ciclo concluído | `CS013` — segurança e evidência criptográfica |
+| Baseline concluída | `1.14.0` |
+| ChangeSet corrente | `CS015` — aceitação final |
+| Último ciclo concluído | `CS014` — release assurance e SDK completo |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |
 | Qualificação P0–P4 | Não promovida automaticamente; depende de campanha específica |
@@ -263,7 +263,7 @@ cmake/                   suporte de build e exportação
 | CS011 | Fechamento numérico | Concluído em 1.11.0 |
 | CS012 | Fechamento temporal e efeitos externos | Concluído em 1.12.0 |
 | CS013 | Segurança e evidência criptográfica de produção | Concluído em 1.13.0 |
-| CS014 | Release assurance e SDK completo | Pendente |
+| CS014 | Release assurance e SDK completo | Concluído em 1.14.0 |
 | CS015 | Aceitação final | Pendente |
 
 Cada ChangeSet deve fechar integralmente o próprio escopo, preservar os invariantes do produto, atualizar os ledgers e apresentar evidência reproduzível antes de ser declarado concluído.

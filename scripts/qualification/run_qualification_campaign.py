@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 SCHEMA = "neoeng.dcore.qualification-campaign-request.v1"
-PROJECT_VERSION = "1.13.0"
+PROJECT_VERSION = "1.14.0"
 PROFILES = {"P0", "P1", "P2", "P3", "P4"}
 EXECUTION_KINDS = {"virtualized", "native_physical", "containerized"}
 
