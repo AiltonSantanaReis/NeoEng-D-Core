@@ -1,0 +1,10 @@
+{
+  "build_config": "Release",
+  "cmake": "cmake version 3.31.6",
+  "compiler_id": "gcc",
+  "probe_binary_sha256": "4a950364cfe88b5919f4a3044e8788c27c6b3bb5dfecd2c4702da52568910671",
+  "project_version": "1.13.0",
+  "python": "3.12.3",
+  "schema": "neoeng.dcore.build-identity.v1",
+  "tests_binary_sha256": "f66a643cf533d4d974532f62537f981f52ec2caaf6c21a67119b8d2839a8caf1"
+}

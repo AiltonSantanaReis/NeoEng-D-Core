@@ -127,6 +127,27 @@ OperationalStepResult OperationalRuntime::ingest_authenticated_input(
     std::uint64_t now_ms,
     CorrelationId correlation_id,
     std::span<const std::uint8_t> datagram) {
+    return ingest_input(origin, now_ms, correlation_id, datagram, nullptr, nullptr);
+}
+
+OperationalStepResult OperationalRuntime::ingest_authorized_input(
+    OriginId origin,
+    std::uint64_t now_ms,
+    CorrelationId correlation_id,
+    std::span<const std::uint8_t> datagram,
+    const TransportSecurityContext& transport,
+    const CommandAuthorizationPolicy& authorization) {
+    return ingest_input(
+        origin, now_ms, correlation_id, datagram, &transport, &authorization);
+}
+
+OperationalStepResult OperationalRuntime::ingest_input(
+    OriginId origin,
+    std::uint64_t now_ms,
+    CorrelationId correlation_id,
+    std::span<const std::uint8_t> datagram,
+    const TransportSecurityContext* transport,
+    const CommandAuthorizationPolicy* authorization) {
     ScopedBudgetMeasurement ingest_budget_scope(
         wall_clock_budget_tracing_ ? &budget_monitor_ : nullptr,
         wall_clock_budget_tracing_ ? &traces_ : nullptr,
@@ -162,6 +183,46 @@ OperationalStepResult OperationalRuntime::ingest_authenticated_input(
         result.recovery_event = publish_recovery(
             result.recovery, milliseconds_to_nanoseconds(now_ms));
         return result;
+    }
+    if (authorization != nullptr) {
+        if (transport == nullptr) {
+            result.authorization_reason = AuthorizationReason::InvalidRequest;
+            return result;
+        }
+        const AuthorizationDecision authorization_decision =
+            authorization->authorize_input_batch(
+                {
+                    .role = static_cast<SessionRole>(
+                        packet.packet.authorized_role),
+                    .origin = packet.packet.origin,
+                    .key_id = packet.packet.key_id,
+                    .key_epoch = packet.packet.key_epoch,
+                },
+                *transport,
+                now_ms,
+                std::span<const InputCommand>(
+                    input_buffer_.data(), parsed.command_count));
+        result.authorization_reason = authorization_decision.reason;
+        if (!authorization_decision.accepted()) {
+            traces_.record({
+                .correlation_id = correlation_id,
+                .frame = engine_.state().frame,
+                .monotonic_time_ns = milliseconds_to_nanoseconds(now_ms),
+                .category = TraceCategory::Input,
+                .outcome = TraceOutcome::Rejected,
+                .code = TraceCode::SessionRejected,
+                .entity = authorization_decision.command_index < parsed.command_count
+                    ? input_buffer_[authorization_decision.command_index].entity
+                    : 0U,
+                .measured_value = static_cast<std::int64_t>(
+                    authorization_decision.reason),
+                .subsystem = TraceSubsystem::Session,
+                .severity = TraceSeverity::Warning,
+                .subject_token = origin,
+                .detail_code = authorization_decision.rule_id,
+            });
+            return result;
+        }
     }
 
     try {

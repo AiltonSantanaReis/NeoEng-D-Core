@@ -1,0 +1,17 @@
+{
+  "limitations": [
+    "The product does not include a production asymmetric State Signature provider.",
+    "The HMAC packet format does not provide confidentiality.",
+    "Production confidentiality requires a conforming external transport and provider.",
+    "Test-only providers prove integration behavior, not cryptographic strength.",
+    "Private-key custody, entropy and trusted time remain deployment responsibilities.",
+    "The product does not supply an external WORM/notary trust domain.",
+    "Forward secrecy depends on the selected deployment transport.",
+    "No independent cryptographic audit or certification was performed.",
+    "An x86_64 result does not prove ARM64 equivalence.",
+    "Measurements describe only the recorded host and configuration."
+  ],
+  "native_or_external_results_may_be_inferred": false,
+  "project_version": "1.13.0",
+  "schema": "neoeng.dcore.production-security-limitations.v1"
+}

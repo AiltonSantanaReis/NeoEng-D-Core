@@ -678,7 +678,7 @@
     "arm64": "not executed",
     "p0_p4_qualified": []
   },
-  "package_version": "1.12.0",
+  "package_version": "1.13.0",
   "changeset_009": {
     "id": "009",
     "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",
@@ -781,6 +781,34 @@
     "external_effects_contract": "prepare/confirm/commit/compensate with idempotency conflict checks; exactly-once is not claimed without a conforming host",
     "arm64_execution": "not performed; no equivalence inferred",
     "external_trust_anchor": "deployment responsibility; not product-supplied",
+    "commercial_ready": false
+  },
+  "changeset_013": {
+    "id": "013",
+    "title": "production security and cryptographic-evidence boundary",
+    "base_version": "1.12.0",
+    "target_version": "1.13.0",
+    "requirements_targeted": [
+      "DCORE-CRYPTO-002",
+      "DCORE-SEC-001",
+      "DCORE-BUNDLE-002"
+    ],
+    "limitations_targeted": [
+      "LIM-006",
+      "LIM-008",
+      "LIM-011",
+      "LIM-027",
+      "LIM-029"
+    ],
+    "asymmetric_state_signature_claim": "removed; external provider interfaces remain",
+    "confidentiality_model": "authenticated confidential transport plus external AEAD provider with channel binding",
+    "authorization_model": "bounded deny-by-default command/entity/origin/role/key/time policy",
+    "production_provider_included": false,
+    "test_provider_security_claimed": false,
+    "windows_x86_64_clang": "passed on physical Windows host at source 28c990174742b1da1885750bc72c29a4614997a0",
+    "linux_x86_64_cross_compiler": "GCC and Clang passed with byte-identical semantic output in GitHub Actions run 30354055225",
+    "arm64_execution": "not performed; no equivalence inferred",
+    "external_security_audit": "not performed",
     "commercial_ready": false
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-requirements-traceability.v1",
-  "project_version": "1.12.0",
+  "project_version": "1.13.0",
   "status_vocabulary": [
     "complete",
     "partial",
@@ -447,22 +447,36 @@
       "requirement_id": "DCORE-CRYPTO-002",
       "description": "Production asymmetric State Signature claim is implemented or removed.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
+      "status": "complete",
       "implementation": [
-        "include/neoeng/core/state_evidence.hpp"
+        "include/neoeng/core/production_security.hpp",
+        "docs/contracts/PRODUCTION_SECURITY_V1.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_production_security_tests",
+        "scripts/verify_production_security_boundary.py",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_stage": "CS013"
     },
     {
       "requirement_id": "DCORE-SEC-001",
       "description": "Command-level authorization and key lifecycle scope are closed for the supported deployment model.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
-        "src/session_security.cpp"
+        "src/session_security.cpp",
+        "src/production_security.cpp",
+        "src/operational_runtime.cpp",
+        "docs/contracts/PRODUCTION_SECURITY_V1.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_production_security_tests",
+        "scripts/verify_production_security_boundary.py",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_stage": "CS013"
     },
     {
@@ -484,9 +498,18 @@
       "requirement_id": "DCORE-BUNDLE-002",
       "description": "Support-bundle confidentiality policy and optional encrypted transport are explicitly closed.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "include/neoeng/core/production_security.hpp",
+        "src/production_security.cpp",
+        "docs/contracts/PRODUCTION_SECURITY_V1.md"
+      ],
+      "tests_or_evidence": [
+        "neoeng_production_security_tests",
+        "neoeng_production_security_probe",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_stage": "CS013"
     },
     {

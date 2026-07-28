@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.12.0"
+EXPECTED_VERSION = "1.13.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -176,8 +176,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.12.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.12.0 baseline")
+    if "baseline 1.13.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.13.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -260,8 +260,13 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     if prod.get("status") not in {"unsupported", "planned"}:
         errors.append("production-readiness claim is elevated while mandatory work remains")
     sign = claims_by_id.get("CLAIM-SIGN-001", {})
-    if sign.get("status") not in {"unsupported", "planned"}:
+    if sign.get("status") not in {"unsupported", "planned", "removed"}:
         errors.append("asymmetric signature provider claim exceeds implementation")
+    if sign.get("status") == "removed" and (
+        "not included" not in str(sign.get("statement", "")).lower()
+        or sign.get("public_use") != "original_positive_claim_prohibited"
+    ):
+        errors.append("removed asymmetric signature claim is not fail-closed")
 
     classes = docs["responsibility"].get("classes")
     if not isinstance(classes, dict):
@@ -393,7 +398,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS012 closes the declared temporal recorder, WorldState v1 localization, mandatory-path instrumentation and external-effects boundary; native ARM64, other mandatory technical work and external assurance remain open.",
+        "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open.",
     }
 
 

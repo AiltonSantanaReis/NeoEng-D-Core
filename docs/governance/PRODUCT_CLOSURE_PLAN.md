@@ -25,9 +25,9 @@ Y1-O4 rejeitado como claim de runtime; certificado global composto rejeitado; co
 
 Recorder temporal append-only duravel e encadeado por SHA-256, recuperacao e adulteracao fail-closed, branch/retencao explicitas, protocolo idempotente prepare/confirm/commit/compensate, reconciliacao de rollback e instrumentacao automatica dos caminhos obrigatorios. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas, com resultado semantico GCC/Clang byte a byte identico. O anchor externo e o executor idempotente real permanecem responsabilidades declaradas de deployment/host; ARM64 nao foi inferido.
 
-## CS013 - Seguranca e evidencia criptografica de producao
+## CS013 - Seguranca e evidencia criptografica de producao — CONCLUIDO EM 1.13.0
 
-Confidencialidade suportada, provider assimetrico ou remocao do claim, autorizacao granular, politica de chaves, protecao de support bundle e anchor adapter.
+O claim de provider assimetrico State Signature incluido foi removido. O contrato de producao exige transporte confidencial autenticado e channel binding, autorizacao granular deny-by-default, descritores externos de ciclo de chaves, protecao canonica de support bundles por provider AEAD e adapter de anchor externo. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas sobre a mesma fonte, com resultado semantico GCC/Clang byte a byte identico; ARM64, provider criptografico de producao, PKI, custodia, trust externo e auditoria independente nao foram inferidos.
 
 ## CS014 - Release assurance e SDK completo
 

@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS012 1.12.0 configured regression passed 29/29 and immutable temporal campaign passed on the recorded physical Windows x86_64 host; native hardware qualification remains separate",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS013 1.13.0 configured regression passed 34/34 and immutable production-security campaign passed on the recorded physical Windows x86_64 host; native hardware qualification remains separate",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.12.0",
+  "package_version": "1.13.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
@@ -278,6 +278,23 @@
     "arm64_execution": "not performed",
     "external_trust_anchor": "not performed; deployment-specific",
     "exactly_once_without_conforming_host": "not claimed",
+    "commercial_product_complete": false
+  },
+  "changeset_013": {
+    "base_version": "1.12.0",
+    "target_version": "1.13.0",
+    "scope": "confidential transport attestation, granular authorization, external provider key policy, protected support-bundle framing and external anchor adapter",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "stable_hash_changed": false,
+    "host_c_abi_version": "1.0 unchanged",
+    "asymmetric_state_signature_provider": "not included; product claim removed",
+    "cryptographic_provider_model": "external provider interface; deterministic provider is test-only",
+    "windows_x86_64_execution": "passed on physical Windows host at source 28c990174742b1da1885750bc72c29a4614997a0",
+    "linux_x86_64_cross_compiler_execution": "GCC and Clang passed with byte-identical semantic output in GitHub Actions run 30354055225",
+    "arm64_execution": "not performed",
+    "external_security_audit": "not performed",
     "commercial_product_complete": false
   }
 }

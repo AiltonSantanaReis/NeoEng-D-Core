@@ -1,0 +1,35 @@
+{
+  "schema": "neoeng.dcore.recorded-host-hardware.v1",
+  "project_version": "1.13.0",
+  "source_commit": "28c990174742b1da1885750bc72c29a4614997a0",
+  "capture_date": "2026-07-28",
+  "capture_basis": "live Windows CIM inventory and NVIDIA device query on the physical host that executed TEST-CS013-001",
+  "cpu": {
+    "name": "AMD Ryzen 7 5700X3D 8-Core Processor",
+    "physical_cores": 8,
+    "logical_processors": 16,
+    "reported_max_clock_mhz": 3001
+  },
+  "memory": {
+    "physical_bytes": 34278793216,
+    "physical_gib_rounded": 31.92
+  },
+  "system": {
+    "manufacturer": "Gigabyte Technology Co., Ltd.",
+    "model": "B550M AORUS ELITE"
+  },
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 3070 Ti",
+    "memory_mib": 8192,
+    "driver_version": "610.47",
+    "participates_in_production_security_contract": false
+  },
+  "operating_system": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200",
+    "build": "26200",
+    "architecture": "64 bits"
+  },
+  "performance_result_interpretation": "Results describe only this recorded host and configuration. Machines with lower or higher capability may produce better or worse observations; no monotonic rule, universal requirement or result for another machine is inferred.",
+  "hardware_requirement_promoted": false
+}

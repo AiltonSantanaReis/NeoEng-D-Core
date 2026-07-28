@@ -474,6 +474,10 @@ PacketDecision NetworkSecurityGateway::process(
                 .session_id = session_id,
                 .sequence = sequence,
                 .sent_at_ms = sent_at_ms,
+                .origin = origin,
+                .key_id = state.key_id,
+                .key_epoch = state.key_epoch,
+                .authorized_role = state.authorized_role,
                 .payload = datagram.subspan(kSecurePacketHeaderBytes, payload_size),
             },
         };

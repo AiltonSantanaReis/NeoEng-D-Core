@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-scope-responsibility-matrix.v1",
-  "project_version": "1.12.0",
+  "project_version": "1.13.0",
   "product_scope": "Independent deterministic state-assurance runtime derived from Year-1 technical work; not the five-year engine program.",
   "classes": {
     "core_mandatory": "Must be implemented inside the canonical D-Core library without violating canonical authority.",
@@ -31,7 +31,7 @@
       "class": "host_responsibility"
     },
     {
-      "area": "DDoS edge protection, WORM storage, HSM/TPM custody and secure OS",
+      "area": "confidential transport, production AEAD/signature providers, DDoS edge protection, WORM storage, HSM/TPM custody and secure OS",
       "class": "deployment_responsibility"
     },
     {
