@@ -1,0 +1,26 @@
+{
+  "cross_architecture_claim_promoted": false,
+  "global_numeric_certificate_promoted": false,
+  "native_or_external_results_inferred": false,
+  "probe": {
+    "connected_fallback": "operational_only",
+    "division_by_zero_rejected": 16,
+    "exact_oblique": "certified_declared_scope",
+    "exact_oblique_hash": "0xC89FAE52652B9BF8",
+    "fixed_decision_hash": "0xE256739A08E1EE4",
+    "fixed_operation_cases": 20480,
+    "fixed_samples": 4096,
+    "global_numeric_certificate_claim_allowed": false,
+    "overflow_rejected": 6124,
+    "raa_disjoint_products": 4096,
+    "raa_operation_hash": "0x8E16B390EF5EE325",
+    "representable": 14340,
+    "schema": "neoeng.dcore.numeric-closure-result.v1",
+    "y1_o4_runtime_claim_allowed": false
+  },
+  "probe_exit_code": 0,
+  "project_version": "1.11.0",
+  "schema": "neoeng.dcore.numeric-closure-campaign-summary.v1",
+  "status": "passed",
+  "tests_exit_code": 0
+}

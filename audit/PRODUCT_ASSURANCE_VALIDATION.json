@@ -2,21 +2,21 @@
   "schema": "neoeng.dcore.product-assurance-validation.v1",
   "project_version": "1.11.0",
   "status": "passed",
-  "requirements_sha256": "d139f3eaf63c37d879dfe0d59f74087a2097cd4b969fbc661cc84896ed460ef7",
-  "assurance_matrix_sha256": "c44127893c28703ce33ddbc95a08eb7e3f596217ee9fac1f12d6abb6399a7221",
-  "test_campaigns_sha256": "49bfe73eb1d69ef3e74b6d500f54e676e3d20359b48ae2863ace0cb341f0731f",
+  "requirements_sha256": "5e95a9be78c9d9ca6f8251834dd578c4523ca861db48e1da7c6e106ef5bc5892",
+  "assurance_matrix_sha256": "d9ab672ddc9a3dfa6202a4c4c720a9a8dedb19b190f6c343cf05f775a5b07ef3",
+  "test_campaigns_sha256": "aad1508662e990ac530faa286dca67383d880ace77266da0db8d4af1aec131bb",
   "requirements_covered": 36,
   "campaigns": 10,
   "assurance_status_counts": {
-    "evidenced": 18,
+    "evidenced": 21,
     "external_or_native_pending": 1,
-    "planned_or_partial": 17
+    "planned_or_partial": 14
   },
   "campaign_status_counts": {
-    "executed": 1,
+    "executed": 2,
     "executed_cs008_linux_gcc_clang": 2,
     "executed_cs009_linux_gcc_clang_virtualized_unqualified_native": 1,
-    "planned": 6
+    "planned": 5
   },
   "capability_proof_completed_by_this_meta_test": false,
   "reason": "The verifier proves traceability, campaign coverage and fail-closed test obligations, not unexecuted technical campaigns."

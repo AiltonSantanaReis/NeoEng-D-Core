@@ -393,7 +393,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS010 closes the two-instance reference transport and reconciliation scope while production transport, native ARM64, other mandatory technical work and external assurance remain open.",
+        "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open.",
     }
 
 
@@ -412,7 +412,15 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
     add("close limitation without evidence", lambda d: next(r for r in d["backlog"]["items"] if r["limitation_id"] == "LIM-001").update(closure_evidence=[]))
     add("elevate ARM64 claim", lambda d: next(r for r in d["claims"]["claims"] if r["claim_id"] == "CLAIM-XARCH-001").update(status="verified"))
     add("wrong baseline version", lambda d: d["index"].update(project_version="1.8.0"))
-    add("missing backlog stage", lambda d: [r.update(closure_stage="CS999") for r in d["backlog"]["items"] if r.get("closure_stage") == "CS011"])
+    add(
+        "missing backlog stage",
+        lambda d: next(
+            row
+            for row in d["backlog"]["items"]
+            if row.get("category") == "internal_mandatory"
+            and row.get("status") == "open"
+        ).update(closure_stage=""),
+    )
 
     for name, mutated in mutations:
         if not validate_documents(root, mutated):

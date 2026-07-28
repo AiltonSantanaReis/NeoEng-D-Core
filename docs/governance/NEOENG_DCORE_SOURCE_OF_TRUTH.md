@@ -52,7 +52,7 @@ Cada ChangeSet deve declarar requisitos fechados, baseline verificavel, nao obje
 
 Pendencias somente podem permanecer como `native_qualification`, `external_assurance`, `host_responsibility`, `deployment_responsibility`, `optional_vertical`, `accepted_boundary` ou `out_of_scope`.
 
-## 7. Estado da baseline 1.11.0 em validacao
+## 7. Estado da baseline 1.11.0
 
 A 1.8.0 estabeleceu governanca, rastreabilidade, claims, responsabilidades, backlog finito e gates de asseguracao, preservando o nucleo canonico da 1.7.0.
 
@@ -64,7 +64,9 @@ O CS010, incorporado na baseline 1.10.0, fecha a referencia distribuida interna:
 
 O modulo v1 nao e transporte remoto de producao, nao autentica nem cifra por si so e nao incorpora consenso, quorum, BFT, banco distribuido ou ordenacao multiwriter. O resultado x86_64 nao promove o claim ARM64.
 
-O CS011 esta em validacao para a baseline 1.11.0. Sua decisao normativa rejeita o Y1-O4 como claim de runtime e rejeita um certificado numerico global composto; aceita somente primitivas Q32.32 verificadas e certificados de solver explicitamente limitados ao proprio predicado e dominio. Ate a campanha imutavel ser concluida, requisitos e limitacoes do CS011 permanecem abertos. O produto ainda nao esta comercialmente concluido.
+O CS011, incorporado na baseline 1.11.0, rejeita o Y1-O4 como claim de runtime e remove o claim de certificado numerico global composto. O contrato aceito cobre primitivas Q32.32 com intermediario exato e rejeicao fail-closed, e separa os resultados do solver em certificado racional de pequena arvore, grade finita, residual limitado e fallback conectado operacional nao certificado. As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a mesma fonte, com resultado semantico GCC/Clang byte a byte identico.
+
+Esses resultados descrevem somente os ambientes registrados e nao promovem ARM64, desempenho universal, estimador de Lyapunov de producao, certificacao global do solver ou prova de toda composicao numerica. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS012.
 
 ## 8. Regra de conflito
 

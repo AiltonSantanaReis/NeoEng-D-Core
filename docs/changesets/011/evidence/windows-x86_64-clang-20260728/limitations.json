@@ -1,0 +1,15 @@
+{
+  "limitations": [
+    "Y1-O4 is rejected as a runtime claim; historical uncertainty and RAA code remains research-only.",
+    "The primitive Q32.32 certificate is not a global certificate for arbitrary composed workloads.",
+    "RAA evidence is local and empirical; authoritative RAA integration is not claimed.",
+    "The exact continuous oblique certificate is limited to the declared small-tree scope.",
+    "Finite-grid and residual certificates cannot be promoted beyond their stated predicates.",
+    "Connected coordinate fallback is operational and deterministic but non-certified.",
+    "An x86_64 result does not prove ARM64 equivalence.",
+    "Measurements describe only the recorded host and configuration."
+  ],
+  "native_or_external_results_may_be_inferred": false,
+  "project_version": "1.11.0",
+  "schema": "neoeng.dcore.numeric-closure-limitations.v1"
+}

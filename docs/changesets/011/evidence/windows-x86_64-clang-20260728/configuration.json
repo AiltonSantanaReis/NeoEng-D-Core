@@ -1,0 +1,13 @@
+{
+  "exact_oblique_maximum_bodies": 10,
+  "exact_oblique_maximum_contacts": 9,
+  "fixed_operations_per_sample": 5,
+  "fixed_samples": 4096,
+  "machine": "AMD64",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "project_version": "1.11.0",
+  "raa_operation_iterations": 4096,
+  "raa_terms": 8,
+  "schema": "neoeng.dcore.numeric-closure-configuration.v1"
+}

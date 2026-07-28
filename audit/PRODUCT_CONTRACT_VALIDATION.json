@@ -3,26 +3,23 @@
   "project_version": "1.11.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "c44127893c28703ce33ddbc95a08eb7e3f596217ee9fac1f12d6abb6399a7221",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "9f1b180aee2a481aaf0ba82c30986fa92166ce1f14ce4253903b3f612ba98601",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "49bfe73eb1d69ef3e74b6d500f54e676e3d20359b48ae2863ace0cb341f0731f",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "43be5b0cd19761c0f73f480f2c7c2dc9d56f981137bc02028ab565baac5abf2c",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "d9ab672ddc9a3dfa6202a4c4c720a9a8dedb19b190f6c343cf05f775a5b07ef3",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "58fb22730bcf74023593a3edccaeca1078db9de5716f3dbfe41e60c79207f0d6",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "aad1508662e990ac530faa286dca67383d880ace77266da0db8d4af1aec131bb",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "898bb827c4f63330aa6c48fcad392c826b8564b6a7a2bd443d2e931e1ad51881",
     "audit/DEFERRED_VALIDATION_GATES.json": "d2028f5653d455d1a1ac7ad63a52e2475926424e9527fce1f37a224a01f3c1cb",
     "audit/SOURCE_OF_TRUTH_INDEX.json": "5d5cd7c4dba9d52dd827714a2f368b04cd9bfc676f1bf2c69d8d9ae47e1fb7e5",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "d139f3eaf63c37d879dfe0d59f74087a2097cd4b969fbc661cc84896ed460ef7",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "5e95a9be78c9d9ca6f8251834dd578c4523ca861db48e1da7c6e106ef5bc5892",
     "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "419d302d86e25f17f536e8e8a87adf2e956df4cc3a3deca666d502f65e2bd794"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 16,
-    "open_internal_limitations": 20
+    "open_internal_requirements": 13,
+    "open_internal_limitations": 17
   },
   "open_internal_requirement_ids": [
-    "DCORE-NUM-001",
-    "DCORE-NUM-002",
-    "DCORE-NUM-003",
     "DCORE-TIME-002",
     "DCORE-DIV-002",
     "DCORE-OBS-001",
@@ -38,9 +35,6 @@
     "DCORE-ACCEPT-001"
   ],
   "open_internal_limitation_ids": [
-    "LIM-002",
-    "LIM-003",
-    "LIM-004",
     "LIM-006",
     "LIM-008",
     "LIM-011",
@@ -60,5 +54,5 @@
     "LIM-036"
   ],
   "commercial_ready": false,
-  "reason": "CS010 closes the two-instance reference transport and reconciliation scope while production transport, native ARM64, other mandatory technical work and external assurance remain open."
+  "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open."
 }

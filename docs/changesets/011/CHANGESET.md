@@ -8,6 +8,8 @@ Limitations: `LIM-002`, `LIM-003`, `LIM-004`
 
 Campaign: `TEST-CS011-001`
 
+State: concluded in 1.11.0
+
 ## Decision
 
 CS011 closes unsupported numerical promises by narrowing them to evidence that
@@ -23,3 +25,13 @@ the implementation can actually sustain:
 
 No canonical state, transition, serialization, hash, fixed tick or rollback
 format is changed.
+
+## Exit evidence
+
+- Windows clang-cl configured regression: 24/24;
+- immutable Windows numeric campaign: passed;
+- Linux GCC and Clang campaigns: passed;
+- semantic GCC/Clang result: byte-identical;
+- independent evidence verifier and tamper self-test: passed;
+- ARM64, universal hardware timing and external mathematical audit: not
+  inferred.

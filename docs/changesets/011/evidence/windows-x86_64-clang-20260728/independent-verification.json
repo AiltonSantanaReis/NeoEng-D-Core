@@ -1,0 +1,10 @@
+{
+  "capability_proof_scope": "recorded campaign only",
+  "errors": [],
+  "manifest_entries_verified": 8,
+  "native_or_external_results_inferred": false,
+  "project_version": "1.11.0",
+  "report_covered_by_manifest": false,
+  "schema": "neoeng.dcore.numeric-closure-independent-verification.v1",
+  "status": "passed"
+}

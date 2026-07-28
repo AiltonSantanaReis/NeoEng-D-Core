@@ -17,9 +17,9 @@ Alocacao geral, arena, copy-on-write e manutencao de indices foram fechados como
 
 Duas instancias independentes, mesmos inputs, comparacao, divergencia controlada, localizacao, reconciliacao e evidencia. Transporte/coordenador de referencia fora do estado canonico; consenso, quorum e BFT fora do escopo.
 
-## CS011 - Fechamento numerico — EM VALIDACAO PARA 1.11.0
+## CS011 - Fechamento numerico — CONCLUIDO EM 1.11.0
 
-Y1-O4 rejeitado como claim de runtime; certificado global composto rejeitado; contrato fail-closed de primitivas Q32.32 e classificacao explicita dos dominios/certificados/fallback do solver de arvores obliquas. O fechamento depende da campanha imutavel e da comparacao GCC/Clang.
+Y1-O4 rejeitado como claim de runtime; certificado global composto rejeitado; contrato fail-closed de primitivas Q32.32 e classificacao explicita dos dominios/certificados/fallback do solver de arvores obliquas. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas, com resultado semantico GCC/Clang byte a byte identico e sem inferir ARM64 ou desempenho universal.
 
 ## CS012 - Fechamento temporal e efeitos externos
 
