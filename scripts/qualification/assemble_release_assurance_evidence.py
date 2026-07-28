@@ -32,8 +32,12 @@ RELEASE_REQUIRED = {
     "independent-verification.json",
     "attestation-verification.json",
     "sbom-attestation-verification.json",
+    "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+    "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
     "archive-reproducibility.txt",
 }
+SIGSTORE_PROVIDER = "Sigstore Public Good Instance (Fulcio and Rekor)"
+SIGSTORE_ISSUER = "https://token.actions.githubusercontent.com"
 
 
 class AssemblyError(RuntimeError):
@@ -77,17 +81,40 @@ def assert_fuzzer_passed(path: Path) -> None:
         raise AssemblyError(f"libFuzzer completion marker absent: {path.name}")
 
 
-def attestation_has_predicate(value: Any, predicate_type: str) -> bool:
+def attestation_receipt_valid(
+    value: Any,
+    predicate_type: str,
+    *,
+    artifact_sha256: str,
+    bundle_name: str,
+    bundle_sha256: str,
+    repository: str,
+    commit: str,
+    ref: str,
+) -> bool:
+    expected_identity = (
+        f"https://github.com/{repository}/"
+        f".github/workflows/cs014-release-assurance.yml@{ref}"
+    )
     return (
-        isinstance(value, list)
-        and bool(value)
-        and all(
-            isinstance(row, dict)
-            and row.get("verificationResult", {}).get(
-                "statement", {}
-            ).get("predicateType") == predicate_type
-            for row in value
-        )
+        isinstance(value, dict)
+        and value.get("schema")
+        == "neoeng.dcore.sigstore-attestation-verification.v1"
+        and value.get("project_version") == VERSION
+        and value.get("status") == "passed"
+        and value.get("provider") == SIGSTORE_PROVIDER
+        and value.get("verifier") == "cosign 3.0.6"
+        and value.get("artifact") == "NeoEng-D-Core-1.14.0.zip"
+        and value.get("artifact_sha256") == artifact_sha256
+        and value.get("bundle") == bundle_name
+        and value.get("bundle_sha256") == bundle_sha256
+        and value.get("predicate_type") == predicate_type
+        and value.get("certificate_identity") == expected_identity
+        and value.get("certificate_oidc_issuer") == SIGSTORE_ISSUER
+        and value.get("repository") == repository
+        and value.get("commit") == commit
+        and value.get("ref") == ref
+        and value.get("public_transparency_log_verified") is True
     )
 
 
@@ -147,12 +174,46 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
         or release_verification.get("project_version") != VERSION
     ):
         raise AssemblyError("independent release verification rejected")
-    if not attestation_has_predicate(
-        provenance_attestation, "https://slsa.dev/provenance/v1"
+
+    repository = os.environ.get("CS014_REPOSITORY", "")
+    commit = os.environ.get("CS014_COMMIT", "")
+    ref = os.environ.get("CS014_REF", "")
+    run_id = os.environ.get("CS014_RUN_ID", "")
+    run_attempt = os.environ.get("CS014_RUN_ATTEMPT", "")
+    if (
+        not repository
+        or len(commit) != 40
+        or not ref.startswith("refs/")
+        or not run_id
+        or not run_attempt
+    ):
+        raise AssemblyError("GitHub Actions source identity is incomplete")
+
+    archive_sha256 = str(release_artifacts.get("archive_sha256", ""))
+    if not attestation_receipt_valid(
+        provenance_attestation,
+        "https://neoeng.dev/attestations/release-provenance/v1",
+        artifact_sha256=archive_sha256,
+        bundle_name="NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        bundle_sha256=sha256(
+            output / "NeoEng-D-Core-1.14.0.provenance.sigstore.json"
+        ),
+        repository=repository,
+        commit=commit,
+        ref=ref,
     ):
         raise AssemblyError("external provenance attestation rejected")
-    if not attestation_has_predicate(
-        sbom_attestation, "https://spdx.dev/Document"
+    if not attestation_receipt_valid(
+        sbom_attestation,
+        "https://spdx.dev/Document",
+        artifact_sha256=archive_sha256,
+        bundle_name="NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        bundle_sha256=sha256(
+            output / "NeoEng-D-Core-1.14.0.sbom.sigstore.json"
+        ),
+        repository=repository,
+        commit=commit,
+        ref=ref,
     ):
         raise AssemblyError("external SBOM attestation rejected")
     reproducibility_hashes = [
@@ -165,18 +226,12 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
     ):
         raise AssemblyError("deterministic archive repeat rejected")
 
-    repository = os.environ.get("CS014_REPOSITORY", "")
-    commit = os.environ.get("CS014_COMMIT", "")
-    run_id = os.environ.get("CS014_RUN_ID", "")
-    run_attempt = os.environ.get("CS014_RUN_ATTEMPT", "")
-    if not repository or len(commit) != 40 or not run_id or not run_attempt:
-        raise AssemblyError("GitHub Actions source identity is incomplete")
-
     write_json(output / "source-identity.json", {
         "schema": "neoeng.dcore.source-identity.v1",
         "project_version": VERSION,
         "repository": repository,
         "commit": commit,
+        "ref": ref,
         "workflow_run_id": run_id,
         "workflow_run_attempt": run_attempt,
         "worktree_dirty": False,
@@ -211,6 +266,8 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
         "spdx_sbom_required": True,
         "external_provenance_attestation_required": True,
         "external_sbom_attestation_required": True,
+        "attestation_provider": SIGSTORE_PROVIDER,
+        "public_transparency_log_required": True,
     })
     summary = {
         "schema": "neoeng.dcore.release-assurance-campaign-summary.v1",
@@ -245,6 +302,7 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
             "Coverage-guided fuzzing reduces risk but does not prove absence of defects.",
             "Sanitizer and static-analysis success do not prove absence of defects.",
             "Performance results from one host are not generalized to other hardware.",
+            "The public Sigstore log exposes repository, workflow, ref and commit metadata but not source contents.",
             "Commercial completion remains governed by the CS015 acceptance decision.",
         ],
         "native_or_external_results_may_be_inferred": False,

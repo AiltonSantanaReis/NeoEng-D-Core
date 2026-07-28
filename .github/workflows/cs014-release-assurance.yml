@@ -266,7 +266,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      attestations: write
     steps:
       - uses: actions/checkout@v4
       - name: Download gate evidence
@@ -305,37 +304,68 @@ jobs:
           python3 scripts/verify_consolidated_release.py
           release
           --write-report
-      - name: Attest release provenance
-        uses: actions/attest@v4
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v4.1.0
         with:
-          subject-path: release/NeoEng-D-Core-1.14.0.zip
-      - name: Attest release SBOM
-        uses: actions/attest@v4
-        with:
-          subject-path: release/NeoEng-D-Core-1.14.0.zip
-          sbom-path: release/SBOM.spdx.json
-      - name: Verify published attestations
-        env:
-          GH_TOKEN: ${{ github.token }}
+          cosign-release: "v3.0.6"
+      - name: Attest release with public Sigstore
         shell: bash
         run: |
-          gh attestation verify \
-            release/NeoEng-D-Core-1.14.0.zip \
-            --repo "${{ github.repository }}" \
-            --signer-workflow "github.com/${{ github.repository }}/.github/workflows/cs014-release-assurance.yml" \
-            --source-digest "${{ github.sha }}" \
-            --format json > release/attestation-verification.json
-          gh attestation verify \
-            release/NeoEng-D-Core-1.14.0.zip \
-            --repo "${{ github.repository }}" \
-            --signer-workflow "github.com/${{ github.repository }}/.github/workflows/cs014-release-assurance.yml" \
-            --source-digest "${{ github.sha }}" \
+          cosign attest-blob --yes \
+            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
+            --predicate release/PROVENANCE.json \
+            --type https://neoeng.dev/attestations/release-provenance/v1 \
+            release/NeoEng-D-Core-1.14.0.zip
+          cosign attest-blob --yes \
+            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
+            --predicate release/SBOM.spdx.json \
+            --type spdxjson \
+            release/NeoEng-D-Core-1.14.0.zip
+      - name: Verify public Sigstore attestations
+        shell: bash
+        run: |
+          set -euo pipefail
+          identity="https://github.com/${GITHUB_WORKFLOW_REF}"
+          common=(
+            --certificate-identity "$identity"
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com
+            --certificate-github-workflow-repository "$GITHUB_REPOSITORY"
+            --certificate-github-workflow-sha "$GITHUB_SHA"
+            --certificate-github-workflow-ref "$GITHUB_REF"
+          )
+          cosign verify-blob-attestation \
+            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
+            --type https://neoeng.dev/attestations/release-provenance/v1 \
+            "${common[@]}" \
+            release/NeoEng-D-Core-1.14.0.zip
+          python3 scripts/qualification/write_sigstore_verification_receipt.py \
+            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
+            --artifact release/NeoEng-D-Core-1.14.0.zip \
+            --predicate-type https://neoeng.dev/attestations/release-provenance/v1 \
+            --output release/attestation-verification.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --commit "$GITHUB_SHA" \
+            --ref "$GITHUB_REF" \
+            --certificate-identity "$identity"
+          cosign verify-blob-attestation \
+            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
+            --type spdxjson \
+            "${common[@]}" \
+            release/NeoEng-D-Core-1.14.0.zip
+          python3 scripts/qualification/write_sigstore_verification_receipt.py \
+            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
+            --artifact release/NeoEng-D-Core-1.14.0.zip \
             --predicate-type https://spdx.dev/Document \
-            --format json > release/sbom-attestation-verification.json
+            --output release/sbom-attestation-verification.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --commit "$GITHUB_SHA" \
+            --ref "$GITHUB_REF" \
+            --certificate-identity "$identity"
       - name: Assemble independently verifiable campaign evidence
         env:
           CS014_REPOSITORY: ${{ github.repository }}
           CS014_COMMIT: ${{ github.sha }}
+          CS014_REF: ${{ github.ref }}
           CS014_RUN_ID: ${{ github.run_id }}
           CS014_RUN_ATTEMPT: ${{ github.run_attempt }}
         run: >

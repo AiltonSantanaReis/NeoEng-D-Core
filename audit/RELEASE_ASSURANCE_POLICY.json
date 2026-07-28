@@ -78,8 +78,14 @@
   },
   "release_authenticity": {
     "publication_requires_external_signed_attestation": true,
-    "provider": "GitHub Artifact Attestations backed by Sigstore",
+    "provider": "Sigstore Public Good Instance (Fulcio and Rekor) via Cosign 3.0.6",
+    "verification_tool": "cosign verify-blob-attestation",
+    "verification_bundle_format": "Sigstore bundle",
+    "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+    "public_transparency_log_required": true,
     "workflow": ".github/workflows/cs014-release-assurance.yml",
+    "public_metadata_disclosure": "The repository name, workflow, ref and commit identity are published in the public transparency log; source contents are not published.",
+    "github_artifact_attestations_constraint": "Unavailable to this user-owned private repository without GitHub Enterprise Cloud; not used as the closure provider.",
     "private_signing_key_in_repository": false,
     "local_unsigned_candidate_is_publishable": false
   },

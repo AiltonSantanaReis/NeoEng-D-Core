@@ -64,9 +64,18 @@ constitute external certification or a vulnerability-free claim.
 ## Signature and secure update
 
 No private release-signing key is stored in the repository. Publication
-requires an external signed GitHub Artifact Attestation backed by Sigstore for
-the archive digest. A locally generated unsigned candidate may be tested but
-must not be presented as an authenticated release.
+requires two keyless Sigstore bundles, issued through Fulcio and recorded in
+the public Rekor transparency log: one binds release provenance and one binds
+the SPDX SBOM to the archive digest. Cosign verifies the exact GitHub Actions
+workflow identity, OIDC issuer, repository, commit and ref before the
+verification receipts are emitted. A locally generated unsigned candidate may
+be tested but must not be presented as an authenticated release.
+
+The public transparency record exposes the repository name, workflow, ref and
+commit identity. It does not publish the private source contents. GitHub
+Artifact Attestations are not the CS014 closure provider because that service
+is unavailable to a user-owned private repository without GitHub Enterprise
+Cloud.
 
 Consumers must verify the external attestation, outer SHA-256 and internal
 manifest before installation. Downgrade requires explicit operator approval,

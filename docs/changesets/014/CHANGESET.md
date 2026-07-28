@@ -45,6 +45,7 @@ remains blocking for every other supported implementation unit.
 - sanitizer, coverage-guided fuzzing and static-analysis jobs pass;
 - consolidated archive and all generated assurance artifacts verify
   independently;
-- the published archive receives an external signed attestation;
+- the published archive receives externally verifiable keyless Sigstore
+  provenance and SBOM attestations;
 - six CS014 requirements and eight limitations are reconciled without promoting
   CS015.

@@ -28,4 +28,5 @@ for other hardware is inferred.
 `TEST-CS014-001` remains planned until the committed clean source passes Linux
 GCC, Linux Clang, Windows clang-cl, ASan/UBSan, two 120-second libFuzzer
 campaigns, blocking static analysis, deterministic consolidated packaging,
-independent verification and both externally signed attestations.
+independent verification and both keyless Sigstore attestations recorded in
+the public Rekor transparency log.

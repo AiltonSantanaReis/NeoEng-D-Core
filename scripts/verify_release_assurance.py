@@ -150,6 +150,16 @@ def verify_documents(
     if (
         authenticity.get("publication_requires_external_signed_attestation")
         is not True
+        or authenticity.get("provider")
+        != "Sigstore Public Good Instance (Fulcio and Rekor) via Cosign 3.0.6"
+        or authenticity.get("verification_tool")
+        != "cosign verify-blob-attestation"
+        or authenticity.get("verification_bundle_format") != "Sigstore bundle"
+        or authenticity.get("certificate_oidc_issuer")
+        != "https://token.actions.githubusercontent.com"
+        or authenticity.get("public_transparency_log_required") is not True
+        or "source contents are not published"
+        not in str(authenticity.get("public_metadata_disclosure", ""))
         or authenticity.get("private_signing_key_in_repository") is not False
         or authenticity.get("local_unsigned_candidate_is_publishable") is not False
     ):
@@ -185,9 +195,11 @@ def verify_documents(
         "static-analysis",
         "consolidated-release",
         "archive-reproducibility.txt",
-        "actions/attest@v4",
+        "sigstore/cosign-installer@v4.1.0",
+        'cosign-release: "v3.0.6"',
+        "cosign attest-blob",
+        "cosign verify-blob-attestation",
         "id-token: write",
-        "attestations: write",
     ):
         if token not in workflow:
             errors.append(f"release workflow token missing: {token}")
@@ -228,6 +240,7 @@ def verify_documents(
         "scripts/create_consolidated_release.py",
         "scripts/verify_consolidated_release.py",
         "scripts/run_static_analysis.py",
+        "scripts/qualification/write_sigstore_verification_receipt.py",
         "docs/contracts/RELEASE_ASSURANCE_V1.md",
         "docs/governance/COMMERCIAL_DELIVERY_POLICY.md",
     )
@@ -273,6 +286,12 @@ def self_test(
         "local_unsigned_candidate_is_publishable"
     ] = True
     mutations.append(("unsigned-publish", claims, capabilities, unsigned_publish, {}))
+
+    private_log = copy.deepcopy(policy)
+    private_log["release_authenticity"][
+        "public_transparency_log_required"
+    ] = False
+    mutations.append(("private-transparency-log", claims, capabilities, private_log, {}))
 
     for name, claim_doc, capability_doc, policy_doc, overrides in mutations:
         errors = verify_documents(

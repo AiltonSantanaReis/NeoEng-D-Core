@@ -22,6 +22,8 @@ REQUIRED = {
     "independent-release-verification.json",
     "attestation-verification.json",
     "sbom-attestation-verification.json",
+    "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+    "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
     "archive-reproducibility.txt",
     "raw/linux-gcc-ctest.txt",
     "raw/linux-clang-ctest.txt",
@@ -35,6 +37,8 @@ REQUIRED = {
     "raw/raw-static-analysis.txt",
     "raw/static-analysis-summary.json",
 }
+SIGSTORE_PROVIDER = "Sigstore Public Good Instance (Fulcio and Rekor)"
+SIGSTORE_ISSUER = "https://token.actions.githubusercontent.com"
 
 
 def sha256(path: Path) -> str:
@@ -48,17 +52,40 @@ def load_object(path: Path) -> dict[str, Any]:
     return value
 
 
-def attestation_has_predicate(value: Any, predicate_type: str) -> bool:
+def attestation_receipt_valid(
+    value: Any,
+    predicate_type: str,
+    *,
+    artifact_sha256: str,
+    bundle_name: str,
+    bundle_sha256: str,
+    repository: str,
+    commit: str,
+    ref: str,
+) -> bool:
+    expected_identity = (
+        f"https://github.com/{repository}/"
+        f".github/workflows/cs014-release-assurance.yml@{ref}"
+    )
     return (
-        isinstance(value, list)
-        and bool(value)
-        and all(
-            isinstance(row, dict)
-            and row.get("verificationResult", {}).get(
-                "statement", {}
-            ).get("predicateType") == predicate_type
-            for row in value
-        )
+        isinstance(value, dict)
+        and value.get("schema")
+        == "neoeng.dcore.sigstore-attestation-verification.v1"
+        and value.get("project_version") == VERSION
+        and value.get("status") == "passed"
+        and value.get("provider") == SIGSTORE_PROVIDER
+        and value.get("verifier") == "cosign 3.0.6"
+        and value.get("artifact") == "NeoEng-D-Core-1.14.0.zip"
+        and value.get("artifact_sha256") == artifact_sha256
+        and value.get("bundle") == bundle_name
+        and value.get("bundle_sha256") == bundle_sha256
+        and value.get("predicate_type") == predicate_type
+        and value.get("certificate_identity") == expected_identity
+        and value.get("certificate_oidc_issuer") == SIGSTORE_ISSUER
+        and value.get("repository") == repository
+        and value.get("commit") == commit
+        and value.get("ref") == ref
+        and value.get("public_transparency_log_verified") is True
     )
 
 
@@ -104,24 +131,13 @@ def verify(directory: Path) -> dict[str, Any]:
         "limitations.json",
         "release-artifacts.json",
         "independent-release-verification.json",
+        "attestation-verification.json",
+        "sbom-attestation-verification.json",
         "raw/static-analysis-summary.json",
     ):
         try:
             documents[name] = load_object(directory / name)
         except (OSError, ValueError, json.JSONDecodeError) as exc:
-            errors.append(f"invalid {name}: {exc}")
-    for name, predicate_type in (
-        (
-            "attestation-verification.json",
-            "https://slsa.dev/provenance/v1",
-        ),
-        ("sbom-attestation-verification.json", "https://spdx.dev/Document"),
-    ):
-        try:
-            value = json.loads((directory / name).read_text(encoding="utf-8"))
-            if not attestation_has_predicate(value, predicate_type):
-                errors.append(f"attestation predicate rejected: {name}")
-        except (OSError, json.JSONDecodeError) as exc:
             errors.append(f"invalid {name}: {exc}")
 
     for name, document in documents.items():
@@ -131,6 +147,7 @@ def verify(directory: Path) -> dict[str, Any]:
     if (
         not re.fullmatch(r"[0-9a-f]{40}", str(source.get("commit", "")))
         or not source.get("repository")
+        or not str(source.get("ref", "")).startswith("refs/")
         or not str(source.get("workflow_run_id", "")).isdigit()
         or not str(source.get("workflow_run_attempt", "")).isdigit()
         or source.get("worktree_dirty") is not False
@@ -158,6 +175,8 @@ def verify(directory: Path) -> dict[str, Any]:
         or configuration.get("spdx_sbom_required") is not True
         or configuration.get("external_provenance_attestation_required") is not True
         or configuration.get("external_sbom_attestation_required") is not True
+        or configuration.get("attestation_provider") != SIGSTORE_PROVIDER
+        or configuration.get("public_transparency_log_required") is not True
     ):
         errors.append("campaign configuration rejected")
 
@@ -202,6 +221,48 @@ def verify(directory: Path) -> dict[str, Any]:
         or package_verification.get("local_unsigned_candidate_publishable") is not False
     ):
         errors.append("release artifact or package verification rejected")
+
+    bundle_names = (
+        "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+    )
+    for name in bundle_names:
+        try:
+            bundle = json.loads((directory / name).read_text(encoding="utf-8"))
+            if (
+                not isinstance(bundle, dict)
+                or "sigstore.bundle" not in str(bundle.get("mediaType", ""))
+                or not isinstance(bundle.get("verificationMaterial"), dict)
+                or not isinstance(bundle.get("dsseEnvelope"), dict)
+            ):
+                errors.append(f"Sigstore bundle structure rejected: {name}")
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"invalid Sigstore bundle {name}: {exc}")
+    receipt_specs = (
+        (
+            "attestation-verification.json",
+            "https://neoeng.dev/attestations/release-provenance/v1",
+            bundle_names[0],
+        ),
+        (
+            "sbom-attestation-verification.json",
+            "https://spdx.dev/Document",
+            bundle_names[1],
+        ),
+    )
+    for receipt_name, predicate_type, bundle_name in receipt_specs:
+        bundle_path = directory / bundle_name
+        if not attestation_receipt_valid(
+            documents.get(receipt_name, {}),
+            predicate_type,
+            artifact_sha256=str(artifacts.get("archive_sha256", "")),
+            bundle_name=bundle_name,
+            bundle_sha256=sha256(bundle_path) if bundle_path.is_file() else "",
+            repository=str(source.get("repository", "")),
+            commit=str(source.get("commit", "")),
+            ref=str(source.get("ref", "")),
+        ):
+            errors.append(f"attestation receipt rejected: {receipt_name}")
     reproducibility = directory / "archive-reproducibility.txt"
     if reproducibility.is_file():
         hashes = [
@@ -246,7 +307,7 @@ def verify(directory: Path) -> dict[str, Any]:
 
     limitations = documents.get("limitations.json", {})
     if (
-        len(limitations.get("limitations", [])) < 6
+        len(limitations.get("limitations", [])) < 7
         or limitations.get("native_or_external_results_may_be_inferred") is not False
         or limitations.get("commercial_product_complete_may_be_inferred") is not False
     ):
@@ -267,11 +328,26 @@ def verify(directory: Path) -> dict[str, Any]:
 
 
 def write_fixture(directory: Path) -> None:
+    provenance_bundle = {
+        "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+        "verificationMaterial": {"fixture": True},
+        "dsseEnvelope": {"fixture": True},
+    }
+    sbom_bundle = {
+        "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+        "verificationMaterial": {"fixture": True},
+        "dsseEnvelope": {"fixture": True},
+    }
+    identity = (
+        "https://github.com/owner/repository/"
+        ".github/workflows/cs014-release-assurance.yml@refs/heads/main"
+    )
     values: dict[str, object] = {
         "source-identity.json": {
             "project_version": VERSION,
             "repository": "owner/repository",
             "commit": "a" * 40,
+            "ref": "refs/heads/main",
             "workflow_run_id": "123",
             "workflow_run_attempt": "1",
             "worktree_dirty": False,
@@ -300,6 +376,8 @@ def write_fixture(directory: Path) -> None:
             "spdx_sbom_required": True,
             "external_provenance_attestation_required": True,
             "external_sbom_attestation_required": True,
+            "attestation_provider": SIGSTORE_PROVIDER,
+            "public_transparency_log_required": True,
         },
         "result-summary.json": {
             "project_version": VERSION,
@@ -324,7 +402,7 @@ def write_fixture(directory: Path) -> None:
         },
         "limitations.json": {
             "project_version": VERSION,
-            "limitations": list("abcdef"),
+            "limitations": list("abcdefg"),
             "native_or_external_results_may_be_inferred": False,
             "commercial_product_complete_may_be_inferred": False,
         },
@@ -340,18 +418,45 @@ def write_fixture(directory: Path) -> None:
             "status": "passed",
             "local_unsigned_candidate_publishable": False,
         },
-        "attestation-verification.json": [{
-            "verificationResult": {
-                "statement": {
-                    "predicateType": "https://slsa.dev/provenance/v1"
-                }
-            }
-        }],
-        "sbom-attestation-verification.json": [{
-            "verificationResult": {
-                "statement": {"predicateType": "https://spdx.dev/Document"}
-            }
-        }],
+        "NeoEng-D-Core-1.14.0.provenance.sigstore.json": provenance_bundle,
+        "NeoEng-D-Core-1.14.0.sbom.sigstore.json": sbom_bundle,
+        "attestation-verification.json": {
+            "schema": "neoeng.dcore.sigstore-attestation-verification.v1",
+            "project_version": VERSION,
+            "status": "passed",
+            "provider": SIGSTORE_PROVIDER,
+            "verifier": "cosign 3.0.6",
+            "artifact": "NeoEng-D-Core-1.14.0.zip",
+            "artifact_sha256": "b" * 64,
+            "bundle": "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+            "bundle_sha256": "",
+            "predicate_type":
+                "https://neoeng.dev/attestations/release-provenance/v1",
+            "certificate_identity": identity,
+            "certificate_oidc_issuer": SIGSTORE_ISSUER,
+            "repository": "owner/repository",
+            "commit": "a" * 40,
+            "ref": "refs/heads/main",
+            "public_transparency_log_verified": True,
+        },
+        "sbom-attestation-verification.json": {
+            "schema": "neoeng.dcore.sigstore-attestation-verification.v1",
+            "project_version": VERSION,
+            "status": "passed",
+            "provider": SIGSTORE_PROVIDER,
+            "verifier": "cosign 3.0.6",
+            "artifact": "NeoEng-D-Core-1.14.0.zip",
+            "artifact_sha256": "b" * 64,
+            "bundle": "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+            "bundle_sha256": "",
+            "predicate_type": "https://spdx.dev/Document",
+            "certificate_identity": identity,
+            "certificate_oidc_issuer": SIGSTORE_ISSUER,
+            "repository": "owner/repository",
+            "commit": "a" * 40,
+            "ref": "refs/heads/main",
+            "public_transparency_log_verified": True,
+        },
         "raw/static-analysis-summary.json": {
             "project_version": VERSION,
             "status": "passed",
@@ -364,6 +469,22 @@ def write_fixture(directory: Path) -> None:
         path = directory / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(value) + "\n", encoding="utf-8")
+    for receipt_name, bundle_name in (
+        (
+            "attestation-verification.json",
+            "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        ),
+        (
+            "sbom-attestation-verification.json",
+            "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        ),
+    ):
+        receipt = values[receipt_name]
+        assert isinstance(receipt, dict)
+        receipt["bundle_sha256"] = sha256(directory / bundle_name)
+        (directory / receipt_name).write_text(
+            json.dumps(receipt) + "\n", encoding="utf-8"
+        )
     for name in (
         "raw/linux-gcc-ctest.txt",
         "raw/linux-clang-ctest.txt",
