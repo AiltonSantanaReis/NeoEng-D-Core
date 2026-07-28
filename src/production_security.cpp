@@ -47,15 +47,17 @@ bool read_little_endian(
     std::size_t& cursor,
     T& value) noexcept {
     using U = std::make_unsigned_t<T>;
+    static_assert(sizeof(U) <= sizeof(std::uintmax_t));
     if (cursor > input.size() || input.size() - cursor < sizeof(U)) {
         return false;
     }
-    U bits{};
+    std::uintmax_t bits{};
     for (std::size_t index = 0; index < sizeof(U); ++index) {
-        bits |= static_cast<U>(input[cursor + index]) << (8U * index);
+        bits |= static_cast<std::uintmax_t>(input[cursor + index])
+            << (8U * index);
     }
     cursor += sizeof(U);
-    value = static_cast<T>(bits);
+    value = static_cast<T>(static_cast<U>(bits));
     return true;
 }
 
