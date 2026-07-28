@@ -103,8 +103,12 @@ void test_divergence_diagnostics() {
     CHECK(name, report.first_divergent_entity == 1U);
     CHECK(name, report.first_divergent_component == "position.x");
     CHECK(name, report.first_divergent_chunk == 0U);
-    CHECK(name, traces.by_correlation(99U).size() == 2U);
-    CHECK(name, traces.by_correlation(99U).front().code == TraceCode::StateDivergence);
+    const std::vector<TraceEvent> correlated = traces.by_correlation(99U);
+    CHECK(name, correlated.size() == 3U);
+    CHECK(name, correlated.front().code == TraceCode::StateDivergence);
+    CHECK(name, correlated.back().code == TraceCode::BudgetSampled);
+    CHECK(name, correlated.back().detail_code
+        == static_cast<std::uint32_t>(BudgetId::DivergenceLocalization));
     CHECK(name, !diagnose_state_divergence(expected, expected, 100U).divergent);
 }
 

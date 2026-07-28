@@ -2,7 +2,7 @@
 
 Documento: `NEOENG-DCORE-COMPLETION-001`
 Versao: 1.0
-Baseline: 1.11.0
+Baseline: 1.12.0
 
 ## Regra principal
 

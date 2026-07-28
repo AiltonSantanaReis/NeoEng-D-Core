@@ -1,0 +1,23 @@
+{
+  "cross_architecture_claim_promoted": false,
+  "exactly_once_without_conforming_host_claimed": false,
+  "external_trust_anchor_claimed": false,
+  "native_or_external_results_inferred": false,
+  "probe": {
+    "canonical_fields": 6,
+    "commits": 4096,
+    "compensations": 2048,
+    "durable_head_sha256": "1d78efae8d396de2d6c50746b8f392e911b1ccf9c656e3e0b8a8dc9780a019f8",
+    "durable_segments": 512,
+    "external_effects": 4096,
+    "mandatory_paths": 9,
+    "schema": "neoeng.dcore.temporal-closure.v1",
+    "seed": 12012,
+    "status": "passed"
+  },
+  "probe_exit_code": 0,
+  "project_version": "1.12.0",
+  "schema": "neoeng.dcore.temporal-closure-campaign-summary.v1",
+  "status": "passed",
+  "tests_exit_code": 0
+}

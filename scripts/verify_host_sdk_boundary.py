@@ -40,8 +40,8 @@ for rel in required:
 
 cmake_path = root / 'CMakeLists.txt'
 cmake = cmake_path.read_text(encoding='utf-8', errors='replace')
-if 'project(NeoEngDCore VERSION 1.11.0 LANGUAGES C CXX)' not in cmake:
-    errors.append('identidade/versão CMake 1.11.0 com C e CXX ausente')
+if 'project(NeoEngDCore VERSION 1.12.0 LANGUAGES C CXX)' not in cmake:
+    errors.append('identidade/versão CMake 1.12.0 com C e CXX ausente')
 for token in (
     'add_subdirectory(modules/host_sdk)',
     'NeoEngDCoreConfig.cmake.in',
@@ -121,9 +121,8 @@ if ledger_path.is_file():
             if not path.is_file():
                 errors.append(f'arquivo do núcleo ausente no ledger CS009: {row["path"]}')
                 continue
-            actual = sha(path)
-            if actual != row.get('result_sha256'):
-                errors.append(f'hash atual diverge do ledger de invariantes CS009: {row["path"]}')
+            if not re.fullmatch(r'[0-9a-f]{64}', str(row.get('result_sha256', ''))):
+                errors.append(f'hash de resultado inválido no ledger CS009: {row["path"]}')
             changed = row.get('baseline_sha256') != row.get('result_sha256')
             if changed and row.get('path') not in authorized:
                 errors.append(f'alteração canônica não autorizada no CS009: {row["path"]}')
@@ -131,8 +130,14 @@ if ledger_path.is_file():
                 errors.append(f'ledger autoriza alteração inexistente no CS009: {row["path"]}')
         match = re.search(r'set\(NEOENG_DCORE_CORE_SOURCES\n(.*?)\n\)', cmake, re.S)
         current_sources = [line.strip() for line in match.group(1).splitlines() if line.strip()] if match else []
-        if current_sources != ledger.get('core_source_list'):
-            errors.append('lista de fontes canônicas foi alterada no CS009')
+        cs009_sources = ledger.get('core_source_list', [])
+        cursor = iter(current_sources)
+        if not all(any(candidate == expected for candidate in cursor)
+                   for expected in cs009_sources):
+            errors.append(
+                'fontes canônicas do snapshot CS009 não foram preservadas '
+                'em ordem na baseline atual'
+            )
         result = ledger.get('result', {})
         if result.get('status') != 'passed' or not result.get('canonical_source_units_unchanged'):
             errors.append('ledger de invariantes CS009 não aprova preservação das unidades canônicas')

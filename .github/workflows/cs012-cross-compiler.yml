@@ -1,0 +1,143 @@
+name: CS012 cross-compiler evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/changeset-012
+    paths:
+      - ".github/workflows/cs012-cross-compiler.yml"
+      - "CMakeLists.txt"
+      - "vcpkg.json"
+      - "include/neoeng/core/temporal_contract.hpp"
+      - "include/neoeng/core/diagnostics.hpp"
+      - "include/neoeng/core/observability.hpp"
+      - "src/temporal_contract.cpp"
+      - "src/diagnostics.cpp"
+      - "src/observability.cpp"
+      - "src/state_evidence.cpp"
+      - "src/support_bundle.cpp"
+      - "tests/temporal_closure_tests.cpp"
+      - "apps/temporal_closure_probe.cpp"
+      - "scripts/verify_temporal_closure_boundary.py"
+      - "scripts/qualification/run_temporal_closure_campaign.py"
+      - "scripts/qualification/verify_temporal_closure_evidence.py"
+
+permissions:
+  contents: read
+
+jobs:
+  campaign:
+    name: Linux x86_64 ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libboost-dev ninja-build
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: >-
+          cmake -S . -B build/cs012-${{ matrix.compiler }} -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build
+        run: >-
+          cmake --build build/cs012-${{ matrix.compiler }}
+          --target neoeng_temporal_closure_tests
+          neoeng_temporal_closure_probe
+
+      - name: Verify boundary
+        run: |
+          python3 scripts/verify_temporal_closure_boundary.py
+          python3 scripts/verify_temporal_closure_boundary.py --self-test
+          python3 scripts/qualification/verify_temporal_closure_evidence.py --self-test
+
+      - name: Run campaign
+        run: >-
+          python3 scripts/qualification/run_temporal_closure_campaign.py
+          --tests build/cs012-${{ matrix.compiler }}/neoeng_temporal_closure_tests
+          --probe build/cs012-${{ matrix.compiler }}/neoeng_temporal_closure_probe
+          --output artifacts/cs012-linux-${{ matrix.compiler }}
+          --compiler-id ${{ matrix.compiler }}
+
+      - name: Independently verify evidence
+        run: >-
+          python3 scripts/qualification/verify_temporal_closure_evidence.py
+          artifacts/cs012-linux-${{ matrix.compiler }} --write-report
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cs012-linux-${{ matrix.compiler }}
+          path: artifacts/cs012-linux-${{ matrix.compiler }}
+          if-no-files-found: error
+          retention-days: 30
+
+  compare:
+    name: Compare GCC and Clang
+    needs: campaign
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cs012-linux-*
+          path: artifacts
+
+      - name: Compare semantic probe results
+        run: |
+          diff -u \
+            artifacts/cs012-linux-gcc/raw-probe.json \
+            artifacts/cs012-linux-clang/raw-probe.json \
+            > cross-compiler.diff
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          gcc = Path("artifacts/cs012-linux-gcc/raw-probe.json")
+          clang = Path("artifacts/cs012-linux-clang/raw-probe.json")
+          digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+          result = {
+              "schema": "neoeng.dcore.cs012-cross-compiler.v1",
+              "status": "passed",
+              "architecture": "x86_64",
+              "compilers": ["gcc", "clang"],
+              "gcc_probe_sha256": digest(gcc),
+              "clang_probe_sha256": digest(clang),
+              "byte_identical": gcc.read_bytes() == clang.read_bytes(),
+              "cross_architecture_claim_promoted": False,
+              "external_trust_anchor_claimed": False,
+          }
+          Path("cross-compiler-summary.json").write_text(
+              json.dumps(result, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          if not result["byte_identical"]:
+              raise SystemExit("GCC and Clang semantic results differ")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cs012-cross-compiler-comparison
+          path: |
+            cross-compiler.diff
+            cross-compiler-summary.json
+          if-no-files-found: error
+          retention-days: 30

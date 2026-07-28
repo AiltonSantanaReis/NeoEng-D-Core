@@ -2,11 +2,18 @@
 
 #include <algorithm>
 #include <iomanip>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 
 namespace neoeng::core {
 namespace {
+
+[[nodiscard]] std::int64_t saturating_i64(std::uint64_t value) noexcept {
+    return value > static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max())
+        ? std::numeric_limits<std::int64_t>::max()
+        : static_cast<std::int64_t>(value);
+}
 
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
@@ -174,6 +181,14 @@ FrameDiff TimeTravelDebugger::compare(
         .left_hash = left->state_hash,
         .right_hash = right->state_hash,
     };
+    if (left->state.frame != right->state.frame) {
+        diff.changes.push_back({
+            0U,
+            "state.frame",
+            saturating_i64(left->state.frame),
+            saturating_i64(right->state.frame),
+        });
+    }
     std::size_t left_index{};
     std::size_t right_index{};
     while (left_index < left->state.bodies.size() || right_index < right->state.bodies.size()) {
@@ -386,6 +401,12 @@ const char* to_string(TraceCode code) noexcept {
     case TraceCode::SupportBundleCreated: return "support_bundle_created";
     case TraceCode::SupportBundleVerificationFailed: return "support_bundle_verification_failed";
     case TraceCode::ValidationGateDeferred: return "validation_gate_deferred";
+    case TraceCode::TemporalRecordCommitted: return "temporal_record_committed";
+    case TraceCode::TemporalRecordRejected: return "temporal_record_rejected";
+    case TraceCode::ExternalEffectPrepared: return "external_effect_prepared";
+    case TraceCode::ExternalEffectCommitted: return "external_effect_committed";
+    case TraceCode::ExternalEffectCompensated: return "external_effect_compensated";
+    case TraceCode::ExternalEffectRejected: return "external_effect_rejected";
     }
     return "unknown";
 }

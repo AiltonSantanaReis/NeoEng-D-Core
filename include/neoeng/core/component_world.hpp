@@ -1,6 +1,7 @@
 #pragma once
 
 #include "neoeng/core/active_world.hpp"
+#include "neoeng/core/diagnostics.hpp"
 #include "neoeng/core/fixed_simd.hpp"
 
 #include <cstddef>
@@ -101,6 +102,10 @@ private:
 
 struct ComponentStepOptions final {
     FixedKernelMode kernel_mode{FixedKernelMode::Auto};
+    const BudgetMonitor* budget_monitor{};
+    TraceBuffer* budget_traces{};
+    CorrelationId correlation_id{};
+    std::uint64_t budget_limit_ns{};
 };
 
 struct ComponentStepResult final {

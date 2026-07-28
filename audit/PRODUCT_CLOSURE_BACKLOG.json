@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-closure-backlog.v1",
-  "project_version": "1.11.0",
+  "project_version": "1.12.0",
   "known_limitations_count": 41,
   "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
   "items": [
@@ -165,9 +165,14 @@
       "title": "Rollback cannot undo irreversible external effects.",
       "responsibility": "host_responsibility",
       "category": "host_responsibility",
-      "status": "open",
+      "status": "accepted",
       "closure_stage": "CS012",
-      "normative_decision": "Deliver official idempotency/commit/compensation contract and reference test."
+      "normative_decision": "Accepted in 1.12.0: rollback never claims to undo an irreversible committed effect; the official prepare/confirm/commit/compensate contract, idempotency conflict checks and reference tests make the host boundary explicit.",
+      "closure_evidence": [
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+        "neoeng_temporal_closure_tests",
+        "docs/changesets/012/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-016",
@@ -229,18 +234,28 @@
       "title": "Time-travel diff and Merkle localization are Body-schema-specific.",
       "responsibility": "core_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS012",
-      "normative_decision": "Cover all product-promised canonical schemas or narrow the claim."
+      "normative_decision": "Closed in 1.12.0 by declaring WorldState v1 as the sole product-promised canonical schema and covering frame plus every Body field in semantic diff, canonical SHA-256 and Merkle localization.",
+      "closure_evidence": [
+        "include/neoeng/core/temporal_contract.hpp",
+        "neoeng_temporal_closure_tests",
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md"
+      ]
     },
     {
       "limitation_id": "LIM-022",
       "title": "Automatic budget instrumentation is not universal.",
       "responsibility": "core_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS012",
-      "normative_decision": "Instrument every mandatory path and verify correlation."
+      "normative_decision": "Closed in 1.12.0 by declaring nine mandatory operational paths and emitting correlated automatic budget samples whenever tracing is enabled for each supported path.",
+      "closure_evidence": [
+        "include/neoeng/core/temporal_contract.hpp",
+        "neoeng_temporal_closure_tests",
+        "docs/changesets/012/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-023",
@@ -261,9 +276,14 @@
       "title": "Trace/time-travel retention is bounded and non-durable.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS012",
-      "normative_decision": "Deliver durable recorder/export contract for the product scope."
+      "normative_decision": "Closed in 1.12.0 by retaining the bounded live debugger while adding an explicit append-only durable recorder with restart recovery, atomic publication, SHA-256 chaining and fail-closed verification.",
+      "closure_evidence": [
+        "src/temporal_contract.cpp",
+        "neoeng_temporal_closure_tests",
+        "docs/changesets/012/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-025",
@@ -279,9 +299,14 @@
       "title": "Evidence chains are not automatically persisted or anchored externally.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS012",
-      "normative_decision": "Provide official recorder/anchor adapter contract; external trust anchor remains deployment-specific."
+      "normative_decision": "Closed in 1.12.0 by the official durable recorder and independently verifiable head digest; external anchoring remains an explicit deployment responsibility and is not claimed as product-supplied.",
+      "closure_evidence": [
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+        "src/temporal_contract.cpp",
+        "docs/changesets/012/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-027",

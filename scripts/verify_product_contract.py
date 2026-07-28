@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.11.0"
+EXPECTED_VERSION = "1.12.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -176,8 +176,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.11.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.11.0 baseline")
+    if "baseline 1.12.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.12.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -393,7 +393,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open.",
+        "reason": "CS012 closes the declared temporal recorder, WorldState v1 localization, mandatory-path instrumentation and external-effects boundary; native ARM64, other mandatory technical work and external assurance remain open.",
     }
 
 

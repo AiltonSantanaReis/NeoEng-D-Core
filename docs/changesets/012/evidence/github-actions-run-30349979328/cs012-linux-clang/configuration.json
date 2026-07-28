@@ -1,0 +1,11 @@
+{
+  "durable_segments": 512,
+  "external_effects": 4096,
+  "machine": "x86_64",
+  "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "project_version": "1.12.0",
+  "restart_recovery_required": true,
+  "schema": "neoeng.dcore.temporal-closure-configuration.v1",
+  "tamper_detection_required": true
+}

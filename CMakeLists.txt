@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.11.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.12.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -23,7 +23,7 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 find_package(Boost 1.80 CONFIG REQUIRED)
 
-if(WIN32 AND MSVC AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   execute_process(COMMAND "${CMAKE_CXX_COMPILER}" --print-resource-dir
     OUTPUT_VARIABLE NEOENG_CLANG_RESOURCE_DIR OUTPUT_STRIP_TRAILING_WHITESPACE
     RESULT_VARIABLE NEOENG_CLANG_RESOURCE_RESULT)
@@ -48,6 +48,7 @@ set(NEOENG_DCORE_CORE_SOURCES
   src/crypto_hash.cpp
   src/state_evidence.cpp
   src/diagnostics.cpp
+  src/temporal_contract.cpp
   src/support_bundle.cpp
   src/simulation.cpp
   src/rollback.cpp
@@ -140,6 +141,9 @@ endfunction()
 neoeng_dcore_add_tool(
   neoeng_numeric_closure_probe
   apps/numeric_closure_probe.cpp)
+neoeng_dcore_add_tool(
+  neoeng_temporal_closure_probe
+  apps/temporal_closure_probe.cpp)
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_dcore_lab apps/core_lab_main.cpp)
 endif()
@@ -458,12 +462,23 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_numeric_closure_evidence.py
       --self-test)
+  add_test(NAME neoeng_temporal_closure_evidence_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_temporal_closure_evidence.py
+      --self-test)
   add_test(NAME neoeng_numeric_closure_boundary_verify
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/verify_numeric_closure_boundary.py)
   add_test(NAME neoeng_numeric_closure_boundary_self_test
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/verify_numeric_closure_boundary.py
+      --self-test)
+  add_test(NAME neoeng_temporal_closure_boundary_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_temporal_closure_boundary.py)
+  add_test(NAME neoeng_temporal_closure_boundary_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_temporal_closure_boundary.py
       --self-test)
   set_tests_properties(
     neoeng_product_contract_verify neoeng_product_contract_self_test
@@ -472,8 +487,11 @@ if(BUILD_TESTING)
     neoeng_distributed_reference_boundary_verify
     neoeng_distributed_reference_boundary_self_test
     neoeng_numeric_closure_evidence_verifier_self_test
+    neoeng_temporal_closure_evidence_verifier_self_test
     neoeng_numeric_closure_boundary_verify
     neoeng_numeric_closure_boundary_self_test
+    neoeng_temporal_closure_boundary_verify
+    neoeng_temporal_closure_boundary_self_test
     PROPERTIES LABELS "governance;release-gate;dcore")
 
   add_executable(neoeng_tests tests/test_main.cpp)
@@ -504,7 +522,13 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_numeric_closure_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_numeric_closure_tests)
   add_test(NAME neoeng_numeric_closure_tests COMMAND neoeng_numeric_closure_tests)
+  add_executable(neoeng_temporal_closure_tests tests/temporal_closure_tests.cpp)
+  target_link_libraries(neoeng_temporal_closure_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_temporal_closure_tests)
+  add_test(NAME neoeng_temporal_closure_tests COMMAND neoeng_temporal_closure_tests)
   add_test(NAME neoeng_numeric_closure_probe COMMAND neoeng_numeric_closure_probe)
+  add_test(NAME neoeng_temporal_closure_probe
+    COMMAND neoeng_temporal_closure_probe 64 512)
   set_tests_properties(neoeng_tests neoeng_operational_hardening_tests
     neoeng_session_recovery_contract_tests neoeng_state_evidence_tests
     neoeng_observability_support_tests neoeng_hardware_qualification_tests
@@ -512,6 +536,9 @@ if(BUILD_TESTING)
   set_tests_properties(
     neoeng_numeric_closure_tests neoeng_numeric_closure_probe
     PROPERTIES LABELS "smoke;dcore;cs011;numeric-closure")
+  set_tests_properties(
+    neoeng_temporal_closure_tests neoeng_temporal_closure_probe
+    PROPERTIES LABELS "smoke;dcore;cs012;temporal-closure")
 
   if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
     add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)

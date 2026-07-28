@@ -4,9 +4,9 @@
 
 O NeoEng D-Core é um núcleo C++23 standalone que atua como autoridade canônica sobre estado imutável, transições determinísticas, física numérica, checkpoints, replay e rollback. O projeto mantém renderização, GPU, UI, SDF, voxel e integrações verticais fora do núcleo, preservando uma arquitetura horizontal, auditável e reutilizável.
 
-> **Estado atual:** baseline estável **1.11.0 / ChangeSet 011 concluído**. O
-> próximo ciclo normativo é o **ChangeSet 012**, dedicado ao fechamento
-> temporal e aos efeitos externos.
+> **Estado atual:** baseline estável **1.12.0 / ChangeSet 012 concluído**. O
+> ciclo fechou persistência temporal, cobertura canônica, instrumentação
+> obrigatória e o contrato de efeitos externos.
 
 ## Visão geral
 
@@ -39,9 +39,9 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline publicada | `1.11.0` |
-| ChangeSet concluído mais recente | `CS011` — fechamento numérico |
-| Próximo ciclo | `CS012` — fechamento temporal e efeitos externos |
+| Baseline publicada | `1.12.0` |
+| Último ChangeSet concluído | `CS012` — fechamento temporal e efeitos externos |
+| Próximo ciclo | `CS013` — segurança e evidência criptográfica |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |
 | Qualificação P0–P4 | Não promovida automaticamente; depende de campanha específica |
@@ -171,7 +171,7 @@ O módulo produz artefatos determinísticos de diagnóstico, incluindo imagens B
 
 ## Evidência e qualificação
 
-A baseline 1.10.0 preserva o fechamento de evidência ECS Y1-O2 do CS009 para:
+A baseline 1.12.0 preserva o fechamento de evidência ECS Y1-O2 do CS009 para:
 
 - alocação geral;
 - arena;
@@ -191,6 +191,15 @@ e a comparação independente foram aprovadas no GitHub Actions run
 [`30187433814`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/30187433814).
 Esses resultados qualificam somente os ambientes registrados e não constituem
 uma regra universal de hardware.
+
+A evidência do CS012 está em
+[`docs/changesets/012/TEST_STATUS.md`](docs/changesets/012/TEST_STATUS.md).
+A regressão Windows passou `29/29`; as campanhas Linux GCC/Clang e a comparação
+independente foram aprovadas no GitHub Actions run
+[`30349979328`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/30349979328).
+Os resultados pertencem à fonte e aos ambientes registrados. ARM64, desempenho
+universal, âncora externa e execução `exactly once` sem host conforme não são
+inferidos.
 
 ## Estrutura do repositório
 
@@ -218,6 +227,8 @@ cmake/                   suporte de build e exportação
 - [Fronteira do Host SDK](docs/architecture/HOST_SDK_BOUNDARY.md)
 - [Contrato da referência distribuída](docs/contracts/DISTRIBUTED_REFERENCE_V1.md)
 - [Fronteira da referência distribuída](docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md)
+- [Contrato de fechamento temporal](docs/contracts/TEMPORAL_CLOSURE_V1.md)
+- [Fronteira de fechamento temporal](docs/architecture/TEMPORAL_CLOSURE_BOUNDARY.md)
 - [Fronteira do View Lab](docs/architecture/VIEW_LAB_BOUNDARY.md)
 
 ## Roadmap normativo
@@ -226,7 +237,7 @@ cmake/                   suporte de build e exportação
 |---|---|---|
 | CS010 | Determinismo ponta a ponta e referência distribuída | Concluído em 1.10.0 |
 | CS011 | Fechamento numérico | Concluído em 1.11.0 |
-| CS012 | Fechamento temporal e efeitos externos | Pendente |
+| CS012 | Fechamento temporal e efeitos externos | Concluído em 1.12.0 |
 | CS013 | Segurança e evidência criptográfica de produção | Pendente |
 | CS014 | Release assurance e SDK completo | Pendente |
 | CS015 | Aceitação final | Pendente |

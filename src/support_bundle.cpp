@@ -1,5 +1,6 @@
 #include "neoeng/core/support_bundle.hpp"
 
+#include "neoeng/core/diagnostics.hpp"
 #include <algorithm>
 #include <fstream>
 #include <iomanip>
@@ -245,6 +246,18 @@ SupportBundleArtifact build_support_bundle(
     const SupportBundlePolicy& policy,
     TraceBuffer* audit_traces,
     CorrelationId correlation_id) {
+    const BudgetMonitor budget_monitor;
+    ScopedBudgetMeasurement budget_scope(
+        audit_traces != nullptr ? &budget_monitor : nullptr,
+        audit_traces,
+        {
+            .id = BudgetId::SupportBundleExport,
+            .subsystem = TraceSubsystem::SupportBundle,
+            .limit_ns = 0U,
+            .exceed_severity = TraceSeverity::Warning,
+        },
+        correlation_id,
+        0U);
     if (context.project_version.empty() || context.environment_id.empty()
         || context.hardware_profile.empty() || policy.maximum_trace_events == 0U
         || policy.maximum_entry_bytes == 0U || policy.maximum_total_bytes == 0U

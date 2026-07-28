@@ -1,5 +1,6 @@
 #include "neoeng/core/state_evidence.hpp"
 
+#include "neoeng/core/diagnostics.hpp"
 #include "neoeng/core/hash.hpp"
 #include "neoeng/core/simulation.hpp"
 
@@ -569,6 +570,18 @@ SignedStateEvidence EvidenceChain::append(
     std::uint64_t monotonic_time_ns,
     const EvidenceSigner* signer,
     TraceBuffer* traces) {
+    const BudgetMonitor budget_monitor;
+    ScopedBudgetMeasurement budget_scope(
+        traces != nullptr ? &budget_monitor : nullptr,
+        traces,
+        {
+            .id = BudgetId::EvidenceCheckpoint,
+            .subsystem = TraceSubsystem::Evidence,
+            .limit_ns = 0U,
+            .exceed_severity = TraceSeverity::Warning,
+        },
+        correlation_id,
+        state.frame);
     validate_world(state);
     const StateMerkleSnapshot merkle = state_merkle_sha256(state, merkle_chunk_size_);
     SignedStateEvidence record;

@@ -66,6 +66,12 @@ OperationalRuntime::OperationalRuntime(
           .subsystem = TraceSubsystem::Simulation,
           .limit_ns = config.state_advance_budget_ns,
           .exceed_severity = TraceSeverity::Warning,
+      }),
+      rollback_budget_({
+          .id = BudgetId::Rollback,
+          .subsystem = TraceSubsystem::Rollback,
+          .limit_ns = config.rollback_budget_ns,
+          .exceed_severity = TraceSeverity::Warning,
       }) {
     if (safe_checkpoint_interval_frames_ == 0U) {
         throw std::invalid_argument("Safe checkpoint interval must be greater than zero");
@@ -304,8 +310,34 @@ RecoveryAckResult OperationalRuntime::acknowledge_recovery(
             };
         }
         try {
+            traces_.record({
+                .correlation_id = correlation_id,
+                .frame = engine_.state().frame,
+                .monotonic_time_ns = monotonic_time_ns,
+                .category = TraceCategory::Rollback,
+                .outcome = TraceOutcome::Applied,
+                .code = TraceCode::RollbackStarted,
+                .measured_value = static_cast<std::int64_t>(restored_checkpoint_frame),
+                .subsystem = TraceSubsystem::Rollback,
+                .severity = TraceSeverity::Info,
+            });
+            ScopedBudgetMeasurement rollback_budget_scope(
+                wall_clock_budget_tracing_ ? &budget_monitor_ : nullptr,
+                wall_clock_budget_tracing_ ? &traces_ : nullptr,
+                rollback_budget_, correlation_id, engine_.state().frame);
             engine_.restore_checkpoint(restored_checkpoint_frame);
             time_travel_.truncate_after(restored_checkpoint_frame);
+            traces_.record({
+                .correlation_id = correlation_id,
+                .frame = engine_.state().frame,
+                .monotonic_time_ns = monotonic_time_ns,
+                .category = TraceCategory::Rollback,
+                .outcome = TraceOutcome::Recovered,
+                .code = TraceCode::RollbackCompleted,
+                .measured_value = static_cast<std::int64_t>(restored_checkpoint_frame),
+                .subsystem = TraceSubsystem::Rollback,
+                .severity = TraceSeverity::Info,
+            });
         } catch (const std::bad_alloc&) {
             return {
                 .accepted = false,
