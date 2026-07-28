@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.qualification-campaign-request.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "profile": "P0",
   "execution_kind": "virtualized",
   "environment": {

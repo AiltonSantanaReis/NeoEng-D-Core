@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-assurance-matrix.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "policy": {
     "meta_validation_is_not_capability_proof": true,
     "complete_requires_existing_evidence_paths": true,
@@ -123,6 +123,9 @@
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -334,13 +337,16 @@
     },
     {
       "requirement_id": "DCORE-NUM-001",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "core_mandatory",
       "closure_stage": "CS011",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -350,18 +356,30 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_boundary_verify",
+        "neoeng_numeric_closure_boundary_self_test",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-NUM-002",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "core_mandatory",
       "closure_stage": "CS011",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -371,18 +389,30 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_probe",
+        "neoeng_numeric_closure_evidence_verifier_self_test",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-NUM-003",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "core_mandatory",
       "closure_stage": "CS011",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -392,7 +422,16 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_probe",
+        "neoeng_numeric_closure_boundary_verify",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {

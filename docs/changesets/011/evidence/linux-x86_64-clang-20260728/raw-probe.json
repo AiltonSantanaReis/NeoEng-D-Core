@@ -1,0 +1,16 @@
+{
+  "schema": "neoeng.dcore.numeric-closure-result.v1",
+  "fixed_samples": 4096,
+  "fixed_operation_cases": 20480,
+  "representable": 14340,
+  "overflow_rejected": 6124,
+  "division_by_zero_rejected": 16,
+  "fixed_decision_hash": "0xE256739A08E1EE4",
+  "raa_operation_hash": "0x8E16B390EF5EE325",
+  "raa_disjoint_products": 4096,
+  "exact_oblique": "certified_declared_scope",
+  "exact_oblique_hash": "0xC89FAE52652B9BF8",
+  "connected_fallback": "operational_only",
+  "y1_o4_runtime_claim_allowed": false,
+  "global_numeric_certificate_claim_allowed": false
+}

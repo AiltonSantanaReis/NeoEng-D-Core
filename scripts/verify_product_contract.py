@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.10.0"
+EXPECTED_VERSION = "1.11.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -176,8 +176,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.10.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.10.0 baseline")
+    if "baseline 1.11.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.11.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -393,7 +393,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS010 closes the two-instance reference transport and reconciliation scope while production transport, native ARM64, other mandatory technical work and external assurance remain open.",
+        "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open.",
     }
 
 
@@ -412,7 +412,15 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
     add("close limitation without evidence", lambda d: next(r for r in d["backlog"]["items"] if r["limitation_id"] == "LIM-001").update(closure_evidence=[]))
     add("elevate ARM64 claim", lambda d: next(r for r in d["claims"]["claims"] if r["claim_id"] == "CLAIM-XARCH-001").update(status="verified"))
     add("wrong baseline version", lambda d: d["index"].update(project_version="1.8.0"))
-    add("missing backlog stage", lambda d: [r.update(closure_stage="CS999") for r in d["backlog"]["items"] if r.get("closure_stage") == "CS011"])
+    add(
+        "missing backlog stage",
+        lambda d: next(
+            row
+            for row in d["backlog"]["items"]
+            if row.get("category") == "internal_mandatory"
+            and row.get("status") == "open"
+        ).update(closure_stage=""),
+    )
 
     for name, mutated in mutations:
         if not validate_documents(root, mutated):

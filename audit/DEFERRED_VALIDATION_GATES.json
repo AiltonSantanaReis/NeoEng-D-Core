@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.deferred-validation-gates.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "policy": {
     "native_validation_pending_is_not_an_implementation_failure": true,
     "virtualized_results_are_engineering_baselines": true,
@@ -11,9 +11,9 @@
       "gate_id": "NATIVE-WIN-X64-001",
       "category": "native_validation_pending",
       "target": "Windows x86_64 physical",
-      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit; CS010 records host-local Windows execution, while the complete 1.10.0 proportional release regression remains required before publication.",
-      "implementation_status": "1.7.0 physical Windows core regression independently verified; 1.10.0 CS010 module host-local execution recorded; full proportional regression pending",
-      "execution_status": "executed_for_1.7.0_and_cs010_scope_not_full_1.10.0",
+      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit; CS010 records host-local Windows execution, while the complete 1.11.0 proportional release regression remains required before publication.",
+      "implementation_status": "1.7.0 physical Windows core regression independently verified; 1.10.0 CS010 module host-local execution recorded; full 1.11.0 proportional regression pending",
+      "execution_status": "executed_for_1.7.0_and_cs010_scope_not_full_1.11.0",
       "required_profile": "P1 or P4",
       "required_artifacts": [
         "build-log",
@@ -133,7 +133,7 @@
       "gate_id": "PROFILE-P4-8GB-001",
       "category": "native_validation_pending",
       "target": "P4 8 GB compatibility hardware",
-      "reason": "Historical physical evidence is retained as provenance, but the current 1.10.0 hardware qualification campaign has not been executed.",
+      "reason": "Historical physical evidence is retained as provenance, but the current 1.11.0 hardware qualification campaign has not been executed.",
       "implementation_status": "qualification_harness_v2_ready; historical_evidence_retained_as_provenance_only",
       "execution_status": "not_executed",
       "required_profile": "P4",

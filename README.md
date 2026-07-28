@@ -4,9 +4,9 @@
 
 O NeoEng D-Core é um núcleo C++23 standalone que atua como autoridade canônica sobre estado imutável, transições determinísticas, física numérica, checkpoints, replay e rollback. O projeto mantém renderização, GPU, UI, SDF, voxel e integrações verticais fora do núcleo, preservando uma arquitetura horizontal, auditável e reutilizável.
 
-> **Estado atual:** baseline estável **1.10.0 / ChangeSet 010 concluído**. O
-> próximo ciclo normativo é o **ChangeSet 011**, dedicado ao fechamento
-> numérico.
+> **Estado atual:** baseline estável **1.11.0 / ChangeSet 011 concluído**. O
+> próximo ciclo normativo é o **ChangeSet 012**, dedicado ao fechamento
+> temporal e aos efeitos externos.
 
 ## Visão geral
 
@@ -39,9 +39,9 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline publicada | `1.10.0` |
-| ChangeSet concluído mais recente | `CS010` — determinismo ponta a ponta e referência distribuída |
-| Próximo ciclo | `CS011` — fechamento numérico |
+| Baseline publicada | `1.11.0` |
+| ChangeSet concluído mais recente | `CS011` — fechamento numérico |
+| Próximo ciclo | `CS012` — fechamento temporal e efeitos externos |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |
 | Qualificação P0–P4 | Não promovida automaticamente; depende de campanha específica |
@@ -225,7 +225,7 @@ cmake/                   suporte de build e exportação
 | ChangeSet | Escopo | Estado |
 |---|---|---|
 | CS010 | Determinismo ponta a ponta e referência distribuída | Concluído em 1.10.0 |
-| CS011 | Fechamento numérico | Próximo |
+| CS011 | Fechamento numérico | Concluído em 1.11.0 |
 | CS012 | Fechamento temporal e efeitos externos | Pendente |
 | CS013 | Segurança e evidência criptográfica de produção | Pendente |
 | CS014 | Release assurance e SDK completo | Pendente |

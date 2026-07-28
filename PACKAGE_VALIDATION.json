@@ -25,8 +25,8 @@
       "divergent_files": 0,
       "scope": "NeoEng D-Core 1.0.1 baseline before ChangeSet 001"
     },
-    "manifest_entries": 1281,
-    "package_files_including_manifest": 1282,
+    "manifest_entries": 1428,
+    "package_files_including_manifest": 1429,
     "required_source_files_authorized_modifications": 3,
     "authorized_source_modification_ledger": "audit/AUTHORIZED_SOURCE_MODIFICATIONS.json",
     "year2_extraction_ledger": "audit/YEAR2_EXTRACTION_LEDGER.json",
@@ -60,17 +60,17 @@
     }
   },
   "content_counts": {
-    "headers": 69,
+    "headers": 70,
     "library_cpp": 63,
-    "app_cpp": 79,
-    "test_cpp": 11,
+    "app_cpp": 80,
+    "test_cpp": 12,
     "document_records": 166,
     "campaign_scripts_exact_from_origin": 23,
     "year1_evidence_files": 433,
     "year1_evidence_bytes": 106397555,
     "original_windows_provenance_files": 59,
-    "canonical_core_headers": 64,
-    "canonical_core_cpp": 58,
+    "canonical_core_headers": 65,
+    "canonical_core_cpp": 59,
     "view_lab_library_cpp": 2,
     "selected_year2_evidence_files": 8,
     "view_lab_headers": 2,
@@ -133,8 +133,8 @@
       "canonical_hash": "0x4D94BB2F3D75FFFE"
     },
     "windows_package": {
-      "status": "CS010 module executed on Windows x86_64; full proportional 1.10.0 regression pending final campaign",
-      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; CS010 adds host-local Windows evidence without inferring complete native qualification"
+      "status": "CS011 configured Windows x86_64 regression passed 24/24 and immutable numerical campaign passed; native hardware qualification remains separate",
+      "reason": "physical Windows evidence is recorded for the exact CS011 source and host without inferring ARM64, universal performance or qualification of another machine"
     },
     "clang_asan_ubsan_critical_subset": {
       "configure": "passed",
@@ -678,7 +678,7 @@
     "arm64": "not executed",
     "p0_p4_qualified": []
   },
-  "package_version": "1.10.0",
+  "package_version": "1.11.0",
   "changeset_009": {
     "id": "009",
     "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",
@@ -728,6 +728,32 @@
     "cross_compiler_evidence": "GitHub Actions run 30187433814 passed GCC, Clang, independent verification and byte-identical comparison for commit c3efbcc54e8317da82e645f7b223d49e25b3d579",
     "arm64_execution": "not performed",
     "production_remote_transport": "not claimed",
+    "commercial_ready": false
+  },
+  "changeset_011": {
+    "id": "011",
+    "title": "scoped numerical closure and unsupported-claim removal",
+    "base_version": "1.10.0",
+    "target_version": "1.11.0",
+    "requirements_closed": [
+      "DCORE-NUM-001",
+      "DCORE-NUM-002",
+      "DCORE-NUM-003"
+    ],
+    "limitations_closed": [
+      "LIM-002",
+      "LIM-003",
+      "LIM-004"
+    ],
+    "claim_removed": "CLAIM-NUM-CERT-001",
+    "y1_o4_runtime_claim": "rejected; historical uncertainty and RAA paths remain research/shadow only",
+    "fixed_q32_32_contract": "full signed raw storage input domain, exact wide intermediate and fail-closed rejection of unrepresentable primitive results",
+    "oblique_solver_scope": "exact rational small-tree, finite-grid-only, residual-only and connected operational non-certified dispositions",
+    "source_commit": "bef61a80f98f79eecb6da6bda5b36c3579500c32",
+    "windows_x86_64_clang": "24/24 configured tests and immutable campaign passed on the recorded host",
+    "cross_compiler_evidence": "GitHub Actions run 30345022035 passed GCC, Clang, independent verification and byte-identical comparison",
+    "arm64_execution": "not performed; no equivalence inferred",
+    "global_numeric_certificate": "removed and prohibited",
     "commercial_ready": false
   }
 }

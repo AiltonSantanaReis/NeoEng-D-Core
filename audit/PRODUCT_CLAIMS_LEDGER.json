@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-claims-ledger.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "status_vocabulary": [
     "implemented",
     "verified",
@@ -17,7 +17,7 @@
       "claim_id": "CLAIM-SCOPE-001",
       "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
       "status": "verified",
-      "scope": "product governance baseline 1.10.0",
+      "scope": "product governance baseline 1.11.0",
       "evidence": [
         "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
       ],
@@ -186,12 +186,15 @@
     {
       "claim_id": "CLAIM-NUM-CERT-001",
       "statement": "The full numerical pipeline is globally certified for containment and overflow.",
-      "status": "planned",
-      "scope": "local evidence exists; global certificate remains open",
+      "status": "removed",
+      "scope": "rejected in CS011; only checked Q32.32 primitives and explicitly scoped solver evidence may be claimed",
       "evidence": [
-        "audit/PRODUCT_CLOSURE_BACKLOG.json"
+        "docs/contracts/NUMERIC_CLOSURE_V1.md",
+        "include/neoeng/core/numeric_contract.hpp",
+        "scripts/verify_numeric_closure_boundary.py",
+        "docs/changesets/011/TEST_STATUS.md"
       ],
-      "public_use": "prohibited_as_current_capability"
+      "public_use": "prohibited"
     },
     {
       "claim_id": "CLAIM-PROD-READY-001",

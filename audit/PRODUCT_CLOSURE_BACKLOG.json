@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-closure-backlog.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "known_limitations_count": 41,
   "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
   "items": [
@@ -25,27 +25,45 @@
       "title": "Y1-O4 proxy has no final accept/reject decision.",
       "responsibility": "core_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS011",
-      "normative_decision": "Measure predictive value and cost; accept or remove the runtime claim."
+      "normative_decision": "Closed in 1.11.0 by formally rejecting Y1-O4 as a runtime claim; the historical uncertainty and RAA paths remain research/shadow evidence only.",
+      "closure_evidence": [
+        "docs/contracts/NUMERIC_CLOSURE_V1.md",
+        "include/neoeng/core/numeric_contract.hpp",
+        "scripts/verify_numeric_closure_boundary.py",
+        "docs/changesets/011/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-003",
       "title": "Global numerical containment and overflow certificate is open.",
       "responsibility": "core_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS011",
-      "normative_decision": "Define certified domain, composed bounds, extreme tests and fallback."
+      "normative_decision": "Closed in 1.11.0 by rejecting the global composed certificate and accepting only the full-storage-domain checked Q32.32 primitive contract plus explicitly scoped evidence surfaces.",
+      "closure_evidence": [
+        "docs/contracts/NUMERIC_CLOSURE_V1.md",
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_probe",
+        "docs/changesets/011/evidence"
+      ]
     },
     {
       "limitation_id": "LIM-004",
       "title": "General oblique-tree solver is not fully certified.",
       "responsibility": "core_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS011",
-      "normative_decision": "Close domain/fallback or narrow the product claim."
+      "normative_decision": "Closed in 1.11.0 by separating exact rational small-tree, finite-grid-only, residual-only and connected operational non-certified dispositions; no general solver certificate is claimed.",
+      "closure_evidence": [
+        "docs/contracts/NUMERIC_CLOSURE_V1.md",
+        "include/neoeng/core/numeric_contract.hpp",
+        "neoeng_numeric_closure_tests",
+        "docs/changesets/011/evidence"
+      ]
     },
     {
       "limitation_id": "LIM-005",

@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS010 1.10.0 module campaign passed on the recorded physical Windows x86_64 host; full proportional 1.10.0 Windows release regression remains pending",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS011 1.11.0 configured regression passed 24/24 and immutable numerical campaign passed on the recorded physical Windows x86_64 host; native hardware qualification remains separate",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.10.0",
+  "package_version": "1.11.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",
@@ -244,6 +244,23 @@
     "windows_x86_64_host_local_execution": "passed for commit c3efbcc54e8317da82e645f7b223d49e25b3d579; 19/19 minimal configured tests and immutable campaign evidence recorded under docs/changesets/010/evidence/windows-x86_64-clang-20260726",
     "linux_x86_64_cross_compiler_execution": "GitHub Actions run 30187433814 passed GCC, Clang, independent evidence verification and byte-identical semantic comparison",
     "arm64_execution": "not performed; cross-architecture claim remains planned",
+    "commercial_product_complete": false
+  },
+  "changeset_011": {
+    "base_version": "1.10.0",
+    "target_version": "1.11.0",
+    "scope": "formal rejection of Y1-O4 runtime use and global composed numerical certification; checked Q32.32 primitive contract and explicit solver evidence dispositions",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "stable_hash_changed": false,
+    "host_c_abi_version": "1.0 unchanged",
+    "source_commit": "bef61a80f98f79eecb6da6bda5b36c3579500c32",
+    "windows_x86_64_execution": "24/24 configured tests and immutable numeric campaign passed on the recorded physical host",
+    "linux_x86_64_cross_compiler_execution": "GitHub Actions run 30345022035 passed GCC, Clang, independent evidence verification and byte-identical semantic comparison",
+    "hardware_interpretation": "measurements apply only to the recorded host; weaker or stronger machines may differ for better or worse and no universal rule is inferred",
+    "arm64_execution": "not performed",
+    "external_mathematical_audit": "not performed",
     "commercial_product_complete": false
   }
 }

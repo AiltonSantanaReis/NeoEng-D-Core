@@ -1,7 +1,7 @@
 # Campanhas obrigatorias para comprovacao dos requisitos
 
 Documento: `NEOENG-DCORE-TEST-CAMPAIGNS-001`
-Baseline: 1.10.0
+Baseline: 1.11.0
 
 A definicao executavel das campanhas esta em `audit/PRODUCT_TEST_CAMPAIGNS.json`. Cada requisito aparece em pelo menos uma campanha. Um plano marcado como `planned` nao e evidencia de execucao.
 

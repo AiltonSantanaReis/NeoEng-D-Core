@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-requirements-traceability.v1",
-  "project_version": "1.10.0",
+  "project_version": "1.11.0",
   "status_vocabulary": [
     "complete",
     "partial",
@@ -234,36 +234,69 @@
       "requirement_id": "DCORE-NUM-001",
       "description": "Y1-O4 proxy is accepted with predictive evidence or formally rejected and removed from runtime claims.",
       "responsibility": "core_mandatory",
-      "status": "planned",
+      "status": "complete",
       "implementation": [
-        "src/uncertainty_lab.cpp",
-        "src/fixed_raa_microkernel.cpp"
+        "include/neoeng/core/numeric_contract.hpp",
+        "src/numeric_contract.cpp",
+        "docs/contracts/NUMERIC_CLOSURE_V1.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_boundary_verify",
+        "neoeng_numeric_closure_boundary_self_test",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_stage": "CS011"
     },
     {
       "requirement_id": "DCORE-NUM-002",
       "description": "Containment and overflow are closed for the declared numerical domain.",
       "responsibility": "core_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
-        "src/fixed_raa_microkernel.cpp",
-        "apps/v28_interval_arithmetic_audit.cpp"
+        "include/neoeng/core/numeric_contract.hpp",
+        "src/numeric_contract.cpp",
+        "include/neoeng/core/fixed.hpp",
+        "docs/contracts/NUMERIC_CLOSURE_V1.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_probe",
+        "neoeng_numeric_closure_evidence_verifier_self_test",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_stage": "CS011"
     },
     {
       "requirement_id": "DCORE-NUM-003",
       "description": "General oblique-tree solver scope, fallback and certification status are decided and documented.",
       "responsibility": "core_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
+        "include/neoeng/core/numeric_contract.hpp",
+        "src/numeric_contract.cpp",
         "src/oblique_tree_grid_dp.cpp",
-        "src/exact_oblique_tree_oracle.cpp"
+        "src/exact_oblique_tree_oracle.cpp",
+        "docs/contracts/NUMERIC_CLOSURE_V1.md"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_numeric_closure_tests",
+        "neoeng_numeric_closure_probe",
+        "neoeng_numeric_closure_boundary_verify",
+        "docs/changesets/011/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-gcc-20260728",
+        "docs/changesets/011/evidence/linux-x86_64-clang-20260728",
+        "docs/changesets/011/evidence/cross-compiler-20260728/cross-compiler-summary.json",
+        "docs/changesets/011/evidence/github-actions-run-30345022035.json"
+      ],
       "closure_stage": "CS011"
     },
     {

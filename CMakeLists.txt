@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.10.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.11.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
@@ -60,6 +60,7 @@ set(NEOENG_DCORE_CORE_SOURCES
   src/component_world.cpp
   src/radix_world.cpp
   src/contextual_policy.cpp
+  src/numeric_contract.cpp
   src/fixed_simd.cpp
   src/fixed_slot_allocator.cpp
   src/uncertainty_lab.cpp
@@ -136,6 +137,9 @@ function(neoeng_dcore_add_gnu_wrap_benchmark target source)
   neoeng_dcore_add_tool(${target} ${source})
   target_link_options(${target} PRIVATE -Wl,--wrap=malloc -Wl,--wrap=calloc -Wl,--wrap=realloc -Wl,--wrap=free)
 endfunction()
+neoeng_dcore_add_tool(
+  neoeng_numeric_closure_probe
+  apps/numeric_closure_probe.cpp)
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_dcore_lab apps/core_lab_main.cpp)
 endif()
@@ -450,12 +454,26 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/verify_distributed_reference_boundary.py
       --self-test)
+  add_test(NAME neoeng_numeric_closure_evidence_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_numeric_closure_evidence.py
+      --self-test)
+  add_test(NAME neoeng_numeric_closure_boundary_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_numeric_closure_boundary.py)
+  add_test(NAME neoeng_numeric_closure_boundary_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_numeric_closure_boundary.py
+      --self-test)
   set_tests_properties(
     neoeng_product_contract_verify neoeng_product_contract_self_test
     neoeng_product_assurance_verify neoeng_product_assurance_self_test
     neoeng_distributed_reference_evidence_verifier_self_test
     neoeng_distributed_reference_boundary_verify
     neoeng_distributed_reference_boundary_self_test
+    neoeng_numeric_closure_evidence_verifier_self_test
+    neoeng_numeric_closure_boundary_verify
+    neoeng_numeric_closure_boundary_self_test
     PROPERTIES LABELS "governance;release-gate;dcore")
 
   add_executable(neoeng_tests tests/test_main.cpp)
@@ -482,10 +500,18 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_hardware_qualification_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_hardware_qualification_tests)
   add_test(NAME neoeng_hardware_qualification_tests COMMAND neoeng_hardware_qualification_tests)
+  add_executable(neoeng_numeric_closure_tests tests/numeric_closure_tests.cpp)
+  target_link_libraries(neoeng_numeric_closure_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_numeric_closure_tests)
+  add_test(NAME neoeng_numeric_closure_tests COMMAND neoeng_numeric_closure_tests)
+  add_test(NAME neoeng_numeric_closure_probe COMMAND neoeng_numeric_closure_probe)
   set_tests_properties(neoeng_tests neoeng_operational_hardening_tests
     neoeng_session_recovery_contract_tests neoeng_state_evidence_tests
     neoeng_observability_support_tests neoeng_hardware_qualification_tests
     PROPERTIES LABELS "smoke;dcore")
+  set_tests_properties(
+    neoeng_numeric_closure_tests neoeng_numeric_closure_probe
+    PROPERTIES LABELS "smoke;dcore;cs011;numeric-closure")
 
   if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
     add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
