@@ -1,0 +1,12 @@
+{
+  "authorization_decisions": 4096,
+  "confidential_transport_required": true,
+  "included_asymmetric_provider": false,
+  "machine": "x86_64",
+  "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "production_provider_external": true,
+  "project_version": "1.13.0",
+  "protected_bundles": 512,
+  "schema": "neoeng.dcore.production-security-configuration.v1"
+}

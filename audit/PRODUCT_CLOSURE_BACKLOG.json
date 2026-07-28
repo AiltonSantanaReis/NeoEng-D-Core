@@ -84,9 +84,14 @@
       "title": "Current HMAC protocol provides integrity/authenticity but not confidentiality.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS013",
-      "normative_decision": "Define supported encrypted deployment or explicitly bind confidentiality to transport."
+      "normative_decision": "Closed in 1.13.0 by explicitly limiting the HMAC packet to integrity/authenticity and requiring authenticated confidential transport, nonzero channel binding and an external production provider.",
+      "closure_evidence": [
+        "docs/contracts/PRODUCTION_SECURITY_V1.md",
+        "src/production_security.cpp",
+        "docs/changesets/013/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-007",
@@ -102,9 +107,14 @@
       "title": "No concrete asymmetric authentication/PKI provider exists.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS013",
-      "normative_decision": "Implement a reference provider or remove State Signature production claims."
+      "normative_decision": "Closed in 1.13.0 by removing the included production asymmetric State Signature claim. External provider interfaces remain without implying algorithm, PKI, custody or non-repudiation.",
+      "closure_evidence": [
+        "docs/contracts/PRODUCTION_SECURITY_V1.md",
+        "audit/PRODUCT_CLAIMS_LEDGER.json",
+        "docs/changesets/013/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-009",
@@ -129,9 +139,15 @@
       "title": "Authorization is role-based rather than command/entity-granular.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS013",
-      "normative_decision": "Define the supported authorization policy and enforce it end to end."
+      "normative_decision": "Closed in 1.13.0 by bounded deny-by-default authorization over command, entity, authenticated origin, role, key identifier/epoch, time interval and confidential channel context.",
+      "closure_evidence": [
+        "include/neoeng/core/production_security.hpp",
+        "src/operational_runtime.cpp",
+        "neoeng_production_security_tests",
+        "docs/changesets/013/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-012",
@@ -313,9 +329,14 @@
       "title": "No production asymmetric State Signature provider is implemented.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS013",
-      "normative_decision": "Same closure as LIM-008; duplicate technical symptom retained for claim traceability."
+      "normative_decision": "Closed in 1.13.0 with the same normative removal as LIM-008; the original positive claim is prohibited and the provider remains deployment-specific.",
+      "closure_evidence": [
+        "docs/contracts/PRODUCTION_SECURITY_V1.md",
+        "audit/PRODUCT_CLAIMS_LEDGER.json",
+        "docs/changesets/013/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-028",
@@ -331,9 +352,15 @@
       "title": "Support bundles have integrity but no built-in confidentiality.",
       "responsibility": "product_module_mandatory",
       "category": "internal_mandatory",
-      "status": "open",
+      "status": "closed",
       "closure_stage": "CS013",
-      "normative_decision": "Implement optional recipient encryption or explicitly bind secure transfer/storage to deployment."
+      "normative_decision": "Closed in 1.13.0 by canonical protected-bundle framing through an external AEAD provider, authenticated metadata binding, verified opening and explicit secure transfer/storage deployment responsibility.",
+      "closure_evidence": [
+        "include/neoeng/core/production_security.hpp",
+        "src/production_security.cpp",
+        "neoeng_production_security_tests",
+        "docs/changesets/013/TEST_STATUS.md"
+      ]
     },
     {
       "limitation_id": "LIM-030",

@@ -39,9 +39,9 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline em validação | `1.13.0` |
-| ChangeSet corrente | `CS013` — segurança e evidência criptográfica |
-| Último ciclo concluído | `CS012` — fechamento temporal e efeitos externos |
+| Baseline vigente | `1.13.0` |
+| Próximo ChangeSet | `CS014` — release assurance e SDK completo |
+| Último ciclo concluído | `CS013` — segurança e evidência criptográfica |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |
 | Qualificação P0–P4 | Não promovida automaticamente; depende de campanha específica |
@@ -201,7 +201,7 @@ Os resultados pertencem à fonte e aos ambientes registrados. ARM64, desempenho
 universal, âncora externa e execução `exactly once` sem host conforme não são
 inferidos.
 
-## ChangeSet 013 — em validação
+## ChangeSet 013 — concluído
 
 O CS013 introduz a fronteira oficial de segurança de produção:
 
@@ -215,6 +215,13 @@ O CS013 introduz a fronteira oficial de segurança de produção:
 O claim de provider assimétrico State Signature incluído é removido. Providers
 test-only demonstram integração e rejeição de adulteração, mas não comprovam
 força criptográfica, PKI, custódia, forward secrecy ou auditoria independente.
+As campanhas Windows x86_64 clang-cl, Linux x86_64 GCC e Linux x86_64 Clang
+foram aprovadas sobre a fonte
+`28c990174742b1da1885750bc72c29a4614997a0`. GCC e Clang produziram resultado
+semântico byte a byte idêntico no GitHub Actions run
+[`30354055225`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/30354055225).
+ARM64, segurança do provider externo, trust do anchor e resultado para outro
+hardware não são inferidos.
 
 ## Estrutura do repositório
 
@@ -255,7 +262,7 @@ cmake/                   suporte de build e exportação
 | CS010 | Determinismo ponta a ponta e referência distribuída | Concluído em 1.10.0 |
 | CS011 | Fechamento numérico | Concluído em 1.11.0 |
 | CS012 | Fechamento temporal e efeitos externos | Concluído em 1.12.0 |
-| CS013 | Segurança e evidência criptográfica de produção | Em validação em 1.13.0 |
+| CS013 | Segurança e evidência criptográfica de produção | Concluído em 1.13.0 |
 | CS014 | Release assurance e SDK completo | Pendente |
 | CS015 | Aceitação final | Pendente |
 

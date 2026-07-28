@@ -1,0 +1,12 @@
+{
+  "authorization_decisions": 4096,
+  "confidential_transport_required": true,
+  "included_asymmetric_provider": false,
+  "machine": "AMD64",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "production_provider_external": true,
+  "project_version": "1.13.0",
+  "protected_bundles": 512,
+  "schema": "neoeng.dcore.production-security-configuration.v1"
+}

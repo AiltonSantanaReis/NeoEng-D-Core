@@ -1,6 +1,6 @@
 # NeoEng D-Core Production Security Contract v1
 
-Status: normative candidate for baseline 1.13.0
+Status: normative for baseline 1.13.0
 
 Schema: `neoeng.dcore.production-security.v1`
 

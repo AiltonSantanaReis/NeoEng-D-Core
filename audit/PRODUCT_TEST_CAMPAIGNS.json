@@ -228,7 +228,7 @@
         "DCORE-SEC-001",
         "DCORE-BUNDLE-002"
       ],
-      "status": "planned",
+      "status": "executed_windows_clang_linux_gcc_clang",
       "required_test_classes": [
         "adversarial",
         "cross_architecture_if_applicable",
@@ -251,7 +251,12 @@
         "independent-verification",
         "limitations"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225/cs013-linux-gcc",
+        "docs/changesets/013/evidence/github-actions-run-30354055225/cs013-linux-clang",
+        "docs/changesets/013/evidence/github-actions-run-30354055225/cs013-cross-compiler-comparison/cross-compiler-summary.json"
+      ],
       "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
       "native_or_external_results_may_be_inferred": false
     },

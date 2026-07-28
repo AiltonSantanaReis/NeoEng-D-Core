@@ -3,26 +3,23 @@
   "project_version": "1.13.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "aed7d8f51847e546b317338db7e047f72c9299af8cc925e4b8895e82a6188d2a",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "a1ea1d02b4c32853338c165e47a0850f26e098dd843f8929feec8285d1bf2e2a",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "2e73e59fb5e29f95be3af0acfc834466d9413400ec9a0d0330db65f2bed872be",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "c9f782e00d4358254f0791fea4257cbc74a65bcde950b01ee32ad4c8c3af6ff7",
-    "audit/DEFERRED_VALIDATION_GATES.json": "be7d35bea535eba5454b187a4c2c30d27f4e1c918b3a7de3b2345099031658a3",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "38b4c41c2203d4246ec0df265583a7961a6b36f1cae1e2f0353ab7b6b68f7f78",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "a9660358745198c231d1be6e4cf5992c87bde48c1934a68cbc1c19d0890d013e",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "85012b3772a50cf91729034618c95d896a3350b4e5992a1883522e1e2cc84345",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "fa80d81f0a3a5b3476f722dee4fbc455c14bbc8f2d737fe3d651cc5d4c0e3d56",
+    "audit/DEFERRED_VALIDATION_GATES.json": "a730ef55a9bb2cd0a340f1752c675237450bb336b0f7465f2723e8c068886a9d",
     "audit/SOURCE_OF_TRUTH_INDEX.json": "852e744ee6350c52b3ab8a44fe5e5f4f06bac5af88ac47d44d77de25750096eb",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "1ea843b73f02a8c09422e8fc9ca56190c57b375be5a2d7375cf88a1d74ab0f65",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "67c8e0adf7960adc76fe66272b125f6cc2cb6415153fe70cd7028adf221763d4",
     "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "9117c859d1736d0c395a9ee1c3f7ef517b3743ecc795bca86f4461a3033cc94d"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 10,
-    "open_internal_limitations": 13
+    "open_internal_requirements": 7,
+    "open_internal_limitations": 8
   },
   "open_internal_requirement_ids": [
-    "DCORE-CRYPTO-002",
-    "DCORE-SEC-001",
-    "DCORE-BUNDLE-002",
     "DCORE-SDK-002",
     "DCORE-REL-001",
     "DCORE-REL-002",
@@ -32,12 +29,7 @@
     "DCORE-ACCEPT-001"
   ],
   "open_internal_limitation_ids": [
-    "LIM-006",
-    "LIM-008",
-    "LIM-011",
     "LIM-016",
-    "LIM-027",
-    "LIM-029",
     "LIM-030",
     "LIM-031",
     "LIM-032",
@@ -47,5 +39,5 @@
     "LIM-036"
   ],
   "commercial_ready": false,
-  "reason": "CS013 implements the candidate production-security boundary, but its three requirements remain open until immutable Windows and Linux GCC/Clang campaign evidence is approved; native ARM64, other mandatory technical work and external assurance also remain open."
+  "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open."
 }

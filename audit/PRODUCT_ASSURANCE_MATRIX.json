@@ -631,10 +631,10 @@
     },
     {
       "requirement_id": "DCORE-CRYPTO-002",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS013",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
@@ -645,17 +645,25 @@
         "cross_compiler",
         "cross_architecture_if_applicable",
         "independent_verification",
-        "evidence_integrity"
+        "evidence_integrity",
+        "fail_closed",
+        "regression",
+        "reproducibility"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_production_security_tests",
+        "scripts/verify_production_security_boundary.py",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-SEC-001",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS013",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
@@ -666,9 +674,17 @@
         "cross_compiler",
         "cross_architecture_if_applicable",
         "independent_verification",
-        "evidence_integrity"
+        "evidence_integrity",
+        "fail_closed",
+        "regression",
+        "reproducibility"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_production_security_tests",
+        "scripts/verify_production_security_boundary.py",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
@@ -692,10 +708,10 @@
     },
     {
       "requirement_id": "DCORE-BUNDLE-002",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS013",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
@@ -706,9 +722,17 @@
         "cross_compiler",
         "cross_architecture_if_applicable",
         "independent_verification",
-        "evidence_integrity"
+        "evidence_integrity",
+        "fail_closed",
+        "regression",
+        "reproducibility"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_production_security_tests",
+        "neoeng_production_security_probe",
+        "docs/changesets/013/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/013/evidence/github-actions-run-30354055225"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {

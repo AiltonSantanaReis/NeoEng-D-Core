@@ -17,7 +17,7 @@
       "claim_id": "CLAIM-SCOPE-001",
       "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
       "status": "verified",
-      "scope": "product governance baseline 1.11.0",
+      "scope": "product governance baseline 1.13.0",
       "evidence": [
         "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
       ],
@@ -160,14 +160,15 @@
     },
     {
       "claim_id": "CLAIM-SIGN-001",
-      "statement": "A production asymmetric State Signature provider is included.",
-      "status": "unsupported",
-      "scope": "interfaces exist; no concrete asymmetric provider",
+      "statement": "A production asymmetric State Signature provider is not included in the NeoEng D-Core product.",
+      "status": "removed",
+      "scope": "external provider interfaces remain; no algorithm, PKI, custody or non-repudiation claim is included",
       "evidence": [
         "docs/contracts/STATE_EVIDENCE_V1.md",
-        "audit/DEFERRED_VALIDATION_GATES.json"
+        "docs/contracts/PRODUCTION_SECURITY_V1.md",
+        "docs/changesets/013/TEST_STATUS.md"
       ],
-      "public_use": "prohibited"
+      "public_use": "original_positive_claim_prohibited"
     },
     {
       "claim_id": "CLAIM-SUPPORT-001",

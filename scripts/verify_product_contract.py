@@ -260,8 +260,13 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     if prod.get("status") not in {"unsupported", "planned"}:
         errors.append("production-readiness claim is elevated while mandatory work remains")
     sign = claims_by_id.get("CLAIM-SIGN-001", {})
-    if sign.get("status") not in {"unsupported", "planned"}:
+    if sign.get("status") not in {"unsupported", "planned", "removed"}:
         errors.append("asymmetric signature provider claim exceeds implementation")
+    if sign.get("status") == "removed" and (
+        "not included" not in str(sign.get("statement", "")).lower()
+        or sign.get("public_use") != "original_positive_claim_prohibited"
+    ):
+        errors.append("removed asymmetric signature claim is not fail-closed")
 
     classes = docs["responsibility"].get("classes")
     if not isinstance(classes, dict):
@@ -393,7 +398,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS013 implements the candidate production-security boundary, but its three requirements remain open until immutable Windows and Linux GCC/Clang campaign evidence is approved; native ARM64, other mandatory technical work and external assurance also remain open.",
+        "reason": "CS013 is closed by immutable Windows and Linux GCC/Clang evidence with explicit provider, trust and hardware non-claims; seven mandatory requirements in CS014/CS015, native ARM64/profile qualification and external assurance remain open.",
     }
 
 

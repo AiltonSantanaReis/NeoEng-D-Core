@@ -805,8 +805,8 @@
     "authorization_model": "bounded deny-by-default command/entity/origin/role/key/time policy",
     "production_provider_included": false,
     "test_provider_security_claimed": false,
-    "windows_x86_64_clang": "implementation validation pending immutable clean-source campaign",
-    "linux_x86_64_cross_compiler": "pending GitHub Actions campaign",
+    "windows_x86_64_clang": "passed on physical Windows host at source 28c990174742b1da1885750bc72c29a4614997a0",
+    "linux_x86_64_cross_compiler": "GCC and Clang passed with byte-identical semantic output in GitHub Actions run 30354055225",
     "arm64_execution": "not performed; no equivalence inferred",
     "external_security_audit": "not performed",
     "commercial_ready": false

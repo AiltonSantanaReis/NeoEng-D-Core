@@ -1,0 +1,26 @@
+{
+  "cross_architecture_claim_promoted": false,
+  "external_anchor_trust_claimed": false,
+  "included_asymmetric_provider_claimed": false,
+  "native_or_external_results_inferred": false,
+  "probe": {
+    "authorization_accepts": 4096,
+    "authorization_rejections": 4096,
+    "bundle_roundtrips": 512,
+    "cross_architecture_claim_promoted": false,
+    "external_anchor_trust_claimed": false,
+    "external_provider_required_for_production": true,
+    "included_asymmetric_provider": false,
+    "last_ciphertext_sha256": "8645b4c67098c0447a5be1f284c175f374a74f70cfd397dc7d518b7a7f775235",
+    "schema": "neoeng.dcore.production-security.v1",
+    "status": "passed",
+    "tamper_rejections": 512,
+    "test_provider_used": true
+  },
+  "probe_exit_code": 0,
+  "production_provider_security_proven_by_test_provider": false,
+  "project_version": "1.13.0",
+  "schema": "neoeng.dcore.production-security-campaign-summary.v1",
+  "status": "passed",
+  "tests_exit_code": 0
+}
