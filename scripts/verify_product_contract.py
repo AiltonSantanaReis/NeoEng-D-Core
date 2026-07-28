@@ -62,11 +62,11 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def sha256(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            h.update(block)
-    return h.hexdigest()
+    # Git may materialize text files with CRLF on Windows. Governance hashes
+    # identify normative content, so line endings are canonicalized to LF.
+    return hashlib.sha256(
+        path.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
 
 
 def cmake_version(root: Path) -> str:

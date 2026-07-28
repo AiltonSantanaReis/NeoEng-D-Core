@@ -38,7 +38,11 @@ def load(path: Path) -> dict[str, Any]:
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Keep stored assurance reports identical across Git checkouts whose
+    # platform policy materializes JSON with CRLF or LF line endings.
+    return hashlib.sha256(
+        path.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
 
 
 @functools.lru_cache(maxsize=1)
