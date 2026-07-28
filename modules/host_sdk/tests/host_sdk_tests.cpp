@@ -46,7 +46,7 @@ void test_version_and_creation_guards() {
             "get version");
     require(version.abi_major == 1U && version.abi_minor == 0U,
             "ABI version");
-    require(version.runtime_major == 1U && version.runtime_minor == 9U,
+    require(version.runtime_major == 1U && version.runtime_minor == 14U,
             "runtime version");
     require((version.capabilities & NEOENG_DCORE_CAPABILITY_ROLLBACK) != 0U,
             "rollback capability");
@@ -81,6 +81,27 @@ void test_version_and_creation_guards() {
 }
 
 void test_state_rollback_and_buffers() {
+    neoeng_dcore_host* empty_host = nullptr;
+    neoeng_dcore_host_config empty_config = default_config();
+    require(neoeng_dcore_host_create(
+                0U, nullptr, 0U, &empty_config, &empty_host)
+                == NEOENG_DCORE_STATUS_OK,
+            "create empty host");
+    std::uint64_t empty_count = 1U;
+    require(neoeng_dcore_host_copy_bodies(
+                empty_host, nullptr, 0U, &empty_count)
+                == NEOENG_DCORE_STATUS_OK
+            && empty_count == 0U,
+            "empty body copy accepts null output");
+    empty_count = 1U;
+    require(neoeng_dcore_host_copy_traces(
+                empty_host, nullptr, 0U, &empty_count)
+                == NEOENG_DCORE_STATUS_OK
+            && empty_count == 0U,
+            "empty trace copy accepts null output");
+    require(neoeng_dcore_host_destroy(empty_host) == NEOENG_DCORE_STATUS_OK,
+            "destroy empty host");
+
     neoeng_dcore_host* host = create_host();
     neoeng_dcore_state_summary initial{};
     require(neoeng_dcore_host_get_state_summary(host, &initial) == NEOENG_DCORE_STATUS_OK,

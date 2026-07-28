@@ -4,9 +4,10 @@
 
 O NeoEng D-Core é um núcleo C++23 standalone que atua como autoridade canônica sobre estado imutável, transições determinísticas, física numérica, checkpoints, replay e rollback. O projeto mantém renderização, GPU, UI, SDF, voxel e integrações verticais fora do núcleo, preservando uma arquitetura horizontal, auditável e reutilizável.
 
-> **Estado atual:** baseline **1.13.0 / ChangeSet 013 em validação**. O ciclo
-> fecha segurança de produção, autorização granular e proteção de bundles sem
-> promover providers externos ou test-only a claims criptográficos incluídos.
+> **Estado atual:** baseline candidata **1.14.0 / ChangeSet 014 em validação**. O ciclo
+> fecha a superfície pública do SDK, release assurance, pacote cumulativo,
+> fuzzing coverage-guided, sanitizers, análise estática bloqueante, SBOM e
+> atestação externa sem promover certificação ou equivalência de hardware.
 
 ## Visão geral
 
@@ -39,8 +40,8 @@ Consumidores externos recebem visões imutáveis ou cópias controladas. Rendere
 
 | Item | Situação |
 |---|---|
-| Baseline vigente | `1.13.0` |
-| Próximo ChangeSet | `CS014` — release assurance e SDK completo |
+| Baseline em validação | `1.14.0` |
+| ChangeSet corrente | `CS014` — release assurance e SDK completo |
 | Último ciclo concluído | `CS013` — segurança e evidência criptográfica |
 | Plataforma operacional inicial | Windows 10/11 x64 |
 | Verificação adicional | Linux x86_64 com GCC e Clang |

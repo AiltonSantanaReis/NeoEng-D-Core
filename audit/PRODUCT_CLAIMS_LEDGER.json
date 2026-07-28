@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-claims-ledger.v1",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "status_vocabulary": [
     "implemented",
     "verified",
@@ -17,7 +17,7 @@
       "claim_id": "CLAIM-SCOPE-001",
       "statement": "NeoEng D-Core is an independent product and not the implementation of the five-year engine program.",
       "status": "verified",
-      "scope": "product governance baseline 1.13.0",
+      "scope": "product governance baseline 1.14.0",
       "evidence": [
         "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md"
       ],

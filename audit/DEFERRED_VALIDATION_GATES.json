@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.deferred-validation-gates.v1",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "policy": {
     "native_validation_pending_is_not_an_implementation_failure": true,
     "virtualized_results_are_engineering_baselines": true,
@@ -11,9 +11,9 @@
       "gate_id": "NATIVE-WIN-X64-001",
       "category": "native_validation_pending",
       "target": "Windows x86_64 physical",
-      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit and the 1.13.0 configured suite passed 34/34 on the recorded physical host; proportional P1/P4 hardware qualification remains required before profile claims.",
-      "implementation_status": "1.7.0 physical Windows core regression independently verified; 1.13.0 configured regression passed 34/34 and CS013 campaign passed; proportional hardware qualification pending",
-      "execution_status": "executed_for_1.13.0_core_and_cs013_scope_not_profile_qualification",
+      "reason": "Physical Windows x86_64 evidence exists for the authoritative 1.7.0 source commit, CS013 has immutable evidence, and the preliminary CS014 supported surface passed 51/51 on the recorded physical host; proportional P1/P4 hardware qualification remains required before profile claims.",
+      "implementation_status": "1.7.0 physical Windows core regression independently verified; CS013 campaign passed; preliminary 1.14.0 supported-surface regression passed 51/51; proportional hardware qualification pending",
+      "execution_status": "preliminary_for_1.14.0_supported_surface_not_profile_qualification",
       "required_profile": "P1 or P4",
       "required_artifacts": [
         "build-log",
@@ -133,7 +133,7 @@
       "gate_id": "PROFILE-P4-8GB-001",
       "category": "native_validation_pending",
       "target": "P4 8 GB compatibility hardware",
-      "reason": "Historical physical evidence is retained as provenance, but the current 1.13.0 P4 hardware qualification campaign has not been executed.",
+      "reason": "Historical physical evidence is retained as provenance, but the current 1.14.0 P4 hardware qualification campaign has not been executed.",
       "implementation_status": "qualification_harness_v2_ready; historical_evidence_retained_as_provenance_only",
       "execution_status": "not_executed",
       "required_profile": "P4",

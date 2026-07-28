@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.13.0"
+EXPECTED_VERSION = "1.14.0"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -21,6 +21,8 @@ FILES = {
     "backlog": Path("audit/PRODUCT_CLOSURE_BACKLOG.json"),
     "assurance": Path("audit/PRODUCT_ASSURANCE_MATRIX.json"),
     "campaigns": Path("audit/PRODUCT_TEST_CAMPAIGNS.json"),
+    "capabilities": Path("audit/PRODUCT_CAPABILITY_SURFACE.json"),
+    "release": Path("audit/RELEASE_ASSURANCE_POLICY.json"),
     "deferred": Path("audit/DEFERRED_VALIDATION_GATES.json"),
 }
 REPORT = ROOT / "audit/PRODUCT_CONTRACT_VALIDATION.json"
@@ -120,6 +122,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
         "backlog": "neoeng.dcore.product-closure-backlog.v1",
         "assurance": "neoeng.dcore.product-assurance-matrix.v1",
         "campaigns": "neoeng.dcore.product-test-campaigns.v1",
+        "capabilities": "neoeng.dcore.product-capability-surface.v1",
+        "release": "neoeng.dcore.release-assurance-policy.v1",
         "deferred": "neoeng.dcore.deferred-validation-gates.v1",
     }
     for key, schema in expected_schemas.items():
@@ -176,8 +180,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.13.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.13.0 baseline")
+    if "baseline 1.14.0" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.14.0 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 

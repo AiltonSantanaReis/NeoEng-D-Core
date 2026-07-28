@@ -782,7 +782,13 @@ neoeng_dcore_status neoeng_dcore_host_copy_bodies(
     }
     const auto& bodies = host->engine.state().bodies;
     *out_required_count = bodies.size();
-    if (capacity < bodies.size() || (out_bodies == nullptr && !bodies.empty())) {
+    if (capacity < bodies.size()) {
+        return NEOENG_DCORE_STATUS_BUFFER_TOO_SMALL;
+    }
+    if (bodies.empty()) {
+        return NEOENG_DCORE_STATUS_OK;
+    }
+    if (out_bodies == nullptr) {
         return NEOENG_DCORE_STATUS_BUFFER_TOO_SMALL;
     }
     for (std::size_t index = 0U; index < bodies.size(); ++index) {
@@ -804,7 +810,13 @@ neoeng_dcore_status neoeng_dcore_host_copy_traces(
     try {
         const std::vector<TraceEvent> events = host->traces.snapshot();
         *out_required_count = events.size();
-        if (capacity < events.size() || (out_events == nullptr && !events.empty())) {
+        if (capacity < events.size()) {
+            return NEOENG_DCORE_STATUS_BUFFER_TOO_SMALL;
+        }
+        if (events.empty()) {
+            return NEOENG_DCORE_STATUS_OK;
+        }
+        if (out_events == nullptr) {
             return NEOENG_DCORE_STATUS_BUFFER_TOO_SMALL;
         }
         for (std::size_t index = 0U; index < events.size(); ++index) {

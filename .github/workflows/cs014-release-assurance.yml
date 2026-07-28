@@ -1,0 +1,348 @@
+name: CS014 release assurance
+
+on:
+  push:
+    branches:
+      - changeset-014
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-matrix:
+    name: Linux release (${{ matrix.compiler }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build
+      - name: Select compiler
+        id: compiler
+        shell: bash
+        run: |
+          if [[ "${{ matrix.compiler }}" == "gcc" ]]; then
+            echo "cc=gcc" >> "$GITHUB_OUTPUT"
+            echo "cxx=g++" >> "$GITHUB_OUTPUT"
+          else
+            echo "cc=clang" >> "$GITHUB_OUTPUT"
+            echo "cxx=clang++" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Configure
+        env:
+          CC: ${{ steps.compiler.outputs.cc }}
+          CXX: ${{ steps.compiler.outputs.cxx }}
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Record Linux build identity
+        env:
+          CXX: ${{ steps.compiler.outputs.cxx }}
+        shell: bash
+        run: |
+          {
+            "$CXX" --version
+            cmake --version
+            ninja --version
+            uname -a
+          } > "build/linux-${{ matrix.compiler }}-build-identity.txt"
+      - name: Test supported surface
+        run: >
+          ctest --test-dir build -C Release --output-on-failure -L dcore
+          --output-log build/linux-${{ matrix.compiler }}-ctest.txt
+      - name: Upload Linux evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-raw-linux-${{ matrix.compiler }}
+          path: |
+            build/linux-${{ matrix.compiler }}-ctest.txt
+            build/linux-${{ matrix.compiler }}-build-identity.txt
+          if-no-files-found: error
+
+  windows-release:
+    name: Windows release (clang-cl)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Configure
+        shell: pwsh
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=clang-cl
+          -DCMAKE_CXX_COMPILER=clang-cl
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Record Windows build identity
+        shell: pwsh
+        run: |
+          @(
+            (& clang-cl --version | Out-String)
+            (& cmake --version | Out-String)
+            (& ninja --version | Out-String)
+            [System.Environment]::OSVersion.VersionString
+          ) | Set-Content build/windows-clang-cl-build-identity.txt
+      - name: Test supported surface
+        run: >
+          ctest --test-dir build -C Release --output-on-failure -L dcore
+          --output-log build/windows-clang-cl-ctest.txt
+      - name: Upload Windows evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-raw-windows-clang-cl
+          path: |
+            build/windows-clang-cl-ctest.txt
+            build/windows-clang-cl-build-identity.txt
+          if-no-files-found: error
+
+  sanitizers:
+    name: ASan and UBSan supported surface
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build
+      - name: Configure
+        env:
+          CC: clang
+          CXX: clang++
+        run: >
+          cmake -S . -B build-sanitized -G Ninja
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+          -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+          -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined"
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Build
+        run: cmake --build build-sanitized --parallel 2
+      - name: Test with sanitizers
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: >
+          ctest --test-dir build-sanitized --output-on-failure -L dcore
+          --output-log build-sanitized/sanitizer-ctest.txt
+      - name: Upload sanitizer evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-raw-sanitizers
+          path: build-sanitized/sanitizer-ctest.txt
+          if-no-files-found: error
+
+  coverage-guided-fuzzing:
+    name: Coverage-guided fuzzing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build
+      - name: Configure
+        env:
+          CC: clang
+          CXX: clang++
+        run: >
+          cmake -S . -B build-fuzz -G Ninja
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+          -DNEOENG_DCORE_ENABLE_LIBFUZZER=ON
+      - name: Build fuzz targets
+        run: >
+          cmake --build build-fuzz --parallel 2
+          --target neoeng_network_packet_libfuzzer neoeng_session_handshake_libfuzzer
+      - name: Run network packet fuzzer
+        run: |
+          set -o pipefail
+          mkdir -p fuzz-artifacts/network
+          ./build-fuzz/neoeng_network_packet_libfuzzer \
+            fuzz/corpus/network_packet \
+            -max_total_time=120 \
+            -timeout=5 \
+            -artifact_prefix=fuzz-artifacts/network/ \
+            2>&1 | tee fuzz-artifacts/network-packet.txt
+      - name: Run session handshake fuzzer
+        run: |
+          set -o pipefail
+          mkdir -p fuzz-artifacts/session
+          ./build-fuzz/neoeng_session_handshake_libfuzzer \
+            fuzz/corpus/session_handshake \
+            -max_total_time=120 \
+            -timeout=5 \
+            -artifact_prefix=fuzz-artifacts/session/ \
+            2>&1 | tee fuzz-artifacts/session-handshake.txt
+      - name: Upload fuzz artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-raw-coverage-guided-fuzzing
+          path: fuzz-artifacts
+          if-no-files-found: ignore
+
+  static-analysis:
+    name: Blocking static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy libboost-dev ninja-build
+      - name: Configure compilation database
+        env:
+          CC: clang
+          CXX: clang++
+        run: >
+          cmake -S . -B build-analysis -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEWER=OFF
+      - name: Run clang-tidy gate
+        run: >
+          python3 scripts/run_static_analysis.py
+          --build-dir build-analysis
+          --output build-analysis/static-analysis
+      - name: Upload static-analysis evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-raw-static-analysis
+          path: build-analysis/static-analysis
+          if-no-files-found: error
+
+  consolidated-release:
+    name: Consolidated release and attestation
+    runs-on: ubuntu-latest
+    needs:
+      - release-matrix
+      - windows-release
+      - sanitizers
+      - coverage-guided-fuzzing
+      - static-analysis
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download gate evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cs014-raw-*
+          path: evidence/raw
+          merge-multiple: true
+      - name: Verify public claims
+        run: python3 scripts/generate_public_claims.py --check
+      - name: Verify release policy
+        run: |
+          python3 scripts/verify_release_assurance.py
+          python3 scripts/verify_release_assurance.py --self-test
+      - name: Create consolidated source release
+        shell: bash
+        run: |
+          python3 scripts/create_consolidated_release.py \
+            --output-dir "$RUNNER_TEMP/release-first" \
+            --compiler-id github-actions \
+            --build-id "${{ github.run_id }}-${{ github.run_attempt }}"
+          python3 scripts/create_consolidated_release.py \
+            --output-dir "$RUNNER_TEMP/release-second" \
+            --compiler-id github-actions \
+            --build-id "${{ github.run_id }}-${{ github.run_attempt }}"
+          cmp \
+            "$RUNNER_TEMP/release-first/NeoEng-D-Core-1.14.0.zip" \
+            "$RUNNER_TEMP/release-second/NeoEng-D-Core-1.14.0.zip"
+          mkdir release
+          cp "$RUNNER_TEMP/release-first/"* release/
+          digest="$(sha256sum release/NeoEng-D-Core-1.14.0.zip | cut -d ' ' -f 1)"
+          printf '%s  first-build\n%s  independent-repeat\n' \
+            "$digest" "$digest" > release/archive-reproducibility.txt
+      - name: Independently verify source release
+        run: >
+          python3 scripts/verify_consolidated_release.py
+          release
+          --write-report
+      - name: Attest release provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: release/NeoEng-D-Core-1.14.0.zip
+      - name: Attest release SBOM
+        uses: actions/attest@v4
+        with:
+          subject-path: release/NeoEng-D-Core-1.14.0.zip
+          sbom-path: release/SBOM.spdx.json
+      - name: Verify published attestations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh attestation verify \
+            release/NeoEng-D-Core-1.14.0.zip \
+            --repo "${{ github.repository }}" \
+            --signer-workflow "github.com/${{ github.repository }}/.github/workflows/cs014-release-assurance.yml" \
+            --source-digest "${{ github.sha }}" \
+            --format json > release/attestation-verification.json
+          gh attestation verify \
+            release/NeoEng-D-Core-1.14.0.zip \
+            --repo "${{ github.repository }}" \
+            --signer-workflow "github.com/${{ github.repository }}/.github/workflows/cs014-release-assurance.yml" \
+            --source-digest "${{ github.sha }}" \
+            --predicate-type https://spdx.dev/Document \
+            --format json > release/sbom-attestation-verification.json
+      - name: Assemble independently verifiable campaign evidence
+        env:
+          CS014_REPOSITORY: ${{ github.repository }}
+          CS014_COMMIT: ${{ github.sha }}
+          CS014_RUN_ID: ${{ github.run_id }}
+          CS014_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: >
+          python3 scripts/qualification/assemble_release_assurance_evidence.py
+          --raw evidence/raw
+          --release release
+          --output evidence/campaign
+      - name: Upload consolidated release
+        uses: actions/upload-artifact@v4
+        with:
+          name: neoeng-d-core-1.14.0-consolidated-release
+          path: release
+          if-no-files-found: error
+      - name: Upload release-assurance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs014-release-assurance-evidence
+          path: evidence/campaign
+          if-no-files-found: error

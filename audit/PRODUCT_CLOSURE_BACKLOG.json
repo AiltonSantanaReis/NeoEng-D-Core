@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-closure-backlog.v1",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "known_limitations_count": 41,
   "policy": "Every known limitation is classified; only internal_mandatory items become implementation work for horizontal product completion.",
   "items": [

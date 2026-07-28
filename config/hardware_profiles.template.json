@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.hardware-profile-registry.v2",
-  "project_version": "1.13.0",
+  "project_version": "1.14.0",
   "warning": "Template only. Profiles are named measurement targets, not universal project system requirements. No profile is qualified until a native physical campaign is complete and independently verified.",
   "result_interpretation": {
     "applies_only_to_exact_recorded_environment": true,

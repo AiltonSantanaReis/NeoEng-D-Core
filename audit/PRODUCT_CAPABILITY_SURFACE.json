@@ -1,0 +1,97 @@
+{
+  "schema": "neoeng.dcore.product-capability-surface.v1",
+  "project_version": "1.14.0",
+  "status": "normative_candidate",
+  "policy": {
+    "every_public_claim_requires_a_supported_surface": true,
+    "prohibited_removed_and_unsupported_claims_are_not_product_capabilities": true,
+    "installed_cpp_headers_are_a_supported_sdk": true,
+    "official_tools_must_be_installed_or_shipped_in_the_consolidated_release": true,
+    "vertical_adapters_are_not_horizontal_product_capabilities": true
+  },
+  "surfaces": {
+    "cpp_sdk": {
+      "cmake_target": "NeoEng::DCore",
+      "installed_headers": "include/neoeng/core",
+      "verification": "neoeng_host_sdk_install_consumer"
+    },
+    "c_host_sdk": {
+      "cmake_target": "NeoEng::DCoreHostSdk",
+      "installed_header": "modules/host_sdk/include/neoeng/dcore_host.h",
+      "verification": "neoeng_host_sdk_tests"
+    },
+    "distributed_reference": {
+      "cmake_target": "NeoEng::DCoreDistributedReference",
+      "installed_headers": "modules/distributed_reference/include/neoeng",
+      "verification": "neoeng_distributed_reference_tests"
+    },
+    "official_tools": {
+      "targets": [
+        "neoeng_time_travel_cli",
+        "neoeng_determinism_probe",
+        "neoeng_state_evidence_probe",
+        "neoeng_support_bundle_probe",
+        "neoeng_hardware_profile_probe",
+        "neoeng_numeric_closure_probe",
+        "neoeng_temporal_closure_probe",
+        "neoeng_production_security_probe"
+      ],
+      "verification": "scripts/verify_release_assurance.py"
+    },
+    "governance": {
+      "source_of_truth": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+      "claims_ledger": "audit/PRODUCT_CLAIMS_LEDGER.json",
+      "public_claims": "docs/commercial/PUBLIC_CLAIMS.md"
+    }
+  },
+  "claim_delivery": [
+    {
+      "claim_id": "CLAIM-SCOPE-001",
+      "surfaces": ["governance"]
+    },
+    {
+      "claim_id": "CLAIM-AUTH-001",
+      "surfaces": ["cpp_sdk", "c_host_sdk"]
+    },
+    {
+      "claim_id": "CLAIM-DET-001",
+      "surfaces": ["cpp_sdk", "c_host_sdk", "official_tools"]
+    },
+    {
+      "claim_id": "CLAIM-REPLAY-001",
+      "surfaces": ["cpp_sdk", "c_host_sdk"]
+    },
+    {
+      "claim_id": "CLAIM-ROLLBACK-001",
+      "surfaces": ["cpp_sdk", "c_host_sdk"]
+    },
+    {
+      "claim_id": "CLAIM-TT-001",
+      "surfaces": ["cpp_sdk", "official_tools"]
+    },
+    {
+      "claim_id": "CLAIM-DIV-001",
+      "surfaces": ["cpp_sdk", "official_tools"]
+    },
+    {
+      "claim_id": "CLAIM-DIST-001",
+      "surfaces": ["distributed_reference"]
+    },
+    {
+      "claim_id": "CLAIM-HASH-001",
+      "surfaces": ["cpp_sdk", "c_host_sdk", "official_tools"]
+    },
+    {
+      "claim_id": "CLAIM-SUPPORT-001",
+      "surfaces": ["cpp_sdk", "official_tools"]
+    },
+    {
+      "claim_id": "CLAIM-SDK-001",
+      "surfaces": ["c_host_sdk"]
+    },
+    {
+      "claim_id": "CLAIM-SECTOR-001",
+      "surfaces": ["cpp_sdk"]
+    }
+  ]
+}

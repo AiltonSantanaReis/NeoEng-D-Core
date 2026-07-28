@@ -1,15 +1,19 @@
 cmake_minimum_required(VERSION 3.25)
-project(NeoEngDCore VERSION 1.13.0 LANGUAGES C CXX)
+project(NeoEngDCore VERSION 1.14.0 LANGUAGES C CXX)
 
 option(NEOENG_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
 option(NEOENG_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 option(NEOENG_DCORE_BUILD_FULL_TOOLSET "Build all portable Year-1 historical tools" ON)
+option(NEOENG_DCORE_BUILD_RELEASE_TOOLS
+  "Build the supported operational probes, adversarial tools and CLIs" ON)
 option(NEOENG_DCORE_BUILD_RESEARCH_TOOLS "Build Year-1 v0.28 gate/research tools" ON)
 option(NEOENG_DCORE_BUILD_VIEW_LAB "Build the optional read-only visual diagnostics companion" OFF)
 option(NEOENG_DCORE_BUILD_HOST_SDK "Build the stable C host integration boundary" ON)
 option(NEOENG_DCORE_BUILD_DISTRIBUTED_REFERENCE
   "Build the CS010 real-transport distributed reference module" ON)
 option(NEOENG_DCORE_ENABLE_INSTALL "Enable SDK installation and CMake package export" ON)
+option(NEOENG_DCORE_ENABLE_LIBFUZZER
+  "Build LLVM libFuzzer targets for hostile binary ingress" OFF)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -151,10 +155,8 @@ neoeng_dcore_add_tool(
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_dcore_lab apps/core_lab_main.cpp)
 endif()
-if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
+if(NEOENG_DCORE_BUILD_RELEASE_TOOLS)
   neoeng_dcore_add_tool(neoeng_determinism_probe apps/determinism_probe.cpp)
-endif()
-if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_network_packet_fuzz apps/network_packet_fuzz.cpp)
   neoeng_dcore_add_tool(neoeng_session_security_probe apps/session_security_probe.cpp)
   neoeng_dcore_add_tool(neoeng_session_handshake_fuzz apps/session_handshake_fuzz.cpp)
@@ -167,6 +169,23 @@ if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_state_evidence_fuzz apps/state_evidence_fuzz.cpp)
   neoeng_dcore_add_tool(neoeng_support_bundle_probe apps/support_bundle_probe.cpp)
   neoeng_dcore_add_tool(neoeng_support_bundle_fuzz apps/support_bundle_fuzz.cpp)
+endif()
+if(NEOENG_DCORE_ENABLE_LIBFUZZER)
+  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR MSVC)
+    message(FATAL_ERROR
+      "NEOENG_DCORE_ENABLE_LIBFUZZER requires non-MSVC Clang")
+  endif()
+  foreach(fuzzer
+      neoeng_network_packet_libfuzzer
+      neoeng_session_handshake_libfuzzer)
+    add_executable(${fuzzer} fuzz/${fuzzer}.cpp)
+    target_link_libraries(${fuzzer} PRIVATE neoeng_dcore)
+    target_compile_options(${fuzzer} PRIVATE
+      -fsanitize=fuzzer,address,undefined -fno-omit-frame-pointer)
+    target_link_options(${fuzzer} PRIVATE
+      -fsanitize=fuzzer,address,undefined -fno-omit-frame-pointer)
+    neoeng_set_warnings(${fuzzer})
+  endforeach()
 endif()
 if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
   neoeng_dcore_add_tool(neoeng_benchmark apps/benchmark.cpp)
@@ -400,6 +419,19 @@ if(NEOENG_DCORE_ENABLE_INSTALL)
   if(TARGET neoeng_dcore_distributed_reference)
     list(APPEND NEOENG_DCORE_INSTALL_TARGETS neoeng_dcore_distributed_reference)
   endif()
+  foreach(tool
+      neoeng_determinism_probe
+      neoeng_time_travel_cli
+      neoeng_hardware_profile_probe
+      neoeng_state_evidence_probe
+      neoeng_support_bundle_probe
+      neoeng_numeric_closure_probe
+      neoeng_temporal_closure_probe
+      neoeng_production_security_probe)
+    if(TARGET ${tool})
+      list(APPEND NEOENG_DCORE_INSTALL_TARGETS ${tool})
+    endif()
+  endforeach()
   install(TARGETS ${NEOENG_DCORE_INSTALL_TARGETS}
     EXPORT NeoEngDCoreTargets
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -451,6 +483,22 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --check-report)
   add_test(NAME neoeng_product_assurance_self_test
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/verify_product_assurance.py --self-test)
+  add_test(NAME neoeng_public_claims_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/generate_public_claims.py --check)
+  add_test(NAME neoeng_release_assurance_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_release_assurance.py)
+  add_test(NAME neoeng_release_assurance_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_release_assurance.py --self-test)
+  add_test(NAME neoeng_release_assurance_evidence_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_release_assurance_evidence.py
+      --self-test)
+  add_test(NAME neoeng_consolidated_release_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_consolidated_release.py --self-test)
   add_test(NAME neoeng_distributed_reference_evidence_verifier_self_test
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_distributed_reference_evidence.py
@@ -510,7 +558,19 @@ if(BUILD_TESTING)
     neoeng_temporal_closure_boundary_self_test
     neoeng_production_security_boundary_verify
     neoeng_production_security_boundary_self_test
+    neoeng_public_claims_verify
+    neoeng_release_assurance_verify
+    neoeng_release_assurance_self_test
+    neoeng_release_assurance_evidence_verifier_self_test
+    neoeng_consolidated_release_verifier_self_test
     PROPERTIES LABELS "governance;release-gate;dcore")
+  set_tests_properties(
+    neoeng_public_claims_verify
+    neoeng_release_assurance_verify
+    neoeng_release_assurance_self_test
+    neoeng_release_assurance_evidence_verifier_self_test
+    neoeng_consolidated_release_verifier_self_test
+    PROPERTIES LABELS "governance;release-gate;dcore;cs014;release-assurance")
 
   add_executable(neoeng_tests tests/test_main.cpp)
   target_link_libraries(neoeng_tests PRIVATE neoeng_dcore)
@@ -567,8 +627,7 @@ if(BUILD_TESTING)
     neoeng_production_security_tests neoeng_production_security_probe
     PROPERTIES LABELS "smoke;dcore;cs013;production-security")
 
-  if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
-    add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
+  if(NEOENG_DCORE_BUILD_RELEASE_TOOLS)
     add_test(NAME neoeng_network_packet_fuzz_smoke COMMAND neoeng_network_packet_fuzz 25000)
     add_test(NAME neoeng_session_security_probe COMMAND neoeng_session_security_probe)
     add_test(NAME neoeng_session_handshake_fuzz_smoke COMMAND neoeng_session_handshake_fuzz 25000)
@@ -588,7 +647,18 @@ if(BUILD_TESTING)
     set_tests_properties(neoeng_ecs_scope_evidence_verifier_smoke
       PROPERTIES DEPENDS neoeng_ecs_maintenance_benchmark_smoke LABELS "full;dcore;ecs-scope")
     set_tests_properties(neoeng_ecs_scope_evidence_verifier_self_test
-      PROPERTIES LABELS "smoke;dcore;ecs-scope")
+      PROPERTIES LABELS "smoke;dcore;release-surface;ecs-scope")
+    set_tests_properties(
+      neoeng_network_packet_fuzz_smoke neoeng_session_security_probe
+      neoeng_session_handshake_fuzz_smoke neoeng_recovery_fault_injection
+      neoeng_recovery_contract_probe neoeng_state_evidence_probe
+      neoeng_state_evidence_fuzz_smoke neoeng_support_bundle_probe
+      neoeng_support_bundle_fuzz_smoke neoeng_ecs_maintenance_benchmark_smoke
+      PROPERTIES LABELS "smoke;dcore;release-surface")
+  endif()
+
+  if(NEOENG_DCORE_BUILD_FULL_TOOLSET)
+    add_test(NAME neoeng_snapshot_fuzz COMMAND neoeng_snapshot_fuzz)
     add_test(NAME neoeng_immutable_fuzz COMMAND neoeng_immutable_fuzz)
     add_test(NAME neoeng_active_fuzz COMMAND neoeng_active_fuzz)
     add_test(NAME neoeng_v06_fuzz COMMAND neoeng_v06_fuzz 500)
@@ -614,13 +684,7 @@ if(BUILD_TESTING)
     add_test(NAME neoeng_v26_fuzz COMMAND neoeng_v26_fuzz 100)
     add_test(NAME neoeng_v27_fuzz COMMAND neoeng_v27_fuzz 100)
     set_tests_properties(
-      neoeng_snapshot_fuzz neoeng_network_packet_fuzz_smoke
-      neoeng_session_security_probe neoeng_session_handshake_fuzz_smoke
-      neoeng_recovery_fault_injection neoeng_recovery_contract_probe
-      neoeng_state_evidence_probe neoeng_state_evidence_fuzz_smoke
-      neoeng_support_bundle_probe neoeng_support_bundle_fuzz_smoke
-      neoeng_ecs_maintenance_benchmark_smoke
-      neoeng_immutable_fuzz neoeng_active_fuzz
+      neoeng_snapshot_fuzz neoeng_immutable_fuzz neoeng_active_fuzz
       neoeng_v06_fuzz
       neoeng_v07_fuzz
       neoeng_v08_fuzz
