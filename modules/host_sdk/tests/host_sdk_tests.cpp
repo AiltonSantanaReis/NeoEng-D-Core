@@ -233,6 +233,6 @@ int main() {
     test_state_rollback_and_buffers();
     test_recovery_contract();
     test_thread_ownership_and_input_guards();
-    std::cout << "host_sdk_tests=PASS abi=1.0 runtime=1.9.0\n";
+    std::cout << "host_sdk_tests=PASS abi=1.0 runtime=1.10.0\n";
     return 0;
 }

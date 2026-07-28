@@ -1,7 +1,7 @@
 # ADR-009 - Year-1 internal contract versus public Host C ABI
 
 Status: accepted
-Product version: 1.9.0
+Product version at decision: 1.9.0; preserved by 1.10.0
 
 ## Context
 

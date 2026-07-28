@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-test-campaigns.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "policy": {
     "all_requirements_must_be_covered": true,
     "planned_campaign_is_not_execution_evidence": true,
@@ -101,7 +101,7 @@
         "DCORE-DIST-001",
         "DCORE-NET-002"
       ],
-      "status": "planned",
+      "status": "executed",
       "required_test_classes": [
         "adversarial",
         "cross_architecture_if_applicable",
@@ -124,7 +124,14 @@
         "independent-verification",
         "limitations"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/changesets/010/TEST_STATUS.md",
+        "docs/changesets/010/evidence/windows-x86_64-clang-20260726",
+        "docs/changesets/010/evidence/linux-x86_64-gcc-20260726",
+        "docs/changesets/010/evidence/linux-x86_64-clang-20260726",
+        "docs/changesets/010/evidence/cross-compiler-20260726/cross-compiler-summary.json",
+        "docs/changesets/010/evidence/github-actions-run-30187433814.json"
+      ],
       "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
       "native_or_external_results_may_be_inferred": false
     },

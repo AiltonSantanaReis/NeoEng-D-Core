@@ -2,6 +2,8 @@
 /.deps/
 /.vcpkg-root
 /artifacts/local/
+/tmp/sdk-c/
+/tmp/sdk-i/
 *.user
 *.suo
 *.VC.db

@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.qualification-workload-registry.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "principle": "Workloads preserve the project plan; unavailable native execution is recorded, never inferred.",
   "workloads": [
     {

@@ -13,7 +13,7 @@ Fonte normativa, padrao de conclusao, matriz de responsabilidade, 36 requisitos,
 
 Alocacao geral, arena, copy-on-write e manutencao de indices foram fechados como uma capacidade unica de evidencia, com streams brutos versionados, identidade de fonte/build/configuracao, verificador independente, autotestes de adulteracao e decisao fail-closed. A qualificacao nativa P1 continua separada e `UNQUALIFIED` ate satisfazer hardware, amostras, termica, clocks, timing e zero-alocacao.
 
-## CS010 - Determinismo ponta a ponta e referencia distribuida
+## CS010 - Determinismo ponta a ponta e referencia distribuida — CONCLUIDO EM 1.10.0
 
 Duas instancias independentes, mesmos inputs, comparacao, divergencia controlada, localizacao, reconciliacao e evidencia. Transporte/coordenador de referencia fora do estado canonico; consenso, quorum e BFT fora do escopo.
 

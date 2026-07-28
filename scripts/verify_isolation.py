@@ -170,8 +170,8 @@ cs004_required = [
 for rel in cs004_required:
     if not (root/rel).is_file():
         errors.append(f'arquivo obrigatório do ChangeSet 004 ausente: {rel}')
-if 'project(NeoEngDCore VERSION 1.9.0 ' not in cmake:
-    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.9.0')
+if 'project(NeoEngDCore VERSION 1.10.0 ' not in cmake:
+    errors.append('versão CMake divergente: esperado NeoEng D-Core 1.10.0')
 for rel in ('src/crypto_hash.cpp', 'src/state_evidence.cpp', 'apps/state_evidence_probe.cpp', 'apps/state_evidence_fuzz.cpp'):
     if rel not in cmake:
         errors.append(f'fonte CS004 sem cobertura CMake: {rel}')
@@ -310,7 +310,7 @@ if profile_registry_path.is_file():
         registry = json.loads(profile_registry_path.read_text(encoding='utf-8'))
         if registry.get('schema') != 'neoeng.dcore.hardware-profile-registry.v2':
             errors.append('schema do registro P0-P4 divergente')
-        if registry.get('project_version') != '1.9.0':
+        if registry.get('project_version') != '1.10.0':
             errors.append('versão do registro P0-P4 divergente')
         profiles = {row.get('profile'): row for row in registry.get('profiles', [])}
         if set(profiles) != {'P0', 'P1', 'P2', 'P3', 'P4'}:
@@ -335,7 +335,7 @@ if request_template_path.is_file():
         request_template = json.loads(request_template_path.read_text(encoding='utf-8'))
         if request_template.get('schema') != 'neoeng.dcore.qualification-campaign-request.v1':
             errors.append('schema do request de campanha divergente')
-        if request_template.get('project_version') != '1.9.0':
+        if request_template.get('project_version') != '1.10.0':
             errors.append('versão do request de campanha divergente')
     except Exception as exc:
         errors.append(f'template de campanha inválido: {exc}')
@@ -357,7 +357,7 @@ if workload_registry_path.is_file():
 if gates_path.is_file():
     try:
         gates = json.loads(gates_path.read_text(encoding='utf-8'))
-        if gates.get('project_version') != '1.9.0':
+        if gates.get('project_version') != '1.10.0':
             errors.append('versão do ledger diferido divergente para CS006')
         rows = {row.get('gate_id'): row for row in gates.get('gates', [])}
         for gate_id in ('PROFILE-P0-001', 'PROFILE-P1-NVIDIA-001', 'PROFILE-P2-AMD-001',

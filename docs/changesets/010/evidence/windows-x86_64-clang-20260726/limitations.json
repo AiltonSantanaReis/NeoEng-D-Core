@@ -1,0 +1,12 @@
+{
+  "limitations": [
+    "UDP v1 is a loopback reference, not a production remote transport.",
+    "Datagram SHA-256 detects corruption but does not authenticate or encrypt.",
+    "The campaign does not implement consensus, quorum, BFT or multiwriter ordering.",
+    "An x86_64 result does not prove ARM64 equivalence.",
+    "Measurements describe only the recorded host and configuration."
+  ],
+  "native_or_external_results_may_be_inferred": false,
+  "project_version": "1.10.0",
+  "schema": "neoeng.dcore.distributed-reference-limitations.v1"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "neoeng.dcore.github-actions-run.v1",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "workflow": "CS010 cross-compiler evidence",
+  "run_id": 30187433814,
+  "run_url": "https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/30187433814",
+  "head_branch": "codex/changeset-010",
+  "head_sha": "c3efbcc54e8317da82e645f7b223d49e25b3d579",
+  "last_artifact_updated_at_utc": "2026-07-26T04:15:53Z",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "job_id": 89754510243,
+      "name": "Linux x86_64 gcc",
+      "conclusion": "success"
+    },
+    {
+      "job_id": 89754510257,
+      "name": "Linux x86_64 clang",
+      "conclusion": "success"
+    },
+    {
+      "job_id": 89754700226,
+      "name": "Compare GCC and Clang",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": 8627465209,
+      "name": "cs010-linux-gcc",
+      "digest": "sha256:415d9ac7ac1fb799f2f369288f4f9c3afe5148ae19cfafc509db0305a7f4223a"
+    },
+    {
+      "artifact_id": 8627472343,
+      "name": "cs010-linux-clang",
+      "digest": "sha256:2ab82dac6dd2f6bb03873229c978221e540cef22f50f8489bbbdb8a4d9e0948a"
+    },
+    {
+      "artifact_id": 8627473894,
+      "name": "cs010-cross-compiler-comparison",
+      "digest": "sha256:d11003bd89481ef28d74076d7226d635d09caed7f746caa6e1e4e1839eafcb18"
+    }
+  ],
+  "semantic_probe_sha256": "a5782797532cfba07d52fe2f28f4453452aba566127e4d7da010fcbd057e63f2",
+  "semantic_probe_byte_identical": true,
+  "source": "GitHub Actions API independently queried after the run completed"
+}

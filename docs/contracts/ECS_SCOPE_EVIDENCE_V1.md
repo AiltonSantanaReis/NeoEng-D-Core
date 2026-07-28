@@ -3,7 +3,7 @@
 Schema: `neoeng.dcore.ecs-scope-evidence.v1`
 Verifier schema: `neoeng.dcore.ecs-scope-evidence-verification.v1`
 Workload: `Y1-O2-SPARSE-COMPONENT-MAINTENANCE-V1`
-Status: active in NeoEng D-Core 1.9.0
+Status: active in NeoEng D-Core 1.10.0
 
 ## Purpose
 

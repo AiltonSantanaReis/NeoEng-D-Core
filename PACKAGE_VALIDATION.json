@@ -37,6 +37,9 @@
     "support_bundle_independent_verifier": "scripts/verify_support_bundle.py",
     "qualification_campaign_verifier": "scripts/qualification/verify_qualification_campaign.py",
     "qualification_cross_architecture_comparator": "scripts/qualification/compare_architectures.py",
+    "distributed_reference_boundary_verifier": "scripts/verify_distributed_reference_boundary.py",
+    "distributed_reference_evidence_verifier": "scripts/qualification/verify_distributed_reference_evidence.py",
+    "reverse_dependency_from_core_to_distributed_reference": false,
     "reverse_dependency_from_core_to_host_sdk": false,
     "host_sdk_boundary_verifier": "scripts/verify_host_sdk_boundary.py",
     "host_sdk_gap_analysis": "audit/HOST_SDK_GAP_ANALYSIS_1_6_0.json",
@@ -57,10 +60,10 @@
     }
   },
   "content_counts": {
-    "headers": 67,
-    "library_cpp": 61,
-    "app_cpp": 78,
-    "test_cpp": 9,
+    "headers": 69,
+    "library_cpp": 63,
+    "app_cpp": 79,
+    "test_cpp": 11,
     "document_records": 166,
     "campaign_scripts_exact_from_origin": 23,
     "year1_evidence_files": 433,
@@ -74,7 +77,11 @@
     "host_sdk_public_c_headers": 1,
     "host_sdk_library_cpp": 1,
     "host_sdk_reference_c": 1,
-    "host_sdk_test_c": 1
+    "host_sdk_test_c": 1,
+    "distributed_reference_headers": 2,
+    "distributed_reference_library_cpp": 2,
+    "distributed_reference_probe_cpp": 1,
+    "distributed_reference_test_cpp": 1
   },
   "builds": {
     "gcc_release": {
@@ -126,8 +133,8 @@
       "canonical_hash": "0x4D94BB2F3D75FFFE"
     },
     "windows_package": {
-      "status": "not executed for 1.9.0",
-      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; proportional 1.9.0 regression remains pending"
+      "status": "CS010 module executed on Windows x86_64; full proportional 1.10.0 regression pending final campaign",
+      "reason": "physical Windows evidence is independently verified for the authoritative 1.7.0 commit; CS010 adds host-local Windows evidence without inferring complete native qualification"
     },
     "clang_asan_ubsan_critical_subset": {
       "configure": "passed",
@@ -243,7 +250,7 @@
       "method": "clean prefix install, find_package, build and execute"
     }
   },
-  "test_note": "ChangeSet 009 is validated on Linux x86_64 with GCC and Clang after closing the four-stream ECS evidence contract. Virtualized P0/P1 campaigns remain incomplete and unqualified. Native Windows 1.9.0, ARM64 and P0-P4 qualification are not claimed.",
+  "test_note": "ChangeSet 010 adds a real UDP loopback reference, two-instance divergence/localization/reconciliation and host-local Windows x86_64 evidence. Virtualized P0/P1 campaigns remain incomplete and unqualified. ARM64, production remote transport and P0-P4 qualification are not claimed.",
   "project": "NeoEng D-Core",
   "package": "NeoEng-D-Core-Windows-Audited",
   "rename_validation": {
@@ -671,7 +678,7 @@
     "arm64": "not executed",
     "p0_p4_qualified": []
   },
-  "package_version": "1.9.0",
+  "package_version": "1.10.0",
   "changeset_009": {
     "id": "009",
     "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",
@@ -698,6 +705,29 @@
     "native_p1_status": "unqualified",
     "windows_1_9_execution": "not performed",
     "arm64_execution": "not performed",
+    "commercial_ready": false
+  },
+  "changeset_010": {
+    "id": "010",
+    "title": "end-to-end deterministic distributed reference",
+    "base_version": "1.9.0",
+    "target_version": "1.10.0",
+    "requirements_closed": [
+      "DCORE-DIST-001",
+      "DCORE-NET-002"
+    ],
+    "limitations_closed": [
+      "LIM-005",
+      "LIM-020",
+      "LIM-023"
+    ],
+    "reference_transport": "real UDP loopback with bounded queue, reconnect epoch, replay rejection and SHA-256 integrity",
+    "domain_neutral_boundary": "ReplicaAdapter with explicit schema id and opaque correction payload",
+    "canonical_state_authority_changed": false,
+    "windows_x86_64_clang_local_scope": "19/19 minimal configured tests passed, including installed consumer and 4096-frame probe",
+    "cross_compiler_evidence": "GitHub Actions run 30187433814 passed GCC, Clang, independent verification and byte-identical comparison for commit c3efbcc54e8317da82e645f7b223d49e25b3d579",
+    "arm64_execution": "not performed",
+    "production_remote_transport": "not claimed",
     "commercial_ready": false
   }
 }

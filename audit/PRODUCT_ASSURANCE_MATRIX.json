@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-assurance-matrix.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "policy": {
     "meta_validation_is_not_capability_proof": true,
     "complete_requires_existing_evidence_paths": true,
@@ -139,11 +139,14 @@
     },
     {
       "requirement_id": "DCORE-DIST-001",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS010",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "positive",
         "negative",
         "adversarial",
@@ -155,7 +158,19 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_distributed_reference_tests",
+        "neoeng_distributed_reference_probe",
+        "neoeng_host_sdk_install_consumer",
+        "scripts/verify_distributed_reference_boundary.py",
+        "scripts/qualification/verify_distributed_reference_evidence.py",
+        "docs/changesets/010/TEST_STATUS.md",
+        "docs/changesets/010/evidence/windows-x86_64-clang-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/linux-x86_64-gcc-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/linux-x86_64-clang-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/cross-compiler-20260726/cross-compiler-summary.json",
+        "docs/changesets/010/evidence/github-actions-run-30187433814.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
@@ -179,11 +194,14 @@
     },
     {
       "requirement_id": "DCORE-NET-002",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS010",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "positive",
         "negative",
         "adversarial",
@@ -195,7 +213,19 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_distributed_reference_tests",
+        "neoeng_distributed_reference_probe",
+        "neoeng_host_sdk_install_consumer",
+        "scripts/verify_distributed_reference_boundary.py",
+        "scripts/qualification/verify_distributed_reference_evidence.py",
+        "docs/changesets/010/TEST_STATUS.md",
+        "docs/changesets/010/evidence/windows-x86_64-clang-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/linux-x86_64-gcc-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/linux-x86_64-clang-20260726/independent-verification.json",
+        "docs/changesets/010/evidence/cross-compiler-20260726/cross-compiler-summary.json",
+        "docs/changesets/010/evidence/github-actions-run-30187433814.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {

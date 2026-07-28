@@ -4,3 +4,6 @@ find_package(NeoEngDCore 1.8 CONFIG REQUIRED)
 add_executable(neoeng_dcore_installed_consumer main.c)
 target_link_libraries(neoeng_dcore_installed_consumer PRIVATE NeoEng::DCoreHostSdk)
 set_target_properties(neoeng_dcore_installed_consumer PROPERTIES LINKER_LANGUAGE CXX)
+add_executable(neoeng_dcore_distributed_installed_consumer distributed_main.cpp)
+target_link_libraries(neoeng_dcore_distributed_installed_consumer
+  PRIVATE NeoEng::DCoreDistributedReference)

@@ -1,0 +1,21 @@
+{
+  "cross_architecture_claim_promoted": false,
+  "native_or_external_results_inferred": false,
+  "probe": {
+    "after": "converged",
+    "before": "divergent",
+    "canonical_state_equal": true,
+    "divergence_frame": 1024,
+    "first_divergent_component": "position.x",
+    "frames": 4096,
+    "instances": 2,
+    "localized": true,
+    "schema": "neoeng.dcore.distributed-reference-result.v1",
+    "transport": "udp-loopback"
+  },
+  "probe_exit_code": 0,
+  "project_version": "1.10.0",
+  "schema": "neoeng.dcore.distributed-reference-campaign-summary.v1",
+  "status": "passed",
+  "tests_exit_code": 0
+}

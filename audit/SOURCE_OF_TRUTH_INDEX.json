@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.source-of-truth-index.v1",
-  "project_version": "1.9.0",
+  "project_version": "1.10.0",
   "required_for_every_changeset": true,
   "primary_document": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
   "precedence": [
@@ -31,7 +31,9 @@
   ],
   "verifiers": [
     "scripts/verify_product_contract.py",
-    "scripts/verify_product_assurance.py"
+    "scripts/verify_product_assurance.py",
+    "scripts/verify_distributed_reference_boundary.py",
+    "scripts/qualification/verify_distributed_reference_evidence.py"
   ],
   "conflict_policy": "Higher-precedence documents control. Conflicts stop the affected claim or implementation until reconciled by a ChangeSet.",
   "scope_statement": "NeoEng D-Core is an independent product based on consolidated Year-1 technical work and is not the five-year engine program.",
