@@ -255,6 +255,8 @@ jobs:
   consolidated-release:
     name: Consolidated release and attestation
     runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     needs:
       - release-matrix
       - windows-release
