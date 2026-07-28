@@ -36,12 +36,18 @@ def verify(directory: Path) -> dict[str, Any]:
     archive = directory / f"{PACKAGE_NAME}.zip"
     digest_file = directory / f"{PACKAGE_NAME}.zip.sha256"
     artifact_record = directory / "release-artifacts.json"
+    external_provenance = directory / "PROVENANCE.json"
+    external_sbom = directory / "SBOM.spdx.json"
     if not archive.is_file():
         errors.append("consolidated archive missing")
     if not digest_file.is_file():
         errors.append("outer SHA-256 record missing")
     if not artifact_record.is_file():
         errors.append("release artifact record missing")
+    if not external_provenance.is_file():
+        errors.append("external provenance predicate missing")
+    if not external_sbom.is_file():
+        errors.append("external SBOM predicate missing")
     if errors:
         return result(errors, 0, 0)
 
@@ -154,10 +160,18 @@ def verify(directory: Path) -> dict[str, Any]:
                 ) is not True
             ):
                 errors.append("release provenance rejected")
+            if load_json(
+                external_provenance.read_bytes(), "external PROVENANCE.json"
+            ) != provenance:
+                errors.append("external provenance predicate diverges from archive")
 
             sbom = load_json(
                 package.read(f"{prefix}SBOM.spdx.json"), "SBOM.spdx.json"
             )
+            if load_json(
+                external_sbom.read_bytes(), "external SBOM.spdx.json"
+            ) != sbom:
+                errors.append("external SBOM predicate diverges from archive")
             sbom_files = sbom.get("files", [])
             sbom_names = {
                 str(row.get("fileName", "")).removeprefix("./")
@@ -250,6 +264,8 @@ def write_fixture(directory: Path) -> None:
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as package:
         for name, content in sorted(files.items()):
             package.writestr(prefix + name, content)
+    (directory / "PROVENANCE.json").write_bytes(files["PROVENANCE.json"])
+    (directory / "SBOM.spdx.json").write_bytes(files["SBOM.spdx.json"])
     digest = sha256(archive)
     (directory / f"{PACKAGE_NAME}.zip.sha256").write_text(
         f"{digest}  {archive.name}\n", encoding="utf-8"

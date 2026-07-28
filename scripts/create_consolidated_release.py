@@ -161,8 +161,15 @@ def create(output_dir: Path, compiler_id: str, build_id: str) -> dict[str, Any]:
     archive = output_dir / f"{PACKAGE_NAME}.zip"
     digest_file = output_dir / f"{PACKAGE_NAME}.zip.sha256"
     artifact_record = output_dir / "release-artifacts.json"
+    external_provenance = output_dir / "PROVENANCE.json"
     external_sbom = output_dir / "SBOM.spdx.json"
-    for path in (archive, digest_file, artifact_record, external_sbom):
+    for path in (
+        archive,
+        digest_file,
+        artifact_record,
+        external_provenance,
+        external_sbom,
+    ):
         if path.exists():
             raise ReleaseError(f"refusing to overwrite release artifact: {path}")
 
@@ -209,6 +216,7 @@ def create(output_dir: Path, compiler_id: str, build_id: str) -> dict[str, Any]:
         }
         write_json(stage / "RELEASE_METADATA.json", metadata)
         write_json(stage / "PROVENANCE.json", provenance)
+        shutil.copyfile(stage / "PROVENANCE.json", external_provenance)
 
         pre_sbom = [
             path for path in stage.rglob("*")
