@@ -35,7 +35,7 @@
     "new_project_name": "NeoEng D-Core",
     "source_code_scope_changed": false
   },
-  "package_version": "1.11.0",
+  "package_version": "1.12.0",
   "changeset_001": {
     "derivation": "incremental patch over the audited NeoEng D-Core 1.0.1 baseline",
     "baseline_archive": "NeoEng-D-Core-Windows-Audited.zip",

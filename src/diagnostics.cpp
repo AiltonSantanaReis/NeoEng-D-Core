@@ -92,6 +92,18 @@ StateDivergenceReport diagnose_state_divergence(
     TraceBuffer* traces,
     std::uint64_t monotonic_time_ns,
     std::size_t merkle_chunk_size) {
+    const BudgetMonitor budget_monitor;
+    ScopedBudgetMeasurement budget_scope(
+        traces != nullptr ? &budget_monitor : nullptr,
+        traces,
+        {
+            .id = BudgetId::DivergenceLocalization,
+            .subsystem = TraceSubsystem::Evidence,
+            .limit_ns = 0U,
+            .exceed_severity = TraceSeverity::Warning,
+        },
+        correlation_id,
+        actual.frame);
     StateDivergenceReport report{
         .expected_stable_hash = stable_hash(expected),
         .actual_stable_hash = stable_hash(actual),
@@ -107,8 +119,15 @@ StateDivergenceReport diagnose_state_divergence(
         return report;
     }
 
+    if (expected.frame != actual.frame) {
+        report.first_divergent_entity = 0U;
+        report.first_divergent_component = "state.frame";
+    }
+
     const std::size_t max_bodies = std::max(expected.bodies.size(), actual.bodies.size());
-    for (std::size_t index = 0U; index < max_bodies; ++index) {
+    for (std::size_t index = 0U;
+         report.first_divergent_component.empty() && index < max_bodies;
+         ++index) {
         if (index >= expected.bodies.size()) {
             report.first_divergent_entity = actual.bodies[index].id;
             report.first_divergent_component = "entity.added";
@@ -177,6 +196,9 @@ const char* to_string(BudgetId id) noexcept {
     case BudgetId::EvidenceCheckpoint: return "evidence_checkpoint";
     case BudgetId::SupportBundleExport: return "support_bundle_export";
     case BudgetId::ViewLabFrame: return "view_lab_frame";
+    case BudgetId::DurableRecorder: return "durable_recorder";
+    case BudgetId::ExternalEffectCommit: return "external_effect_commit";
+    case BudgetId::DivergenceLocalization: return "divergence_localization";
     }
     return "unknown";
 }

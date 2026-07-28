@@ -678,7 +678,7 @@
     "arm64": "not executed",
     "p0_p4_qualified": []
   },
-  "package_version": "1.11.0",
+  "package_version": "1.12.0",
   "changeset_009": {
     "id": "009",
     "title": "complete Y1-O2 ECS evidence scope and contract reconciliation",

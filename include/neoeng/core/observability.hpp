@@ -89,6 +89,12 @@ enum class TraceCode : std::uint16_t {
     SupportBundleCreated,
     SupportBundleVerificationFailed,
     ValidationGateDeferred,
+    TemporalRecordCommitted,
+    TemporalRecordRejected,
+    ExternalEffectPrepared,
+    ExternalEffectCommitted,
+    ExternalEffectCompensated,
+    ExternalEffectRejected,
 };
 
 struct TraceEvent final {

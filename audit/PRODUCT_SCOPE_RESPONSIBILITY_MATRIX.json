@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-scope-responsibility-matrix.v1",
-  "project_version": "1.11.0",
+  "project_version": "1.12.0",
   "product_scope": "Independent deterministic state-assurance runtime derived from Year-1 technical work; not the five-year engine program.",
   "classes": {
     "core_mandatory": "Must be implemented inside the canonical D-Core library without violating canonical authority.",

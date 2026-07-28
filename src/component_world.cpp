@@ -370,6 +370,17 @@ ComponentStepResult step_component_active(
     const DeterministicActiveSet& active,
     std::span<const InputCommand> inputs,
     ComponentStepOptions options) {
+    ScopedBudgetMeasurement budget_scope(
+        options.budget_monitor,
+        options.budget_traces,
+        {
+            .id = BudgetId::EcsMaintenance,
+            .subsystem = TraceSubsystem::Simulation,
+            .limit_ns = options.budget_limit_ns,
+            .exceed_severity = TraceSeverity::Warning,
+        },
+        options.correlation_id,
+        current.frame());
     if (current.empty()) throw std::invalid_argument("Component step requires an initialized world");
     if (!active.indices().empty() && active.indices().back() >= current.body_count_) {
         throw std::invalid_argument("Component active set references a body outside world");

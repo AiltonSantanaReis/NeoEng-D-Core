@@ -25,6 +25,7 @@ struct OperationalRuntimeConfig final {
     bool enable_wall_clock_budget_tracing{true};
     std::uint64_t input_ingest_budget_ns{2'000'000U};
     std::uint64_t state_advance_budget_ns{2'000'000U};
+    std::uint64_t rollback_budget_ns{2'000'000U};
 };
 
 struct OperationalStepResult final {
@@ -116,6 +117,7 @@ private:
     bool wall_clock_budget_tracing_{true};
     BudgetDefinition input_ingest_budget_{};
     BudgetDefinition state_advance_budget_{};
+    BudgetDefinition rollback_budget_{};
     BudgetMonitor budget_monitor_{};
 };
 

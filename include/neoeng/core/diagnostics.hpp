@@ -20,6 +20,9 @@ enum class BudgetId : std::uint16_t {
     EvidenceCheckpoint = 5U,
     SupportBundleExport = 6U,
     ViewLabFrame = 7U,
+    DurableRecorder = 8U,
+    ExternalEffectCommit = 9U,
+    DivergenceLocalization = 10U,
 };
 
 struct BudgetDefinition final {

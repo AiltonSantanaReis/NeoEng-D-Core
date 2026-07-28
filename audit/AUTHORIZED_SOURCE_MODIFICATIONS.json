@@ -4,6 +4,13 @@
   "policy": "Every divergence from the supplied Year-1 source corpus must be explicitly listed with original and current SHA-256; unlisted divergence fails isolation validation.",
   "entries": [
     {
+      "path": "include/neoeng/core/component_world.hpp",
+      "original_source_sha256": "ab118c7ece86ea6375388ae68040dbf568ad8db6d0de6a302ff6222c7b358a9a",
+      "authorized_changeset": "012",
+      "reason": "add opt-in correlated budget instrumentation to the mandatory ECS maintenance path without changing canonical state semantics",
+      "current_sha256": "2357cdb51efa1b67d4ad02281570c4f181e7af5bea00e9abe91997ac78e9fa5d"
+    },
+    {
       "path": "include/neoeng/core/rollback.hpp",
       "original_source_sha256": "7cbeafa47f2f3c3b3148e7579929bfa781fe54964fbb24dce4432255fffa21ec",
       "authorized_changeset": "002",
@@ -16,6 +23,13 @@
       "authorized_changeset": "009",
       "reason": "reconcile the internal Year-1 replay/schema source contract with the separately versioned public Host C ABI without changing canonical state or transition semantics",
       "current_sha256": "44bbd48ff8765799ad19a00104222689faad94115fd90ceb84a5ddf063a59dab"
+    },
+    {
+      "path": "src/component_world.cpp",
+      "original_source_sha256": "932f6bb26185158885cf716d62fe2792dad3ceb95d53075e1d352a7f5c4f0174",
+      "authorized_changeset": "012",
+      "reason": "emit the CS012 ECS maintenance budget sample when the caller enables tracing; measurement remains outside deterministic decisions",
+      "current_sha256": "4b0c88714d500f67df09f6f82ee65f621c572a5ac4fbb08d93ec4b61030bda0a"
     },
     {
       "path": "src/rollback.cpp",

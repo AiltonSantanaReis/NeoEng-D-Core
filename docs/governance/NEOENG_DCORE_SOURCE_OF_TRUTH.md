@@ -3,7 +3,7 @@
 Documento normativo: `NEOENG-DCORE-SOT-001`
 Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.11.0
+Baseline desta fonte: 1.12.0
 
 ## 1. Autoridade
 
@@ -52,13 +52,13 @@ Cada ChangeSet deve declarar requisitos fechados, baseline verificavel, nao obje
 
 Pendencias somente podem permanecer como `native_qualification`, `external_assurance`, `host_responsibility`, `deployment_responsibility`, `optional_vertical`, `accepted_boundary` ou `out_of_scope`.
 
-## 7. Estado da baseline 1.11.0
+## 7. Estado da baseline 1.12.0
 
 A 1.8.0 estabeleceu governanca, rastreabilidade, claims, responsabilidades, backlog finito e gates de asseguracao, preservando o nucleo canonico da 1.7.0.
 
 O CS009, incorporado na baseline 1.9.0, fecha o escopo de evidencia ECS Y1-O2 como uma capacidade unica e verificavel: alocacao geral, arena, copy-on-write e manutencao de indices geram streams versionados, vinculados a identidade de fonte/build/configuracao e recalculados por verificador independente. Tambem reconcilia a ABI C publica 1.0 do Host SDK com o contrato interno de replay/schema do Ano 1.
 
-A 1.9.0 **nao declara qualificacao P1**. A execucao virtualizada observada permanece `unqualified` quando amostras, ambiente nativo, termica, clocks, timing ou zero-alocacao nao satisfazem o contrato. A regressao Windows fisica recebida permanece valida para a fonte 1.7.0 identificada pelo commit `fb8362602e1b3f6530d3efe8733bc76fc6de9f3e`; ela nao e automaticamente promovida para a 1.11.0.
+A 1.9.0 **nao declara qualificacao P1**. A execucao virtualizada observada permanece `unqualified` quando amostras, ambiente nativo, termica, clocks, timing ou zero-alocacao nao satisfazem o contrato. A regressao Windows fisica recebida permanece valida para a fonte 1.7.0 identificada pelo commit `fb8362602e1b3f6530d3efe8733bc76fc6de9f3e`; ela nao e automaticamente promovida para a 1.12.0.
 
 O CS010, incorporado na baseline 1.10.0, fecha a referencia distribuida interna: duas instancias independentes sao comparadas, divergem deliberadamente, localizam a diferenca no schema Body, recebem uma correcao opaca por UDP loopback real e convergem pela API oficial de rollback/ressimulacao. `ReplicaAdapter` estabelece a fronteira neutra de dominio sem mudar a autoridade canonica.
 
@@ -66,7 +66,11 @@ O modulo v1 nao e transporte remoto de producao, nao autentica nem cifra por si 
 
 O CS011, incorporado na baseline 1.11.0, rejeita o Y1-O4 como claim de runtime e remove o claim de certificado numerico global composto. O contrato aceito cobre primitivas Q32.32 com intermediario exato e rejeicao fail-closed, e separa os resultados do solver em certificado racional de pequena arvore, grade finita, residual limitado e fallback conectado operacional nao certificado. As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a mesma fonte, com resultado semantico GCC/Clang byte a byte identico.
 
-Esses resultados descrevem somente os ambientes registrados e nao promovem ARM64, desempenho universal, estimador de Lyapunov de producao, certificacao global do solver ou prova de toda composicao numerica. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS012.
+Esses resultados descrevem somente os ambientes registrados e nao promovem ARM64, desempenho universal, estimador de Lyapunov de producao, certificacao global do solver ou prova de toda composicao numerica.
+
+O CS012, proposto para a baseline 1.12.0, fecha o contrato temporal por um recorder append-only duravel e encadeado por SHA-256, recuperacao/verificacao fail-closed, cobertura declarada de todos os campos do unico schema canonico prometido (`WorldState v1`) e budgets automaticos nos nove caminhos obrigatorios. Efeitos externos seguem prepare/confirm/commit/compensate com chave de idempotencia; rollback descarta intents preparados, mas nunca afirma desfazer efeito irreversivel ja confirmado.
+
+O anchor externo e o armazenamento idempotente do executor continuam responsabilidades de deployment/host explicitamente limitadas. Resultados de campanha descrevem somente a fonte, ambiente e configuracao registrados. Ate a campanha imutavel ser aprovada, o produto ainda nao esta comercialmente concluido e o fechamento normativo corrente permanece o CS012.
 
 ## 8. Regra de conflito
 
