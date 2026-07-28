@@ -393,7 +393,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": False,
-        "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open.",
+        "reason": "CS012 closes the declared temporal recorder, WorldState v1 localization, mandatory-path instrumentation and external-effects boundary; native ARM64, other mandatory technical work and external assurance remain open.",
     }
 
 

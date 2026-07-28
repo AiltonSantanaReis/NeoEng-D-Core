@@ -1,0 +1,15 @@
+{
+  "limitations": [
+    "The in-memory time-travel window remains bounded.",
+    "Durability requires explicit use of the recorder on suitable storage.",
+    "Rollback cannot undo an irreversible committed host effect.",
+    "Exactly-once execution requires a conforming host idempotency store.",
+    "The product does not supply an external trust anchor.",
+    "WorldState v1 is the only canonical schema promised by this baseline.",
+    "An x86_64 result does not prove ARM64 equivalence.",
+    "Measurements describe only the recorded host and configuration."
+  ],
+  "native_or_external_results_may_be_inferred": false,
+  "project_version": "1.12.0",
+  "schema": "neoeng.dcore.temporal-closure-limitations.v1"
+}

@@ -1,0 +1,1 @@
+temporal_closure_tests=passed

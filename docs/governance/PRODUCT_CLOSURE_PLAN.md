@@ -21,9 +21,9 @@ Duas instancias independentes, mesmos inputs, comparacao, divergencia controlada
 
 Y1-O4 rejeitado como claim de runtime; certificado global composto rejeitado; contrato fail-closed de primitivas Q32.32 e classificacao explicita dos dominios/certificados/fallback do solver de arvores obliquas. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas, com resultado semantico GCC/Clang byte a byte identico e sem inferir ARM64 ou desempenho universal.
 
-## CS012 - Fechamento temporal e efeitos externos — EM VALIDACAO PARA 1.12.0
+## CS012 - Fechamento temporal e efeitos externos — CONCLUIDO EM 1.12.0
 
-Recorder temporal append-only duravel e encadeado por SHA-256, recuperacao e adulteracao fail-closed, branch/retencao explicitas, protocolo idempotente prepare/confirm/commit/compensate, reconciliacao de rollback e instrumentacao automatica dos caminhos obrigatorios. O anchor externo e o executor idempotente real permanecem responsabilidades declaradas de deployment/host.
+Recorder temporal append-only duravel e encadeado por SHA-256, recuperacao e adulteracao fail-closed, branch/retencao explicitas, protocolo idempotente prepare/confirm/commit/compensate, reconciliacao de rollback e instrumentacao automatica dos caminhos obrigatorios. Campanhas Windows clang-cl, Linux GCC e Linux Clang aprovadas, com resultado semantico GCC/Clang byte a byte identico. O anchor externo e o executor idempotente real permanecem responsabilidades declaradas de deployment/host; ARM64 nao foi inferido.
 
 ## CS013 - Seguranca e evidencia criptografica de producao
 

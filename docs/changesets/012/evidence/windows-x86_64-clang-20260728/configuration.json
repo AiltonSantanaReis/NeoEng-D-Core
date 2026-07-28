@@ -1,0 +1,11 @@
+{
+  "durable_segments": 512,
+  "external_effects": 4096,
+  "machine": "AMD64",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "project_version": "1.12.0",
+  "restart_recovery_required": true,
+  "schema": "neoeng.dcore.temporal-closure-configuration.v1",
+  "tamper_detection_required": true
+}

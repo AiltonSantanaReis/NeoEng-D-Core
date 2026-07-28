@@ -58,11 +58,13 @@
     {
       "claim_id": "CLAIM-REPLAY-001",
       "statement": "The runtime supports deterministic replay and retained historical reconstruction.",
-      "status": "implemented",
-      "scope": "declared schemas and retained window",
+      "status": "verified",
+      "scope": "WorldState v1, bounded live window and explicit append-only durable export recorder",
       "evidence": [
         "docs/TRACEABILITY_YEAR1.md",
-        "docs/VALIDATION_REPORT.md"
+        "docs/VALIDATION_REPORT.md",
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+        "docs/changesets/012/TEST_STATUS.md"
       ],
       "public_use": "allowed_with_retention_limits"
     },
@@ -70,10 +72,12 @@
       "claim_id": "CLAIM-ROLLBACK-001",
       "statement": "The runtime supports correction and deterministic resimulation across an eight-frame rollback window.",
       "status": "verified",
-      "scope": "functional corpus; physical P1 latency qualification pending",
+      "scope": "functional corpus; irreversible committed host effects are explicit boundaries; physical P1 latency qualification pending",
       "evidence": [
         "docs/TRACEABILITY_YEAR1.md",
-        "docs/changesets/007/evidence/host-sdk-reference-gcc.txt"
+        "docs/changesets/007/evidence/host-sdk-reference-gcc.txt",
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+        "neoeng_temporal_closure_tests"
       ],
       "public_use": "allowed_without_unqualified_latency_claim"
     },
@@ -102,12 +106,14 @@
     },
     {
       "claim_id": "CLAIM-TT-001",
-      "statement": "Time-travel navigation and semantic state diff are available for the current Body-based canonical schema.",
+      "statement": "Time-travel navigation, durable authorized export and semantic state diff are available for WorldState v1.",
       "status": "verified",
-      "scope": "bounded in-memory history and current schema",
+      "scope": "bounded in-memory history plus explicit durable recorder; WorldState v1 is the sole promised canonical schema",
       "evidence": [
         "docs/changesets/001/OBSERVABILITY_TIME_TRAVEL.md",
-        "docs/changesets/005/CHANGESET.md"
+        "docs/changesets/005/CHANGESET.md",
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+        "docs/changesets/012/TEST_STATUS.md"
       ],
       "public_use": "allowed_with_schema_and_retention_limits"
     },
@@ -115,11 +121,13 @@
       "claim_id": "CLAIM-DIV-001",
       "statement": "A requested comparison can locate the first observed divergence through stable hash, SHA-256, Merkle chunk and known semantic component.",
       "status": "verified",
-      "scope": "current canonical Body schema; CS010 reference coordinator orchestrates fingerprint comparison and DCoreReplicaAdapter invokes semantic localization",
+      "scope": "all fields of the sole promised WorldState v1 schema; CS010 reference coordinator orchestrates fingerprint comparison and DCoreReplicaAdapter invokes semantic localization",
       "evidence": [
         "docs/changesets/005/CHANGESET.md",
         "tests/observability_support_tests.cpp",
-        "neoeng_distributed_reference_probe"
+        "neoeng_distributed_reference_probe",
+        "neoeng_temporal_closure_tests",
+        "docs/changesets/012/TEST_STATUS.md"
       ],
       "public_use": "allowed_with_orchestration_scope"
     },

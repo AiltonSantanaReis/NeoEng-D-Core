@@ -1,0 +1,1 @@
+{"schema":"neoeng.dcore.temporal-closure.v1","status":"passed","seed":12012,"durable_segments":512,"durable_head_sha256":"1d78efae8d396de2d6c50746b8f392e911b1ccf9c656e3e0b8a8dc9780a019f8","external_effects":4096,"commits":4096,"compensations":2048,"canonical_fields":6,"mandatory_paths":9}

@@ -68,9 +68,9 @@ O CS011, incorporado na baseline 1.11.0, rejeita o Y1-O4 como claim de runtime e
 
 Esses resultados descrevem somente os ambientes registrados e nao promovem ARM64, desempenho universal, estimador de Lyapunov de producao, certificacao global do solver ou prova de toda composicao numerica.
 
-O CS012, proposto para a baseline 1.12.0, fecha o contrato temporal por um recorder append-only duravel e encadeado por SHA-256, recuperacao/verificacao fail-closed, cobertura declarada de todos os campos do unico schema canonico prometido (`WorldState v1`) e budgets automaticos nos nove caminhos obrigatorios. Efeitos externos seguem prepare/confirm/commit/compensate com chave de idempotencia; rollback descarta intents preparados, mas nunca afirma desfazer efeito irreversivel ja confirmado.
+O CS012, incorporado na baseline 1.12.0, fecha o contrato temporal por um recorder append-only duravel e encadeado por SHA-256, recuperacao/verificacao fail-closed, cobertura declarada de todos os campos do unico schema canonico prometido (`WorldState v1`) e budgets automaticos nos nove caminhos obrigatorios. Efeitos externos seguem prepare/confirm/commit/compensate com chave de idempotencia; rollback descarta intents preparados, mas nunca afirma desfazer efeito irreversivel ja confirmado.
 
-O anchor externo e o armazenamento idempotente do executor continuam responsabilidades de deployment/host explicitamente limitadas. Resultados de campanha descrevem somente a fonte, ambiente e configuracao registrados. Ate a campanha imutavel ser aprovada, o produto ainda nao esta comercialmente concluido e o fechamento normativo corrente permanece o CS012.
+As campanhas Windows clang-cl, Linux GCC e Linux Clang foram aprovadas sobre a fonte `7dc8a6f66190382adf7ee45097745d3b1c811e42`, com resultado semantico GCC/Clang byte a byte identico. O anchor externo e o armazenamento idempotente do executor continuam responsabilidades de deployment/host explicitamente limitadas. Resultados descrevem somente a fonte, ambiente e configuracao registrados e nao promovem ARM64 nem desempenho universal. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS013.
 
 ## 8. Regra de conflito
 

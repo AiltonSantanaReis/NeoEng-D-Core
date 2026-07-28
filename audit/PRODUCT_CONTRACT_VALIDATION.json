@@ -3,26 +3,23 @@
   "project_version": "1.12.0",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "a6d73d2fa12825eec34fced41ce7b44d9160e2126665a620ccf3cb230d0efa1b",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "b36554cd36fdb47ecf613a633890997546201b7679f6b5d474555670116d6eec",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "86dfc7214c3cd756f45173341d09e773602c2acf0152974bd8ff148235ec89f5",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "736fc5e687308e0c202d84ec16b9c026e5e819f7ca805d236c6c92a65bcb962a",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "b48eed218cf6c226631c3efc34e5980e064808e76944cb059de640dad8b67682",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "84f0c30e96649f985c137c5789007cf84c4b361ca4b194b7dceabe9334800e2a",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "f56e5bdbda6f1b9d99831b4b743dfb94e52a8d0ca3a07233cbaabf81c7df8c9a",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "18a844d41403800599a7f4fb4adab3831da7d484b112d3e433b9725f5dbc249e",
     "audit/DEFERRED_VALIDATION_GATES.json": "e7e98e1469a0933d9d5d26d8811086d9b1c060aa82df8c66ddc8d301cf6db014",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "0cef7b4b645e09f82ed26f953ac052340c20dd1e9d796ce48b2ddd346419565a",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "19ae071ac2d894d22a69dce79ca4225e30b605ab2e724ff0e0fc03621412de21",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "8976b130d8b433389adf217c61a87e75358ce22285e0a2dbe8f13db105c54100",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "92a2c06a3e8d68da87a48b8858600519f4f043970882a154adfa0aa2ad7ac408",
     "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "abac5e71dc253985d02b9f9d1b33b2c5131220139bfc2b477ff51e9f45bacfd6"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 13,
-    "open_internal_limitations": 17
+    "open_internal_requirements": 10,
+    "open_internal_limitations": 13
   },
   "open_internal_requirement_ids": [
-    "DCORE-TIME-002",
-    "DCORE-DIV-002",
-    "DCORE-OBS-001",
     "DCORE-CRYPTO-002",
     "DCORE-SEC-001",
     "DCORE-BUNDLE-002",
@@ -39,10 +36,6 @@
     "LIM-008",
     "LIM-011",
     "LIM-016",
-    "LIM-021",
-    "LIM-022",
-    "LIM-024",
-    "LIM-026",
     "LIM-027",
     "LIM-029",
     "LIM-030",
@@ -54,5 +47,5 @@
     "LIM-036"
   ],
   "commercial_ready": false,
-  "reason": "CS011 closes the declared numerical domain by removing unsupported global claims and recording scoped evidence; native ARM64, other mandatory technical work and external assurance remain open."
+  "reason": "CS012 closes the declared temporal recorder, WorldState v1 localization, mandatory-path instrumentation and external-effects boundary; native ARM64, other mandatory technical work and external assurance remain open."
 }

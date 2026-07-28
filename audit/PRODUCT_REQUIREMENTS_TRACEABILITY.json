@@ -318,21 +318,49 @@
       "requirement_id": "DCORE-TIME-002",
       "description": "Replay/time-travel retention, export and durable recorder responsibilities are closed.",
       "responsibility": "product_module_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "src/observability.cpp",
-        "apps/dcore_time_travel_cli.cpp"
+        "apps/dcore_time_travel_cli.cpp",
+        "include/neoeng/core/temporal_contract.hpp",
+        "src/temporal_contract.cpp"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_temporal_closure_probe",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_stage": "CS012"
     },
     {
       "requirement_id": "DCORE-TIME-003",
       "description": "Irreversible external effects have an explicit idempotency/commit/compensation contract.",
       "responsibility": "host_responsibility",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "include/neoeng/core/temporal_contract.hpp",
+        "src/temporal_contract.cpp",
+        "docs/contracts/TEMPORAL_CLOSURE_V1.md"
+      ],
+      "tests_or_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_temporal_closure_probe",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_stage": "CS012"
     },
     {
@@ -352,24 +380,52 @@
       "requirement_id": "DCORE-DIV-002",
       "description": "Diff and Merkle localization cover every product-promised canonical component schema.",
       "responsibility": "core_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "src/diagnostics.cpp",
-        "src/state_evidence.cpp"
+        "src/state_evidence.cpp",
+        "src/observability.cpp",
+        "include/neoeng/core/temporal_contract.hpp"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_temporal_closure_tests",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_stage": "CS012"
     },
     {
       "requirement_id": "DCORE-OBS-001",
       "description": "Budget and trace instrumentation cover every mandatory product path.",
       "responsibility": "core_mandatory",
-      "status": "partial",
+      "status": "complete",
       "implementation": [
         "src/observability.cpp",
-        "src/diagnostics.cpp"
+        "src/diagnostics.cpp",
+        "src/operational_runtime.cpp",
+        "src/component_world.cpp",
+        "src/state_evidence.cpp",
+        "src/support_bundle.cpp",
+        "src/temporal_contract.cpp"
       ],
-      "tests_or_evidence": [],
+      "tests_or_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_observability_support_tests",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_stage": "CS012"
     },
     {

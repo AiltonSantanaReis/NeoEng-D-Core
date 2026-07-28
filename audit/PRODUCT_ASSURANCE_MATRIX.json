@@ -455,13 +455,16 @@
     },
     {
       "requirement_id": "DCORE-TIME-002",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS012",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -471,18 +474,32 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_temporal_closure_probe",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-TIME-003",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "host_responsibility",
       "closure_stage": "CS012",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -492,7 +509,18 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_temporal_closure_probe",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
@@ -515,13 +543,16 @@
     },
     {
       "requirement_id": "DCORE-DIV-002",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "core_mandatory",
       "closure_stage": "CS012",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -531,18 +562,31 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_temporal_closure_tests",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-OBS-001",
-      "requirement_status": "partial",
+      "requirement_status": "complete",
       "responsibility": "core_mandatory",
       "closure_stage": "CS012",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
+        "fail_closed",
+        "regression",
+        "reproducibility",
         "adversarial",
         "fault_injection",
         "recovery",
@@ -552,7 +596,18 @@
         "independent_verification",
         "evidence_integrity"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "neoeng_temporal_closure_tests",
+        "neoeng_observability_support_tests",
+        "scripts/verify_temporal_closure_boundary.py",
+        "scripts/qualification/verify_temporal_closure_evidence.py",
+        "docs/changesets/012/TEST_STATUS.md",
+        "docs/changesets/012/evidence/windows-x86_64-clang-20260728",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-gcc",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-linux-clang",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/cs012-cross-compiler-comparison/cross-compiler-summary.json",
+        "docs/changesets/012/evidence/github-actions-run-30349979328/run.json"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {

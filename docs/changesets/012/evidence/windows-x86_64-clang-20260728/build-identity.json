@@ -1,0 +1,10 @@
+{
+  "build_config": "Release",
+  "cmake": "cmake version 4.3.1-msvc1",
+  "compiler_id": "clang-22.1.0-windows-msvc",
+  "probe_binary_sha256": "e991143089175a8d90e894985aa5b1816ca243cb2119458afa9868b4f5ca9ab0",
+  "project_version": "1.12.0",
+  "python": "3.14.6",
+  "schema": "neoeng.dcore.build-identity.v1",
+  "tests_binary_sha256": "d32131a582cb6cae3fedd986bca073fd8561c66b05126e184516156e8c99828e"
+}

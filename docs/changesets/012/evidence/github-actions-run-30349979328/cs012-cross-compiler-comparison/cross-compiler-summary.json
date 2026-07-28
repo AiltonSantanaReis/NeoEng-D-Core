@@ -1,0 +1,14 @@
+{
+  "architecture": "x86_64",
+  "byte_identical": true,
+  "clang_probe_sha256": "451ba76738a7b2572e731a980360452d1726b3ecc5a0d52e3fabc0084203dc20",
+  "compilers": [
+    "gcc",
+    "clang"
+  ],
+  "cross_architecture_claim_promoted": false,
+  "external_trust_anchor_claimed": false,
+  "gcc_probe_sha256": "451ba76738a7b2572e731a980360452d1726b3ecc5a0d52e3fabc0084203dc20",
+  "schema": "neoeng.dcore.cs012-cross-compiler.v1",
+  "status": "passed"
+}

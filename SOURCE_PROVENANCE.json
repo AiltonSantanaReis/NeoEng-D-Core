@@ -27,7 +27,7 @@
     "campaign_scripts": 23,
     "artifact_roots": 133
   },
-  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS011 1.11.0 configured regression passed 24/24 and immutable numerical campaign passed on the recorded physical Windows x86_64 host; native hardware qualification remains separate",
+  "windows_status": "authoritative 1.7.0 source independently verified on physical Windows; CS012 1.12.0 configured regression passed 29/29 and immutable temporal campaign passed on the recorded physical Windows x86_64 host; native hardware qualification remains separate",
   "package": "NeoEng-D-Core-Windows-Audited",
   "identity_change": {
     "date": "2026-07-22",
@@ -261,6 +261,23 @@
     "hardware_interpretation": "measurements apply only to the recorded host; weaker or stronger machines may differ for better or worse and no universal rule is inferred",
     "arm64_execution": "not performed",
     "external_mathematical_audit": "not performed",
+    "commercial_product_complete": false
+  },
+  "changeset_012": {
+    "base_version": "1.11.0",
+    "target_version": "1.12.0",
+    "scope": "durable temporal recorder, full WorldState v1 diff/localization, mandatory-path budget instrumentation and explicit external-effects lifecycle",
+    "canonical_state_authority_changed": false,
+    "canonical_transition_changed": false,
+    "canonical_serialization_changed": false,
+    "host_c_abi_version": "1.0 unchanged; additive trace code constants only",
+    "source_commit": "7dc8a6f66190382adf7ee45097745d3b1c811e42",
+    "windows_x86_64_execution": "29/29 configured tests and immutable temporal campaign passed on the recorded Windows 11 clang-cl host",
+    "linux_x86_64_cross_compiler_execution": "GitHub Actions run 30349979328 passed GCC, Clang, independent evidence verification and byte-identical semantic comparison",
+    "hardware_interpretation": "measurements apply only to the recorded host and configuration; weaker or stronger machines may differ for better or worse and no universal rule is inferred",
+    "arm64_execution": "not performed",
+    "external_trust_anchor": "not performed; deployment-specific",
+    "exactly_once_without_conforming_host": "not claimed",
     "commercial_product_complete": false
   }
 }
