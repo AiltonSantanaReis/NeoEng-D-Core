@@ -152,7 +152,9 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
 
     static_summary = load_json(raw_output / "static-analysis-summary.json")
     release_artifacts = load_json(output / "release-artifacts.json")
-    release_verification = load_json(output / "independent-verification.json")
+    release_verification = load_json(
+        output / "independent-release-verification.json"
+    )
     provenance_attestation = load_json(output / "attestation-verification.json")
     sbom_attestation = load_json(output / "sbom-attestation-verification.json")
     reproducibility_lines = (
