@@ -296,7 +296,10 @@ def verify(directory: Path) -> dict[str, Any]:
         path = directory / name
         if path.is_file():
             text = path.read_text(encoding="utf-8", errors="replace")
-            if "100% tests passed" not in text or "0 tests failed out of" not in text:
+            if (
+                "100% tests passed" not in text
+                or re.search(r"\b[1-9][0-9]* tests failed out of", text)
+            ):
                 errors.append(f"CTest success marker absent: {name}")
     for name in ("raw/network-packet.txt", "raw/session-handshake.txt"):
         path = directory / name
@@ -491,8 +494,13 @@ def write_fixture(directory: Path) -> None:
         "raw/windows-clang-cl-ctest.txt",
         "raw/sanitizer-ctest.txt",
     ):
+        summary = (
+            "100% tests passed out of 1\n"
+            if name == "raw/windows-clang-cl-ctest.txt"
+            else "100% tests passed, 0 tests failed out of 1\n"
+        )
         (directory / name).write_text(
-            "100% tests passed, 0 tests failed out of 1\n", encoding="utf-8"
+            summary, encoding="utf-8"
         )
     for name in (
         "raw/linux-gcc-build-identity.txt",

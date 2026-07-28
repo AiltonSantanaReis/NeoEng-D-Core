@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -71,7 +72,10 @@ def locate(directory: Path, name: str) -> Path:
 
 def assert_ctest_passed(path: Path) -> None:
     text = path.read_text(encoding="utf-8", errors="replace")
-    if "100% tests passed" not in text or "0 tests failed out of" not in text:
+    if (
+        "100% tests passed" not in text
+        or re.search(r"\b[1-9][0-9]* tests failed out of", text)
+    ):
         raise AssemblyError(f"CTest success marker absent: {path.name}")
 
 
