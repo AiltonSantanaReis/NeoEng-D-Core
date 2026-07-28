@@ -83,13 +83,13 @@ template <typename T>
     if (cursor > bytes.size() || bytes.size() - cursor < sizeof(Unsigned)) {
         return false;
     }
-    Unsigned bits{};
+    std::uintmax_t bits{};
     for (std::size_t index = 0U; index < sizeof(Unsigned); ++index) {
-        bits |= static_cast<Unsigned>(bytes[cursor + index])
+        bits |= static_cast<std::uintmax_t>(bytes[cursor + index])
             << static_cast<unsigned int>(index * 8U);
     }
     cursor += sizeof(Unsigned);
-    value = static_cast<T>(bits);
+    value = static_cast<T>(static_cast<Unsigned>(bits));
     return true;
 }
 
