@@ -4,7 +4,7 @@ Baseline under acceptance: `1.14.0`
 
 Campaign: `TEST-CS015-001`
 
-State: implementation
+State: accepted
 
 ## Scope
 
@@ -43,3 +43,14 @@ qualification, sector readiness or performance on another machine.
   CS015, without being promoted;
 - the final requirement, campaign, reports and public status are reconciled
   without changing the technical baseline version.
+
+## Acceptance record
+
+All exit criteria passed for source
+`0d909e75380140078e84d1b5af07ed1e709082b5` in GitHub Actions run
+`30375982639`. The independently verified package is recorded at
+`docs/changesets/015/evidence/github-actions-run-30375982639`.
+
+The final decision closes `DCORE-ACCEPT-001` and accepts the horizontal
+baseline 1.14.0 only within generated public claims and recorded limitations.
+Native and external gates remain separate and no prohibited claim is promoted.

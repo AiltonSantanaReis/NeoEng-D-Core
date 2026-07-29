@@ -1,0 +1,18 @@
+{
+  "acceptance_state": "closure_candidate",
+  "certification_or_external_audit_inferred": false,
+  "gates": {
+    "governance_fail_closed": "passed",
+    "linux_clang_regression": "passed",
+    "linux_gcc_regression": "passed",
+    "prior_release_assurance_reverification": "passed",
+    "public_claim_reconciliation": "passed",
+    "windows_clang_cl_regression": "passed"
+  },
+  "native_or_hardware_profile_qualification_inferred": false,
+  "performance_on_other_hardware_inferred": false,
+  "project_version": "1.14.0",
+  "schema": "neoeng.dcore.final-acceptance-campaign-summary.v1",
+  "status": "passed",
+  "unrestricted_production_readiness_inferred": false
+}
