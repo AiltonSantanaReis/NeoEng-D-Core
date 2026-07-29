@@ -24,6 +24,7 @@ FILES = {
     "campaigns": Path("audit/PRODUCT_TEST_CAMPAIGNS.json"),
     "capabilities": Path("audit/PRODUCT_CAPABILITY_SURFACE.json"),
     "release": Path("audit/RELEASE_ASSURANCE_POLICY.json"),
+    "acceptance": Path("audit/FINAL_ACCEPTANCE_POLICY.json"),
     "deferred": Path("audit/DEFERRED_VALIDATION_GATES.json"),
 }
 REPORT = ROOT / "audit/PRODUCT_CONTRACT_VALIDATION.json"
@@ -159,6 +160,7 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
         "campaigns": "neoeng.dcore.product-test-campaigns.v1",
         "capabilities": "neoeng.dcore.product-capability-surface.v1",
         "release": "neoeng.dcore.release-assurance-policy.v1",
+        "acceptance": "neoeng.dcore.final-acceptance-policy.v1",
         "deferred": "neoeng.dcore.deferred-validation-gates.v1",
     }
     for key, schema in expected_schemas.items():
@@ -383,6 +385,38 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
         if gate.get("category") == "native_validation_pending" and gate.get("blocking_for_profile_qualification") is not True:
             errors.append(f"native gate does not block profile qualification: {gate.get('gate_id')}")
 
+    acceptance = docs["acceptance"]
+    if (
+        acceptance.get("closure_stage") != "CS015"
+        or acceptance.get("acceptance_requirement") != "DCORE-ACCEPT-001"
+        or acceptance.get("acceptance_campaign") != "TEST-CS015-001"
+    ):
+        errors.append("final acceptance policy does not identify the CS015 closure")
+    conditions = acceptance.get("required_conditions", {})
+    if (
+        not isinstance(conditions, dict)
+        or conditions.get("open_internal_limitations") != 0
+        or conditions.get("open_internal_requirements_before_evidence_recording")
+        != ["DCORE-ACCEPT-001"]
+        or conditions.get("open_internal_requirements_after_acceptance") != 0
+        or conditions.get("unsupported_or_prohibited_claims_in_public_material") != 0
+        or conditions.get("prior_release_assurance_evidence_must_verify") is not True
+        or conditions.get("independent_campaign_verification_required") is not True
+        or conditions.get("sha256_manifest_required") is not True
+    ):
+        errors.append("final acceptance required conditions are not fail-closed")
+    interpretation = acceptance.get("commercial_interpretation", {})
+    for flag in (
+        "unrestricted_production_readiness_may_be_inferred",
+        "mission_critical_sector_readiness_may_be_inferred",
+        "certification_may_be_inferred",
+        "independent_external_audit_may_be_inferred",
+        "arm64_or_hardware_profile_qualification_may_be_inferred",
+        "performance_on_other_hardware_may_be_inferred",
+    ):
+        if interpretation.get(flag) is not False:
+            errors.append(f"final acceptance policy must prohibit inference: {flag}")
+
     # CS009 closes implementation scope only; native qualification remains separate.
     req_by_id = {r.get("requirement_id"): r for r in req_rows if isinstance(r, dict)}
     for rid in ("DCORE-ECS-002", "DCORE-ECS-003", "DCORE-ECS-004", "DCORE-GOV-001"):
@@ -426,6 +460,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         and r["status"] in {"partial", "planned"}
     ]
     open_lim = [r["limitation_id"] for r in backlog_rows if r["category"] == "internal_mandatory" and r["status"] == "open"]
+    accepted = not open_req and not open_lim
     return {
         "schema": "neoeng.dcore.product-contract-validation.v1",
         "project_version": EXPECTED_VERSION,
@@ -440,8 +475,18 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         },
         "open_internal_requirement_ids": open_req,
         "open_internal_limitation_ids": open_lim,
-        "commercial_ready": False,
-        "reason": "CS014 is closed by immutable Windows and Linux GCC/Clang release-assurance evidence plus independently verified public Sigstore bundles; final CS015 acceptance, native ARM64/profile qualification and external assurance remain open.",
+        "commercial_ready": accepted,
+        "reason": (
+            "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.0 "
+            "within generated public claims and recorded limitations. This does "
+            "not infer unrestricted production readiness, native ARM64/profile "
+            "qualification, certification or external assurance."
+            if accepted else
+            "CS014 release assurance is closed; DCORE-ACCEPT-001 remains the "
+            "only open internal requirement until immutable CS015 evidence is "
+            "recorded. Native ARM64/profile qualification and external "
+            "assurance remain separate nonblocking gates."
+        ),
     }
 
 
@@ -468,6 +513,12 @@ def run_self_test(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]:
             if row.get("category") == "internal_mandatory"
         ).update(status="open", closure_stage=""),
     )
+    add(
+        "allow unrestricted production inference",
+        lambda d: d["acceptance"]["commercial_interpretation"].update(
+            unrestricted_production_readiness_may_be_inferred=True
+        ),
+    )
 
     for name, mutated in mutations:
         if not validate_documents(root, mutated):
@@ -491,7 +542,7 @@ def main() -> int:
         if failures:
             print("\n".join(failures))
             return 1
-        print("OK: 7 fail-closed product-contract mutations were rejected.")
+        print("OK: 8 fail-closed product-contract mutations were rejected.")
         return 0
 
     errors = validate_documents(ROOT, docs)

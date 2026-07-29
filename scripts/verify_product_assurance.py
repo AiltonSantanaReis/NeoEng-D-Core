@@ -297,9 +297,40 @@ def self_test(req: dict[str, Any], matrix: dict[str, Any], campaigns: dict[str, 
         mutate(r, m, c)
         cases.append((name, r, m, c))
 
+    def reopen_acceptance_as_wrongly_evidenced(r, m, c):
+        requirement = next(
+            row for row in r["requirements"]
+            if row["requirement_id"] == "DCORE-ACCEPT-001"
+        )
+        assurance = next(
+            row for row in m["requirements"]
+            if row["requirement_id"] == "DCORE-ACCEPT-001"
+        )
+        campaign = next(
+            row for row in c["campaigns"]
+            if row["campaign_id"] == "TEST-CS015-001"
+        )
+        requirement.update(
+            status="planned", implementation=[], tests_or_evidence=[]
+        )
+        assurance.update(
+            requirement_status="planned",
+            assurance_status="evidenced",
+            current_evidence=[],
+        )
+        campaign.update(status="planned", evidence=[])
+
     add("remove a requirement row", lambda r, m, c: m["requirements"].pop())
-    add("mark open requirement evidenced", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial").update(assurance_status="evidenced"))
-    add("drop adversarial future class", lambda r, m, c: next(x for x in m["requirements"] if x["assurance_status"] == "planned_or_partial")["required_test_classes"].remove("adversarial"))
+    add("mark open requirement evidenced", reopen_acceptance_as_wrongly_evidenced)
+    add(
+        "drop adversarial future class",
+        lambda r, m, c: next(
+            x for x in m["requirements"]
+            if x["assurance_status"] in {
+                "planned_or_partial", "external_or_native_pending"
+            }
+        )["required_test_classes"].remove("adversarial"),
+    )
     add("claim meta-test is capability proof", lambda r, m, c: m["policy"].update(meta_validation_is_not_capability_proof=False))
     add("diverge current evidence", lambda r, m, c: m["requirements"][0].update(current_evidence=[]))
     add("duplicate assurance row", lambda r, m, c: m["requirements"].append(copy.deepcopy(m["requirements"][0])))

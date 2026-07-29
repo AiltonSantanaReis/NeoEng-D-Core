@@ -496,6 +496,16 @@ if(BUILD_TESTING)
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_release_assurance_evidence.py
       --self-test)
+  add_test(NAME neoeng_final_acceptance_verify
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_final_acceptance.py --check-report)
+  add_test(NAME neoeng_final_acceptance_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/verify_final_acceptance.py --self-test)
+  add_test(NAME neoeng_final_acceptance_evidence_verifier_self_test
+    COMMAND ${Python3_EXECUTABLE}
+      ${CMAKE_SOURCE_DIR}/scripts/qualification/verify_final_acceptance_evidence.py
+      --self-test)
   add_test(NAME neoeng_consolidated_release_verifier_self_test
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/scripts/verify_consolidated_release.py --self-test)
@@ -562,6 +572,9 @@ if(BUILD_TESTING)
     neoeng_release_assurance_verify
     neoeng_release_assurance_self_test
     neoeng_release_assurance_evidence_verifier_self_test
+    neoeng_final_acceptance_verify
+    neoeng_final_acceptance_self_test
+    neoeng_final_acceptance_evidence_verifier_self_test
     neoeng_consolidated_release_verifier_self_test
     PROPERTIES LABELS "governance;release-gate;dcore")
   set_tests_properties(
@@ -571,6 +584,11 @@ if(BUILD_TESTING)
     neoeng_release_assurance_evidence_verifier_self_test
     neoeng_consolidated_release_verifier_self_test
     PROPERTIES LABELS "governance;release-gate;dcore;cs014;release-assurance")
+  set_tests_properties(
+    neoeng_final_acceptance_verify
+    neoeng_final_acceptance_self_test
+    neoeng_final_acceptance_evidence_verifier_self_test
+    PROPERTIES LABELS "governance;release-gate;dcore;cs015;final-acceptance")
 
   add_executable(neoeng_tests tests/test_main.cpp)
   target_link_libraries(neoeng_tests PRIVATE neoeng_dcore)

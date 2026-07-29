@@ -82,7 +82,11 @@ O CS014, incorporado na baseline 1.14.0, fecha a superficie publica por um mapa 
 
 A campanha Windows clang-cl, Linux GCC/Clang, sanitizers, dois fuzzers de 120 segundos, clang-tidy e release deterministico foi aprovada sobre a fonte `82580064cd38be07af9f5264599165cbf48c218b` no run `30367653644`. Proveniencia e SBOM foram atestados por Fulcio/Rekor e verificados por Cosign no runner e novamente no host Windows do usuario.
 
-A publicacao exige os bundles keyless Sigstore do artefato; nenhuma chave privada e incluida e um candidato local sem atestacao nao e publicavel. Entitlement permanece controlado pela distribuicao e contrato comercial, sem decisao de licenca no estado canonico. Certificacao, auditoria externa, ARM64, qualificacao de hardware e desempenho universal nao sao inferidos. O produto ainda nao esta comercialmente concluido; o proximo fechamento normativo e o CS015.
+A publicacao exige os bundles keyless Sigstore do artefato; nenhuma chave privada e incluida e um candidato local sem atestacao nao e publicavel. Entitlement permanece controlado pela distribuicao e contrato comercial, sem decisao de licenca no estado canonico. Certificacao, auditoria externa, ARM64, qualificacao de hardware e desempenho universal nao sao inferidos.
+
+O CS015 aceita o NeoEng D-Core como produto horizontal na baseline 1.14.0, estritamente dentro dos claims publicos gerados e das limitacoes registradas. A campanha Windows clang-cl, Linux GCC e Linux Clang foi aprovada sobre a fonte `0d909e75380140078e84d1b5af07ed1e709082b5` no run `30375982639`, com 54 testes da superficie suportada em cada ambiente, reconciliacao de claims, reverificacao independente do pacote CS014 e manifesto SHA-256 verificado.
+
+Essa aceitacao reporta zero requisitos internos obrigatorios abertos, zero limitacoes internas obrigatorias abertas e zero claims planejados, nao suportados, removidos ou proibidos no material publico gerado. Ela nao transforma `CLAIM-PROD-READY-001` em claim autorizado e nao implica prontidao irrestrita ou mission-critical, certificacao, auditoria externa, ARM64/P0-P4, provider criptografico externo nem desempenho em outra maquina. Gates nativos e externos permanecem separados e bloqueiam somente os claims correspondentes.
 
 ## 8. Regra de conflito
 

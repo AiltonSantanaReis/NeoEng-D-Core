@@ -1,0 +1,45 @@
+{
+  "schema": "neoeng.dcore.final-acceptance-policy.v1",
+  "project_version": "1.14.0",
+  "closure_stage": "CS015",
+  "acceptance_requirement": "DCORE-ACCEPT-001",
+  "acceptance_campaign": "TEST-CS015-001",
+  "accepted_product_scope": "NeoEng D-Core horizontal product baseline 1.14.0 within the generated public claims and recorded limitations",
+  "required_conditions": {
+    "open_internal_limitations": 0,
+    "open_internal_requirements_before_evidence_recording": [
+      "DCORE-ACCEPT-001"
+    ],
+    "open_internal_requirements_after_acceptance": 0,
+    "unsupported_or_prohibited_claims_in_public_material": 0,
+    "source_of_truth_conflicts": 0,
+    "failed_normative_verifiers": 0,
+    "unregistered_mandatory_evidence_references": 0,
+    "cross_platform_release_regression": [
+      "windows-x86_64-clang-cl",
+      "linux-x86_64-gcc",
+      "linux-x86_64-clang"
+    ],
+    "prior_release_assurance_evidence_must_verify": true,
+    "independent_campaign_verification_required": true,
+    "sha256_manifest_required": true
+  },
+  "allowed_acceptance_states": [
+    "closure_candidate",
+    "accepted"
+  ],
+  "commercial_interpretation": {
+    "horizontal_product_baseline_may_be_accepted": true,
+    "unrestricted_production_readiness_may_be_inferred": false,
+    "mission_critical_sector_readiness_may_be_inferred": false,
+    "certification_may_be_inferred": false,
+    "independent_external_audit_may_be_inferred": false,
+    "arm64_or_hardware_profile_qualification_may_be_inferred": false,
+    "performance_on_other_hardware_may_be_inferred": false
+  },
+  "deferred_gate_policy": {
+    "nonblocking_for_cs015_may_remain_open": true,
+    "native_profile_claims_remain_blocked_until_native_campaign": true,
+    "external_assurance_claims_remain_blocked_until_external_evidence": true
+  }
+}

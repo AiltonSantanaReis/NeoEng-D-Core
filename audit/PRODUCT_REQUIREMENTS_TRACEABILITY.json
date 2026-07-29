@@ -644,9 +644,14 @@
       "requirement_id": "DCORE-ACCEPT-001",
       "description": "Final product acceptance reports zero internal mandatory gaps and zero unsupported public claims.",
       "responsibility": "product_module_mandatory",
-      "status": "planned",
-      "implementation": [],
-      "tests_or_evidence": [],
+      "status": "complete",
+      "implementation": [
+        "audit/FINAL_ACCEPTANCE_POLICY.json",
+        "scripts/verify_final_acceptance.py"
+      ],
+      "tests_or_evidence": [
+        "docs/changesets/015/evidence/github-actions-run-30375982639"
+      ],
       "closure_stage": "CS015"
     }
   ]

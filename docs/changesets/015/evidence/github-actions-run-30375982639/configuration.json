@@ -1,0 +1,12 @@
+{
+  "independent_verification_required": true,
+  "prior_cs014_evidence_reverification_required": true,
+  "project_version": "1.14.0",
+  "schema": "neoeng.dcore.final-acceptance-configuration.v1",
+  "sha256_manifest_required": true,
+  "supported_regression_targets": [
+    "linux-x86_64-gcc",
+    "linux-x86_64-clang",
+    "windows-x86_64-clang-cl"
+  ]
+}

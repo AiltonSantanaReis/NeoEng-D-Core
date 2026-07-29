@@ -33,6 +33,6 @@ O claim de provider assimetrico State Signature incluido foi removido. O contrat
 
 Mapa claim-para-SDK/ferramenta oficial, fuzzing coverage-guided, sanitizers, analise estatica bloqueante, SBOM SPDX, proveniencia, duas atestacoes keyless Sigstore publicas, CI reproduzivel, pacote cumulativo consolidado e politica comercial fora do estado canonico. Campanha Windows clang-cl, Linux GCC/Clang e verificacao independente aprovadas no run `30367653644`; ARM64, certificacao, auditoria externa e desempenho universal nao foram inferidos.
 
-## CS015 - Aceitacao final
+## CS015 - Aceitacao final — CONCLUIDO NA BASELINE 1.14.0
 
-Auditoria integral dos ledgers, regressao completa, campanhas nativas executadas quando exigidas, zero gap interno obrigatorio e publicacao de claims estritamente sustentados.
+Auditoria integral dos ledgers, regressao Windows clang-cl e Linux GCC/Clang, reverificacao independente do CS014, zero gap interno obrigatorio e publicacao de claims estritamente sustentados. A evidencia imutavel do run `30375982639` aceita o produto horizontal na baseline 1.14.0 sem inferir prontidao irrestrita, ARM64/P0-P4, certificacao, auditoria externa ou desempenho em outra maquina.

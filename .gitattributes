@@ -1,0 +1,3 @@
+# Immutable evidence packages are byte-addressed by their SHA-256 manifests.
+# Git must never rewrite their line endings or raw whitespace on checkout.
+docs/changesets/**/evidence/** -text whitespace=-trailing-space

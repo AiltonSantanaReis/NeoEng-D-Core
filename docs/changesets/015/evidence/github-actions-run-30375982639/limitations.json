@@ -1,0 +1,16 @@
+{
+  "certification_or_external_audit_may_be_inferred": false,
+  "limitations": [
+    "Acceptance is limited to generated public claims and recorded product boundaries.",
+    "No native ARM64 or P0-P4 hardware profile qualification is inferred.",
+    "No certification or independent external audit is inferred.",
+    "No unrestricted or mission-critical production-readiness claim is authorized.",
+    "Fuzzing, sanitizers, static analysis and regression reduce risk but do not prove absence of defects.",
+    "Performance observed on one host is not generalized; weaker or stronger hardware may produce worse or better results."
+  ],
+  "native_or_hardware_profile_qualification_may_be_inferred": false,
+  "performance_on_other_hardware_may_be_inferred": false,
+  "project_version": "1.14.0",
+  "schema": "neoeng.dcore.final-acceptance-limitations.v1",
+  "unrestricted_production_readiness_may_be_inferred": false
+}

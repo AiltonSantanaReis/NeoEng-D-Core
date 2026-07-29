@@ -945,10 +945,10 @@
     },
     {
       "requirement_id": "DCORE-ACCEPT-001",
-      "requirement_status": "planned",
+      "requirement_status": "complete",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS015",
-      "assurance_status": "planned_or_partial",
+      "assurance_status": "evidenced",
       "required_test_classes": [
         "positive",
         "negative",
@@ -959,9 +959,14 @@
         "cross_compiler",
         "cross_architecture_if_applicable",
         "independent_verification",
-        "evidence_integrity"
+        "evidence_integrity",
+        "fail_closed",
+        "regression",
+        "reproducibility"
       ],
-      "current_evidence": [],
+      "current_evidence": [
+        "docs/changesets/015/evidence/github-actions-run-30375982639"
+      ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     }
   ]

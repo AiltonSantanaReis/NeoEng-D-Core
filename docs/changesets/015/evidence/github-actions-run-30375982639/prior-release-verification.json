@@ -1,0 +1,11 @@
+{
+  "commercial_product_complete": false,
+  "errors": [],
+  "external_signed_attestations_verified": true,
+  "manifest_entries_verified": 23,
+  "native_or_external_results_inferred": false,
+  "project_version": "1.14.0",
+  "report_covered_by_manifest": false,
+  "schema": "neoeng.dcore.release-assurance-independent-verification.v1",
+  "status": "passed"
+}
