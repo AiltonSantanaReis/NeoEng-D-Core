@@ -42,11 +42,16 @@ def main() -> int:
     parser.add_argument("--commit", required=True)
     parser.add_argument("--ref", required=True)
     parser.add_argument("--certificate-identity", required=True)
+    parser.add_argument(
+        "--workflow-file",
+        default="cs014-release-assurance.yml",
+        help="workflow filename used in the expected GitHub OIDC identity",
+    )
     args = parser.parse_args()
 
     expected_identity = (
         f"https://github.com/{args.repository}/"
-        f".github/workflows/cs014-release-assurance.yml@{args.ref}"
+        f".github/workflows/{args.workflow_file}@{args.ref}"
     )
     try:
         if not re.fullmatch(r"[0-9a-f]{40}", args.commit):

@@ -88,6 +88,15 @@ O CS015 aceita o NeoEng D-Core como produto horizontal na baseline 1.14.0, estri
 
 Essa aceitacao reporta zero requisitos internos obrigatorios abertos, zero limitacoes internas obrigatorias abertas e zero claims planejados, nao suportados, removidos ou proibidos no material publico gerado. Ela nao transforma `CLAIM-PROD-READY-001` em claim autorizado e nao implica prontidao irrestrita ou mission-critical, certificacao, auditoria externa, ARM64/P0-P4, provider criptografico externo nem desempenho em outra maquina. Gates nativos e externos permanecem separados e bloqueiam somente os claims correspondentes.
 
+Em revalidacao corretiva posterior, o run `31246260738` sobre o commit
+`2348f147452e8183a62f54db34dd3cf46388f28d` repetiu os 54/54 testes da
+superficie suportada em Windows clang-cl, Linux GCC e Linux Clang. A cadeia
+de proveniencia externa foi atestada e verificada com Sigstore/Cosign, e o
+verificador independente fail-closed aceitou o pacote. Esse registro e
+append-only: a baseline 1.14.0 e suas limitacoes permanecem inalteradas, sem
+inferir qualificacao de hardware, desempenho universal, certificacao ou
+prontidao irrestrita.
+
 ## 8. Regra de conflito
 
 1. Interromper a afirmacao ou implementacao afetada.

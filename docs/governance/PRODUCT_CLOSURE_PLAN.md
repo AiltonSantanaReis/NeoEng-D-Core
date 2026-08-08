@@ -36,3 +36,10 @@ Mapa claim-para-SDK/ferramenta oficial, fuzzing coverage-guided, sanitizers, ana
 ## CS015 - Aceitacao final — CONCLUIDO NA BASELINE 1.14.0
 
 Auditoria integral dos ledgers, regressao Windows clang-cl e Linux GCC/Clang, reverificacao independente do CS014, zero gap interno obrigatorio e publicacao de claims estritamente sustentados. A evidencia imutavel do run `30375982639` aceita o produto horizontal na baseline 1.14.0 sem inferir prontidao irrestrita, ARM64/P0-P4, certificacao, auditoria externa ou desempenho em outra maquina.
+
+Uma revalidacao corretiva posterior, no run `31246260738` sobre a fonte
+`2348f147452e8183a62f54db34dd3cf46388f28d`, confirmou 54/54 testes em
+Windows clang-cl, Linux GCC e Linux Clang, verificou a atestacao externa de
+proveniencia com Sigstore/Cosign e passou o verificador fail-closed. Essa
+revalidacao corrige a cadeia de autenticacao da evidencia sem alterar a
+baseline 1.14.0 nem ampliar claims de hardware, desempenho ou prontidao.
