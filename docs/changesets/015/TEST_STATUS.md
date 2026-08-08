@@ -29,3 +29,26 @@ manifested artifacts.
 No native ARM64/P0–P4 result, certification, independent external audit,
 mission-critical readiness or performance rule for another machine is
 inferred.
+
+## Corrective provenance revalidation
+
+The acceptance package was revalidated on GitHub Actions in run
+`31246260738`, using source commit
+`2348f147452e8183a62f54db34dd3cf46388f28d` on branch
+`changeset-016-p0-assurance`. This is a corrective assurance run; it does
+not create a new product baseline or replace the historical run above.
+
+- Windows clang-cl, Linux GCC and Linux Clang each passed 54/54 supported-
+  surface tests;
+- the final-acceptance package was independently assembled and verified with
+  the strict fail-closed verifier;
+- the external provenance attestation was created and verified with public
+  Sigstore/Cosign (`Verified OK`);
+- 15 manifest entries were verified and 19 final evidence files were
+  uploaded in artifact `cs015-final-acceptance-evidence`;
+- artifact digest: `sha256:285d3904f3f46f3913e2c8aa8f87b8aa5beaade53e71256ce0d4d52cc9b365c5`.
+
+The corrective run closes the provenance-authentication gap found during
+assurance review. It preserves all prior limitations: no native ARM64/P0–P4
+qualification, certification, external audit, mission-critical readiness or
+performance rule for another machine is inferred.
