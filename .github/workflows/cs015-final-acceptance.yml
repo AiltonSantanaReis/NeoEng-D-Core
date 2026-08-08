@@ -130,6 +130,9 @@ jobs:
   final-acceptance:
     name: Fail-closed final acceptance
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     needs:
       - linux-regression
       - windows-regression
@@ -150,10 +153,57 @@ jobs:
           CS015_REF: ${{ github.ref }}
           CS015_RUN_ID: ${{ github.run_id }}
           CS015_RUN_ATTEMPT: ${{ github.run_attempt }}
+          CS015_WORKFLOW_REF: ${{ github.workflow_ref }}
         run: >
           python3 scripts/qualification/assemble_final_acceptance_evidence.py
           --raw "$RUNNER_TEMP/cs015-raw"
           --output evidence/campaign
+          --defer-external-verification
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v4.1.0
+        with:
+          cosign-release: "v3.0.6"
+      - name: Attest final-acceptance evidence with public Sigstore
+        shell: bash
+        run: |
+          set -euo pipefail
+          cosign attest-blob --yes \
+            --bundle evidence/campaign/provenance-attestation.sigstore.json \
+            --predicate evidence/campaign/source-provenance.json \
+            --type https://neoeng.dev/attestations/final-acceptance-provenance/v1 \
+            evidence/campaign/SHA256SUMS.txt
+      - name: Verify final-acceptance Sigstore attestation
+        shell: bash
+        run: |
+          set -euo pipefail
+          identity="https://github.com/${GITHUB_WORKFLOW_REF}"
+          common=(
+            --certificate-identity "$identity"
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com
+            --certificate-github-workflow-repository "$GITHUB_REPOSITORY"
+            --certificate-github-workflow-sha "$GITHUB_SHA"
+            --certificate-github-workflow-ref "$GITHUB_REF"
+          )
+          cosign verify-blob-attestation \
+            --bundle evidence/campaign/provenance-attestation.sigstore.json \
+            --type https://neoeng.dev/attestations/final-acceptance-provenance/v1 \
+            "${common[@]}" \
+            evidence/campaign/SHA256SUMS.txt
+          python3 scripts/qualification/write_sigstore_verification_receipt.py \
+            --bundle evidence/campaign/provenance-attestation.sigstore.json \
+            --artifact evidence/campaign/SHA256SUMS.txt \
+            --predicate-type https://neoeng.dev/attestations/final-acceptance-provenance/v1 \
+            --output evidence/campaign/attestation-verification.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --commit "$GITHUB_SHA" \
+            --ref "$GITHUB_REF" \
+            --certificate-identity "$identity" \
+            --workflow-file cs015-final-acceptance.yml
+      - name: Verify final-acceptance evidence package
+        run: >
+          python3 scripts/qualification/verify_final_acceptance_evidence.py
+          evidence/campaign
+          --write-report
       - name: Upload final acceptance evidence
         uses: actions/upload-artifact@v4
         with:

@@ -23,6 +23,10 @@ RAW_REQUIRED = {
     "linux-clang-build-identity.txt",
     "windows-clang-cl-build-identity.txt",
 }
+EXTERNAL_ATTESTATION_FILES = {
+    "provenance-attestation.sigstore.json",
+    "attestation-verification.json",
+}
 
 
 class AssemblyError(RuntimeError):
@@ -76,7 +80,7 @@ def assert_ctest(path: Path) -> None:
         raise AssemblyError(f"CTest success marker absent: {path.name}")
 
 
-def assemble(raw: Path, output: Path) -> dict[str, Any]:
+def assemble(raw: Path, output: Path, *, verify_output: bool = True) -> dict[str, Any]:
     if output.exists() and any(output.iterdir()):
         raise AssemblyError(f"refusing to overwrite non-empty evidence: {output}")
     output.mkdir(parents=True, exist_ok=True)
@@ -101,6 +105,23 @@ def assemble(raw: Path, output: Path) -> dict[str, Any]:
         or not run_attempt.isdigit()
     ):
         raise AssemblyError("GitHub Actions source identity is incomplete")
+    workflow_ref = os.environ.get(
+        "CS015_WORKFLOW_REF",
+        f"{repository}/.github/workflows/cs015-final-acceptance.yml@{ref}",
+    )
+    try:
+        tree = subprocess.run(
+            ["git", "rev-parse", f"{commit}^{{tree}}"],
+            cwd=ROOT,
+            check=True,
+            text=True,
+            capture_output=True,
+            encoding="utf-8",
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise AssemblyError(f"unable to resolve Git tree for {commit}: {exc}") from exc
+    if not re.fullmatch(r"[0-9a-f]{40}", tree):
+        raise AssemblyError("resolved Git tree is not a full lowercase SHA-1")
 
     verifier_specs = (
         (["scripts/verify_product_contract.py", "--check-report"], "product_contract"),
@@ -182,6 +203,21 @@ def assemble(raw: Path, output: Path) -> dict[str, Any]:
         },
     )
     write_json(
+        output / "source-provenance.json",
+        {
+            "schema": "neoeng.dcore.final-acceptance-provenance.v1",
+            "project_version": VERSION,
+            "repository": repository,
+            "commit": commit,
+            "tree": tree,
+            "ref": ref,
+            "workflow_ref": workflow_ref,
+            "workflow_run_id": run_id,
+            "workflow_run_attempt": run_attempt,
+            "artifact": "SHA256SUMS.txt",
+        },
+    )
+    write_json(
         output / "configuration.json",
         {
             "schema": "neoeng.dcore.final-acceptance-configuration.v1",
@@ -239,7 +275,8 @@ def assemble(raw: Path, output: Path) -> dict[str, Any]:
         path
         for path in output.rglob("*")
         if path.is_file()
-        and path.name not in {"SHA256SUMS.txt", "independent-verification.json"}
+        and path.name
+        not in {"SHA256SUMS.txt", "independent-verification.json", *EXTERNAL_ATTESTATION_FILES}
     )
     (output / "SHA256SUMS.txt").write_text(
         "".join(
@@ -249,29 +286,30 @@ def assemble(raw: Path, output: Path) -> dict[str, Any]:
         encoding="utf-8",
         newline="\n",
     )
-    verification = subprocess.run(
-        [
-            sys.executable,
-            str(
-                ROOT
-                / "scripts/qualification/verify_final_acceptance_evidence.py"
-            ),
-            str(output),
-            "--write-report",
-        ],
-        cwd=ROOT,
-        check=False,
-        text=True,
-        capture_output=True,
-        encoding="utf-8",
-        errors="replace",
-    )
-    if verification.returncode != 0:
-        raise AssemblyError(
-            "independent final acceptance verification failed:\n"
-            + verification.stdout
-            + verification.stderr
+    if verify_output:
+        verification = subprocess.run(
+            [
+                sys.executable,
+                str(
+                    ROOT
+                    / "scripts/qualification/verify_final_acceptance_evidence.py"
+                ),
+                str(output),
+                "--write-report",
+            ],
+            cwd=ROOT,
+            check=False,
+            text=True,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
         )
+        if verification.returncode != 0:
+            raise AssemblyError(
+                "independent final acceptance verification failed:\n"
+                + verification.stdout
+                + verification.stderr
+            )
     return summary
 
 
@@ -279,9 +317,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--defer-external-verification", action="store_true")
     args = parser.parse_args()
     try:
-        result = assemble(args.raw.resolve(), args.output.resolve())
+        result = assemble(
+            args.raw.resolve(),
+            args.output.resolve(),
+            verify_output=not args.defer_external_verification,
+        )
     except (OSError, ValueError, json.JSONDecodeError, AssemblyError, subprocess.CalledProcessError) as exc:
         print(f"final-acceptance evidence assembly failed: {exc}", file=sys.stderr)
         return 1

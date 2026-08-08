@@ -5,6 +5,8 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path, PurePosixPath
@@ -28,6 +30,12 @@ REQUIRED = {
     "raw/windows-clang-cl-build-identity.txt",
     "raw/governance-verifiers.txt",
 }
+EXTERNAL_ATTESTATION_FILES = {
+    "provenance-attestation.sigstore.json",
+    "attestation-verification.json",
+}
+PROVENANCE_PREDICATE = "https://neoeng.dev/attestations/final-acceptance-provenance/v1"
+SIGSTORE_ISSUER = "https://token.actions.githubusercontent.com"
 
 
 def sha256(path: Path) -> str:
@@ -41,7 +49,7 @@ def load_object(path: Path) -> dict[str, Any]:
     return value
 
 
-def verify(directory: Path) -> dict[str, Any]:
+def verify(directory: Path, *, require_external_attestation: bool = False) -> dict[str, Any]:
     errors: list[str] = []
     manifest = directory / "SHA256SUMS.txt"
     lines = manifest.read_text(encoding="utf-8").splitlines() if manifest.is_file() else []
@@ -74,14 +82,15 @@ def verify(directory: Path) -> dict[str, Any]:
         path.relative_to(directory).as_posix()
         for path in directory.rglob("*")
         if path.is_file()
-        and path.name not in {"SHA256SUMS.txt", "independent-verification.json"}
+        and path.name
+        not in {"SHA256SUMS.txt", "independent-verification.json", *EXTERNAL_ATTESTATION_FILES}
     }
     additional = sorted(material - set(entries))
     if additional:
         errors.append(f"unmanifested artifacts present: {', '.join(additional)}")
 
     documents: dict[str, dict[str, Any]] = {}
-    for name in (
+    document_names = [
         "source-identity.json",
         "build-identity.json",
         "configuration.json",
@@ -89,7 +98,10 @@ def verify(directory: Path) -> dict[str, Any]:
         "limitations.json",
         "final-acceptance-validation.json",
         "prior-release-verification.json",
-    ):
+    ]
+    if require_external_attestation:
+        document_names.append("source-provenance.json")
+    for name in document_names:
         try:
             documents[name] = load_object(directory / name)
         except (OSError, ValueError, json.JSONDecodeError) as exc:
@@ -108,6 +120,21 @@ def verify(directory: Path) -> dict[str, Any]:
         or source.get("worktree_dirty") is not False
     ):
         errors.append("source identity rejected")
+
+    provenance = documents.get("source-provenance.json", {})
+    if require_external_attestation and (
+        provenance.get("schema") != "neoeng.dcore.final-acceptance-provenance.v1"
+        or provenance.get("repository") != source.get("repository")
+        or provenance.get("commit") != source.get("commit")
+        or provenance.get("ref") != source.get("ref")
+        or provenance.get("workflow_run_id") != source.get("workflow_run_id")
+        or provenance.get("workflow_run_attempt") != source.get("workflow_run_attempt")
+        or not re.fullmatch(r"[0-9a-f]{40}", str(provenance.get("tree", "")))
+        or not str(provenance.get("workflow_ref", "")).startswith(
+            f"{source.get('repository', '')}/.github/workflows/"
+        )
+    ):
+        errors.append("source provenance rejected")
 
     build = documents.get("build-identity.json", {})
     if (
@@ -209,6 +236,72 @@ def verify(directory: Path) -> dict[str, Any]:
         or limitations.get("performance_on_other_hardware_may_be_inferred") is not False
     ):
         errors.append("limitations or non-inference policy rejected")
+
+    if require_external_attestation:
+        bundle = directory / "provenance-attestation.sigstore.json"
+        receipt_path = directory / "attestation-verification.json"
+        artifact = directory / "SHA256SUMS.txt"
+        if not bundle.is_file() or not receipt_path.is_file():
+            errors.append("external provenance attestation is absent")
+        else:
+            try:
+                receipt = load_object(receipt_path)
+                expected_identity = f"https://github.com/{provenance['workflow_ref']}"
+                if (
+                    receipt.get("schema")
+                    != "neoeng.dcore.sigstore-attestation-verification.v1"
+                    or receipt.get("status") != "passed"
+                    or receipt.get("artifact") != artifact.name
+                    or receipt.get("artifact_sha256") != sha256(artifact)
+                    or receipt.get("bundle") != bundle.name
+                    or receipt.get("bundle_sha256") != sha256(bundle)
+                    or receipt.get("predicate_type") != PROVENANCE_PREDICATE
+                    or receipt.get("repository") != source.get("repository")
+                    or receipt.get("commit") != source.get("commit")
+                    or receipt.get("ref") != source.get("ref")
+                    or receipt.get("certificate_identity") != expected_identity
+                    or receipt.get("certificate_oidc_issuer") != SIGSTORE_ISSUER
+                    or receipt.get("public_transparency_log_verified") is not True
+                    or provenance.get("artifact") != artifact.name
+                ):
+                    errors.append("external provenance receipt rejected")
+                cosign = shutil.which("cosign")
+                if cosign is None:
+                    errors.append("cosign is required for external provenance verification")
+                else:
+                    checked = subprocess.run(
+                        [
+                            cosign,
+                            "verify-blob-attestation",
+                            "--bundle",
+                            str(bundle),
+                            "--type",
+                            PROVENANCE_PREDICATE,
+                            "--certificate-identity",
+                            expected_identity,
+                            "--certificate-oidc-issuer",
+                            SIGSTORE_ISSUER,
+                            "--certificate-github-workflow-repository",
+                            str(source.get("repository")),
+                            "--certificate-github-workflow-sha",
+                            str(source.get("commit")),
+                            "--certificate-github-workflow-ref",
+                            str(source.get("ref")),
+                            str(artifact),
+                        ],
+                        check=False,
+                        capture_output=True,
+                        text=True,
+                        encoding="utf-8",
+                        errors="replace",
+                    )
+                    if checked.returncode != 0:
+                        errors.append(
+                            "cosign provenance verification failed: "
+                            + (checked.stdout + checked.stderr).strip()
+                        )
+            except (OSError, ValueError, json.JSONDecodeError, KeyError) as exc:
+                errors.append(f"external provenance verification error: {exc}")
     return {
         "schema": "neoeng.dcore.final-acceptance-independent-verification.v1",
         "project_version": VERSION,
@@ -238,6 +331,17 @@ def _fixture(directory: Path) -> None:
     }
     documents: dict[str, object] = {
         "source-identity.json": source,
+        "source-provenance.json": {
+            "schema": "neoeng.dcore.final-acceptance-provenance.v1",
+            "project_version": VERSION,
+            "repository": source["repository"],
+            "commit": source["commit"],
+            "tree": "b" * 40,
+            "ref": source["ref"],
+            "workflow_run_id": source["workflow_run_id"],
+            "workflow_run_attempt": source["workflow_run_attempt"],
+            "workflow_ref": "example/NeoEng-D-Core/.github/workflows/cs015-final-acceptance.yml@refs/heads/changeset-015",
+        },
         "build-identity.json": {
             "schema": "neoeng.dcore.final-acceptance-build-identity.v1",
             "project_version": VERSION,
@@ -350,6 +454,12 @@ def self_test() -> bool:
         _fixture(root)
         if verify(root)["status"] != "passed":
             return False
+        unsigned = verify(root, require_external_attestation=True)
+        if unsigned["status"] != "failed" or not any(
+            "external provenance attestation is absent" in error
+            for error in unsigned["errors"]
+        ):
+            return False
         target = root / "raw/linux-gcc-ctest.txt"
         target.write_text("99% tests passed, 1 tests failed out of 54\n", encoding="utf-8")
         failed = verify(root)
@@ -375,7 +485,7 @@ def main() -> int:
     if args.directory is None:
         parser.error("directory is required unless --self-test is used")
     directory = args.directory.resolve()
-    result = verify(directory)
+    result = verify(directory, require_external_attestation=True)
     if args.write_report:
         (directory / "independent-verification.json").write_text(
             json.dumps(result, indent=2, sort_keys=True) + "\n",
