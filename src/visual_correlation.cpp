@@ -7,22 +7,62 @@
 namespace neoeng::core {
 namespace {
 
+[[nodiscard]] std::size_t utf8_sequence_length(std::string_view value, std::size_t index) noexcept {
+    const auto byte = [&value](std::size_t offset) {
+        return static_cast<unsigned char>(value[offset]);
+    };
+    const unsigned char lead = byte(index);
+    std::size_t length{};
+    if (lead < 0x80U) return 1U;
+    if (lead >= 0xC2U && lead <= 0xDFU) length = 2U;
+    else if (lead >= 0xE0U && lead <= 0xEFU) length = 3U;
+    else if (lead >= 0xF0U && lead <= 0xF4U) length = 4U;
+    else return 0U;
+    if (index + length > value.size()) return 0U;
+    for (std::size_t offset = 1U; offset < length; ++offset) {
+        if ((byte(index + offset) & 0xC0U) != 0x80U) return 0U;
+    }
+    const unsigned char second = byte(index + 1U);
+    if ((length == 3U && ((lead == 0xE0U && second < 0xA0U)
+                          || (lead == 0xEDU && second > 0x9FU)))
+        || (length == 4U && ((lead == 0xF0U && second < 0x90U)
+                             || (lead == 0xF4U && second > 0x8FU)))) return 0U;
+    return length;
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
-    for (const char character : value) {
+    for (std::size_t index = 0U; index < value.size();) {
+        const char character = value[index];
         switch (character) {
-        case '\\': stream << "\\\\"; break;
-        case '"': stream << "\\\""; break;
-        case '\n': stream << "\\n"; break;
-        case '\r': stream << "\\r"; break;
-        case '\t': stream << "\\t"; break;
+        case '\\': stream << "\\\\"; ++index; break;
+        case '"': stream << "\\\""; ++index; break;
+        case '<': stream << "\\u003c"; ++index; break;
+        case '>': stream << "\\u003e"; ++index; break;
+        case '&': stream << "\\u0026"; ++index; break;
+        case '\n': stream << "\\n"; ++index; break;
+        case '\r': stream << "\\r"; ++index; break;
+        case '\t': stream << "\\t"; ++index; break;
         default:
             if (static_cast<unsigned char>(character) < 0x20U) {
                 stream << "\\u" << std::hex << std::setw(4) << std::setfill('0')
                        << static_cast<unsigned int>(static_cast<unsigned char>(character))
                        << std::dec;
-            } else {
+                ++index;
+            } else if (static_cast<unsigned char>(character) < 0x80U) {
                 stream << character;
+                ++index;
+            } else {
+                const std::size_t length = utf8_sequence_length(value, index);
+                if (length == 0U) {
+                    stream << "\\u00" << std::hex << std::setw(2) << std::setfill('0')
+                           << static_cast<unsigned int>(static_cast<unsigned char>(character))
+                           << std::dec;
+                    ++index;
+                } else {
+                    stream.write(value.data() + index, static_cast<std::streamsize>(length));
+                    index += length;
+                }
             }
         }
     }
@@ -61,7 +101,9 @@ std::string visual_correlation_json(
                << ",\"state_hash\":" << record.state_hash
                << ",\"visibility_hash\":" << record.visibility_hash
                << ",\"color_hash\":" << record.color_hash
-               << ",\"correlation_id\":" << record.correlation_id
+               // Correlation IDs are uint64 values and must not be coerced to
+               // an imprecise JavaScript Number by browser consumers.
+               << ",\"correlation_id\":\"" << record.correlation_id << '"'
                << ",\"producer\":\"" << to_string(record.producer) << "\""
                << ",\"cpu_begin_ns\":" << record.cpu_begin_ns
                << ",\"cpu_end_ns\":" << record.cpu_end_ns;

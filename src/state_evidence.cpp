@@ -162,10 +162,27 @@ struct MerkleLevels final {
         && envelope.producer_id.size() <= kMaximumEvidenceProducerIdBytes;
 }
 
+[[nodiscard]] bool signature_algorithm_valid(EvidenceSignatureAlgorithm algorithm) noexcept {
+    switch (algorithm) {
+    case EvidenceSignatureAlgorithm::HmacSha256TestOnly:
+    case EvidenceSignatureAlgorithm::Ed25519:
+    case EvidenceSignatureAlgorithm::EcdsaP256Sha256:
+    case EvidenceSignatureAlgorithm::RsaPssSha256:
+    case EvidenceSignatureAlgorithm::ExternalProviderPrivate:
+        return true;
+    case EvidenceSignatureAlgorithm::None:
+    default:
+        return false;
+    }
+}
+
 [[nodiscard]] bool signature_metadata_valid(const EvidenceSignature& signature) noexcept {
     const bool none = signature.algorithm == EvidenceSignatureAlgorithm::None;
     if (none) {
         return signature.key_id.empty() && signature.bytes.empty();
+    }
+    if (!signature_algorithm_valid(signature.algorithm)) {
+        return false;
     }
     return !signature.key_id.empty()
         && signature.key_id.size() <= kMaximumEvidenceKeyIdBytes
@@ -201,22 +218,74 @@ void record_evidence_trace(
     return {.reason = reason, .record_index = index};
 }
 
+[[nodiscard]] std::size_t utf8_sequence_length(std::string_view value, std::size_t index) noexcept {
+    const auto byte = [&value](std::size_t offset) {
+        return static_cast<unsigned char>(value[offset]);
+    };
+    const unsigned char lead = byte(index);
+    std::size_t length{};
+    if (lead < 0x80U) {
+        return 1U;
+    } else if (lead >= 0xC2U && lead <= 0xDFU) {
+        length = 2U;
+    } else if (lead >= 0xE0U && lead <= 0xEFU) {
+        length = 3U;
+    } else if (lead >= 0xF0U && lead <= 0xF4U) {
+        length = 4U;
+    } else {
+        return 0U;
+    }
+    if (index + length > value.size()) {
+        return 0U;
+    }
+    for (std::size_t offset = 1U; offset < length; ++offset) {
+        if ((byte(index + offset) & 0xC0U) != 0x80U) {
+            return 0U;
+        }
+    }
+    const unsigned char second = byte(index + 1U);
+    if ((length == 3U && ((lead == 0xE0U && second < 0xA0U)
+                          || (lead == 0xEDU && second > 0x9FU)))
+        || (length == 4U && ((lead == 0xF0U && second < 0x90U)
+                             || (lead == 0xF4U && second > 0x8FU)))) {
+        return 0U;
+    }
+    return length;
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
-    for (const char character : value) {
+    for (std::size_t index = 0U; index < value.size();) {
+        const char character = value[index];
         switch (character) {
-        case '\\': stream << "\\\\"; break;
-        case '"': stream << "\\\""; break;
-        case '\n': stream << "\\n"; break;
-        case '\r': stream << "\\r"; break;
-        case '\t': stream << "\\t"; break;
+        case '\\': stream << "\\\\"; ++index; break;
+        case '"': stream << "\\\""; ++index; break;
+        case '<': stream << "\\u003c"; ++index; break;
+        case '>': stream << "\\u003e"; ++index; break;
+        case '&': stream << "\\u0026"; ++index; break;
+        case '\n': stream << "\\n"; ++index; break;
+        case '\r': stream << "\\r"; ++index; break;
+        case '\t': stream << "\\t"; ++index; break;
         default:
             if (static_cast<unsigned char>(character) < 0x20U) {
                 stream << "\\u" << std::hex << std::setw(4) << std::setfill('0')
                        << static_cast<unsigned int>(static_cast<unsigned char>(character))
                        << std::dec;
-            } else {
+                ++index;
+            } else if (static_cast<unsigned char>(character) < 0x80U) {
                 stream << character;
+                ++index;
+            } else {
+                const std::size_t length = utf8_sequence_length(value, index);
+                if (length == 0U) {
+                    stream << "\\u00" << std::hex << std::setw(2) << std::setfill('0')
+                           << static_cast<unsigned int>(static_cast<unsigned char>(character))
+                           << std::dec;
+                    ++index;
+                } else {
+                    stream.write(value.data() + index, static_cast<std::streamsize>(length));
+                    index += length;
+                }
             }
         }
     }
@@ -556,6 +625,9 @@ EvidenceChain EvidenceChain::fork_from(
     EvidenceBranchId branch_id,
     std::string producer_id,
     std::size_t merkle_chunk_size) {
+    if (branch_id == parent.envelope.branch_id) {
+        throw std::invalid_argument("Evidence fork branch ID must differ from parent");
+    }
     if (!metadata_valid(parent.envelope)
         || !sha256_equal(parent.envelope_hash, evidence_envelope_hash(parent.envelope))) {
         throw std::invalid_argument("Evidence branch parent is invalid");
@@ -603,7 +675,7 @@ SignedStateEvidence EvidenceChain::append(
     record.envelope_hash = evidence_envelope_hash(record.envelope);
     if (signer != nullptr) {
         const std::string_view key = signer->key_id();
-        if (signer->algorithm() == EvidenceSignatureAlgorithm::None
+        if (!signature_algorithm_valid(signer->algorithm())
             || key.empty() || key.size() > kMaximumEvidenceKeyIdBytes) {
             throw std::invalid_argument("Evidence signer metadata is invalid");
         }

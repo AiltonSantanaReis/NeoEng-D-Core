@@ -12,9 +12,59 @@
 namespace neoeng::core {
 namespace {
 
+[[nodiscard]] bool valid_utf8_sequence(
+    std::string_view value,
+    std::size_t index,
+    std::size_t& length) noexcept {
+    const auto lead = static_cast<unsigned char>(value[index]);
+    if (lead < 0x80U) {
+        length = 1U;
+        return true;
+    }
+    std::uint32_t code_point{};
+    if (lead >= 0xC2U && lead <= 0xDFU) {
+        length = 2U;
+        code_point = lead & 0x1FU;
+    } else if (lead >= 0xE0U && lead <= 0xEFU) {
+        length = 3U;
+        code_point = lead & 0x0FU;
+    } else if (lead >= 0xF0U && lead <= 0xF4U) {
+        length = 4U;
+        code_point = lead & 0x07U;
+    } else {
+        return false;
+    }
+    if (index + length > value.size()) return false;
+    for (std::size_t offset = 1U; offset < length; ++offset) {
+        const auto continuation = static_cast<unsigned char>(value[index + offset]);
+        if ((continuation & 0xC0U) != 0x80U) return false;
+        code_point = (code_point << 6U) | (continuation & 0x3FU);
+    }
+    return (length != 2U || code_point >= 0x80U)
+        && (length != 3U || code_point >= 0x800U)
+        && (length != 4U || code_point >= 0x10000U)
+        && code_point <= 0x10FFFFU
+        && !(code_point >= 0xD800U && code_point <= 0xDFFFU);
+}
+
+[[nodiscard]] bool valid_utf8(std::string_view value) noexcept {
+    for (std::size_t index = 0U; index < value.size();) {
+        std::size_t length{};
+        if (!valid_utf8_sequence(value, index, length)) return false;
+        index += length;
+    }
+    return true;
+}
+
+[[nodiscard]] char hex_digit(unsigned int value) noexcept {
+    return value < 10U ? static_cast<char>('0' + value)
+        : static_cast<char>('A' + value - 10U);
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
-    for (const char character : value) {
+    for (std::size_t index = 0U; index < value.size(); ++index) {
+        const char character = value[index];
         switch (character) {
         case '\\': stream << "\\\\"; break;
         case '"': stream << "\\\""; break;
@@ -26,12 +76,31 @@ void append_json_string(std::ostringstream& stream, std::string_view value) {
                 stream << "\\u" << std::hex << std::setw(4) << std::setfill('0')
                        << static_cast<unsigned int>(static_cast<unsigned char>(character))
                        << std::dec;
+            } else if (static_cast<unsigned char>(character) >= 0x80U) {
+                std::size_t length{};
+                if (valid_utf8_sequence(value, index, length)) {
+                    stream.write(value.data() + static_cast<std::ptrdiff_t>(index),
+                        static_cast<std::streamsize>(length));
+                    index += length - 1U;
+                } else {
+                    const auto byte = static_cast<unsigned int>(
+                        static_cast<unsigned char>(character));
+                    stream << "\\u00" << hex_digit((byte >> 4U) & 0x0FU)
+                           << hex_digit(byte & 0x0FU);
+                }
             } else {
                 stream << character;
             }
         }
     }
     stream << '"';
+}
+
+[[nodiscard]] bool exceeds_limit(
+    std::size_t total,
+    std::size_t addition,
+    std::size_t limit) noexcept {
+    return addition > limit || total > limit - addition;
 }
 
 [[nodiscard]] Sha256Digest hash_text(std::string_view text) {
@@ -160,8 +229,11 @@ void add_entry(
     if (!safe_relative_path(path)) {
         throw std::invalid_argument("support bundle path is unsafe");
     }
-    if (content.size() > policy.maximum_entry_bytes
-        || total > policy.maximum_total_bytes - content.size()) {
+    if (!valid_utf8(content)) {
+        throw std::invalid_argument("support bundle entry is not valid UTF-8");
+    }
+    if (exceeds_limit(total, content.size(), policy.maximum_total_bytes)
+        || content.size() > policy.maximum_entry_bytes) {
         throw std::length_error("support bundle size limit exceeded");
     }
     total += content.size();
@@ -198,9 +270,247 @@ void add_entry(
 }
 
 [[nodiscard]] bool gate_valid(const DeferredValidationGate& gate) noexcept {
+    const bool valid_category = [&]() noexcept {
+        switch (gate.category) {
+        case ValidationGateCategory::ImplementationGap:
+        case ValidationGateCategory::NativeValidationPending:
+        case ValidationGateCategory::ExternalAssurancePending:
+        case ValidationGateCategory::FutureInfrastructure:
+            return true;
+        }
+        return false;
+    }();
+    const bool valid_execution_status = [&]() noexcept {
+        switch (gate.execution_status) {
+        case ValidationExecutionStatus::NotExecuted:
+        case ValidationExecutionStatus::Passed:
+        case ValidationExecutionStatus::Failed:
+        case ValidationExecutionStatus::NotApplicable:
+            return true;
+        }
+        return false;
+    }();
     return !gate.gate_id.empty() && !gate.target.empty() && !gate.reason.empty()
-        && !gate.implementation_status.empty() && !gate.required_profile.empty();
+        && !gate.implementation_status.empty() && !gate.required_profile.empty()
+        && valid_category && valid_execution_status;
 }
+
+struct ManifestTuple final {
+    std::string path{};
+    std::size_t size{};
+    std::string sha256{};
+};
+
+class ManifestParser final {
+public:
+    explicit ManifestParser(std::string_view input) : input_(input) {}
+
+    [[nodiscard]] bool parse(
+        std::size_t expected_entry_count,
+        std::vector<ManifestTuple>& tuples) {
+        if (!parse_manifest_object(expected_entry_count, tuples)) return false;
+        skip_whitespace();
+        return position_ == input_.size();
+    }
+
+private:
+    [[nodiscard]] bool parse_manifest_object(
+        std::size_t expected_entry_count,
+        std::vector<ManifestTuple>& tuples) {
+        if (!consume('{')) return false;
+        bool schema_seen{};
+        bool count_seen{};
+        bool project_version_seen{};
+        bool environment_id_seen{};
+        bool entries_seen{};
+        std::size_t declared_count{};
+        skip_whitespace();
+        if (consume('}')) return false;
+        while (true) {
+            std::string key;
+            if (!parse_string(key) || !consume(':')) return false;
+            bool recognized{};
+            if (key == "schema") {
+                if (schema_seen) return false;
+                schema_seen = true;
+                recognized = parse_string(key) && key == kSupportBundleSchema;
+            } else if (key == "entry_count") {
+                if (count_seen) return false;
+                count_seen = true;
+                recognized = parse_unsigned(declared_count);
+            } else if (key == "project_version") {
+                if (project_version_seen) return false;
+                project_version_seen = true;
+                recognized = parse_string(key);
+            } else if (key == "environment_id") {
+                if (environment_id_seen) return false;
+                recognized = parse_string(key);
+                environment_id_seen = true;
+            } else if (key == "entries") {
+                if (entries_seen) return false;
+                entries_seen = true;
+                recognized = parse_entries(tuples);
+            } else {
+                return false;
+            }
+            if (!recognized) return false;
+            skip_whitespace();
+            if (consume('}')) break;
+            if (!consume(',')) return false;
+        }
+        return schema_seen && count_seen && entries_seen
+            && declared_count == expected_entry_count
+            && tuples.size() == expected_entry_count;
+    }
+
+    [[nodiscard]] bool parse_entries(std::vector<ManifestTuple>& tuples) {
+        if (!consume('[')) return false;
+        skip_whitespace();
+        if (consume(']')) return true;
+        while (true) {
+            if (!consume('{')) return false;
+            ManifestTuple tuple;
+            bool path_seen{};
+            bool size_seen{};
+            bool hash_seen{};
+            skip_whitespace();
+            if (consume('}')) return false;
+            while (true) {
+                std::string key;
+                if (!parse_string(key) || !consume(':')) return false;
+                if (key == "path") {
+                    if (path_seen || !parse_string(tuple.path)) return false;
+                    path_seen = true;
+                } else if (key == "size") {
+                    if (size_seen || !parse_unsigned(tuple.size)) return false;
+                    size_seen = true;
+                } else if (key == "sha256") {
+                    if (hash_seen || !parse_string(tuple.sha256)) return false;
+                    hash_seen = true;
+                } else {
+                    return false;
+                }
+                skip_whitespace();
+                if (consume('}')) break;
+                if (!consume(',')) return false;
+            }
+            if (!path_seen || !size_seen || !hash_seen || tuple.sha256.size() != 64U) {
+                return false;
+            }
+            for (const char character : tuple.sha256) {
+                const bool hex = (character >= '0' && character <= '9')
+                    || (character >= 'a' && character <= 'f')
+                    || (character >= 'A' && character <= 'F');
+                if (!hex) return false;
+            }
+            tuples.push_back(std::move(tuple));
+            skip_whitespace();
+            if (consume(']')) break;
+            if (!consume(',')) return false;
+        }
+        return true;
+    }
+
+    [[nodiscard]] bool parse_unsigned(std::size_t& result) {
+        skip_whitespace();
+        if (position_ == input_.size()
+            || input_[position_] < '0' || input_[position_] > '9') {
+            return false;
+        }
+        if (input_[position_] == '0') {
+            ++position_;
+            result = 0U;
+            return position_ == input_.size()
+                || (input_[position_] < '0' || input_[position_] > '9');
+        }
+        result = 0U;
+        while (position_ < input_.size()
+            && input_[position_] >= '0' && input_[position_] <= '9') {
+            const std::size_t digit = static_cast<std::size_t>(input_[position_] - '0');
+            if (result > (std::numeric_limits<std::size_t>::max() - digit) / 10U) {
+                return false;
+            }
+            result = result * 10U + digit;
+            ++position_;
+        }
+        return true;
+    }
+
+    [[nodiscard]] bool parse_string(std::string& result) {
+        skip_whitespace();
+        if (!consume('"')) return false;
+        result.clear();
+        while (position_ < input_.size()) {
+            const unsigned char character = static_cast<unsigned char>(input_[position_++]);
+            if (character == '"') return valid_utf8(result);
+            if (character < 0x20U) return false;
+            if (character != '\\') {
+                result.push_back(static_cast<char>(character));
+                continue;
+            }
+            if (position_ == input_.size()) return false;
+            const char escaped = input_[position_++];
+            switch (escaped) {
+            case '"': result.push_back('"'); break;
+            case '\\': result.push_back('\\'); break;
+            case '/': result.push_back('/'); break;
+            case 'b': result.push_back('\b'); break;
+            case 'f': result.push_back('\f'); break;
+            case 'n': result.push_back('\n'); break;
+            case 'r': result.push_back('\r'); break;
+            case 't': result.push_back('\t'); break;
+            case 'u': {
+                unsigned int code_point{};
+                for (std::size_t index = 0U; index < 4U; ++index) {
+                    if (position_ == input_.size()) return false;
+                    const char hex = input_[position_++];
+                    unsigned int value{};
+                    if (hex >= '0' && hex <= '9') value = static_cast<unsigned int>(hex - '0');
+                    else if (hex >= 'a' && hex <= 'f') value = static_cast<unsigned int>(hex - 'a' + 10);
+                    else if (hex >= 'A' && hex <= 'F') value = static_cast<unsigned int>(hex - 'A' + 10);
+                    else return false;
+                    code_point = (code_point << 4U) | value;
+                }
+                if (code_point <= 0x7FU) {
+                    result.push_back(static_cast<char>(code_point));
+                } else if (code_point <= 0x7FFU) {
+                    result.push_back(static_cast<char>(0xC0U | (code_point >> 6U)));
+                    result.push_back(static_cast<char>(0x80U | (code_point & 0x3FU)));
+                } else if (code_point >= 0xD800U && code_point <= 0xDFFFU) {
+                    return false;
+                } else {
+                    result.push_back(static_cast<char>(0xE0U | (code_point >> 12U)));
+                    result.push_back(static_cast<char>(0x80U | ((code_point >> 6U) & 0x3FU)));
+                    result.push_back(static_cast<char>(0x80U | (code_point & 0x3FU)));
+                }
+                break;
+            }
+            default: return false;
+            }
+        }
+        return false;
+    }
+
+    void skip_whitespace() noexcept {
+        while (position_ < input_.size()) {
+            const char character = input_[position_];
+            if (character != ' ' && character != '\n' && character != '\r' && character != '\t') {
+                break;
+            }
+            ++position_;
+        }
+    }
+
+    [[nodiscard]] bool consume(char expected) noexcept {
+        skip_whitespace();
+        if (position_ >= input_.size() || input_[position_] != expected) return false;
+        ++position_;
+        return true;
+    }
+
+    std::string_view input_;
+    std::size_t position_{};
+};
 
 } // namespace
 
@@ -290,7 +600,7 @@ SupportBundleArtifact build_support_bundle(
     bundle.manifest_json = manifest_json(bundle.entries, &context);
     bundle.manifest_sha256 = hash_text(bundle.manifest_json);
     if (bundle.manifest_json.size() > policy.maximum_entry_bytes
-        || total > policy.maximum_total_bytes - bundle.manifest_json.size()) {
+        || exceeds_limit(total, bundle.manifest_json.size(), policy.maximum_total_bytes)) {
         throw std::length_error("support bundle manifest exceeds size limits");
     }
     if (audit_traces != nullptr) {
@@ -328,6 +638,12 @@ SupportBundleVerifyResult verify_support_bundle(
     const SupportBundlePolicy& policy) noexcept {
     try {
         std::set<std::string> paths;
+        if (bundle.manifest_json.size() > policy.maximum_entry_bytes) {
+            return {SupportBundleVerifyReason::EntryTooLarge, 0U};
+        }
+        if (bundle.manifest_json.size() > policy.maximum_total_bytes) {
+            return {SupportBundleVerifyReason::TotalTooLarge, 0U};
+        }
         std::size_t total = bundle.manifest_json.size();
         bool has_metadata{};
         bool has_traces{};
@@ -341,7 +657,7 @@ SupportBundleVerifyResult verify_support_bundle(
             if (entry.content.size() > policy.maximum_entry_bytes) {
                 return {SupportBundleVerifyReason::EntryTooLarge, index};
             }
-            if (total > policy.maximum_total_bytes - entry.content.size()) {
+            if (exceeds_limit(total, entry.content.size(), policy.maximum_total_bytes)) {
                 return {SupportBundleVerifyReason::TotalTooLarge, index};
             }
             total += entry.content.size();
@@ -360,18 +676,20 @@ SupportBundleVerifyResult verify_support_bundle(
         if (!sha256_equal(hash_text(bundle.manifest_json), bundle.manifest_sha256)) {
             return {SupportBundleVerifyReason::ManifestMismatch, 0U};
         }
-        // Context metadata is opaque to this verifier, but every declared entry tuple must
-        // be present in the signed/hash-anchored manifest.
-        if (bundle.manifest_json.find(std::string(kSupportBundleSchema)) == std::string::npos
-            || bundle.manifest_json.find("\"entry_count\": " + std::to_string(bundle.entries.size()))
-                == std::string::npos) {
+        std::vector<ManifestTuple> manifest_entries;
+        ManifestParser parser(bundle.manifest_json);
+        if (!parser.parse(bundle.entries.size(), manifest_entries)) {
             return {SupportBundleVerifyReason::ManifestMismatch, 0U};
         }
-        for (const SupportBundleEntry& entry : bundle.entries) {
-            const std::string tuple = "{\"path\":\"" + entry.path
-                + "\",\"size\":" + std::to_string(entry.content.size())
-                + ",\"sha256\":\"" + sha256_hex(entry.sha256) + "\"}";
-            if (bundle.manifest_json.find(tuple) == std::string::npos) {
+        std::set<std::string> manifest_paths;
+        for (const ManifestTuple& tuple : manifest_entries) {
+            if (!manifest_paths.insert(tuple.path).second) {
+                return {SupportBundleVerifyReason::ManifestMismatch, 0U};
+            }
+            const auto entry = std::find_if(bundle.entries.begin(), bundle.entries.end(),
+                [&](const SupportBundleEntry& candidate) { return candidate.path == tuple.path; });
+            if (entry == bundle.entries.end() || entry->content.size() != tuple.size
+                || sha256_hex(entry->sha256) != tuple.sha256) {
                 return {SupportBundleVerifyReason::ManifestMismatch, 0U};
             }
         }

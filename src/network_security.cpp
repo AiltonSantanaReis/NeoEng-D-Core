@@ -215,6 +215,11 @@ NetworkSecurityGateway::NetworkSecurityGateway(
         || limits_.rate_limit_burst_packets == 0U) {
         throw std::invalid_argument("NetworkSecurityLimits contains an invalid zero or burst value");
     }
+    constexpr std::size_t packet_overhead = kSecurePacketHeaderBytes + kSecurePacketTagBytes;
+    if (limits_.maximum_payload_bytes > std::numeric_limits<std::uint32_t>::max()
+        || limits_.maximum_payload_bytes > std::numeric_limits<std::size_t>::max() - packet_overhead) {
+        throw std::invalid_argument("NetworkSecurityLimits maximum payload exceeds wire or size limits");
+    }
     if (!authentication_key_is_valid(fallback_key_)) {
         throw std::invalid_argument("Authentication key must not be all zero");
     }

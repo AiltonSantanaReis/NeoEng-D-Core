@@ -5,6 +5,8 @@
 #include <array>
 #include <cstdlib>
 #include <iostream>
+#include <span>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -74,6 +76,17 @@ public:
 
 private:
     AuthenticationKey key_{};
+};
+
+class UnknownAlgorithmProvider final : public EvidenceSigner {
+public:
+    EvidenceSignatureAlgorithm algorithm() const noexcept override {
+        return static_cast<EvidenceSignatureAlgorithm>(0xFFFFU);
+    }
+    std::string_view key_id() const noexcept override { return "unknown-algorithm"; }
+    std::vector<std::uint8_t> sign(std::span<const std::uint8_t>) const override {
+        return std::vector<std::uint8_t>(kSha256DigestBytes, 0xA5U);
+    }
 };
 
 void test_sha256_vectors() {
@@ -212,6 +225,25 @@ void test_rollback_branch_is_formally_linked() {
     CHECK(name, zero_child.envelope.branch_parent_frame == 0U);
     CHECK(name, !sha256_is_zero(zero_child.envelope.branch_parent_hash));
     CHECK(name, verify_evidence_chain(zero_branch.records(), &provider, true).accepted());
+
+    bool same_branch_rejected = false;
+    try {
+        static_cast<void>(EvidenceChain::fork_from(parent, parent.envelope.branch_id,
+            "invalid-same-branch", 2U));
+    } catch (const std::invalid_argument&) {
+        same_branch_rejected = true;
+    }
+    CHECK(name, same_branch_rejected);
+
+    UnknownAlgorithmProvider unknown;
+    EvidenceChain invalid_signer_chain(5U, "invalid-signer", 2U);
+    bool unknown_algorithm_rejected = false;
+    try {
+        static_cast<void>(invalid_signer_chain.append(make_world(1U, 1U), 6U, 6U, &unknown));
+    } catch (const std::invalid_argument&) {
+        unknown_algorithm_rejected = true;
+    }
+    CHECK(name, unknown_algorithm_rejected);
 }
 
 } // namespace
