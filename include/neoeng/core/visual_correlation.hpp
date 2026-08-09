@@ -51,10 +51,14 @@ struct VisualCorrelationRecord final {
             || cpu_end_ns < cpu_begin_ns) {
             return false;
         }
-        if (producer == VisualProducerKind::GpuInstrumented) {
+        switch (producer) {
+        case VisualProducerKind::CpuReference:
+            return !gpu.has_value() || gpu->valid();
+        case VisualProducerKind::GpuInstrumented:
             return gpu.has_value() && gpu->valid();
+        default:
+            return false;
         }
-        return !gpu.has_value() || gpu->valid();
     }
 };
 

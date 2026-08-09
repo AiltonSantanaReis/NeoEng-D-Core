@@ -181,6 +181,9 @@ bool SessionKeyRing::upsert(RootKeyRecord record) noexcept {
         || !authentication_key_is_valid(record.key)) {
         return false;
     }
+    if (record.lifecycle == RootKeyLifecycle::Revoked) {
+        securely_erase(record.key);
+    }
     try {
         auto iterator = std::find_if(records_.begin(), records_.end(),
             [&record](const RootKeyRecord& existing) {

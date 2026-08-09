@@ -361,6 +361,7 @@ RecoveryAckResult OperationalRuntime::acknowledge_recovery(
     const auto& pending = recovery_host_bridge_.pending();
     if (pending.has_value()
         && pending->generation == generation
+        && pending->signal.mode == RecoveryMode::RollingBackToCheckpoint
         && acknowledgement == RecoveryAcknowledgement::CheckpointRestored
         && restored_checkpoint_frame == pending->signal.rollback_checkpoint_frame) {
         if (!engine_.snapshots().contains(restored_checkpoint_frame)) {
