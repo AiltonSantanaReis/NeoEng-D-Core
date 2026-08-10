@@ -1,0 +1,16 @@
+{
+  "schema": "neoeng.dcore.r9-github-immutability-evidence.v1",
+  "observed_at": "2026-08-09",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "repository_immutable_releases_enabled": true,
+  "repository_immutable_releases_enforced_by_owner": false,
+  "historical_release": {
+    "tag": "v1.14.0",
+    "isImmutable": false,
+    "target_commit": "488112e9e1a248686eff168c453cb51915f72498",
+    "url": "https://github.com/AiltonSantanaReis/NeoEng-D-Core/releases/tag/v1.14.0"
+  },
+  "decision": "future_releases_protected_historical_release_not_rewritten",
+  "destructive_rewrite_performed": false,
+  "external_assurance_inferred": false
+}
