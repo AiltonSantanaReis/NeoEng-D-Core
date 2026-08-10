@@ -31,6 +31,8 @@ os ledgers de máquina.
   aceitação horizontal CS015;
 - [`docs/records/CS001_R9_GOVERNANCE_ENVIRONMENT_CLOSURE.md`](../records/CS001_R9_GOVERNANCE_ENVIRONMENT_CLOSURE.md):
   reconciliação de governança, ambiente e proteção de novas releases.
+- [`docs/records/POST_MERGE_REVALIDATION_20260810.md`](../records/POST_MERGE_REVALIDATION_20260810.md):
+  revalidação local do merge corretivo, sem nova baseline ou release.
 
 ## Registros históricos preservados
 
