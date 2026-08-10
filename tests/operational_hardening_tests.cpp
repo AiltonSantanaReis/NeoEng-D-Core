@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 #include <random>
 #include <span>
 #include <stdexcept>
@@ -143,6 +144,27 @@ void test_input_payload_total_parser() {
     invalid_entity[4] = 0U;
     invalid_entity[5] = 0U;
     CHECK(name, parse_input_payload(invalid_entity, output).reason == InputPayloadRejectReason::InvalidEntity);
+}
+
+void test_extreme_payload_limit_is_rejected() {
+    constexpr std::string_view name = "extreme_payload_limit_is_rejected";
+    NetworkSecurityLimits limits{
+        .maximum_payload_bytes = std::numeric_limits<std::size_t>::max(),
+        .maximum_input_commands = 4U,
+        .maximum_tracked_origins = 2U,
+        .maximum_clock_skew_ms = 100U,
+        .session_timeout_ms = 1'000U,
+        .rate_limit_packets_per_second = 10U,
+        .rate_limit_burst_packets = 10U,
+    };
+    bool rejected = false;
+    try {
+        NetworkSecurityGateway gateway(test_key(), limits);
+        static_cast<void>(gateway);
+    } catch (const std::invalid_argument&) {
+        rejected = true;
+    }
+    CHECK(name, rejected);
 }
 
 void test_hostile_parser_fuzz_smoke() {
@@ -408,6 +430,7 @@ int main() {
     test_hmac_sha256_rfc4231();
     test_secure_packet_authentication_replay_rate_limit_and_timeout();
     test_input_payload_total_parser();
+    test_extreme_payload_limit_is_rejected();
     test_hostile_parser_fuzz_smoke();
     test_trace_buffer_and_time_travel();
     test_operational_runtime_end_to_end();

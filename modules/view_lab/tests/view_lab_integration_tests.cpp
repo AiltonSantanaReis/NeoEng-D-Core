@@ -94,7 +94,7 @@ void test_static_viewer_and_p4_contract() {
         }};
         state = step(state, input);
         const std::array<TraceEvent, 1U> event{{{
-            .correlation_id = 0xD0030000U + frame,
+            .correlation_id = 0xD003000000000000ULL + frame,
             .frame = frame,
             .category = TraceCategory::Simulation,
             .outcome = TraceOutcome::Applied,
@@ -107,6 +107,15 @@ void test_static_viewer_and_p4_contract() {
     const std::filesystem::path output =
         std::filesystem::temp_directory_path() / "neoeng-dcore-view-lab-test";
     std::filesystem::remove_all(output);
+    std::filesystem::create_directories(output);
+    {
+        std::ofstream user_named_frame(output / "frame-user.bmp", std::ios::binary);
+        user_named_frame << "preserve-me";
+    }
+    {
+        std::ofstream stale_generated_frame(output / "frame-99999999.bmp", std::ios::binary);
+        stale_generated_frame << "remove-me";
+    }
     const auto result = neoeng::view_lab::export_static_viewer(
         debugger, output, "VIRTUALIZED-TEST", {
             .width = 96U,
@@ -120,7 +129,11 @@ void test_static_viewer_and_p4_contract() {
     CHECK(name, std::filesystem::is_regular_file(result.viewer_path));
     CHECK(name, std::filesystem::is_regular_file(result.correlation_path));
     CHECK(name, std::filesystem::is_regular_file(output / "frame-00000000.bmp"));
+    CHECK(name, std::filesystem::is_regular_file(output / "frame-user.bmp"));
+    CHECK(name, !std::filesystem::exists(output / "frame-99999999.bmp"));
     CHECK(name, read_all(result.viewer_path).find("NeoEng D-Core View Lab") != std::string::npos);
+    CHECK(name, read_all(result.viewer_path).find(
+        "\"correlation_id\":\"14988823984819142657\"") != std::string::npos);
     CHECK(name, read_all(result.correlation_path).find(kVisualCorrelationSchema)
         != std::string::npos);
     const std::string bmp = read_all(output / "frame-00000000.bmp");

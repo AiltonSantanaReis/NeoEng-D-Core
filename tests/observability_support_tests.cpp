@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <span>
 #include <string>
 #include <vector>
 
@@ -188,6 +189,113 @@ void test_deferred_gate_schema() {
     CHECK(name, json.find("blocking_for_current_changeset\":false") != std::string::npos);
 }
 
+bool valid_utf8(std::string_view value) {
+    for (std::size_t index = 0U; index < value.size();) {
+        const auto lead = static_cast<unsigned char>(value[index]);
+        std::size_t length{};
+        std::uint32_t code_point{};
+        if (lead <= 0x7FU) {
+            length = 1U;
+            code_point = lead;
+        } else if (lead >= 0xC2U && lead <= 0xDFU) {
+            length = 2U;
+            code_point = lead & 0x1FU;
+        } else if (lead >= 0xE0U && lead <= 0xEFU) {
+            length = 3U;
+            code_point = lead & 0x0FU;
+        } else if (lead >= 0xF0U && lead <= 0xF4U) {
+            length = 4U;
+            code_point = lead & 0x07U;
+        } else {
+            return false;
+        }
+        if (index + length > value.size()) return false;
+        for (std::size_t offset = 1U; offset < length; ++offset) {
+            const auto continuation = static_cast<unsigned char>(value[index + offset]);
+            if ((continuation & 0xC0U) != 0x80U) return false;
+            code_point = (code_point << 6U) | (continuation & 0x3FU);
+        }
+        if ((length == 2U && code_point < 0x80U)
+            || (length == 3U && code_point < 0x800U)
+            || (length == 4U && code_point < 0x10000U)
+            || code_point > 0x10FFFFU
+            || (code_point >= 0xD800U && code_point <= 0xDFFFU)) {
+            return false;
+        }
+        index += length;
+    }
+    return true;
+}
+
+void test_support_bundle_adversarial_contracts() {
+    constexpr const char* name = "support_bundle_adversarial_contracts";
+    const SupportBundlePolicy policy{
+        .maximum_trace_events = 16U,
+        .maximum_entry_bytes = 1024U * 1024U,
+        .maximum_total_bytes = 4U * 1024U * 1024U,
+        .include_time_travel = false,
+        .time_travel_payload_authorized = false,
+        .include_visual_correlation = false,
+        .include_monotonic_timestamps = false,
+        .pseudonymization_salt = "adversarial-test-salt",
+    };
+    const std::vector<TraceEvent> traces{};
+    const std::vector<SignedStateEvidence> evidence{};
+    const std::vector<DeferredValidationGate> deferred = gates();
+    SupportBundleContext context{
+        .project_version = "1.14.0-test",
+        .environment_id = "test-environment",
+        .hardware_profile = "test-host",
+        .seed = 7U,
+        .traces = traces,
+        .time_travel_json = {},
+        .evidence_records = evidence,
+        .visual_records = {},
+        .deferred_gates = deferred,
+    };
+    SupportBundleArtifact bundle = build_support_bundle(context, policy);
+
+    SupportBundleArtifact invalid_manifest = bundle;
+    invalid_manifest.manifest_json = "THIS IS NOT JSON\n";
+    invalid_manifest.manifest_sha256 = sha256(std::span<const std::uint8_t>(
+        reinterpret_cast<const std::uint8_t*>(invalid_manifest.manifest_json.data()),
+        invalid_manifest.manifest_json.size()));
+    CHECK(name, !verify_support_bundle(invalid_manifest, policy).accepted());
+
+    SupportBundlePolicy tiny_total = policy;
+    tiny_total.maximum_total_bytes = 1U;
+    bool builder_rejected{};
+    try {
+        (void)build_support_bundle(context, tiny_total);
+    } catch (const std::length_error&) {
+        builder_rejected = true;
+    }
+    CHECK(name, builder_rejected);
+    SupportBundlePolicy tiny_entry = policy;
+    tiny_entry.maximum_entry_bytes = 1U;
+    CHECK(name, verify_support_bundle(bundle, tiny_entry).reason
+        == SupportBundleVerifyReason::EntryTooLarge);
+
+    SupportBundleContext invalid_utf8 = context;
+    invalid_utf8.project_version.push_back(static_cast<char>(0xFFU));
+    const SupportBundleArtifact escaped = build_support_bundle(invalid_utf8, policy);
+    bool all_json_utf8 = valid_utf8(escaped.manifest_json);
+    for (const SupportBundleEntry& entry : escaped.entries) {
+        all_json_utf8 = all_json_utf8 && valid_utf8(entry.content);
+    }
+    CHECK(name, all_json_utf8);
+
+    std::vector<DeferredValidationGate> unknown = gates();
+    unknown.front().category = static_cast<ValidationGateCategory>(255U);
+    bool enum_rejected{};
+    try {
+        (void)export_deferred_validation_gates_json(unknown);
+    } catch (const std::invalid_argument&) {
+        enum_rejected = true;
+    }
+    CHECK(name, enum_rejected);
+}
+
 } // namespace
 
 int main() {
@@ -195,6 +303,7 @@ int main() {
     test_divergence_diagnostics();
     test_support_bundle_and_tamper_detection();
     test_deferred_gate_schema();
+    test_support_bundle_adversarial_contracts();
     if (failures != 0) {
         std::cerr << failures << " observability/support checks failed\n";
         return EXIT_FAILURE;

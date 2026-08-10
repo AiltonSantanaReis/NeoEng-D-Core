@@ -1,3 +1,7 @@
+# Source, documentation and metadata are byte-stable across native Windows
+# and Unix checkouts. Evidence artifacts below remain binary/immutable.
+* text=auto eol=lf
+
 # Immutable evidence packages are byte-addressed by their SHA-256 manifests.
 # Git must never rewrite their line endings or raw whitespace on checkout.
 docs/changesets/**/evidence/** -text whitespace=-trailing-space

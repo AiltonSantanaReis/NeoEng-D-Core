@@ -166,6 +166,18 @@ void test_authenticated_handshake_key_rotation_and_session_gateway() {
         == HandshakeRejectReason::KeyRevoked);
 }
 
+void test_revoked_key_material_is_erased() {
+    constexpr const char* name = "revoked_key_material_is_erased";
+    SessionKeyRing ring(2U);
+    RootKeyRecord revoked = active_record(key_with_seed(17U), 1U);
+    revoked.lifecycle = RootKeyLifecycle::Revoked;
+    CHECK(name, ring.upsert(revoked));
+    const RootKeyRecord* stored = ring.find(revoked.key_id, revoked.epoch);
+    CHECK(name, stored != nullptr);
+    CHECK(name, stored != nullptr && stored->lifecycle == RootKeyLifecycle::Revoked);
+    CHECK(name, stored != nullptr && !authentication_key_is_valid(stored->key));
+}
+
 void test_role_authorization_and_session_expiry() {
     constexpr const char* name = "role_authorization_and_session_expiry";
     const AuthenticationKey root = key_with_seed(55U);
@@ -350,6 +362,7 @@ void test_recovery_contract_generation_and_acknowledgement() {
 
 int main() {
     test_authenticated_handshake_key_rotation_and_session_gateway();
+    test_revoked_key_material_is_erased();
     test_role_authorization_and_session_expiry();
     test_operational_runtime_checkpoint_restore_contract();
     test_recovery_contract_generation_and_acknowledgement();
