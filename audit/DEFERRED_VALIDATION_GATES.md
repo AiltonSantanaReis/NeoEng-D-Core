@@ -2,7 +2,7 @@
 
 The normative machine-readable ledger is `audit/DEFERRED_VALIDATION_GATES.json`.
 
-## Current baseline: 1.14.0
+## Current candidate baseline: 1.14.1
 
 This ledger is current for the accepted horizontal baseline `1.14.0`. The
 deferred gates are non-blocking for CS015 acceptance, but they remain blocking

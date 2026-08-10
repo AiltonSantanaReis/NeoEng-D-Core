@@ -292,11 +292,11 @@ jobs:
             --compiler-id github-actions \
             --build-id "${{ github.run_id }}-${{ github.run_attempt }}"
           cmp \
-            "$RUNNER_TEMP/release-first/NeoEng-D-Core-1.14.0.zip" \
-            "$RUNNER_TEMP/release-second/NeoEng-D-Core-1.14.0.zip"
+            "$RUNNER_TEMP/release-first/NeoEng-D-Core-1.14.1.zip" \
+            "$RUNNER_TEMP/release-second/NeoEng-D-Core-1.14.1.zip"
           mkdir release
           cp "$RUNNER_TEMP/release-first/"* release/
-          digest="$(sha256sum release/NeoEng-D-Core-1.14.0.zip | cut -d ' ' -f 1)"
+          digest="$(sha256sum release/NeoEng-D-Core-1.14.1.zip | cut -d ' ' -f 1)"
           printf '%s  first-build\n%s  independent-repeat\n' \
             "$digest" "$digest" > release/archive-reproducibility.txt
       - name: Independently verify source release
@@ -312,15 +312,15 @@ jobs:
         shell: bash
         run: |
           cosign attest-blob --yes \
-            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
+            --bundle release/NeoEng-D-Core-1.14.1.provenance.sigstore.json \
             --predicate release/PROVENANCE.json \
             --type https://neoeng.dev/attestations/release-provenance/v1 \
-            release/NeoEng-D-Core-1.14.0.zip
+            release/NeoEng-D-Core-1.14.1.zip
           cosign attest-blob --yes \
-            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
+            --bundle release/NeoEng-D-Core-1.14.1.sbom.sigstore.json \
             --predicate release/SBOM.spdx.json \
             --type spdxjson \
-            release/NeoEng-D-Core-1.14.0.zip
+            release/NeoEng-D-Core-1.14.1.zip
       - name: Verify public Sigstore attestations
         shell: bash
         run: |
@@ -334,13 +334,13 @@ jobs:
             --certificate-github-workflow-ref "$GITHUB_REF"
           )
           cosign verify-blob-attestation \
-            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
+            --bundle release/NeoEng-D-Core-1.14.1.provenance.sigstore.json \
             --type https://neoeng.dev/attestations/release-provenance/v1 \
             "${common[@]}" \
-            release/NeoEng-D-Core-1.14.0.zip
+            release/NeoEng-D-Core-1.14.1.zip
           python3 scripts/qualification/write_sigstore_verification_receipt.py \
-            --bundle release/NeoEng-D-Core-1.14.0.provenance.sigstore.json \
-            --artifact release/NeoEng-D-Core-1.14.0.zip \
+            --bundle release/NeoEng-D-Core-1.14.1.provenance.sigstore.json \
+            --artifact release/NeoEng-D-Core-1.14.1.zip \
             --predicate-type https://neoeng.dev/attestations/release-provenance/v1 \
             --output release/attestation-verification.json \
             --repository "$GITHUB_REPOSITORY" \
@@ -348,13 +348,13 @@ jobs:
             --ref "$GITHUB_REF" \
             --certificate-identity "$identity"
           cosign verify-blob-attestation \
-            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
+            --bundle release/NeoEng-D-Core-1.14.1.sbom.sigstore.json \
             --type spdxjson \
             "${common[@]}" \
-            release/NeoEng-D-Core-1.14.0.zip
+            release/NeoEng-D-Core-1.14.1.zip
           python3 scripts/qualification/write_sigstore_verification_receipt.py \
-            --bundle release/NeoEng-D-Core-1.14.0.sbom.sigstore.json \
-            --artifact release/NeoEng-D-Core-1.14.0.zip \
+            --bundle release/NeoEng-D-Core-1.14.1.sbom.sigstore.json \
+            --artifact release/NeoEng-D-Core-1.14.1.zip \
             --predicate-type https://spdx.dev/Document \
             --output release/sbom-attestation-verification.json \
             --repository "$GITHUB_REPOSITORY" \
@@ -376,7 +376,7 @@ jobs:
       - name: Upload consolidated release
         uses: actions/upload-artifact@v4
         with:
-          name: neoeng-d-core-1.14.0-consolidated-release
+          name: neoeng-d-core-1.14.1-consolidated-release
           path: release
           if-no-files-found: error
       - name: Upload release-assurance evidence

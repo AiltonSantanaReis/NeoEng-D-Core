@@ -1,6 +1,6 @@
 # NeoEng D-Core — public technical claims
 
-Generated from the normative claims ledger for baseline `1.14.0`.
+Generated from the normative claims ledger for baseline `1.14.1`.
 
 Only the statements and scopes below are authorized. Planned, unsupported, removed and prohibited claims are intentionally absent.
 
@@ -98,7 +98,7 @@ The runtime supports correction and deterministic resimulation across an eight-f
 NeoEng D-Core is an independent product and not the implementation of the five-year engine program.
 
 - Status: `verified`
-- Scope: product governance baseline 1.14.0
+- Scope: product governance baseline 1.14.1
 - Public use: `allowed`
 - Evidence:
   - `docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`

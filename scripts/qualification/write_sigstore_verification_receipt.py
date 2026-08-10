@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 ISSUER = "https://token.actions.githubusercontent.com"
 PROVIDER = "Sigstore Public Good Instance (Fulcio and Rekor)"
 

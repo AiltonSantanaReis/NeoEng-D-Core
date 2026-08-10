@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.release-assurance-policy.v1",
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "status": "normative_candidate",
   "supported_release_surface": [
     "neoeng_dcore",

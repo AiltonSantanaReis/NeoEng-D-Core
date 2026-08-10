@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.source-of-truth-index.v1",
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "required_for_every_changeset": true,
   "primary_document": "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
   "precedence": [

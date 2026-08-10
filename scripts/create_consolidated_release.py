@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 PACKAGE_NAME = f"NeoEng-D-Core-{VERSION}"
 
 

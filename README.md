@@ -2,7 +2,7 @@
 
 Infraestrutura C++23 para autoridade canônica de estado, transições determinísticas, replay, rollback e evidência verificável.
 
-> **Baseline atual:** `1.14.0` — aceita pelo CS015 dentro das claims públicas e limitações registradas. Esta aceitação não é uma certificação, auditoria externa, qualificação ARM64 ou garantia universal de desempenho.
+> **Baseline atual:** `1.14.1` — aceita pelo CS015 dentro das claims públicas e limitações registradas. Esta aceitação não é uma certificação, auditoria externa, qualificação ARM64 ou garantia universal de desempenho.
 
 ## O que é
 
@@ -43,7 +43,7 @@ A dependência é unidirecional: hosts, UI, telemetria, renderers e adapters con
 
 | Item | Estado documentado |
 |---|---|
-| Baseline do produto | `1.14.0` |
+| Baseline do produto | `1.14.1` |
 | ChangeSets | CS001–CS015 preservados no histórico; CS015 aceita a baseline horizontal |
 | Requisitos internos obrigatórios | Nenhum aberto no ledger atual |
 | Assurance de release | GCC/Clang Linux, clang-cl Windows, sanitizers, fuzzing, análise estática, SDK em prefixo limpo e evidência independente, conforme CS014 |

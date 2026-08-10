@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.14.0"
+EXPECTED_VERSION = "1.14.1"
 FILES = {
     "index": Path("audit/SOURCE_OF_TRUTH_INDEX.json"),
     "requirements": Path("audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json"),
@@ -217,8 +217,8 @@ def validate_documents(root: Path, docs: dict[str, dict[str, Any]]) -> list[str]
     ):
         if token not in primary_text:
             errors.append(f"primary source of truth missing normative token: {token}")
-    if "baseline 1.14.0" not in primary_text.lower():
-        errors.append("source of truth does not identify the active 1.14.0 baseline")
+    if "baseline 1.14.1" not in primary_text.lower():
+        errors.append("source of truth does not identify the active 1.14.1 baseline")
     if "cs009" not in primary_text.lower() or "evidencia ecs" not in primary_text.lower():
         errors.append("source of truth does not record the CS009 ECS closure")
 
@@ -477,7 +477,7 @@ def deterministic_report(root: Path, docs: dict[str, dict[str, Any]]) -> dict[st
         "open_internal_limitation_ids": open_lim,
         "commercial_ready": accepted,
         "reason": (
-            "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.0 "
+            "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.1 "
             "within generated public claims and recorded limitations. This does "
             "not infer unrestricted production readiness, native ARM64/profile "
             "qualification, certification or external assurance."

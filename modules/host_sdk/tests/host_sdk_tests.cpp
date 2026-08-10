@@ -48,6 +48,7 @@ void test_version_and_creation_guards() {
             "ABI version");
     require(version.runtime_major == 1U && version.runtime_minor == 14U,
             "runtime version");
+    require(version.runtime_patch == 1U, "runtime patch version");
     require((version.capabilities & NEOENG_DCORE_CAPABILITY_ROLLBACK) != 0U,
             "rollback capability");
 

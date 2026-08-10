@@ -3,7 +3,8 @@
 Documento normativo: `NEOENG-DCORE-SOT-001`
 Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.14.0
+Baseline desta fonte: 1.14.1
+A baseline 1.14.1 é a candidata ativa desta reconciliação e só se torna release aceita após os gates próprios.
 
 ## 1. Autoridade
 

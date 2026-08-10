@@ -1,6 +1,6 @@
 {
   "name": "neoeng-d-core",
-  "version-string": "1.14.0",
+  "version-string": "1.14.1",
   "dependencies": [
     "boost-multiprecision"
   ]

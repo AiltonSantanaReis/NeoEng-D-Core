@@ -10,7 +10,7 @@ import tempfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 MANIFEST_PATTERN = re.compile(r"^([0-9a-f]{64})  ([^\r\n]+)$")
 REQUIRED = {
     "source-identity.json",
@@ -22,8 +22,8 @@ REQUIRED = {
     "independent-release-verification.json",
     "attestation-verification.json",
     "sbom-attestation-verification.json",
-    "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
-    "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+    "NeoEng-D-Core-1.14.1.provenance.sigstore.json",
+    "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
     "archive-reproducibility.txt",
     "raw/linux-gcc-ctest.txt",
     "raw/linux-clang-ctest.txt",
@@ -75,7 +75,7 @@ def attestation_receipt_valid(
         and value.get("status") == "passed"
         and value.get("provider") == SIGSTORE_PROVIDER
         and value.get("verifier") == "cosign 3.0.6"
-        and value.get("artifact") == "NeoEng-D-Core-1.14.0.zip"
+        and value.get("artifact") == "NeoEng-D-Core-1.14.1.zip"
         and value.get("artifact_sha256") == artifact_sha256
         and value.get("bundle") == bundle_name
         and value.get("bundle_sha256") == bundle_sha256
@@ -223,8 +223,8 @@ def verify(directory: Path) -> dict[str, Any]:
         errors.append("release artifact or package verification rejected")
 
     bundle_names = (
-        "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
-        "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        "NeoEng-D-Core-1.14.1.provenance.sigstore.json",
+        "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
     )
     for name in bundle_names:
         try:
@@ -421,17 +421,17 @@ def write_fixture(directory: Path) -> None:
             "status": "passed",
             "local_unsigned_candidate_publishable": False,
         },
-        "NeoEng-D-Core-1.14.0.provenance.sigstore.json": provenance_bundle,
-        "NeoEng-D-Core-1.14.0.sbom.sigstore.json": sbom_bundle,
+        "NeoEng-D-Core-1.14.1.provenance.sigstore.json": provenance_bundle,
+        "NeoEng-D-Core-1.14.1.sbom.sigstore.json": sbom_bundle,
         "attestation-verification.json": {
             "schema": "neoeng.dcore.sigstore-attestation-verification.v1",
             "project_version": VERSION,
             "status": "passed",
             "provider": SIGSTORE_PROVIDER,
             "verifier": "cosign 3.0.6",
-            "artifact": "NeoEng-D-Core-1.14.0.zip",
+            "artifact": "NeoEng-D-Core-1.14.1.zip",
             "artifact_sha256": "b" * 64,
-            "bundle": "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+            "bundle": "NeoEng-D-Core-1.14.1.provenance.sigstore.json",
             "bundle_sha256": "",
             "predicate_type":
                 "https://neoeng.dev/attestations/release-provenance/v1",
@@ -448,9 +448,9 @@ def write_fixture(directory: Path) -> None:
             "status": "passed",
             "provider": SIGSTORE_PROVIDER,
             "verifier": "cosign 3.0.6",
-            "artifact": "NeoEng-D-Core-1.14.0.zip",
+            "artifact": "NeoEng-D-Core-1.14.1.zip",
             "artifact_sha256": "b" * 64,
-            "bundle": "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+            "bundle": "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
             "bundle_sha256": "",
             "predicate_type": "https://spdx.dev/Document",
             "certificate_identity": identity,
@@ -475,11 +475,11 @@ def write_fixture(directory: Path) -> None:
     for receipt_name, bundle_name in (
         (
             "attestation-verification.json",
-            "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+            "NeoEng-D-Core-1.14.1.provenance.sigstore.json",
         ),
         (
             "sbom-attestation-verification.json",
-            "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+            "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
         ),
     ):
         receipt = values[receipt_name]

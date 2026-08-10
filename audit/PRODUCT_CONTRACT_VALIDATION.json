@@ -1,19 +1,19 @@
 {
   "schema": "neoeng.dcore.product-contract-validation.v1",
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "status": "passed",
   "source_of_truth_files": {
-    "audit/FINAL_ACCEPTANCE_POLICY.json": "224a775c9442318c4b3cfffee7bd1aeb632ba0f8089fb4a78a125f421f68a427",
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "b97162cba324235eecc7481de854248ef4aa1446a4ab73052a46d6080ad2052a",
-    "audit/PRODUCT_CLOSURE_BACKLOG.json": "c2c2a066a689da55e5023e0157fa2ef694028187436ef26e96f147f19def1232",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "98f5f156c3ed88f9c0959fb7636ef8c8341be45fd5413518c6e5b9efad4d79f2",
-    "audit/PRODUCT_CAPABILITY_SURFACE.json": "a50bc40488d88d7fd413bf652f741138904435b6e2c613d7b2d6f6e4dbc23567",
-    "audit/PRODUCT_CLAIMS_LEDGER.json": "a4a3ae746624374143322026f5abfabfd3504ded2e04ed612c326ad3baffc8e2",
-    "audit/DEFERRED_VALIDATION_GATES.json": "98a525ae860124a126de228c824a52c8a8e65c0a273472782de5869500b0eb74",
-    "audit/SOURCE_OF_TRUTH_INDEX.json": "f2042b3afcfce2fd053d20aa21542fca583f17c1467882d335f3146def7575f3",
-    "audit/RELEASE_ASSURANCE_POLICY.json": "903433441900b8906f29394141d165e3789e2c9c5dac8026fcaad8760cc145c3",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "bf26e014b0961f0484b2b07a5873a5ba073e096b578ba42ca838d2b67fe87bcf",
-    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "f7a6f71879f4a4c508974fc29a79906c1ffa7b4a274d422fc68cc654bf3a1543"
+    "audit/FINAL_ACCEPTANCE_POLICY.json": "fd29c89d806bc025212f21ee369bdc084c6166e2c0b34375816c87496a3a8d27",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "eabd50c5bbbf1af5eec16d58e9f622270f54b30f66c0cad666c928774ab00f6d",
+    "audit/PRODUCT_CLOSURE_BACKLOG.json": "0247d533e358b7db7101abc9490a2814ee56b9ec23b620968a0a3bd722d222b0",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "53c9e6e7afc7da29175a620dba6f3130f7780020f0f61b1e00a474b4996619ce",
+    "audit/PRODUCT_CAPABILITY_SURFACE.json": "15e6a77c1d7300e76f45b38584922e49f3eb2e3393f7c84d174ba5360512dd46",
+    "audit/PRODUCT_CLAIMS_LEDGER.json": "acb4836e83bf6df0015ed89fe3e0e85fd2614060c52b08d78a580630339dec51",
+    "audit/DEFERRED_VALIDATION_GATES.json": "60df17a27f9225303f084c39eb7d70b7252049822b64eafe6d6407f9217e6a56",
+    "audit/SOURCE_OF_TRUTH_INDEX.json": "8e26d211ceb18697e23cc97cd596e95addc14623e2ff0ed605340fac3a7a20f8",
+    "audit/RELEASE_ASSURANCE_POLICY.json": "8a45d2b1ec645c2aee796ab7466cb9f4e12c82cea037cafcd3b16257b242d7d2",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "8dfd0907a6e916619c892068b817078d3ff80d13fd0624cb23c917921a134b25",
+    "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "36ea5ae5c2353276ac39a22ecb03df699cc12f6a0d9b46a7474793dd429cd12a"
   },
   "counts": {
     "requirements": 36,
@@ -25,5 +25,5 @@
   "open_internal_requirement_ids": [],
   "open_internal_limitation_ids": [],
   "commercial_ready": true,
-  "reason": "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.0 within generated public claims and recorded limitations. This does not infer unrestricted production readiness, native ARM64/profile qualification, certification or external assurance."
+  "reason": "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.1 within generated public claims and recorded limitations. This does not infer unrestricted production readiness, native ARM64/profile qualification, certification or external assurance."
 }

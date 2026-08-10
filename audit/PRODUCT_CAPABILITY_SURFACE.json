@@ -1,6 +1,6 @@
 {
   "schema": "neoeng.dcore.product-capability-surface.v1",
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "status": "normative_candidate",
   "policy": {
     "every_public_claim_requires_a_supported_surface": true,

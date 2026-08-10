@@ -12,7 +12,7 @@ from typing import Any
 from generate_public_claims import ALLOWED_STATUSES, is_public, render
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "1.14.0"
+EXPECTED_VERSION = "1.14.1"
 CLAIMS = ROOT / "audit/PRODUCT_CLAIMS_LEDGER.json"
 CAPABILITIES = ROOT / "audit/PRODUCT_CAPABILITY_SURFACE.json"
 POLICY = ROOT / "audit/RELEASE_ASSURANCE_POLICY.json"
@@ -213,7 +213,7 @@ def verify_documents(
     for macro, value in (
         ("NEOENG_DCORE_RUNTIME_VERSION_MAJOR", "1"),
         ("NEOENG_DCORE_RUNTIME_VERSION_MINOR", "14"),
-        ("NEOENG_DCORE_RUNTIME_VERSION_PATCH", "0"),
+        ("NEOENG_DCORE_RUNTIME_VERSION_PATCH", "1"),
     ):
         if not re.search(
             rf"#define\s+{macro}\s+UINT16_C\({value}\)", host_header

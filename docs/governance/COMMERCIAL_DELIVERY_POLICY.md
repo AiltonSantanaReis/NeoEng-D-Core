@@ -1,6 +1,6 @@
 # Commercial delivery policy
 
-Accepted baseline governed by this policy: 1.14.0
+Accepted baseline governed by this policy: 1.14.1
 
 Any future version is a candidate until its own acceptance and evidence record
 are complete. This wording does not expand the public claims or remove any
