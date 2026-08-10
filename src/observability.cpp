@@ -15,6 +15,10 @@ namespace {
         : static_cast<std::int64_t>(value);
 }
 
+void append_json_uint64(std::ostringstream& stream, std::uint64_t value) {
+    stream << '"' << value << '"';
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
     for (const char character : value) {
@@ -240,14 +244,14 @@ std::string TimeTravelDebugger::export_reproducible_json(
     std::string_view environment_id) const {
     std::ostringstream stream;
     stream << "{\n  \"schema\": \"neoeng.dcore.time-travel.v1\",\n"
-           << "  \"seed\": " << seed << ",\n  \"environment_id\": ";
+           << "  \"seed\": "; append_json_uint64(stream, seed); stream << ",\n  \"environment_id\": ";
     append_json_string(stream, environment_id);
     stream << ",\n  \"frames\": [";
 
     for (std::size_t position = 0; position < size_; ++position) {
         const FrameRecord& record = *records_[logical_index(position)];
         stream << (position == 0U ? "\n" : ",\n")
-               << "    {\"frame\": " << record.state.frame
+               << "    {\"frame\": "; append_json_uint64(stream, record.state.frame); stream
                << ", \"hash\": \"" << hash_hex(record.state_hash) << "\", \"bodies\": [";
         for (std::size_t index = 0; index < record.state.bodies.size(); ++index) {
             const Body& body = record.state.bodies[index];
@@ -270,8 +274,8 @@ std::string TimeTravelDebugger::export_reproducible_json(
         for (std::size_t index = 0; index < record.events.size(); ++index) {
             const TraceEvent& event = record.events[index];
             stream << (index == 0U ? "" : ",")
-                   << "{\"correlation\":" << event.correlation_id
-                   << ",\"sequence\":" << event.sequence
+                   << "{\"correlation\":"; append_json_uint64(stream, event.correlation_id);
+            stream << ",\"sequence\":"; append_json_uint64(stream, event.sequence); stream
                    << ",\"category\":\"" << to_string(event.category)
                    << "\",\"outcome\":\"" << to_string(event.outcome)
                    << "\",\"code\":\"" << to_string(event.code) << "\"}";
@@ -313,6 +317,15 @@ std::optional<std::uint64_t> TimeTravelDebugger::newest_frame() const noexcept {
     }
     return records_[logical_index(size_ - 1U)]->state.frame;
 }
+std::vector<std::uint64_t> TimeTravelDebugger::retained_frame_numbers() const {
+    std::vector<std::uint64_t> frames;
+    frames.reserve(size_);
+    for (std::size_t position = 0; position < size_; ++position) {
+        frames.push_back(records_[logical_index(position)]->state.frame);
+    }
+    return frames;
+}
+
 
 const char* to_string(TraceCategory category) noexcept {
     switch (category) {

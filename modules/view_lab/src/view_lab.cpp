@@ -397,7 +397,8 @@ ViewerExportResult export_static_viewer(
     append_json_string(data, environment_id);
     data << ",\"frames\":[";
     std::size_t count = 0U;
-    for (std::uint64_t core_frame = *oldest; core_frame <= *newest; ++core_frame) {
+    const std::vector<std::uint64_t> retained_frames = debugger.retained_frame_numbers();
+    for (const std::uint64_t core_frame : retained_frames) {
         const FrameRecord* record = debugger.frame(core_frame);
         if (record == nullptr) {
             continue;

@@ -253,6 +253,10 @@ void record_evidence_trace(
     return length;
 }
 
+void append_json_uint64(std::ostringstream& stream, std::uint64_t value) {
+    stream << '"' << value << '"';
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
     for (std::size_t index = 0U; index < value.size();) {
@@ -702,21 +706,22 @@ std::string export_evidence_chain_json(std::span<const SignedStateEvidence> reco
     for (std::size_t index = 0; index < records.size(); ++index) {
         const auto& record = records[index];
         stream << (index == 0U ? "\n" : ",\n")
-               << "    {\"sequence\":" << record.envelope.sequence
-               << ",\"frame\":" << record.envelope.frame
-               << ",\"body_count\":" << record.envelope.body_count
+               << "    {\"sequence\":"; append_json_uint64(stream, record.envelope.sequence);
+        stream << ",\"frame\":"; append_json_uint64(stream, record.envelope.frame);
+        stream << ",\"body_count\":"; append_json_uint64(stream, record.envelope.body_count);
+        stream
                << ",\"stable_hash\":\"" << hash_hex(record.envelope.stable_state_hash)
                << "\",\"canonical_sha256\":\"" << sha256_hex(record.envelope.canonical_state_digest)
                << "\",\"merkle_root_sha256\":\"" << sha256_hex(record.envelope.merkle_root)
                << "\",\"previous_envelope_sha256\":\"" << sha256_hex(record.envelope.previous_envelope_hash)
                << "\",\"envelope_sha256\":\"" << sha256_hex(record.envelope_hash)
-               << "\",\"branch_id\":" << record.envelope.branch_id
+               << "\",\"branch_id\":"; append_json_uint64(stream, record.envelope.branch_id); stream
                << ",\"branch_parent_sha256\":\"" << sha256_hex(record.envelope.branch_parent_hash)
-               << "\",\"branch_parent_frame\":" << record.envelope.branch_parent_frame
-               << ",\"correlation_id\":" << record.envelope.correlation_id
+               << "\",\"branch_parent_frame\":"; append_json_uint64(stream, record.envelope.branch_parent_frame); stream
+               << ",\"correlation_id\":"; append_json_uint64(stream, record.envelope.correlation_id); stream
                << ",\"producer_id\":";
         append_json_string(stream, record.envelope.producer_id);
-        stream << ",\"monotonic_time_ns\":" << record.envelope.monotonic_time_ns
+        stream << ",\"monotonic_time_ns\":"; append_json_uint64(stream, record.envelope.monotonic_time_ns); stream
                << ",\"signature_algorithm\":\"" << to_string(record.signature.algorithm)
                << "\",\"signature_key_id\":";
         append_json_string(stream, record.signature.key_id);

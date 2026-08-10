@@ -1,4 +1,5 @@
 #include "neoeng/core/state_evidence.hpp"
+#include "neoeng/core/fuzz_cli.hpp"
 
 #include <cstdint>
 #include <cstdlib>
@@ -10,12 +11,16 @@
 using namespace neoeng::core;
 
 int main(int argc, char** argv) {
-    const std::uint64_t iterations = argc > 1 ? std::stoull(argv[1]) : 25'000U;
+    std::size_t iterations{};
+    if (!parse_fuzz_iteration_count(
+            argc, argv, 25'000U, 1'000'000U, "neoeng_state_evidence_fuzz", iterations)) {
+        return EXIT_FAILURE;
+    }
     std::mt19937_64 random(0xD0045EEDULL);
     std::uint64_t accepted_valid{};
     std::uint64_t rejected_tampered{};
 
-    for (std::uint64_t iteration = 0; iteration < iterations; ++iteration) {
+    for (std::size_t iteration = 0; iteration < iterations; ++iteration) {
         const std::size_t body_count = 1U + static_cast<std::size_t>(random() % 48U);
         const std::size_t chunk_size = 1U + static_cast<std::size_t>(random() % 12U);
         WorldState state{.frame = iteration + 1U};

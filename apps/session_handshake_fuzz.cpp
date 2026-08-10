@@ -1,4 +1,5 @@
 #include "neoeng/core/session_security.hpp"
+#include "neoeng/core/fuzz_cli.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -36,9 +37,11 @@ HandshakeNonce test_nonce() {
 } // namespace
 
 int main(int argc, char** argv) {
-    const std::size_t iterations = argc > 1
-        ? static_cast<std::size_t>(std::strtoull(argv[1], nullptr, 10))
-        : 100'000U;
+    std::size_t iterations{};
+    if (!parse_fuzz_iteration_count(
+            argc, argv, 100'000U, 1'000'000U, "neoeng_session_handshake_fuzz", iterations)) {
+        return EXIT_FAILURE;
+    }
     const AuthenticationKey root = test_key();
     SessionKeyRing ring(2U);
     if (!ring.upsert({

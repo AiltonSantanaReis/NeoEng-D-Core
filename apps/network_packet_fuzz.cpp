@@ -1,4 +1,5 @@
 #include "neoeng/core/network_security.hpp"
+#include "neoeng/core/fuzz_cli.hpp"
 
 #include <array>
 #include <cstdint>
@@ -9,7 +10,11 @@
 
 int main(int argc, char** argv) {
     using namespace neoeng::core;
-    const std::uint64_t iterations = argc > 1 ? std::strtoull(argv[1], nullptr, 10) : 100'000U;
+    std::size_t iterations{};
+    if (!parse_fuzz_iteration_count(
+            argc, argv, 100'000U, 1'000'000U, "neoeng_network_packet_fuzz", iterations)) {
+        return EXIT_FAILURE;
+    }
     AuthenticationKey key{};
     for (std::size_t index = 0; index < key.size(); ++index) {
         key[index] = static_cast<std::uint8_t>(0xA5U ^ index);
@@ -30,7 +35,7 @@ int main(int argc, char** argv) {
     std::array<InputCommand, 64> commands{};
     std::uint64_t accepted{};
     std::uint64_t parsed{};
-    for (std::uint64_t iteration = 0; iteration < iterations; ++iteration) {
+    for (std::size_t iteration = 0; iteration < iterations; ++iteration) {
         std::vector<std::uint8_t> datagram(size_distribution(random));
         for (std::uint8_t& byte : datagram) {
             byte = static_cast<std::uint8_t>(byte_distribution(random));

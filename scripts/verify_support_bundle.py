@@ -43,6 +43,18 @@ def fail(message: str) -> int:
     print(f"ERROR: {message}", file=sys.stderr)
     return 1
 
+def json_keys(value: object) -> set[str]:
+    keys: set[str] = set()
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if isinstance(key, str):
+                keys.add(key)
+            keys.update(json_keys(child))
+    elif isinstance(value, list):
+        for child in value:
+            keys.update(json_keys(child))
+    return keys
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -50,6 +62,14 @@ def main() -> int:
     parser.add_argument("--reject-extra-files", action="store_true", default=True)
     args = parser.parse_args()
     root = args.directory.resolve()
+    if not root.is_dir():
+        return fail("bundle directory is missing")
+    symlinks = sorted(
+        item.relative_to(root).as_posix() for item in root.rglob("*")
+        if item.is_symlink()
+    )
+    if symlinks:
+        return fail(f"symbolic links are not allowed: {symlinks}")
     manifest_path = root / "manifest.json"
     digest_path = root / "manifest.sha256"
     if not manifest_path.is_file() or not digest_path.is_file():
@@ -83,8 +103,12 @@ def main() -> int:
         if not isinstance(expected_hash, str) or not HEX64.fullmatch(expected_hash):
             return fail(f"invalid SHA-256 for {path}")
         target = root / path
-        if not target.is_file():
-            return fail(f"missing entry: {path}")
+        if target.is_symlink() or not target.is_file():
+            return fail(f"missing or symbolic-link entry: {path}")
+        try:
+            target.resolve(strict=True).relative_to(root)
+        except (OSError, ValueError):
+            return fail(f"entry escapes bundle directory: {path}")
         actual_size = target.stat().st_size
         if actual_size != expected_size:
             return fail(f"size mismatch for {path}: {actual_size} != {expected_size}")
@@ -114,6 +138,40 @@ def main() -> int:
     for field in forbidden_true:
         if redaction.get(field) is not False:
             return fail(f"redaction invariant failed: {field}")
+    payload_keys: set[str] = set()
+    trace_keys: set[str] = set()
+    for relative in sorted(declared - {"redaction-report.json"}):
+        candidate = root / relative
+        try:
+            parsed = json.loads(candidate.read_text(encoding="utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            continue
+        parsed_keys = json_keys(parsed)
+        payload_keys.update(parsed_keys)
+        if relative == "traces.json":
+            trace_keys.update(parsed_keys)
+    if (
+        not redaction.get("session_keys_included")
+        and payload_keys & {"session_key", "session_keys"}
+    ):
+        return fail("redaction report contradicts session-key payload")
+    if (
+        not redaction.get("authentication_secrets_included")
+        and payload_keys & {"authentication_secret", "authentication_secrets"}
+    ):
+        return fail("redaction report contradicts authentication-secret payload")
+    if (
+        not redaction.get("private_signing_material_included")
+        and payload_keys & {"private_signing_material", "private_signing_key"}
+    ):
+        return fail("redaction report contradicts private-signing payload")
+    if (
+        not redaction.get("raw_subject_ids_included")
+        and payload_keys & {"raw_subject_id", "raw_subject_ids", "subject_id", "subject_ids"}
+    ):
+        return fail("redaction report contradicts raw-subject payload")
+    if not redaction.get("monotonic_timestamps_included") and "monotonic_time_ns" in trace_keys:
+        return fail("redaction report contradicts monotonic-timestamp payload")
 
     gates = json.loads((root / "deferred-validation-gates.json").read_text(encoding="utf-8"))
     if gates.get("schema") != GATE_SCHEMA or not isinstance(gates.get("gates"), list):
@@ -122,7 +180,7 @@ def main() -> int:
     allowed_files = declared | {"manifest.json", "manifest.sha256"}
     actual_files = {
         item.relative_to(root).as_posix()
-        for item in root.rglob("*") if item.is_file()
+        for item in root.rglob("*") if item.is_file() and not item.is_symlink()
     }
     extras = actual_files - allowed_files
     if args.reject_extra_files and extras:
