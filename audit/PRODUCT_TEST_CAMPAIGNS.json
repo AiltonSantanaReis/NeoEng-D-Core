@@ -296,7 +296,7 @@
         "limitations"
       ],
       "evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
       "native_or_external_results_may_be_inferred": false
@@ -308,7 +308,7 @@
       "requirement_ids": [
         "DCORE-ACCEPT-001"
       ],
-      "status": "executed_windows_clang_linux_gcc_clang",
+      "status": "planned",
       "required_test_classes": [
         "adversarial",
         "cross_architecture_if_applicable",
@@ -331,9 +331,7 @@
         "independent-verification",
         "limitations"
       ],
-      "evidence": [
-        "docs/changesets/015/evidence/github-actions-run-30375982639"
-      ],
+      "evidence": [],
       "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
       "native_or_external_results_may_be_inferred": false
     },

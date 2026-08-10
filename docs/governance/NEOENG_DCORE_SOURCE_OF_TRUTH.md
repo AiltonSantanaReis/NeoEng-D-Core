@@ -120,3 +120,15 @@ no laboratório após essa publicação foram corrigidos nos commits `8d994c4` e
 árvore não podem ser atribuídos retroativamente ao pacote `v1.14.0`. Até que
 haja nova identidade, aceitação e atestação, o estado corrigido é somente um
 candidato de release.
+
+
+### 7.2 Estado do candidato 1.14.1 após CS014
+
+O candidato `1.14.1`, no commit
+`143163833764f92beb84646674d845bc82f7ab24`, passou a campanha CS014 no run
+`31381564124`. O pacote cumulativo `NeoEng-D-Core-1.14.1.zip` foi verificado
+independentemente e tem SHA-256
+`70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
+As atestações públicas de proveniência e SBOM foram verificadas no próprio
+run. Isso fecha somente a assurance CS014 da candidata; o CS015 da candidata
+continua pendente e nenhum release `v1.14.1` foi publicado.

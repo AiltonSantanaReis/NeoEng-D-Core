@@ -1,6 +1,6 @@
 # NeoEng D-Core Host SDK C ABI v1
 
-Status: active in NeoEng D-Core 1.14.0
+Status: active in NeoEng D-Core 1.14.1 candidate; historical accepted baseline: 1.14.0
 Public header: `neoeng/dcore_host.h`
 CMake target: `NeoEng::DCoreHostSdk`
 

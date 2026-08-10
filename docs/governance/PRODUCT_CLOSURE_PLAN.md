@@ -57,3 +57,19 @@ Antes do fechamento comercial dessa correção, é obrigatório definir a nova
 identidade de versão, repetir o contrato de assurance no commit candidato,
 regenerar manifesto/SBOM/proveniência, verificar reprodutibilidade e obter as
 atestações externas exigidas.
+
+
+## Candidate baseline 1.14.1 — CS014 passed; CS015 pending
+
+The candidate branch `agent/release-1.14.1-candidate` now has its own CS014
+assurance evidence. Commit `143163833764f92beb84646674d845bc82f7ab24` passed
+GitHub Actions run `31381564124` across Linux GCC/Clang, Windows clang-cl,
+ASan/UBSan, coverage-guided fuzzing, blocking clang-tidy, deterministic
+packaging and public Sigstore verification. The candidate archive digest is
+`70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
+
+This evidence belongs only to candidate `1.14.1`; it does not rewrite or
+retroactively validate the immutable `v1.14.0` release. CS015 final acceptance
+has not yet been run for `1.14.1`, so no new release or commercial acceptance is
+claimed. Deferred hardware, external assurance, certification and deployment
+gates remain governed by the ledger.

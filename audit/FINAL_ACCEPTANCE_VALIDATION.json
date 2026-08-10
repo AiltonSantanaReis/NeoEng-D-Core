@@ -1,20 +1,19 @@
 {
-  "acceptance_state": "accepted",
+  "acceptance_state": "closure_candidate",
   "accepted_scope": "NeoEng D-Core horizontal product baseline 1.14.1 within generated public claims and recorded limitations",
   "certification_or_external_audit_inferred": false,
-  "errors": [
-    "final acceptance evidence package rejected",
-    "immutable CS014 release-assurance evidence rejected"
-  ],
+  "errors": [],
   "horizontal_product_baseline_accepted": false,
   "native_or_hardware_profile_qualification_inferred": false,
   "open_internal_limitation_ids": [],
-  "open_internal_requirement_ids": [],
+  "open_internal_requirement_ids": [
+    "DCORE-ACCEPT-001"
+  ],
   "performance_on_other_hardware_inferred": false,
-  "prior_release_assurance_evidence_verified": false,
+  "prior_release_assurance_evidence_verified": true,
   "project_version": "1.14.1",
   "schema": "neoeng.dcore.final-acceptance-validation.v1",
-  "status": "failed",
+  "status": "passed",
   "unrestricted_production_readiness_inferred": false,
   "unsupported_or_prohibited_public_claims": 0
 }

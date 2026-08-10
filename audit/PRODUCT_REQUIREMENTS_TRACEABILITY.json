@@ -538,7 +538,7 @@
       ],
       "tests_or_evidence": [
         "scripts/verify_release_assurance.py",
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_stage": "CS014"
     },
@@ -571,7 +571,7 @@
         "docs/contracts/RELEASE_ASSURANCE_V1.md"
       ],
       "tests_or_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_stage": "CS014"
     },
@@ -587,7 +587,7 @@
         "fuzz"
       ],
       "tests_or_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_stage": "CS014"
     },
@@ -603,9 +603,9 @@
         "scripts/qualification/write_sigstore_verification_receipt.py"
       ],
       "tests_or_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.provenance.sigstore.json",
-        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.sbom.sigstore.json",
-        "docs/changesets/014/evidence/github-actions-run-30367653644/independent-verification.json"
+        "docs/changesets/014/evidence/github-actions-run-31381564124/NeoEng-D-Core-1.14.1.provenance.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-31381564124/NeoEng-D-Core-1.14.1.sbom.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-31381564124/independent-verification.json"
       ],
       "closure_stage": "CS014"
     },
@@ -618,7 +618,7 @@
         ".github/workflows/cs014-release-assurance.yml"
       ],
       "tests_or_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_stage": "CS014"
     },
@@ -636,7 +636,7 @@
       "tests_or_evidence": [
         "scripts/verify_product_contract.py",
         "scripts/verify_release_assurance.py",
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_stage": "CS014"
     },
@@ -644,14 +644,9 @@
       "requirement_id": "DCORE-ACCEPT-001",
       "description": "Final product acceptance reports zero internal mandatory gaps and zero unsupported public claims.",
       "responsibility": "product_module_mandatory",
-      "status": "complete",
-      "implementation": [
-        "audit/FINAL_ACCEPTANCE_POLICY.json",
-        "scripts/verify_final_acceptance.py"
-      ],
-      "tests_or_evidence": [
-        "docs/changesets/015/evidence/github-actions-run-30375982639"
-      ],
+      "status": "planned",
+      "implementation": [],
+      "tests_or_evidence": [],
       "closure_stage": "CS015"
     }
   ]

@@ -1,6 +1,6 @@
 # Commercial delivery policy
 
-Accepted baseline governed by this policy: 1.14.1
+Current release candidate governed by this policy: 1.14.1 (CS015 acceptance pending)
 
 Any future version is a candidate until its own acceptance and evidence record
 are complete. This wording does not expand the public claims or remove any

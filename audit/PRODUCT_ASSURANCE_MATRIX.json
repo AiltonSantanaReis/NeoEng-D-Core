@@ -776,7 +776,7 @@
       ],
       "current_evidence": [
         "scripts/verify_release_assurance.py",
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
@@ -831,7 +831,7 @@
         "reproducibility"
       ],
       "current_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
@@ -857,7 +857,7 @@
         "reproducibility"
       ],
       "current_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
@@ -883,9 +883,9 @@
         "reproducibility"
       ],
       "current_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.provenance.sigstore.json",
-        "docs/changesets/014/evidence/github-actions-run-30367653644/NeoEng-D-Core-1.14.0.sbom.sigstore.json",
-        "docs/changesets/014/evidence/github-actions-run-30367653644/independent-verification.json"
+        "docs/changesets/014/evidence/github-actions-run-31381564124/NeoEng-D-Core-1.14.1.provenance.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-31381564124/NeoEng-D-Core-1.14.1.sbom.sigstore.json",
+        "docs/changesets/014/evidence/github-actions-run-31381564124/independent-verification.json"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
@@ -911,7 +911,7 @@
         "reproducibility"
       ],
       "current_evidence": [
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
@@ -939,16 +939,16 @@
       "current_evidence": [
         "scripts/verify_product_contract.py",
         "scripts/verify_release_assurance.py",
-        "docs/changesets/014/evidence/github-actions-run-30367653644"
+        "docs/changesets/014/evidence/github-actions-run-31381564124"
       ],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     },
     {
       "requirement_id": "DCORE-ACCEPT-001",
-      "requirement_status": "complete",
+      "requirement_status": "planned",
       "responsibility": "product_module_mandatory",
       "closure_stage": "CS015",
-      "assurance_status": "evidenced",
+      "assurance_status": "planned_or_partial",
       "required_test_classes": [
         "positive",
         "negative",
@@ -964,9 +964,7 @@
         "regression",
         "reproducibility"
       ],
-      "current_evidence": [
-        "docs/changesets/015/evidence/github-actions-run-30375982639"
-      ],
+      "current_evidence": [],
       "closure_rule": "All applicable required_test_classes must have immutable evidence before the requirement may become complete."
     }
   ]
