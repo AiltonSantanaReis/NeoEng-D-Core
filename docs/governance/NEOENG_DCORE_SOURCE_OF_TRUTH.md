@@ -3,8 +3,8 @@
 Documento normativo: `NEOENG-DCORE-SOT-001`
 Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.14.1
-A baseline 1.14.1 é a candidata ativa desta reconciliação e só se torna release aceita após os gates próprios.
+Baseline desta fonte: 1.14.1 (release publicada)
+A baseline 1.14.1 é a release aceita vigente, publicada no tag `v1.14.1` sobre o merge `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`.
 
 ## 1. Autoridade
 
@@ -143,7 +143,9 @@ requisito final. Após esse registro, `DCORE-ACCEPT-001` está `complete`,
 `TEST-CS015-001` está executado, a assurance está `evidenced` e
 `audit/FINAL_ACCEPTANCE_VALIDATION.json` reporta `accepted`, sem requisitos ou
 limitações internas obrigatórias abertos. Isso não altera a baseline histórica
-`v1.14.0`: nenhum release/tag `v1.14.1` foi publicado ainda.
+`v1.14.0`: o tag `v1.14.1` foi publicado no merge
+`e3fff973554a2e56b8bd7afdc1132f75f3ec337c`, com artefatos e atestações
+verificados nos runs CS014 `31387419484` e CS015 `31387421705`.
 
 A aceitação permanece limitada aos claims públicos gerados e às limitações
 registradas. Não são inferidos ARM64/P0-P4, qualificação nativa de hardware,

@@ -67,4 +67,5 @@ Evidence: `docs/changesets/014/evidence/github-actions-run-31381564124`.
 
 This candidate evidence is not attributed to the immutable `v1.14.0` release. CS015
 acceptance for candidate `1.14.1` is recorded separately in
-`docs/changesets/015/TEST_STATUS.md`; no release tag has been published yet.
+`docs/changesets/015/TEST_STATUS.md`; release `v1.14.1` was subsequently published
+on merge `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`.

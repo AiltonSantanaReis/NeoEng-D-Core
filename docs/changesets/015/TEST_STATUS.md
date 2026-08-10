@@ -2,7 +2,7 @@
 
 State: accepted for candidate `1.14.1`; historical baseline `1.14.0` preserved
 
-Baseline: candidate `1.14.1` (publication pending); historical baseline: `1.14.0`
+Baseline: published release `v1.14.1`; historical baseline: `1.14.0`
 
 Campaign: `TEST-CS015-001`
 
@@ -53,7 +53,7 @@ assurance review. It preserves all prior limitations: no native ARM64/P0–P4
 qualification, certification, external audit, mission-critical readiness or
 performance rule for another machine is inferred.
 
-## Candidate baseline 1.14.1 — final acceptance
+## Published baseline 1.14.1 — final acceptance
 
 - source commit: `880a1820b570ec1c9ebb2892206068fbcf7bd1ef`;
 - GitHub Actions run: `31384684512`;
@@ -79,8 +79,11 @@ package and does not establish claims for other hardware.
 The package's own `final-acceptance-validation.json` records `closure_candidate`,
 as required before registering the immutable evidence. The current ledgers then
 recalculate the accepted state; the package was not modified after publication.
-This candidate is not attributed to the immutable `v1.14.0` release, and no
-`v1.14.1` release tag or public package has been published.
+This candidate is not attributed to the immutable `v1.14.0` release. The published
+release `v1.14.1` points to merge `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`;
+its main-branch package and attestations were verified in CS014 run
+`31387419484`, with archive SHA-256
+`107c8c4f90642151648de523e6b461500c6dc90915f759f930490c03e29f53bf`.
 
 No native ARM64/P0–P4 result, certification, independent external audit,
 mission-critical readiness or performance rule for another machine is inferred.

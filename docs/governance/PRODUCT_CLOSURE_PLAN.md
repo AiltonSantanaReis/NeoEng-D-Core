@@ -59,7 +59,7 @@ regenerar manifesto/SBOM/proveniência, verificar reprodutibilidade e obter as
 atestações externas exigidas.
 
 
-## Candidate baseline 1.14.1 — CS014 and CS015 accepted; publication pending
+## Published baseline 1.14.1 — CS014 and CS015 accepted
 
 The candidate branch `agent/release-1.14.1-candidate` has its own CS014
 assurance evidence. Commit `143163833764f92beb84646674d845bc82f7ab24` passed
@@ -80,7 +80,11 @@ that package is registered; the current ledgers and
 `audit/FINAL_ACCEPTANCE_VALIDATION.json` now report `accepted` with zero open
 mandatory requirements and limitations.
 
-This candidate evidence belongs only to `1.14.1`; it does not rewrite or
-retroactively validate the immutable `v1.14.0` release. No `v1.14.1` release
-tag or public package has been created yet. Deferred hardware, external
-assurance, certification and deployment gates remain governed by the ledger.
+This evidence belongs only to `1.14.1`; it does not rewrite or retroactively
+validate the immutable `v1.14.0` release. The release was published at tag
+`v1.14.1` on merge `e3fff973554a2e56b8bd7afdc1132f75f3ec337c` after the main
+CS014 run `31387419484` and main CS015 run `31387421705` passed. The published
+archive SHA-256 is
+`107c8c4f90642151648de523e6b461500c6dc90915f759f930490c03e29f53bf`.
+Deferred hardware, external assurance, certification and deployment gates
+remain governed by the ledger.
