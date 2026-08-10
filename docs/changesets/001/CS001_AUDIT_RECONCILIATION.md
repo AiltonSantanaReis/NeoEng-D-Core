@@ -2,7 +2,8 @@
 
 **Estado:** correção técnica verificada na baseline `f11c28e`; registro publicado
 como adendo de reconciliação. A release histórica `v1.14.0` continua
-explicitamente não imutável.
+explicitamente sem imutabilidade de assets no GitHub. Isso descreve a proteção
+da release/tag, não revoga a aceitação técnica da baseline horizontal `1.14.0`.
 **Data da rodada:** 2026-08-09.
 
 Este documento é um adendo de auditoria. O relatório histórico e o oráculo
@@ -106,7 +107,7 @@ do contrato atual passou 107/107 no laboratório, sem remover ou comentar testes
 históricos.
 
 R9 foi tratado sem reescrever a história: a proteção de releases imutáveis foi
-habilitada no GitHub para novas publicações, mas `v1.14.0` permanece registrada
-como release histórica não imutável. Hardware, assurance externa,
+habilitada no GitHub para novas publicações, mas os assets da tag histórica
+`v1.14.0` permanecem registrados como não imutáveis. Hardware, assurance externa,
 certificação, ARM64, long-run e power-loss permanecem deferidos conforme o
 plano aprovado.

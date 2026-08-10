@@ -1,6 +1,8 @@
 # NeoEng D-Core Release Assurance Contract v1
 
-Status: normative candidate for baseline 1.14.0
+Status: normative contract for the accepted horizontal baseline 1.14.0.
+Future release candidates must satisfy this contract again from their own
+immutable source and evidence package.
 
 ChangeSet: CS014
 

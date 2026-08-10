@@ -78,8 +78,9 @@ removeu testes históricos.
 
 ## 6. R9 — imutabilidade da release
 
-**Estado:** `proteção_corrigida_para_novas_releases`; `v1.14.0` histórica,
-explicitamente não imutável.
+**Estado:** `proteção_corrigida_para_novas_releases`; os assets da tag histórica
+`v1.14.0` não possuem imutabilidade no GitHub. Isso é uma propriedade da
+release/tag e não altera a aceitação técnica da baseline horizontal `1.14.0`.
 
 A API do GitHub confirmou que a release `v1.14.0` existente tem
 `isImmutable=false`. A proteção de releases imutáveis foi habilitada no
@@ -87,7 +88,7 @@ repositório em 2026-08-09. A partir dessa habilitação, novas releases terão 
 e assets protegidos pelo GitHub.
 
 Não foi apagada, movida ou reescrita a tag `v1.14.0`, pois isso destruiria a
-proveniência histórica. Ela não deve ser apresentada como release imutável. A
+proveniência histórica. Seus assets não devem ser apresentados como imutáveis. A
 próxima publicação comercial deve ser criada somente após a proteção estar
 ativa e deve registrar a atestação nativa do GitHub junto da proveniência
 Sigstore/Cosign já exigida pelo contrato.
@@ -125,5 +126,5 @@ Continuam deferidos, sem defeito de implementação declarado:
 
 Este registro fecha CS001-AUD-004/005/006, a reconciliação de governança e o
 contrato de ambiente. R9 fica protegido para a próxima release, enquanto a
-release histórica `v1.14.0` permanece corretamente classificada como não
-imutável.
+release histórica `v1.14.0` permanece corretamente classificada como sem
+imutabilidade de assets no GitHub.

@@ -2,6 +2,13 @@
 
 Data: 22 de julho de 2026.
 
+> **Classificação documental:** registro histórico de validação anterior à
+> baseline aceita `1.14.0`. Este arquivo preserva os resultados da rodada de
+> 22/07/2026 e não deve ser usado como retrato do estado atual. Para o estado
+> vigente, consulte a [fonte normativa](governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md),
+> o [plano de fechamento](governance/PRODUCT_CLOSURE_PLAN.md) e o
+> [status CS015](changesets/015/TEST_STATUS.md).
+
 ## Identidade e integração
 
 - projeto CMake: `NeoEngDCore`;
