@@ -43,3 +43,17 @@ Windows clang-cl, Linux GCC e Linux Clang, verificou a atestacao externa de
 proveniencia com Sigstore/Cosign e passou o verificador fail-closed. Essa
 revalidacao corrige a cadeia de autenticacao da evidencia sem alterar a
 baseline 1.14.0 nem ampliar claims de hardware, desempenho ou prontidao.
+
+## Estado pós-release da baseline 1.14.0 — CANDIDATO NÃO PUBLICADO
+
+O release público `v1.14.0` permanece imutável no commit
+`488112e9e1a248686eff168c453cb51915f72498` e não contém as correções
+posteriores do laboratório. Os commits `8d994c4` e `ef8d628`, incorporados no
+merge `2fe59dac`, corrigem achados funcionais posteriores e foram revalidados
+localmente em Windows x86_64 clang-cl. Essa árvore é candidata a uma nova
+distribuição, não uma atualização silenciosa do arquivo `v1.14.0`.
+
+Antes do fechamento comercial dessa correção, é obrigatório definir a nova
+identidade de versão, repetir o contrato de assurance no commit candidato,
+regenerar manifesto/SBOM/proveniência, verificar reprodutibilidade e obter as
+atestações externas exigidas.

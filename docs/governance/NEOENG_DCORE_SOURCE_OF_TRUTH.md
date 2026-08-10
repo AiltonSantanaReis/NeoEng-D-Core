@@ -109,3 +109,13 @@ prontidao irrestrita.
 ## 9. Alteracao desta fonte
 
 Somente por ChangeSet identificado, com justificativa, diff auditavel, impacto nos requisitos/claims, aprovacao do proprietario, verificacao por `scripts/verify_product_contract.py` e `scripts/verify_product_assurance.py`, manifesto atualizado e evidencia preservada.
+
+### 7.1 Correções posteriores ao release público
+
+A publicação `v1.14.0` é um artefato histórico imutável baseado no commit
+`488112e9e1a248686eff168c453cb51915f72498`. Achados funcionais identificados
+no laboratório após essa publicação foram corrigidos nos commits `8d994c4` e
+`ef8d628` e incorporados ao merge `2fe59dac`. Os resultados locais dessa
+árvore não podem ser atribuídos retroativamente ao pacote `v1.14.0`. Até que
+haja nova identidade, aceitação e atestação, o estado corrigido é somente um
+candidato de release.
