@@ -1,0 +1,26 @@
+{
+  "attestation_provider": "Sigstore Public Good Instance (Fulcio and Rekor)",
+  "coverage_guided_fuzz_targets": [
+    "neoeng_network_packet_libfuzzer",
+    "neoeng_session_handshake_libfuzzer"
+  ],
+  "external_provenance_attestation_required": true,
+  "external_sbom_attestation_required": true,
+  "linux_compilers": [
+    "gcc",
+    "clang"
+  ],
+  "project_version": "1.14.1",
+  "public_transparency_log_required": true,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "schema": "neoeng.dcore.release-assurance-configuration.v1",
+  "single_cumulative_archive": true,
+  "spdx_sbom_required": true,
+  "static_analysis_blocking": true,
+  "windows_compilers": [
+    "clang-cl"
+  ]
+}

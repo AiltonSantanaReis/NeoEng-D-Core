@@ -1,0 +1,10 @@
+{
+  "commit": "143163833764f92beb84646674d845bc82f7ab24",
+  "project_version": "1.14.1",
+  "ref": "refs/heads/agent/release-1.14.1-candidate",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "schema": "neoeng.dcore.source-identity.v1",
+  "workflow_run_attempt": "1",
+  "workflow_run_id": "31381564124",
+  "worktree_dirty": false
+}

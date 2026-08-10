@@ -1,0 +1,15 @@
+{
+  "commercial_product_complete_may_be_inferred": false,
+  "limitations": [
+    "The campaign does not prove ARM64 behavior.",
+    "The campaign is not an independent security audit or certification.",
+    "Coverage-guided fuzzing reduces risk but does not prove absence of defects.",
+    "Sanitizer and static-analysis success do not prove absence of defects.",
+    "Performance results from one host are not generalized to other hardware.",
+    "The public Sigstore log exposes repository, workflow, ref and commit metadata but not source contents.",
+    "Commercial completion remains governed by the CS015 acceptance decision."
+  ],
+  "native_or_external_results_may_be_inferred": false,
+  "project_version": "1.14.1",
+  "schema": "neoeng.dcore.release-assurance-limitations.v1"
+}
