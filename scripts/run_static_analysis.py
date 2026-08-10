@@ -135,7 +135,7 @@ def main() -> int:
     )
     summary = {
         "schema": "neoeng.dcore.static-analysis-summary.v1",
-        "project_version": "1.14.0",
+        "project_version": "1.14.1",
         "status": "passed" if not failures else "failed",
         "engine": Path(executable).name,
         "checks": CHECKS,

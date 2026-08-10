@@ -1,0 +1,23 @@
+{
+  "archive_sha256": "70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6",
+  "arm64_or_other_hardware_result_inferred": false,
+  "certification_or_external_audit_claimed": false,
+  "commercial_product_complete": false,
+  "external_signed_attestations_verified": true,
+  "gates": {
+    "asan_ubsan": "passed",
+    "blocking_static_analysis": "passed",
+    "consolidated_release_verification": "passed",
+    "coverage_guided_fuzzing": "passed",
+    "deterministic_archive_repeat": "passed",
+    "linux_clang": "passed",
+    "linux_gcc": "passed",
+    "provenance_attestation_verification": "passed",
+    "sbom_attestation_verification": "passed",
+    "windows_clang_cl": "passed"
+  },
+  "local_unsigned_candidate_publishable": false,
+  "project_version": "1.14.1",
+  "schema": "neoeng.dcore.release-assurance-campaign-summary.v1",
+  "status": "passed"
+}

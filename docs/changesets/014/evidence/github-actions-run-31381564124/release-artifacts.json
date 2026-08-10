@@ -1,0 +1,17 @@
+{
+  "archive": "NeoEng-D-Core-1.14.1.zip",
+  "archive_bytes": 1393478,
+  "archive_sha256": "70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6",
+  "build_id": "31381564124-1",
+  "builder": "runnervmvrwv9",
+  "compiler_id": "github-actions",
+  "external_signed_attestation_required": true,
+  "local_unsigned_candidate_publishable": false,
+  "operating_system": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "project_version": "1.14.1",
+  "python": "3.12.3",
+  "schema": "neoeng.dcore.release-artifacts.v1",
+  "source_commit": "143163833764f92beb84646674d845bc82f7ab24",
+  "source_tree": "470a7df7933bd726975fd0b7d0a6ae076fb9e020",
+  "status": "created"
+}

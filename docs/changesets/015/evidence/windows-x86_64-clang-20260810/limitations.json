@@ -1,0 +1,8 @@
+{
+  "schema": "neoeng.dcore.supplemental-local-test-limitations.v1",
+  "limitations": [
+    "The executable build was configured before the final documentation-only reconciliation and was not rebuilt in this step.",
+    "No source commit or binary digest was asserted for this supplemental run.",
+    "The result describes this Windows x86_64 host only and does not infer ARM64, P0-P4, or performance on other hardware."
+  ]
+}

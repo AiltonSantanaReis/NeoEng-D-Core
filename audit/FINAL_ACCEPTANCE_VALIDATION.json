@@ -1,6 +1,6 @@
 {
   "acceptance_state": "accepted",
-  "accepted_scope": "NeoEng D-Core horizontal product baseline 1.14.0 within generated public claims and recorded limitations",
+  "accepted_scope": "NeoEng D-Core horizontal product baseline 1.14.1 within generated public claims and recorded limitations",
   "certification_or_external_audit_inferred": false,
   "errors": [],
   "horizontal_product_baseline_accepted": true,
@@ -9,7 +9,7 @@
   "open_internal_requirement_ids": [],
   "performance_on_other_hardware_inferred": false,
   "prior_release_assurance_evidence_verified": true,
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "schema": "neoeng.dcore.final-acceptance-validation.v1",
   "status": "passed",
   "unrestricted_production_readiness_inferred": false,

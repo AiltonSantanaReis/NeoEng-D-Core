@@ -1,10 +1,10 @@
 {
   "schema": "neoeng.dcore.final-acceptance-policy.v1",
-  "project_version": "1.14.0",
+  "project_version": "1.14.1",
   "closure_stage": "CS015",
   "acceptance_requirement": "DCORE-ACCEPT-001",
   "acceptance_campaign": "TEST-CS015-001",
-  "accepted_product_scope": "NeoEng D-Core horizontal product baseline 1.14.0 within the generated public claims and recorded limitations",
+  "accepted_product_scope": "NeoEng D-Core horizontal product baseline 1.14.1 within the generated public claims and recorded limitations",
   "required_conditions": {
     "open_internal_limitations": 0,
     "open_internal_requirements_before_evidence_recording": [

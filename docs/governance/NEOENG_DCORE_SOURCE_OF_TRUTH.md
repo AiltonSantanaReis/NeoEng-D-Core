@@ -3,7 +3,8 @@
 Documento normativo: `NEOENG-DCORE-SOT-001`
 Versao normativa: 1.2
 Produto governado: NeoEng D-Core
-Baseline desta fonte: 1.14.0
+Baseline desta fonte: 1.14.1
+A baseline 1.14.1 é a candidata ativa desta reconciliação e só se torna release aceita após os gates próprios.
 
 ## 1. Autoridade
 
@@ -109,3 +110,42 @@ prontidao irrestrita.
 ## 9. Alteracao desta fonte
 
 Somente por ChangeSet identificado, com justificativa, diff auditavel, impacto nos requisitos/claims, aprovacao do proprietario, verificacao por `scripts/verify_product_contract.py` e `scripts/verify_product_assurance.py`, manifesto atualizado e evidencia preservada.
+
+### 7.1 Correções posteriores ao release público
+
+A publicação `v1.14.0` é um artefato histórico imutável baseado no commit
+`488112e9e1a248686eff168c453cb51915f72498`. Achados funcionais identificados
+no laboratório após essa publicação foram corrigidos nos commits `8d994c4` e
+`ef8d628` e incorporados ao merge `2fe59dac`. Os resultados locais dessa
+árvore não podem ser atribuídos retroativamente ao pacote `v1.14.0`. Até que
+haja nova identidade, aceitação e atestação, o estado corrigido é somente um
+candidato de release.
+
+
+### 7.2 Estado do candidato 1.14.1 após CS014 e CS015
+
+O candidato `1.14.1`, no commit CS014
+`143163833764f92beb84646674d845bc82f7ab24`, passou a campanha CS014 no run
+`31381564124`. O pacote cumulativo `NeoEng-D-Core-1.14.1.zip` foi verificado
+independentemente e tem SHA-256
+`70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
+
+A aceitação final da candidata passou no run CS015 `31384684512`, sobre o
+commit `880a1820b570ec1c9ebb2892206068fbcf7bd1ef`. Os três alvos declarados
+(Linux GCC, Linux Clang e Windows clang-cl) passaram; a montagem fail-closed,
+a atestação pública Sigstore, a verificação da atestação e a verificação
+independente do pacote passaram. A evidência imutável está em
+`docs/changesets/015/evidence/github-actions-run-31384684512`.
+
+O pacote registra `closure_candidate` durante a execução, pois a máquina de
+estados exige que a evidência seja registrada nos ledgers antes de promover o
+requisito final. Após esse registro, `DCORE-ACCEPT-001` está `complete`,
+`TEST-CS015-001` está executado, a assurance está `evidenced` e
+`audit/FINAL_ACCEPTANCE_VALIDATION.json` reporta `accepted`, sem requisitos ou
+limitações internas obrigatórias abertos. Isso não altera a baseline histórica
+`v1.14.0`: nenhum release/tag `v1.14.1` foi publicado ainda.
+
+A aceitação permanece limitada aos claims públicos gerados e às limitações
+registradas. Não são inferidos ARM64/P0-P4, qualificação nativa de hardware,
+long-run/power-loss, certificação, auditoria externa, assurance de deployment
+ou regra de desempenho para outra máquina.

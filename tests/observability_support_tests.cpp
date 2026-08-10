@@ -302,7 +302,7 @@ void test_support_bundle_adversarial_contracts() {
     const std::vector<SignedStateEvidence> evidence{};
     const std::vector<DeferredValidationGate> deferred = gates();
     SupportBundleContext context{
-        .project_version = "1.14.0-test",
+        .project_version = "1.14.1-test",
         .environment_id = "test-environment",
         .hardware_profile = "test-host",
         .seed = 7U,

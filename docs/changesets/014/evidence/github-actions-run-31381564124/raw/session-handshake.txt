@@ -1,0 +1,28 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1998457543
+INFO: Loaded 1 modules   (18 inline 8-bit counters): 18 [0x55eaf4410f38, 0x55eaf4410f4a), 
+INFO: Loaded 1 PC tables (18 PCs): 18 [0x55eaf4410f50,0x55eaf4411070), 
+INFO:        1 files found in fuzz/corpus/session_handshake
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
+INFO: seed corpus: files: 1 min: 5b max: 5b total: 5b rss: 43Mb
+#2	INITED cov: 9 ft: 9 corp: 1/5b exec/s: 0 rss: 44Mb
+#3	REDUCE cov: 9 ft: 9 corp: 1/4b lim: 5 exec/s: 0 rss: 44Mb L: 4/4 MS: 1 EraseBytes-
+#14	REDUCE cov: 9 ft: 11 corp: 2/6b lim: 5 exec/s: 0 rss: 46Mb L: 2/4 MS: 1 EraseBytes-
+#35	NEW    cov: 9 ft: 13 corp: 3/9b lim: 5 exec/s: 0 rss: 46Mb L: 3/4 MS: 1 InsertByte-
+#66	NEW    cov: 9 ft: 15 corp: 4/10b lim: 5 exec/s: 0 rss: 46Mb L: 1/4 MS: 1 EraseBytes-
+#483	NEW    cov: 9 ft: 17 corp: 5/18b lim: 9 exec/s: 0 rss: 46Mb L: 8/8 MS: 2 InsertByte-InsertRepeatedBytes-
+#488	NEW    cov: 9 ft: 18 corp: 6/27b lim: 9 exec/s: 0 rss: 46Mb L: 9/9 MS: 5 ChangeBit-ChangeBit-ShuffleBytes-InsertRepeatedBytes-InsertByte-
+#1119	NEW    cov: 9 ft: 19 corp: 7/40b lim: 15 exec/s: 0 rss: 47Mb L: 13/13 MS: 1 InsertRepeatedBytes-
+#1154	NEW    cov: 9 ft: 20 corp: 8/55b lim: 15 exec/s: 0 rss: 47Mb L: 15/15 MS: 5 CrossOver-CrossOver-ChangeByte-InsertByte-InsertRepeatedBytes-
+#1173	REDUCE cov: 9 ft: 21 corp: 9/69b lim: 15 exec/s: 0 rss: 47Mb L: 14/15 MS: 4 InsertByte-EraseBytes-InsertRepeatedBytes-InsertRepeatedBytes-
+#1493	NEW    cov: 9 ft: 23 corp: 10/86b lim: 18 exec/s: 0 rss: 47Mb L: 17/17 MS: 5 ShuffleBytes-CrossOver-ChangeByte-CopyPart-InsertRepeatedBytes-
+#1536	REDUCE cov: 9 ft: 23 corp: 10/85b lim: 18 exec/s: 0 rss: 47Mb L: 16/16 MS: 3 CrossOver-ChangeBit-EraseBytes-
+#1048576	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 426Mb
+#2097152	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 524288 rss: 426Mb
+#4194304	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 599186 rss: 427Mb
+#8388608	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 559240 rss: 427Mb
+#16777216	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 559240 rss: 427Mb
+#33554432	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 568719 rss: 427Mb
+#67108864	pulse  cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 568719 rss: 427Mb
+#68521792	DONE   cov: 9 ft: 23 corp: 10/85b lim: 4096 exec/s: 566295 rss: 427Mb
+Done 68521792 runs in 121 second(s)

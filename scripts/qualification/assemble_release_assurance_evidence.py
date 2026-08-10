@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 RAW_REQUIRED = {
     "linux-gcc-ctest.txt",
     "linux-clang-ctest.txt",
@@ -33,8 +33,8 @@ RELEASE_REQUIRED = {
     "independent-verification.json",
     "attestation-verification.json",
     "sbom-attestation-verification.json",
-    "NeoEng-D-Core-1.14.0.provenance.sigstore.json",
-    "NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+    "NeoEng-D-Core-1.14.1.provenance.sigstore.json",
+    "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
     "archive-reproducibility.txt",
 }
 SIGSTORE_PROVIDER = "Sigstore Public Good Instance (Fulcio and Rekor)"
@@ -108,7 +108,7 @@ def attestation_receipt_valid(
         and value.get("status") == "passed"
         and value.get("provider") == SIGSTORE_PROVIDER
         and value.get("verifier") == "cosign 3.0.6"
-        and value.get("artifact") == "NeoEng-D-Core-1.14.0.zip"
+        and value.get("artifact") == "NeoEng-D-Core-1.14.1.zip"
         and value.get("artifact_sha256") == artifact_sha256
         and value.get("bundle") == bundle_name
         and value.get("bundle_sha256") == bundle_sha256
@@ -200,9 +200,9 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
         provenance_attestation,
         "https://neoeng.dev/attestations/release-provenance/v1",
         artifact_sha256=archive_sha256,
-        bundle_name="NeoEng-D-Core-1.14.0.provenance.sigstore.json",
+        bundle_name="NeoEng-D-Core-1.14.1.provenance.sigstore.json",
         bundle_sha256=sha256(
-            output / "NeoEng-D-Core-1.14.0.provenance.sigstore.json"
+            output / "NeoEng-D-Core-1.14.1.provenance.sigstore.json"
         ),
         repository=repository,
         commit=commit,
@@ -213,9 +213,9 @@ def assemble(raw: Path, release: Path, output: Path) -> dict[str, Any]:
         sbom_attestation,
         "https://spdx.dev/Document",
         artifact_sha256=archive_sha256,
-        bundle_name="NeoEng-D-Core-1.14.0.sbom.sigstore.json",
+        bundle_name="NeoEng-D-Core-1.14.1.sbom.sigstore.json",
         bundle_sha256=sha256(
-            output / "NeoEng-D-Core-1.14.0.sbom.sigstore.json"
+            output / "NeoEng-D-Core-1.14.1.sbom.sigstore.json"
         ),
         repository=repository,
         commit=commit,

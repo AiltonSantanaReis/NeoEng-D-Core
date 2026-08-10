@@ -1,8 +1,8 @@
 # CS014 — test status
 
-State: concluded
+State: concluded for historical 1.14.0; candidate 1.14.1 CS014 passed and CS015 accepted
 
-Baseline: `1.14.0`
+Historical baseline: `1.14.0`; current candidate: `1.14.1`
 
 Campaign: `TEST-CS014-001`
 
@@ -50,3 +50,21 @@ Evidence:
 The campaign closes CS014 only. It does not prove ARM64 behavior, certify the
 product, constitute an external security audit, generalize performance to
 other hardware or complete CS015 commercial acceptance.
+
+## Candidate baseline 1.14.1 — CS014 assurance revalidation
+
+State: passed for the candidate; CS015 acceptance is recorded in the candidate closure ledger.
+
+- source commit: `143163833764f92beb84646674d845bc82f7ab24`;
+- GitHub Actions run: `31381564124`;
+- Linux GCC, Linux Clang and Windows clang-cl release gates: passed;
+- ASan/UBSan, two coverage-guided fuzzers and blocking clang-tidy: passed;
+- deterministic cumulative ZIP and independent verification: passed;
+- keyless Sigstore provenance and SPDX SBOM attestations: verified;
+- candidate archive SHA-256: `70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
+
+Evidence: `docs/changesets/014/evidence/github-actions-run-31381564124`.
+
+This candidate evidence is not attributed to the immutable `v1.14.0` release. CS015
+acceptance for candidate `1.14.1` is recorded separately in
+`docs/changesets/015/TEST_STATUS.md`; no release tag has been published yet.

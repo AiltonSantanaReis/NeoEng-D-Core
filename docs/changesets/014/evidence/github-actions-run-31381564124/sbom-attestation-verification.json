@@ -1,0 +1,19 @@
+{
+  "artifact": "NeoEng-D-Core-1.14.1.zip",
+  "artifact_sha256": "70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6",
+  "bundle": "NeoEng-D-Core-1.14.1.sbom.sigstore.json",
+  "bundle_sha256": "971f5e26858a916c11546f9dea3b99e6e897231c9df8f3bf3fee5330f529423d",
+  "certificate_identity": "https://github.com/AiltonSantanaReis/NeoEng-D-Core/.github/workflows/cs014-release-assurance.yml@refs/heads/agent/release-1.14.1-candidate",
+  "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+  "commit": "143163833764f92beb84646674d845bc82f7ab24",
+  "predicate_type": "https://spdx.dev/Document",
+  "project_version": "1.14.1",
+  "provider": "Sigstore Public Good Instance (Fulcio and Rekor)",
+  "public_transparency_log_verified": true,
+  "ref": "refs/heads/agent/release-1.14.1-candidate",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "schema": "neoeng.dcore.sigstore-attestation-verification.v1",
+  "status": "passed",
+  "verification_precondition": "emitted only after cosign verify-blob-attestation exited zero",
+  "verifier": "cosign 3.0.6"
+}

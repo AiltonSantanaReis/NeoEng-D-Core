@@ -11,10 +11,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 REPORT = ROOT / "audit/FINAL_ACCEPTANCE_VALIDATION.json"
 CS014_EVIDENCE = (
-    ROOT / "docs/changesets/014/evidence/github-actions-run-30367653644"
+    ROOT / "docs/changesets/014/evidence/github-actions-run-31381564124"
 )
 MANDATORY = {"core_mandatory", "product_module_mandatory"}
 PUBLIC_STATUSES = {
@@ -260,7 +260,7 @@ def _report(
         "acceptance_state": state,
         "horizontal_product_baseline_accepted": accepted,
         "accepted_scope": (
-            "NeoEng D-Core horizontal product baseline 1.14.0 within generated "
+            "NeoEng D-Core horizontal product baseline 1.14.1 within generated "
             "public claims and recorded limitations"
         ),
         "open_internal_requirement_ids": open_requirements,

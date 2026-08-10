@@ -12,7 +12,7 @@ import tempfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 MANIFEST_LINE = re.compile(r"^([0-9a-f]{64})  ([^\r\n]+)$")
 REQUIRED = {
     "source-identity.json",

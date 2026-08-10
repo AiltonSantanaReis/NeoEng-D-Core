@@ -11,7 +11,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-VERSION = "1.14.0"
+VERSION = "1.14.1"
 PACKAGE_NAME = f"NeoEng-D-Core-{VERSION}"
 MANIFEST_PATTERN = re.compile(r"^([0-9a-f]{64})  ([^\r\n]+)$")
 
@@ -218,9 +218,9 @@ def write_fixture(directory: Path) -> None:
     tree = "b" * 40
     files: dict[str, bytes] = {
         "CMakeLists.txt": (
-            "project(NeoEngDCore VERSION 1.14.0 LANGUAGES C CXX)\n"
+            "project(NeoEngDCore VERSION 1.14.1 LANGUAGES C CXX)\n"
         ).encode(),
-        "vcpkg.json": b'{"version-string":"1.14.0"}\n',
+        "vcpkg.json": b'{"version-string":"1.14.1"}\n',
         "NOTICE.md": b"fixture\n",
         "PUBLIC_CLAIMS.md": b"fixture\n",
         "docs/contracts/RELEASE_ASSURANCE_V1.md": b"fixture\n",

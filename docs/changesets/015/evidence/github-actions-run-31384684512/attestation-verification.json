@@ -1,0 +1,19 @@
+{
+  "artifact": "SHA256SUMS.txt",
+  "artifact_sha256": "25cf4434b4f0a54aca675dd8f1adc770f5398b579c8ff666a5bd48ec3f2da78f",
+  "bundle": "provenance-attestation.sigstore.json",
+  "bundle_sha256": "229dd8addac702abd8ee78308f7cf7072e3c98e9d4cc7523bdd0a3db98244ca4",
+  "certificate_identity": "https://github.com/AiltonSantanaReis/NeoEng-D-Core/.github/workflows/cs015-final-acceptance.yml@refs/heads/agent/release-1.14.1-candidate",
+  "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+  "commit": "880a1820b570ec1c9ebb2892206068fbcf7bd1ef",
+  "predicate_type": "https://neoeng.dev/attestations/final-acceptance-provenance/v1",
+  "project_version": "1.14.1",
+  "provider": "Sigstore Public Good Instance (Fulcio and Rekor)",
+  "public_transparency_log_verified": true,
+  "ref": "refs/heads/agent/release-1.14.1-candidate",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "schema": "neoeng.dcore.sigstore-attestation-verification.v1",
+  "status": "passed",
+  "verification_precondition": "emitted only after cosign verify-blob-attestation exited zero",
+  "verifier": "cosign 3.0.6"
+}
