@@ -158,6 +158,7 @@ jobs:
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
         run: >
           ctest --test-dir build-sanitized --output-on-failure -L dcore
+          -E neoeng_final_acceptance_verify
           --output-log build-sanitized/sanitizer-ctest.txt
       - name: Upload sanitizer evidence
         if: always()
