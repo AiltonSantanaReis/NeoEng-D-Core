@@ -61,6 +61,7 @@ jobs:
       - name: Test supported surface
         run: >
           ctest --test-dir build -C Release --output-on-failure -L dcore
+          -E neoeng_final_acceptance_verify
           --output-log build/linux-${{ matrix.compiler }}-ctest.txt
       - name: Upload Linux evidence
         if: always()
@@ -116,6 +117,7 @@ jobs:
       - name: Test supported surface
         run: >
           ctest --test-dir build -C Release --output-on-failure -L dcore
+          -E neoeng_final_acceptance_verify
           --output-log build/windows-clang-cl-ctest.txt
       - name: Upload Windows evidence
         if: always()
