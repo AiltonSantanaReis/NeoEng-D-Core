@@ -4,26 +4,28 @@
   "status": "passed",
   "source_of_truth_files": {
     "audit/FINAL_ACCEPTANCE_POLICY.json": "fd29c89d806bc025212f21ee369bdc084c6166e2c0b34375816c87496a3a8d27",
-    "audit/PRODUCT_ASSURANCE_MATRIX.json": "eabd50c5bbbf1af5eec16d58e9f622270f54b30f66c0cad666c928774ab00f6d",
+    "audit/PRODUCT_ASSURANCE_MATRIX.json": "ac423a0129b3fae3692f5c168d260a41e8e72db01eedd62c2d5e7e38f8b83482",
     "audit/PRODUCT_CLOSURE_BACKLOG.json": "0247d533e358b7db7101abc9490a2814ee56b9ec23b620968a0a3bd722d222b0",
-    "audit/PRODUCT_TEST_CAMPAIGNS.json": "53c9e6e7afc7da29175a620dba6f3130f7780020f0f61b1e00a474b4996619ce",
+    "audit/PRODUCT_TEST_CAMPAIGNS.json": "b2eaf0e49fd59bbd4105841ad554e38d4bc12e0ae0360fbab265a478b96bcbf7",
     "audit/PRODUCT_CAPABILITY_SURFACE.json": "15e6a77c1d7300e76f45b38584922e49f3eb2e3393f7c84d174ba5360512dd46",
     "audit/PRODUCT_CLAIMS_LEDGER.json": "acb4836e83bf6df0015ed89fe3e0e85fd2614060c52b08d78a580630339dec51",
     "audit/DEFERRED_VALIDATION_GATES.json": "60df17a27f9225303f084c39eb7d70b7252049822b64eafe6d6407f9217e6a56",
     "audit/SOURCE_OF_TRUTH_INDEX.json": "8e26d211ceb18697e23cc97cd596e95addc14623e2ff0ed605340fac3a7a20f8",
     "audit/RELEASE_ASSURANCE_POLICY.json": "8a45d2b1ec645c2aee796ab7466cb9f4e12c82cea037cafcd3b16257b242d7d2",
-    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "8dfd0907a6e916619c892068b817078d3ff80d13fd0624cb23c917921a134b25",
+    "audit/PRODUCT_REQUIREMENTS_TRACEABILITY.json": "8801819047bcf4f869017cfd6da9ffe90ea72958e0ffc25d465836c7f3ebad52",
     "audit/PRODUCT_SCOPE_RESPONSIBILITY_MATRIX.json": "36ea5ae5c2353276ac39a22ecb03df699cc12f6a0d9b46a7474793dd429cd12a"
   },
   "counts": {
     "requirements": 36,
     "claims": 20,
     "known_limitations": 41,
-    "open_internal_requirements": 0,
+    "open_internal_requirements": 1,
     "open_internal_limitations": 0
   },
-  "open_internal_requirement_ids": [],
+  "open_internal_requirement_ids": [
+    "DCORE-ACCEPT-001"
+  ],
   "open_internal_limitation_ids": [],
-  "commercial_ready": true,
-  "reason": "CS015 accepts the NeoEng D-Core horizontal product baseline 1.14.1 within generated public claims and recorded limitations. This does not infer unrestricted production readiness, native ARM64/profile qualification, certification or external assurance."
+  "commercial_ready": false,
+  "reason": "CS014 release assurance is closed; DCORE-ACCEPT-001 remains the only open internal requirement until immutable CS015 evidence is recorded. Native ARM64/profile qualification and external assurance remain separate nonblocking gates."
 }
