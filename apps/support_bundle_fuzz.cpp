@@ -1,4 +1,5 @@
 #include "neoeng/core/support_bundle.hpp"
+#include "neoeng/core/fuzz_cli.hpp"
 
 #include <cstdlib>
 #include <iostream>
@@ -9,8 +10,11 @@
 using namespace neoeng::core;
 
 int main(int argc, char** argv) {
-    const std::size_t iterations = argc > 1
-        ? static_cast<std::size_t>(std::stoull(argv[1])) : 100'000U;
+    std::size_t iterations{};
+    if (!parse_fuzz_iteration_count(
+            argc, argv, 100'000U, 1'000'000U, "neoeng_support_bundle_fuzz", iterations)) {
+        return EXIT_FAILURE;
+    }
     const SupportBundlePolicy policy{
         .maximum_trace_events = 8U,
         .maximum_entry_bytes = 1024U * 1024U,

@@ -186,6 +186,7 @@ public:
     [[nodiscard]] std::size_t capacity() const noexcept { return records_.size(); }
     [[nodiscard]] std::optional<std::uint64_t> oldest_frame() const noexcept;
     [[nodiscard]] std::optional<std::uint64_t> newest_frame() const noexcept;
+    [[nodiscard]] std::vector<std::uint64_t> retained_frame_numbers() const;
 
 private:
     [[nodiscard]] std::size_t logical_index(std::size_t position) const noexcept;

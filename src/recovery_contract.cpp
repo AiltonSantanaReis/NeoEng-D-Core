@@ -179,20 +179,24 @@ RecoveryAckResult RecoveryHostBridge::acknowledge(
     };
 }
 
+void append_json_uint64(std::ostringstream& stream, std::uint64_t value) {
+    stream << '"' << value << '"';
+}
+
 std::string recovery_contract_json(const RecoveryContractEvent& event) {
     std::ostringstream stream;
     stream << "{\"schema\":\"neoeng.dcore.recovery.v1\""
            << ",\"contract_version\":" << event.contract_version
-           << ",\"generation\":" << event.generation
+           << ",\"generation\":"; append_json_uint64(stream, event.generation); stream
            << ",\"status_code\":" << static_cast<std::uint32_t>(event.status)
            << ",\"status\":\"" << to_string(event.status) << "\""
            << ",\"directive\":\"" << to_string(event.directive) << "\""
            << ",\"fault\":\"" << to_string(event.signal.fault) << "\""
            << ",\"mode\":\"" << to_string(event.signal.mode) << "\""
            << ",\"action\":\"" << to_string(event.signal.action) << "\""
-           << ",\"frame\":" << event.signal.frame
-           << ",\"correlation_id\":" << event.signal.correlation_id
-           << ",\"checkpoint_frame\":" << event.signal.rollback_checkpoint_frame
+           << ",\"frame\":"; append_json_uint64(stream, event.signal.frame); stream
+           << ",\"correlation_id\":"; append_json_uint64(stream, event.signal.correlation_id); stream
+           << ",\"checkpoint_frame\":"; append_json_uint64(stream, event.signal.rollback_checkpoint_frame); stream
            << ",\"acknowledgement_required\":"
            << (event.acknowledgement_required ? "true" : "false") << "}";
     return stream.str();

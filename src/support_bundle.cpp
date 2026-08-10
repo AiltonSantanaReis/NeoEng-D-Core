@@ -61,6 +61,14 @@ namespace {
         : static_cast<char>('A' + value - 10U);
 }
 
+void append_json_uint64(std::ostringstream& stream, std::uint64_t value) {
+    stream << '"' << value << '"';
+}
+
+void append_json_int64(std::ostringstream& stream, std::int64_t value) {
+    stream << '"' << value << '"';
+}
+
 void append_json_string(std::ostringstream& stream, std::string_view value) {
     stream << '"';
     for (std::size_t index = 0U; index < value.size(); ++index) {
@@ -167,11 +175,11 @@ void append_json_string(std::ostringstream& stream, std::string_view value) {
     for (std::size_t index = offset; index < source.size(); ++index) {
         const TraceEvent& event = source[index];
         stream << (index == offset ? "\n" : ",\n")
-               << "    {\"correlation_id\":" << event.correlation_id
-               << ",\"sequence\":" << event.sequence
-               << ",\"frame\":" << event.frame;
+               << "    {\"correlation_id\":"; append_json_uint64(stream, event.correlation_id); stream
+               << ",\"sequence\":"; append_json_uint64(stream, event.sequence); stream
+               << ",\"frame\":"; append_json_uint64(stream, event.frame);
         if (policy.include_monotonic_timestamps) {
-            stream << ",\"monotonic_time_ns\":" << event.monotonic_time_ns;
+            stream << ",\"monotonic_time_ns\":"; append_json_uint64(stream, event.monotonic_time_ns);
         }
         stream << ",\"category\":\"" << to_string(event.category)
                << "\",\"subsystem\":\"" << to_string(event.subsystem)
@@ -180,9 +188,9 @@ void append_json_string(std::ostringstream& stream, std::string_view value) {
                << "\",\"code\":\"" << to_string(event.code)
                << "\",\"entity\":" << event.entity
                << ",\"component\":" << event.component
-               << ",\"measured_value\":" << event.measured_value
-               << ",\"budget_limit\":" << event.budget_limit
-               << ",\"related_hash\":" << event.related_hash
+               << ",\"measured_value\":"; append_json_int64(stream, event.measured_value); stream
+               << ",\"budget_limit\":"; append_json_int64(stream, event.budget_limit); stream
+               << ",\"related_hash\":"; append_json_uint64(stream, event.related_hash); stream
                << ",\"detail_code\":" << event.detail_code
                << ",\"subject_pseudonym\":"
                << '"' << pseudonymize_subject(event.subject_token, policy.pseudonymization_salt)
@@ -202,7 +210,7 @@ void append_json_string(std::ostringstream& stream, std::string_view value) {
     append_json_string(stream, context.environment_id);
     stream << ",\n  \"hardware_profile\": ";
     append_json_string(stream, context.hardware_profile);
-    stream << ",\n  \"seed\": " << context.seed
+    stream << ",\n  \"seed\": "; append_json_uint64(stream, context.seed); stream
            << ",\n  \"authority\": \"canonical-state-remains-in-dcore\"\n}\n";
     return stream.str();
 }

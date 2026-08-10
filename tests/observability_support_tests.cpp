@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <limits>
 #include <span>
 #include <string>
 #include <vector>
@@ -181,6 +182,64 @@ void test_support_bundle_and_tamper_detection() {
     std::filesystem::remove_all(directory);
 }
 
+void test_uint64_json_round_trip() {
+    constexpr const char* name = "uint64_json_round_trip";
+    constexpr std::uint64_t maximum = std::numeric_limits<std::uint64_t>::max();
+    constexpr std::int64_t maximum_signed = std::numeric_limits<std::int64_t>::max();
+    constexpr std::int64_t minimum_signed = std::numeric_limits<std::int64_t>::min();
+    const std::vector<TraceEvent> traces{{
+        .correlation_id = maximum,
+        .sequence = maximum,
+        .frame = maximum,
+        .monotonic_time_ns = maximum,
+        .category = TraceCategory::Tooling,
+        .outcome = TraceOutcome::Applied,
+        .code = TraceCode::BudgetSampled,
+        .measured_value = maximum_signed,
+        .budget_limit = minimum_signed,
+        .related_hash = maximum,
+    }};
+    const SupportBundlePolicy policy{
+        .maximum_trace_events = 4U,
+        .maximum_entry_bytes = 1024U * 1024U,
+        .maximum_total_bytes = 4U * 1024U * 1024U,
+        .include_time_travel = false,
+        .time_travel_payload_authorized = false,
+        .include_visual_correlation = false,
+        .include_monotonic_timestamps = true,
+        .pseudonymization_salt = "uint64-round-trip-salt",
+    };
+    const SupportBundleContext context{
+        .project_version = "uint64-test",
+        .environment_id = "test-environment",
+        .hardware_profile = "test-host",
+        .seed = maximum,
+        .traces = traces,
+        .time_travel_json = {},
+        .evidence_records = {},
+        .visual_records = {},
+        .deferred_gates = {},
+    };
+    const SupportBundleArtifact bundle = build_support_bundle(context, policy);
+    std::string traces_json;
+    std::string metadata_json;
+    for (const SupportBundleEntry& entry : bundle.entries) {
+        if (entry.path == "traces.json") traces_json = entry.content;
+        if (entry.path == "metadata.json") metadata_json = entry.content;
+    }
+    const std::string maximum_text = "\"" + std::to_string(maximum) + "\"";
+    CHECK(name, traces_json.find("\"correlation_id\":" + maximum_text) != std::string::npos);
+    CHECK(name, traces_json.find("\"sequence\":" + maximum_text) != std::string::npos);
+    CHECK(name, traces_json.find("\"frame\":" + maximum_text) != std::string::npos);
+    CHECK(name, traces_json.find("\"monotonic_time_ns\":" + maximum_text) != std::string::npos);
+    CHECK(name, traces_json.find("\"related_hash\":" + maximum_text) != std::string::npos);
+    CHECK(name, traces_json.find("\"measured_value\":\"9223372036854775807\"")
+        != std::string::npos);
+    CHECK(name, traces_json.find("\"budget_limit\":\"-9223372036854775808\"")
+        != std::string::npos);
+    CHECK(name, metadata_json.find("\"seed\": \"" + std::to_string(maximum) + "\"")
+        != std::string::npos);
+}
 void test_deferred_gate_schema() {
     constexpr const char* name = "deferred_gate_schema";
     const std::string json = export_deferred_validation_gates_json(gates());
@@ -302,6 +361,7 @@ int main() {
     test_budget_monitor();
     test_divergence_diagnostics();
     test_support_bundle_and_tamper_detection();
+    test_uint64_json_round_trip();
     test_deferred_gate_schema();
     test_support_bundle_adversarial_contracts();
     if (failures != 0) {

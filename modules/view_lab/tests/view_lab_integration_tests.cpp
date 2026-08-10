@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <string>
 #include <string_view>
 
@@ -149,6 +150,40 @@ void test_static_viewer_and_p4_contract() {
     std::filesystem::remove_all(output);
 }
 
+void test_sparse_frame_export() {
+    constexpr std::string_view name = "sparse_frame_export";
+    using namespace neoeng::core;
+    constexpr std::uint64_t maximum_frame = std::numeric_limits<std::uint64_t>::max();
+    TimeTravelDebugger debugger(4U);
+    const auto world_for = [](std::uint64_t frame) {
+        return WorldState{
+            .frame = frame,
+            .bodies = {{.id = 1U, .position = {}, .velocity = {}}},
+        };
+    };
+    debugger.record_frame(world_for(1U), {});
+    debugger.record_frame(world_for(maximum_frame), {});
+
+    const std::filesystem::path output =
+        std::filesystem::temp_directory_path() / "neoeng-dcore-view-lab-sparse-test";
+    std::filesystem::remove_all(output);
+    const auto result = neoeng::view_lab::export_static_viewer(
+        debugger, output, "VIRTUALIZED-SPARSE-TEST", {
+            .width = 32U,
+            .height = 32U,
+            .pixels_per_world_unit = 4,
+            .body_half_extent_pixels = 2,
+        });
+    CHECK(name, result.frames_written == 2U);
+    CHECK(name, result.first_frame == 1U);
+    CHECK(name, result.last_frame == maximum_frame);
+    CHECK(name, std::filesystem::is_regular_file(
+        output / "frame-00000001.bmp"));
+    CHECK(name, std::filesystem::is_regular_file(
+        output / "frame-18446744073709551615.bmp"));
+    std::filesystem::remove_all(output);
+}
+
 void test_gpu_correlation_schema_requires_timeline() {
     constexpr std::string_view name = "gpu_correlation_schema_requires_timeline";
     using namespace neoeng::core;
@@ -181,6 +216,7 @@ void test_gpu_correlation_schema_requires_timeline() {
 int main() {
     test_deterministic_frame_rendering();
     test_static_viewer_and_p4_contract();
+    test_sparse_frame_export();
     test_gpu_correlation_schema_requires_timeline();
     if (failures != 0) {
         std::cerr << failures << " view-lab integration assertion(s) failed\n";
