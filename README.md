@@ -167,6 +167,8 @@ O repositório não contém uma chave privada de assinatura. Quando uma distribu
 
 ## Documentação normativa e de operação
 
+- [Guia de uso e integração (Markdown)](docs/USER_GUIDE_PT-BR.md)
+- [Guia de uso e integração (PDF)](output/pdf/NeoEng-D-Core-Guia-Usuario-v1.14.1.pdf)
 - [Fonte de verdade do produto](docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md)
 - [Índice de estado documental](docs/governance/DOCUMENT_STATUS_INDEX.md)
 - [Plano de fechamento do produto](docs/governance/PRODUCT_CLOSURE_PLAN.md)
