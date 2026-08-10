@@ -1,6 +1,10 @@
 # Commercial delivery policy
 
-Baseline candidate: 1.14.0
+Accepted baseline governed by this policy: 1.14.0
+
+Any future version is a candidate until its own acceptance and evidence record
+are complete. This wording does not expand the public claims or remove any
+deferred external, native or contractual gate.
 
 NeoEng D-Core uses a distribution-and-contract-controlled entitlement model.
 Access to an official package is granted through the authorized distribution

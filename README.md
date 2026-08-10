@@ -49,6 +49,7 @@ A dependência é unidirecional: hosts, UI, telemetria, renderers e adapters con
 | Assurance de release | GCC/Clang Linux, clang-cl Windows, sanitizers, fuzzing, análise estática, SDK em prefixo limpo e evidência independente, conforme CS014 |
 | Aceitação CS015 | Windows clang-cl, Linux GCC e Linux Clang: `54/54` testes em cada ambiente no run [`30375982639`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/30375982639) |
 | Verificação corretiva de proveniência | Run [`31246260738`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/31246260738); não altera a baseline do produto |
+| Gates deferidos, não bloqueantes para CS015 | Qualificação nativa P0–P4/ARM64, long-run/power-loss, assurance externa e infraestrutura de deployment; consulte o ledger vigente |
 | Qualificação nativa, ARM64 e certificação | Não declaradas; dependem de campanhas e contratos específicos |
 
 Os números acima são evidências dos ambientes registrados. Eles não representam uma regra para qualquer outro computador. CPU, GPU, drivers, firmware, modo de energia, temperatura, virtualização e processos concorrentes podem alterar resultados.
@@ -167,6 +168,7 @@ O repositório não contém uma chave privada de assinatura. Quando uma distribu
 ## Documentação normativa e de operação
 
 - [Fonte de verdade do produto](docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md)
+- [Índice de estado documental](docs/governance/DOCUMENT_STATUS_INDEX.md)
 - [Plano de fechamento do produto](docs/governance/PRODUCT_CLOSURE_PLAN.md)
 - [Padrão de conclusão do produto](docs/governance/PRODUCT_COMPLETION_STANDARD.md)
 - [Padrão de testes de assurance](docs/governance/PRODUCT_ASSURANCE_TEST_STANDARD.md)
@@ -176,7 +178,8 @@ O repositório não contém uma chave privada de assinatura. Quando uma distribu
 - [Fronteira da referência distribuída](docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md)
 - [Fronteira de segurança de produção](docs/architecture/PRODUCTION_SECURITY_BOUNDARY.md)
 - [Fronteira do View Lab](docs/architecture/VIEW_LAB_BOUNDARY.md)
-- [Status geral de auditoria](docs/AUDIT_STATUS.md)
+- [Ledger de gates deferidos](audit/DEFERRED_VALIDATION_GATES.json)
+- [Relatório histórico de auditoria](docs/AUDIT_STATUS.md)
 - [Avisos e atribuições](NOTICE.md)
 
 ## Estrutura do repositório
