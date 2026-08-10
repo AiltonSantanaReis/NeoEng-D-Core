@@ -1,0 +1,12 @@
+{
+  "artifact": "SHA256SUMS.txt",
+  "commit": "880a1820b570ec1c9ebb2892206068fbcf7bd1ef",
+  "project_version": "1.14.1",
+  "ref": "refs/heads/agent/release-1.14.1-candidate",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "schema": "neoeng.dcore.final-acceptance-provenance.v1",
+  "tree": "5d68c9f311a08a7e78eb8be840049fb2bc2da170",
+  "workflow_ref": "AiltonSantanaReis/NeoEng-D-Core/.github/workflows/cs015-final-acceptance.yml@refs/heads/agent/release-1.14.1-candidate",
+  "workflow_run_attempt": "1",
+  "workflow_run_id": "31384684512"
+}

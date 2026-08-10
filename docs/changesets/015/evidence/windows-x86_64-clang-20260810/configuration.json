@@ -1,0 +1,13 @@
+{
+  "schema": "neoeng.dcore.supplemental-local-test.v1",
+  "project_version": "1.14.1",
+  "test_command": "ctest --test-dir build/release-1.14.1-windows-clang --output-on-failure",
+  "result": "100% tests passed, 0 tests failed out of 89",
+  "target": "windows-x86_64-clang-cl",
+  "compiler": "C:/Program Files/LLVM/bin/clang-cl.exe",
+  "generator": "Ninja",
+  "build_version": "1.14.1",
+  "build_provenance": "pre-existing local build; not cryptographically bound to a source commit",
+  "scope": "supplemental corroboration only; not the immutable CS015 acceptance package",
+  "hardware_inference": false
+}

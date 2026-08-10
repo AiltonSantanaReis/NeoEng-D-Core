@@ -59,17 +59,28 @@ regenerar manifesto/SBOM/proveniência, verificar reprodutibilidade e obter as
 atestações externas exigidas.
 
 
-## Candidate baseline 1.14.1 — CS014 passed; CS015 pending
+## Candidate baseline 1.14.1 — CS014 and CS015 accepted; publication pending
 
-The candidate branch `agent/release-1.14.1-candidate` now has its own CS014
+The candidate branch `agent/release-1.14.1-candidate` has its own CS014
 assurance evidence. Commit `143163833764f92beb84646674d845bc82f7ab24` passed
 GitHub Actions run `31381564124` across Linux GCC/Clang, Windows clang-cl,
 ASan/UBSan, coverage-guided fuzzing, blocking clang-tidy, deterministic
 packaging and public Sigstore verification. The candidate archive digest is
 `70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
 
-This evidence belongs only to candidate `1.14.1`; it does not rewrite or
-retroactively validate the immutable `v1.14.0` release. CS015 final acceptance
-has not yet been run for `1.14.1`, so no new release or commercial acceptance is
-claimed. Deferred hardware, external assurance, certification and deployment
-gates remain governed by the ledger.
+CS015 then passed in run `31384684512` on commit
+`880a1820b570ec1c9ebb2892206068fbcf7bd1ef`: Linux GCC, Linux Clang and
+Windows clang-cl passed; the fail-closed evidence assembly, public Sigstore
+attestation, attestation verification and independent evidence verifier all
+passed. The immutable campaign evidence is
+`docs/changesets/015/evidence/github-actions-run-31384684512` and contains
+19 files with 15 manifest entries. Its recorded state is `closure_candidate`
+because the fail-closed state machine only promotes `DCORE-ACCEPT-001` after
+that package is registered; the current ledgers and
+`audit/FINAL_ACCEPTANCE_VALIDATION.json` now report `accepted` with zero open
+mandatory requirements and limitations.
+
+This candidate evidence belongs only to `1.14.1`; it does not rewrite or
+retroactively validate the immutable `v1.14.0` release. No `v1.14.1` release
+tag or public package has been created yet. Deferred hardware, external
+assurance, certification and deployment gates remain governed by the ledger.

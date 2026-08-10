@@ -308,7 +308,7 @@
       "requirement_ids": [
         "DCORE-ACCEPT-001"
       ],
-      "status": "planned",
+      "status": "executed_windows_clang_linux_gcc_clang",
       "required_test_classes": [
         "adversarial",
         "cross_architecture_if_applicable",
@@ -331,7 +331,9 @@
         "independent-verification",
         "limitations"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/changesets/015/evidence/github-actions-run-31384684512"
+      ],
       "acceptance_rule": "No covered requirement may be promoted to complete unless every applicable test class has immutable evidence and all internal failures are closed.",
       "native_or_external_results_may_be_inferred": false
     },

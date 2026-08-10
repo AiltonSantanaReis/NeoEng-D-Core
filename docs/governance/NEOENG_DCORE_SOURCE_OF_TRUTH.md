@@ -122,13 +122,30 @@ haja nova identidade, aceitação e atestação, o estado corrigido é somente u
 candidato de release.
 
 
-### 7.2 Estado do candidato 1.14.1 após CS014
+### 7.2 Estado do candidato 1.14.1 após CS014 e CS015
 
-O candidato `1.14.1`, no commit
+O candidato `1.14.1`, no commit CS014
 `143163833764f92beb84646674d845bc82f7ab24`, passou a campanha CS014 no run
 `31381564124`. O pacote cumulativo `NeoEng-D-Core-1.14.1.zip` foi verificado
 independentemente e tem SHA-256
 `70136e7cd71e652d3c7a8fcf60cd0286b5de81ea460e60fdf9268b9a79631fb6`.
-As atestações públicas de proveniência e SBOM foram verificadas no próprio
-run. Isso fecha somente a assurance CS014 da candidata; o CS015 da candidata
-continua pendente e nenhum release `v1.14.1` foi publicado.
+
+A aceitação final da candidata passou no run CS015 `31384684512`, sobre o
+commit `880a1820b570ec1c9ebb2892206068fbcf7bd1ef`. Os três alvos declarados
+(Linux GCC, Linux Clang e Windows clang-cl) passaram; a montagem fail-closed,
+a atestação pública Sigstore, a verificação da atestação e a verificação
+independente do pacote passaram. A evidência imutável está em
+`docs/changesets/015/evidence/github-actions-run-31384684512`.
+
+O pacote registra `closure_candidate` durante a execução, pois a máquina de
+estados exige que a evidência seja registrada nos ledgers antes de promover o
+requisito final. Após esse registro, `DCORE-ACCEPT-001` está `complete`,
+`TEST-CS015-001` está executado, a assurance está `evidenced` e
+`audit/FINAL_ACCEPTANCE_VALIDATION.json` reporta `accepted`, sem requisitos ou
+limitações internas obrigatórias abertos. Isso não altera a baseline histórica
+`v1.14.0`: nenhum release/tag `v1.14.1` foi publicado ainda.
+
+A aceitação permanece limitada aos claims públicos gerados e às limitações
+registradas. Não são inferidos ARM64/P0-P4, qualificação nativa de hardware,
+long-run/power-loss, certificação, auditoria externa, assurance de deployment
+ou regra de desempenho para outra máquina.

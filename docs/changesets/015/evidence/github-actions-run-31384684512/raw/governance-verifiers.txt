@@ -1,0 +1,38 @@
+product_contract=passed
+OK: source of truth verified; requirements=36, claims=20, limitations=41, open_internal_requirements=1.
+product_contract_self_test=passed
+OK: 8 fail-closed product-contract mutations were rejected.
+product_assurance=passed
+OK: assurance matrix covers 36 requirements across 10 campaigns; meta-test does not claim capability proof.
+product_assurance_self_test=passed
+OK: 9 fail-closed product-assurance mutations were rejected.
+release_assurance=passed
+release_assurance=passed; public_claims=12; libfuzzer_targets=2
+release_assurance_self_test=passed
+release_assurance_self_test=passed
+final_acceptance=passed
+{
+  "acceptance_state": "closure_candidate",
+  "accepted_scope": "NeoEng D-Core horizontal product baseline 1.14.1 within generated public claims and recorded limitations",
+  "certification_or_external_audit_inferred": false,
+  "errors": [],
+  "horizontal_product_baseline_accepted": false,
+  "native_or_hardware_profile_qualification_inferred": false,
+  "open_internal_limitation_ids": [],
+  "open_internal_requirement_ids": [
+    "DCORE-ACCEPT-001"
+  ],
+  "performance_on_other_hardware_inferred": false,
+  "prior_release_assurance_evidence_verified": true,
+  "project_version": "1.14.1",
+  "schema": "neoeng.dcore.final-acceptance-validation.v1",
+  "status": "passed",
+  "unrestricted_production_readiness_inferred": false,
+  "unsupported_or_prohibited_public_claims": 0
+}
+final_acceptance_self_test=passed
+final_acceptance_self_test=passed; mutations_rejected=7
+public_claims=passed
+public_claims_check=passed
+manifest=passed
+OK: MANIFEST.sha256 confere

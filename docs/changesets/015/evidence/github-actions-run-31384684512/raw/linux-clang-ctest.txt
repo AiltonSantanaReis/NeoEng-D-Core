@@ -1,0 +1,141 @@
+[OUTPUT] 
+Internal ctest changing into directory: /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/build
+
+[HANDLER_OUTPUT] 
+Test project /home/runner/work/NeoEng-D-Core/NeoEng-D-Core/build
+
+      Start  1: neoeng_product_contract_verify
+ 1/54 Test  #1: neoeng_product_contract_verify .............................   Passed    0.09 sec
+      Start  2: neoeng_product_contract_self_test
+ 2/54 Test  #2: neoeng_product_contract_self_test ..........................   Passed    0.24 sec
+      Start  3: neoeng_product_assurance_verify
+ 3/54 Test  #3: neoeng_product_assurance_verify ............................   Passed    0.07 sec
+      Start  4: neoeng_product_assurance_self_test
+ 4/54 Test  #4: neoeng_product_assurance_self_test .........................   Passed    0.13 sec
+      Start  5: neoeng_public_claims_verify
+ 5/54 Test  #5: neoeng_public_claims_verify ................................   Passed    0.04 sec
+      Start  6: neoeng_release_assurance_verify
+ 6/54 Test  #6: neoeng_release_assurance_verify ............................   Passed    0.05 sec
+      Start  7: neoeng_release_assurance_self_test
+ 7/54 Test  #7: neoeng_release_assurance_self_test .........................   Passed    0.05 sec
+      Start  8: neoeng_release_assurance_evidence_verifier_self_test
+ 8/54 Test  #8: neoeng_release_assurance_evidence_verifier_self_test .......   Passed    0.06 sec
+      Start  9: neoeng_final_acceptance_verify
+ 9/54 Test  #9: neoeng_final_acceptance_verify .............................   Passed    0.13 sec
+      Start 10: neoeng_final_acceptance_self_test
+10/54 Test #10: neoeng_final_acceptance_self_test ..........................   Passed    0.30 sec
+      Start 11: neoeng_final_acceptance_evidence_verifier_self_test
+11/54 Test #11: neoeng_final_acceptance_evidence_verifier_self_test ........   Passed    0.06 sec
+      Start 12: neoeng_consolidated_release_verifier_self_test
+12/54 Test #12: neoeng_consolidated_release_verifier_self_test .............   Passed    0.05 sec
+      Start 13: neoeng_distributed_reference_evidence_verifier_self_test
+13/54 Test #13: neoeng_distributed_reference_evidence_verifier_self_test ...   Passed    0.05 sec
+      Start 14: neoeng_distributed_reference_boundary_verify
+14/54 Test #14: neoeng_distributed_reference_boundary_verify ...............   Passed    0.05 sec
+      Start 15: neoeng_distributed_reference_boundary_self_test
+15/54 Test #15: neoeng_distributed_reference_boundary_self_test ............   Passed    0.07 sec
+      Start 16: neoeng_numeric_closure_evidence_verifier_self_test
+16/54 Test #16: neoeng_numeric_closure_evidence_verifier_self_test .........   Passed    0.05 sec
+      Start 17: neoeng_temporal_closure_evidence_verifier_self_test
+17/54 Test #17: neoeng_temporal_closure_evidence_verifier_self_test ........   Passed    0.05 sec
+      Start 18: neoeng_production_security_evidence_verifier_self_test
+18/54 Test #18: neoeng_production_security_evidence_verifier_self_test .....   Passed    0.05 sec
+      Start 19: neoeng_numeric_closure_boundary_verify
+19/54 Test #19: neoeng_numeric_closure_boundary_verify .....................   Passed    0.03 sec
+      Start 20: neoeng_numeric_closure_boundary_self_test
+20/54 Test #20: neoeng_numeric_closure_boundary_self_test ..................   Passed    0.04 sec
+      Start 21: neoeng_temporal_closure_boundary_verify
+21/54 Test #21: neoeng_temporal_closure_boundary_verify ....................   Passed    0.03 sec
+      Start 22: neoeng_temporal_closure_boundary_self_test
+22/54 Test #22: neoeng_temporal_closure_boundary_self_test .................   Passed    0.03 sec
+      Start 23: neoeng_production_security_boundary_verify
+23/54 Test #23: neoeng_production_security_boundary_verify .................   Passed    0.03 sec
+      Start 24: neoeng_production_security_boundary_self_test
+24/54 Test #24: neoeng_production_security_boundary_self_test ..............   Passed    0.04 sec
+      Start 25: neoeng_tests
+25/54 Test #25: neoeng_tests ...............................................   Passed    0.21 sec
+      Start 26: neoeng_operational_hardening_tests
+26/54 Test #26: neoeng_operational_hardening_tests .........................   Passed    0.04 sec
+      Start 27: neoeng_session_recovery_contract_tests
+27/54 Test #27: neoeng_session_recovery_contract_tests .....................   Passed    0.00 sec
+      Start 28: neoeng_observability_support_tests
+28/54 Test #28: neoeng_observability_support_tests .........................   Passed    0.00 sec
+      Start 29: neoeng_state_evidence_tests
+29/54 Test #29: neoeng_state_evidence_tests ................................   Passed    0.00 sec
+      Start 30: neoeng_hardware_qualification_tests
+30/54 Test #30: neoeng_hardware_qualification_tests ........................   Passed    0.00 sec
+      Start 31: neoeng_numeric_closure_tests
+31/54 Test #31: neoeng_numeric_closure_tests ...............................   Passed    0.02 sec
+      Start 32: neoeng_temporal_closure_tests
+32/54 Test #32: neoeng_temporal_closure_tests ..............................   Passed    0.01 sec
+      Start 33: neoeng_production_security_tests
+33/54 Test #33: neoeng_production_security_tests ...........................   Passed    0.00 sec
+      Start 34: neoeng_numeric_closure_probe
+34/54 Test #34: neoeng_numeric_closure_probe ...............................   Passed    0.30 sec
+      Start 35: neoeng_temporal_closure_probe
+35/54 Test #35: neoeng_temporal_closure_probe ..............................   Passed    0.06 sec
+      Start 36: neoeng_production_security_probe
+36/54 Test #36: neoeng_production_security_probe ...........................   Passed    0.07 sec
+      Start 37: neoeng_network_packet_fuzz_smoke
+37/54 Test #37: neoeng_network_packet_fuzz_smoke ...........................   Passed    0.06 sec
+      Start 38: neoeng_session_security_probe
+38/54 Test #38: neoeng_session_security_probe ..............................   Passed    0.00 sec
+      Start 39: neoeng_session_handshake_fuzz_smoke
+39/54 Test #39: neoeng_session_handshake_fuzz_smoke ........................   Passed    0.02 sec
+      Start 40: neoeng_recovery_fault_injection
+40/54 Test #40: neoeng_recovery_fault_injection ............................   Passed    0.00 sec
+      Start 41: neoeng_recovery_contract_probe
+41/54 Test #41: neoeng_recovery_contract_probe .............................   Passed    0.00 sec
+      Start 42: neoeng_state_evidence_probe
+42/54 Test #42: neoeng_state_evidence_probe ................................   Passed    0.00 sec
+      Start 43: neoeng_state_evidence_fuzz_smoke
+43/54 Test #43: neoeng_state_evidence_fuzz_smoke ...........................   Passed    1.12 sec
+      Start 44: neoeng_support_bundle_probe
+44/54 Test #44: neoeng_support_bundle_probe ................................   Passed    0.00 sec
+      Start 45: neoeng_support_bundle_fuzz_smoke
+45/54 Test #45: neoeng_support_bundle_fuzz_smoke ...........................   Passed    0.14 sec
+      Start 46: neoeng_ecs_maintenance_benchmark_smoke
+46/54 Test #46: neoeng_ecs_maintenance_benchmark_smoke .....................   Passed    0.00 sec
+      Start 47: neoeng_ecs_scope_evidence_verifier_smoke
+47/54 Test #47: neoeng_ecs_scope_evidence_verifier_smoke ...................   Passed    0.05 sec
+      Start 48: neoeng_ecs_scope_evidence_verifier_self_test
+48/54 Test #48: neoeng_ecs_scope_evidence_verifier_self_test ...............   Passed    0.06 sec
+      Start 49: neoeng_host_sdk_install_consumer
+49/54 Test #49: neoeng_host_sdk_install_consumer ...........................   Passed    2.23 sec
+      Start 50: neoeng_host_sdk_tests
+50/54 Test #50: neoeng_host_sdk_tests ......................................   Passed    0.00 sec
+      Start 51: neoeng_host_sdk_c_header_test
+51/54 Test #51: neoeng_host_sdk_c_header_test ..............................   Passed    0.00 sec
+      Start 52: neoeng_host_sdk_reference
+52/54 Test #52: neoeng_host_sdk_reference ..................................   Passed    0.00 sec
+      Start 53: neoeng_distributed_reference_tests
+53/54 Test #53: neoeng_distributed_reference_tests .........................   Passed    0.00 sec
+      Start 54: neoeng_distributed_reference_probe
+54/54 Test #54: neoeng_distributed_reference_probe .........................   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 54
+
+Label Time Summary:
+cs010                    =   0.03 sec*proc (2 tests)
+cs011                    =   0.32 sec*proc (2 tests)
+cs012                    =   0.06 sec*proc (2 tests)
+cs013                    =   0.07 sec*proc (2 tests)
+cs014                    =   0.24 sec*proc (5 tests)
+cs015                    =   0.49 sec*proc (3 tests)
+dcore                    =   6.21 sec*proc (54 tests)
+distributed-reference    =   0.03 sec*proc (2 tests)
+ecs-scope                =   0.11 sec*proc (2 tests)
+final-acceptance         =   0.49 sec*proc (3 tests)
+full                     =   0.07 sec*proc (2 tests)
+governance               =   1.78 sec*proc (24 tests)
+host-sdk                 =   2.24 sec*proc (4 tests)
+install                  =   2.23 sec*proc (1 test)
+numeric-closure          =   0.32 sec*proc (2 tests)
+production-security      =   0.07 sec*proc (2 tests)
+release-assurance        =   0.24 sec*proc (5 tests)
+release-gate             =   1.78 sec*proc (24 tests)
+release-surface          =   1.42 sec*proc (11 tests)
+smoke                    =   4.36 sec*proc (28 tests)
+temporal-closure         =   0.06 sec*proc (2 tests)
+
+Total Test time (real) =   6.31 sec

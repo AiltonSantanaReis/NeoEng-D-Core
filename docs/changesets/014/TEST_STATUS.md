@@ -1,6 +1,6 @@
 # CS014 — test status
 
-State: concluded for historical 1.14.0; candidate 1.14.1 CS014 passed
+State: concluded for historical 1.14.0; candidate 1.14.1 CS014 passed and CS015 accepted
 
 Historical baseline: `1.14.0`; current candidate: `1.14.1`
 
@@ -53,7 +53,7 @@ other hardware or complete CS015 commercial acceptance.
 
 ## Candidate baseline 1.14.1 — CS014 assurance revalidation
 
-State: passed for the candidate; CS015 acceptance remains pending.
+State: passed for the candidate; CS015 acceptance is recorded in the candidate closure ledger.
 
 - source commit: `143163833764f92beb84646674d845bc82f7ab24`;
 - GitHub Actions run: `31381564124`;
@@ -65,5 +65,6 @@ State: passed for the candidate; CS015 acceptance remains pending.
 
 Evidence: `docs/changesets/014/evidence/github-actions-run-31381564124`.
 
-This candidate evidence is not attributed to the immutable `v1.14.0` release and
-has not yet been used to declare CS015 acceptance.
+This candidate evidence is not attributed to the immutable `v1.14.0` release. CS015
+acceptance for candidate `1.14.1` is recorded separately in
+`docs/changesets/015/TEST_STATUS.md`; no release tag has been published yet.

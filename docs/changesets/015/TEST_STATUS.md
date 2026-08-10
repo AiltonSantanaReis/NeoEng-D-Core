@@ -1,8 +1,8 @@
 # CS015 — test status
 
-State: accepted
+State: accepted for candidate `1.14.1`; historical baseline `1.14.0` preserved
 
-Baseline: `1.14.0`
+Baseline: candidate `1.14.1` (publication pending); historical baseline: `1.14.0`
 
 Campaign: `TEST-CS015-001`
 
@@ -52,3 +52,35 @@ The corrective run closes the provenance-authentication gap found during
 assurance review. It preserves all prior limitations: no native ARM64/P0–P4
 qualification, certification, external audit, mission-critical readiness or
 performance rule for another machine is inferred.
+
+## Candidate baseline 1.14.1 — final acceptance
+
+- source commit: `880a1820b570ec1c9ebb2892206068fbcf7bd1ef`;
+- GitHub Actions run: `31384684512`;
+- Linux GCC, Linux Clang and Windows clang-cl regressions: passed;
+- fail-closed evidence assembly: passed;
+- public Sigstore provenance attestation and verification: passed;
+- independent evidence verification: passed;
+- immutable campaign evidence: `docs/changesets/015/evidence/github-actions-run-31384684512`;
+- 19 evidence files and 15 SHA256 manifest entries;
+- current ledgers: `DCORE-ACCEPT-001` complete, `TEST-CS015-001` executed, assurance evidenced;
+- current final-acceptance report: `accepted`, zero open mandatory requirements and zero open mandatory limitations.
+
+Supplemental local corroboration on the user's Windows x86_64 host also passed
+`ctest --test-dir build/release-1.14.1-windows-clang --output-on-failure`:
+89/89 tests passed, including the governance, CS010–CS015, recovery, security,
+fuzz-smoke, Host SDK and distributed-reference tests. The raw output and
+configuration are preserved at
+`docs/changesets/015/evidence/windows-x86_64-clang-20260810`.
+This supplemental build was pre-existing and is not cryptographically bound to
+a source commit; it is not substituted for the immutable cross-platform CS015
+package and does not establish claims for other hardware.
+
+The package's own `final-acceptance-validation.json` records `closure_candidate`,
+as required before registering the immutable evidence. The current ledgers then
+recalculate the accepted state; the package was not modified after publication.
+This candidate is not attributed to the immutable `v1.14.0` release, and no
+`v1.14.1` release tag or public package has been published.
+
+No native ARM64/P0–P4 result, certification, independent external audit,
+mission-critical readiness or performance rule for another machine is inferred.

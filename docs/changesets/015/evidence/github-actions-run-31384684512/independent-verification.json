@@ -1,0 +1,12 @@
+{
+  "acceptance_state": "closure_candidate",
+  "errors": [],
+  "horizontal_product_baseline_accepted": false,
+  "manifest_entries_verified": 15,
+  "native_or_external_results_inferred": false,
+  "project_version": "1.14.1",
+  "report_covered_by_manifest": false,
+  "schema": "neoeng.dcore.final-acceptance-independent-verification.v1",
+  "status": "passed",
+  "unrestricted_production_readiness_inferred": false
+}

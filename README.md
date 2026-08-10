@@ -2,7 +2,7 @@
 
 Infraestrutura C++23 para autoridade canônica de estado, transições determinísticas, replay, rollback e evidência verificável.
 
-> **Baseline candidata:** `1.14.1` — CS014 passou no run `31381564124`; o CS015 da candidata ainda está pendente. A aceitação histórica da baseline `1.14.0` não é retroativa. Nenhum desses estados é certificação, auditoria externa, qualificação ARM64 ou garantia universal de desempenho.
+> **Baseline candidata aceita:** `1.14.1` — CS014 e CS015 passaram com evidência imutável nos runs `31381564124` e `31384684512`. O release público `v1.14.0` permanece histórico e imutável; `v1.14.1` ainda não foi publicado. A aceitação é restrita aos claims e limites registrados e não é certificação, auditoria externa, qualificação ARM64 ou garantia universal de desempenho.
 
 ## O que é
 
@@ -43,13 +43,13 @@ A dependência é unidirecional: hosts, UI, telemetria, renderers e adapters con
 
 | Item | Estado documentado |
 |---|---|
-| Baseline do produto | candidata `1.14.1` (CS015 pendente) |
-| ChangeSets | CS001–CS015 preservados no histórico; CS015 histórico em `1.14.0`, candidato `1.14.1` pendente |
+| Baseline do produto | candidata aceita `1.14.1` (CS015 aprovado; release ainda não publicado) |
+| ChangeSets | CS001–CS015 preservados no histórico; CS015 histórico em `1.14.0` e aceito na candidata `1.14.1` |
 | Requisitos internos obrigatórios | Nenhum aberto no ledger atual |
 | Assurance de release | GCC/Clang Linux, clang-cl Windows, sanitizers, fuzzing, análise estática, SDK em prefixo limpo e evidência independente, conforme CS014 |
 | CS014 da candidata | Windows clang-cl, Linux GCC/Clang, sanitizers, fuzzing, clang-tidy e atestação: aprovado no run [`31381564124`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/31381564124) |
 | Verificação corretiva de proveniência | Run [`31246260738`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/31246260738); não altera a baseline do produto |
-| Gates deferidos, não bloqueantes para CS015 | Qualificação nativa P0–P4/ARM64, long-run/power-loss, assurance externa e infraestrutura de deployment; consulte o ledger vigente |
+| Gates deferidos, não bloqueantes para CS015 | Qualificação nativa P0–P4/ARM64, long-run/power-loss, assurance externa e infraestrutura de deployment; continuam fora da aceitação horizontal |
 | Qualificação nativa, ARM64 e certificação | Não declaradas; dependem de campanhas e contratos específicos |
 
 Os números acima são evidências dos ambientes registrados. Eles não representam uma regra para qualquer outro computador. CPU, GPU, drivers, firmware, modo de energia, temperatura, virtualização e processos concorrentes podem alterar resultados.
