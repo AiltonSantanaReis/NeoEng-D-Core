@@ -1,0 +1,28 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "normative_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md",
+  "invariants": [
+    {"invariant_id":"INV-EV-001","statement":"O D-Core permanece a única autoridade sobre o estado canônico.","status":"active","enforcement":"Verificar fronteiras de mutação e dependências host/adaptor -> D-Core."},
+    {"invariant_id":"INV-EV-002","statement":"Mesmas entradas canônicas no mesmo contrato determinístico produzem a mesma saída canônica no escopo suportado.","status":"active","enforcement":"Corpus ouro e comparação cross-compiler/cross-platform quando exigida."},
+    {"invariant_id":"INV-EV-003","statement":"Relógio de parede, telemetria e budgets não participam da decisão canônica.","status":"active","enforcement":"Testes de dependência e auditoria de caminhos determinísticos."},
+    {"invariant_id":"INV-EV-004","statement":"Host, renderer, UI, telemetria, adapters e verticais não modificam estado canônico diretamente.","status":"active","enforcement":"Verificação de fronteira/API e testes negativos."},
+    {"invariant_id":"INV-EV-005","statement":"A release v1.14.1 e sua evidência histórica permanecem imutáveis.","status":"active","enforcement":"Identidade de tag/SHA e proibição de reatribuição retroativa."},
+    {"invariant_id":"INV-EV-006","statement":"Toda evidência qualificadora é vinculada ao SHA, configuração e ambiente exatos.","status":"active","enforcement":"Evidence manifests e verificadores fail-closed."},
+    {"invariant_id":"INV-EV-007","statement":"Testes, gates e corpus obrigatórios não são enfraquecidos para obter aprovação.","status":"active","enforcement":"Diff de testes/gates e amendment obrigatório para mudança normativa."},
+    {"invariant_id":"INV-EV-008","statement":"Falhas e resultados negativos relevantes são preservados como evidência.","status":"active","enforcement":"Manifesto de evidência e política append-only."},
+    {"invariant_id":"INV-EV-009","statement":"Etapas evolutivas avançam somente por dependências aceitas e uma etapa ativa por vez.","status":"active","enforcement":"EVOLUTION_ROADMAP.json e verify_evolution_plan.py."},
+    {"invariant_id":"INV-EV-010","statement":"Não existe arquitetura paralela nem reescrita geral autorizada por este programa.","status":"active","enforcement":"Auditoria do plano, ChangeSets e topologia de dependências."},
+    {"invariant_id":"INV-EV-011","statement":"Otimização de performance não altera bytes ou resultado canônico protegido.","status":"active","enforcement":"Corpus ouro, hashes e comparação antes/depois."},
+    {"invariant_id":"INV-EV-012","statement":"Replay histórico não é reinterpretado silenciosamente por versão futura.","status":"active","enforcement":"Identidade/versionamento de replay e testes de compatibilidade."},
+    {"invariant_id":"INV-EV-013","statement":"Compatibilidade ABI é preservada ou versionada explicitamente; incompatibilidade não é mascarada.","status":"active","enforcement":"ABI tests, version negotiation e decisão normativa."},
+    {"invariant_id":"INV-EV-014","statement":"Claims públicas nunca excedem a evidência registrada.","status":"active","enforcement":"Reconciliar PRODUCT_CLAIMS_LEDGER e public claims em cada gate aplicável."},
+    {"invariant_id":"INV-EV-015","statement":"Evidência histórica é append-only e não é reescrita para adequar conclusão posterior.","status":"active","enforcement":"Manifestos, Git history e regras de ChangeSet."},
+    {"invariant_id":"INV-EV-016","statement":"O laboratório valida o produto, mas não fornece comportamento necessário ao runtime.","status":"active","enforcement":"Separação de dependências e execução pela fronteira oficial do produto."},
+    {"invariant_id":"INV-EV-017","statement":"Schema/componentes futuros permanecem neutros de domínio no núcleo horizontal.","status":"active","enforcement":"Auditoria de contratos e não objetivos."},
+    {"invariant_id":"INV-EV-018","statement":"Ambiente não executado permanece explicitamente não qualificado.","status":"active","enforcement":"Ledgers de gates adiados e relatórios de campanha."},
+    {"invariant_id":"INV-EV-019","statement":"Estado parcialmente aplicado não é aceito quando uma operação é declarada atômica.","status":"active","enforcement":"Testes transacionais negativos e recovery."},
+    {"invariant_id":"INV-EV-020","statement":"Qualquer desvio de escopo exige STOP, registro, amendment e nova verificação antes de continuar.","status":"active","enforcement":"Registros DEV-NNNN e verificador do plano."}
+  ]
+}

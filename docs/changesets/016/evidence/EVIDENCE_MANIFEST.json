@@ -1,0 +1,27 @@
+{
+  "schema": "neoeng.dcore.evolution-evidence-manifest.v1",
+  "changeset": "CS016",
+  "source_commit": "f8884c463cdcf11720f5abc359034c65d8c0c8a9",
+  "hash_mode": "lf-normalized-text",
+  "files": [
+    {
+      "path": "docs/changesets/016/evidence/github-actions-run-31557764638/run-identity.txt",
+      "sha256": "e2326deec7bffd7212e9455ce404ee631f69eaf68cafdbd673a0f34a99410443"
+    },
+    {
+      "path": "docs/changesets/016/evidence/github-actions-run-31557764638/validation-summary.json",
+      "sha256": "7ce9d475ed560bb1fdfd7127039cdb0fc0515686b37817f19423928902373b00"
+    },
+    {
+      "path": "docs/changesets/016/evidence/github-actions-run-31557764638/workflow-artifact.json",
+      "sha256": "700ab0dc9e7ce3779a121dbc9bc84ab300336f9ce6f9d6d7f6c1195c0f1dc95e"
+    }
+  ],
+  "external_artifact": {
+    "github_actions_run_id": 31557764638,
+    "artifact_id": 9126581075,
+    "artifact_digest": "sha256:146493a9c39994510fe00d8313fa21bf28d7c370e127340221c28abd24f0ba65",
+    "retention_expires_at": "2026-11-10T02:43:09Z"
+  },
+  "decision": "accepted_evidence_record"
+}

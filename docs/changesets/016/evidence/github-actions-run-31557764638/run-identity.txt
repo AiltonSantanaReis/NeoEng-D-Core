@@ -1,0 +1,12 @@
+repository=AiltonSantanaReis/NeoEng-D-Core
+source_commit=f8884c463cdcf11720f5abc359034c65d8c0c8a9
+baseline_release=v1.14.1
+baseline_commit=e3fff973554a2e56b8bd7afdc1132f75f3ec337c
+workflow=Evolution governance
+workflow_path=.github/workflows/evolution-governance.yml
+run_id=31557764638
+run_attempt=1
+event=push
+branch=agent/evolution-governance-foundation
+status=completed
+conclusion=success
