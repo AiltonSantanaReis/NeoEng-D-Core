@@ -89,7 +89,7 @@ jobs:
           printf '  %s\n' "${changed[@]}"
           for path in "${changed[@]}"; do
             case "$path" in
-              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml)
+              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml|.github/workflows/cs017-ev00-validation.yml)
                 ;;
               *)
                 echo "Unexpected preparation path: $path" >&2
@@ -97,7 +97,7 @@ jobs:
                 ;;
             esac
           done
-          if git diff --name-only "$base"...HEAD -- src include CMakeLists.txt CMakePresets.json modules tests apps | grep -q .; then
+          if git diff --name-only "$base"...HEAD -- src include CMakeLists.txt CMakePresets.json vcpkg.json modules tests apps | grep -q .; then
             echo 'Product/runtime/build surface changed during EV-00 preparation.' >&2
             exit 1
           fi
