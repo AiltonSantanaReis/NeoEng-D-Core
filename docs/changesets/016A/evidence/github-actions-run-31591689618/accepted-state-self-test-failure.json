@@ -1,0 +1,28 @@
+{
+  "schema": "neoeng.dcore.cs016a-validation-failure.v1",
+  "source_commit": "f989124bc02baf18b1599a378b5e876225998452",
+  "run_id": 31591689618,
+  "job_id": 94097893660,
+  "event": "push",
+  "conclusion": "failure",
+  "failed_gate": "D-Lab action authorization self-test",
+  "observed_failures": [
+    "valid CS016A governance amendment was rejected",
+    "PRE-CS017 was authorized before CS016A acceptance",
+    "PRE-CS017 rejection did not identify amendment blocker"
+  ],
+  "root_cause": "The self-test inherited the repository's current accepted amendment state while asserting behaviors that require an explicit in_progress fixture.",
+  "corrective_action": "Build explicit in_progress and accepted fixtures inside the self-test so its assertions remain stable across lifecycle states.",
+  "artifact": {
+    "id": 9139370255,
+    "name": "evolution-governance-f989124bc02baf18b1599a378b5e876225998452",
+    "size_in_bytes": 66470,
+    "digest": "sha256:633fb1a829537193566b9f63f146e35f7bd58b180e2f86b57a8cc1813557ef7c"
+  },
+  "impact": [
+    "CS016A acceptance remains blocked.",
+    "EV-00 remains not_started.",
+    "CS017 remains unauthorized.",
+    "No runtime or public claim changed."
+  ]
+}

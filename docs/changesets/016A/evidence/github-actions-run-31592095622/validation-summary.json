@@ -1,0 +1,63 @@
+{
+  "schema": "neoeng.dcore.cs016a-validation.v2",
+  "source_commit": "fd7c5d1645a044ff8db8ab60ea1290c1d20137d9",
+  "run_id": 31592095622,
+  "job_id": 94099169632,
+  "event": "push",
+  "conclusion": "success",
+  "corrective_context": {
+    "prior_failed_run_id": 31591689618,
+    "prior_failed_source_commit": "f989124bc02baf18b1599a378b5e876225998452",
+    "root_cause": "Action authorizer self-test inherited the current amendment lifecycle state.",
+    "correction": "Self-test now constructs explicit in_progress and accepted fixtures independent of current repository state."
+  },
+  "gates": [
+    {
+      "name": "D-Lab action authorization self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "D-Lab governance self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify D-Lab governance",
+      "conclusion": "success"
+    },
+    {
+      "name": "CS016A authorization-state gate",
+      "conclusion": "success",
+      "assertion": "PRE-CS017 rejected while CS016A is in_progress"
+    },
+    {
+      "name": "Evolution verifier self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify evolution plan",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product contract",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product assurance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify tracked-file manifest",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload governance evidence",
+      "conclusion": "success"
+    }
+  ],
+  "limits": [
+    "CS016A governance only.",
+    "EV-00 remains not_started.",
+    "CS017 not started.",
+    "No runtime/public-claim/release qualification."
+  ]
+}

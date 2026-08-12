@@ -1,0 +1,145 @@
+{
+  "schema": "neoeng.dcore.evolution-requirements-amendment-016a.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016A",
+  "stage": "EV-00",
+  "requirements": [
+    {
+      "requirement_id": "EVREQ-055",
+      "stage": "EV-00",
+      "statement": "CS001-CS015 devem possuir matriz histórica de revalidação sem lacunas nem reescrita retroativa.",
+      "status": "planned",
+      "evidence_required": ["historical revalidation matrix"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-056",
+      "stage": "EV-00",
+      "statement": "Evidência histórica disponível deve ter integridade reverificada por hashes/manifests quando tecnicamente possível.",
+      "status": "planned",
+      "evidence_required": ["integrity verification report"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-057",
+      "stage": "EV-00",
+      "statement": "Contratos históricos classificados critical/high e reproduzíveis devem ser reexecutados antes da aceitação de EV-00.",
+      "status": "planned",
+      "evidence_required": ["risk classification", "rerun evidence"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-058",
+      "stage": "EV-00",
+      "statement": "Contradição histórica deve gerar finding append-only e análise de impacto, nunca edição retroativa da evidência original.",
+      "status": "planned",
+      "evidence_required": ["historical finding", "impact analysis"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-059",
+      "stage": "EV-00",
+      "statement": "D-Lab deve possuir catálogo versionado das classes obrigatórias de cenários operacionais.",
+      "status": "planned",
+      "evidence_required": ["scenario catalog"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-060",
+      "stage": "EV-00",
+      "statement": "Cenários reais, simulados, híbridos e físicos devem ser distinguidos e claims limitadas ao tipo executado.",
+      "status": "planned",
+      "evidence_required": ["scenario metadata", "claims scope"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-061",
+      "stage": "EV-00",
+      "statement": "Todo cenário qualificante deve possuir oracle, propriedade verificável ou classe esperada de rejeição.",
+      "status": "planned",
+      "evidence_required": ["scenario oracle"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-062",
+      "stage": "EV-00",
+      "statement": "Randomização qualificante deve registrar seed, gerador e versão para reprodução.",
+      "status": "planned",
+      "evidence_required": ["seed record", "generator identity"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-063",
+      "stage": "EV-00",
+      "statement": "Defeito confirmado deve produzir cenário/teste de regressão permanente quando tecnicamente possível.",
+      "status": "planned",
+      "evidence_required": ["regression mapping"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-064",
+      "stage": "EV-00",
+      "statement": "Harness qualificante deve registrar identidade criptográfica e possuir self-tests fail-closed.",
+      "status": "planned",
+      "evidence_required": ["harness identity", "self-test evidence"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-065",
+      "stage": "EV-00",
+      "statement": "Toda tentativa de campanha deve possuir identidade prévia e exatamente um estado terminal inequívoco.",
+      "status": "planned",
+      "evidence_required": ["run identity", "terminal state"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-066",
+      "stage": "EV-00",
+      "statement": "Source, build, install e evidência devem permanecer separados em campanhas qualificantes.",
+      "status": "planned",
+      "evidence_required": ["workspace layout evidence"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-067",
+      "stage": "EV-00",
+      "statement": "Manifesto/evidência qualificante deve possuir verificação independente do componente gerador.",
+      "status": "planned",
+      "evidence_required": ["independent verification"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-068",
+      "stage": "EV-00",
+      "statement": "Archives, falhas e resultados parciais históricos devem ser preservados sem limpeza ou correção retroativa.",
+      "status": "planned",
+      "evidence_required": ["archive fingerprint", "failure preservation"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-069",
+      "stage": "EV-00",
+      "statement": "Patches locais devem possuir precondições, allowlist e aplicação exata ou falhar integralmente.",
+      "status": "planned",
+      "evidence_required": ["patch authorization", "diff verification"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-070",
+      "stage": "EV-00",
+      "statement": "Build anterior não pode qualificar novo run; reutilização só pode ocorrer como cache/referência explicitamente não qualificante.",
+      "status": "planned",
+      "evidence_required": ["fresh-build evidence"],
+      "evidence": []
+    },
+    {
+      "requirement_id": "EVREQ-071",
+      "stage": "EV-00",
+      "statement": "Ação operacional deve ser autorizada por gate fail-closed; PRE-CS017 deve ser rejeitado enquanto CS016A não estiver accepted.",
+      "status": "planned",
+      "evidence_required": ["action authorization evidence", "anti-skip regression"],
+      "evidence": []
+    }
+  ]
+}
