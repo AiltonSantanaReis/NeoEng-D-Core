@@ -57,3 +57,9 @@ At that moment, the classic branch protection still required one human approval.
 ## Product boundary
 
 This decision changes governance only. It does not modify runtime, ABI, product tests, product claims or release authorization.
+
+## Publication integrity note
+
+During publication of this decision, the manifest-reconciliation trigger was emitted before the complete single-maintainer tree had been attached to the branch. The intermediate commit `b3427811e8fe889186ff2cbf5915d04eb48e0684` and its bot reconciliation `69d34d93c5762fa77e61cbeb0586064ae1e2e8e3` are therefore preserved as **non-qualifying intermediate states**.
+
+The complete single-maintainer hardening package was then applied by fast-forward commit `e20100ff25c02c03f544482ac2b85ab6fc1c8d4a`. Neither intermediate commit is acceptance evidence, and no failure or ordering mistake is reclassified as PASS.
