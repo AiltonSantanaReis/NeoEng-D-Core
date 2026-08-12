@@ -1,13 +1,8 @@
 name: Evolution governance
 
+# Historical CS016 governance workflow retained for manual diagnostics only.
+# Automatic execution retired under the evidence-driven ChangeSet validation regime.
 on:
-  push:
-    branches:
-      - main
-      - "agent/**"
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
