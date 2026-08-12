@@ -129,6 +129,25 @@
           "conclusion": "success"
         }
       ]
+    },
+    {
+      "changeset": "CS016E",
+      "title": "Governance root-of-trust, scope sealing, live provenance and repository-protection hardening",
+      "status": "in_progress",
+      "required_before_stage": "EV-00",
+      "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_5_AMENDMENT.md",
+      "deviation_record": "docs/records/evolution/DEV-0005.md",
+      "accepted_source_commit": null,
+      "evidence_manifest": null,
+      "validation_history": [
+        {
+          "source_commit": "253859d285963a2519af78cd7a30ba2d69fad9a1",
+          "run_id": 31618330920,
+          "state": "cs017_r4_start_state_audit",
+          "conclusion": "success_but_nonqualifying_for_ev00",
+          "reason": "R4 stopped before stage_operation after independent audit found root-of-trust and protection gaps; no qualifying product campaign executed"
+        }
+      ]
     }
   ]
 }

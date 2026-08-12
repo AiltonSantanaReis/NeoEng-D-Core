@@ -12,6 +12,8 @@ on:
 
 permissions:
   contents: read
+  actions: read
+  pull-requests: read
 
 jobs:
   governance:
@@ -21,106 +23,142 @@ jobs:
       - name: Checkout exact source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - name: D-Lab action authorization self-test
         run: python3 scripts/authorize_evolution_action.py --self-test
 
-      - name: D-Lab governance self-test
-        run: python3 scripts/verify_dlab_governance.py --self-test
+      - name: Governance root self-test
+        run: python3 scripts/verify_governance_root.py --self-test
 
-      - name: Verify D-Lab governance
-        run: python3 scripts/verify_dlab_governance.py
+      - name: Governance history self-test
+        run: python3 scripts/verify_governance_history.py --self-test
+
+      - name: Verify candidate governance root
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          elif [[ "${GITHUB_REF}" == "refs/heads/main" && "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            BASE="${{ github.event.before }}"
+            HEAD_SHA="${GITHUB_SHA}"
+            if [[ ! "$BASE" =~ ^[0-9a-f]{40}$ || "$BASE" == "0000000000000000000000000000000000000000" ]]; then
+              BASE="$(git rev-parse HEAD^)"
+            fi
+          else
+            BASE="$(git merge-base origin/main HEAD)"
+            HEAD_SHA="$(git rev-parse HEAD)"
+          fi
+          python3 scripts/verify_governance_root.py --candidate-root . --trusted-root . --base-sha "$BASE" --head-sha "$HEAD_SHA"
+
+      - name: Verify candidate governance history
+        run: python3 scripts/verify_governance_history.py --candidate-root . --trusted-root .
+
+      - name: Verify live GitHub governance provenance
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/verify_github_evidence.py
+
+      - name: D-Lab governance v1.5 self-test
+        run: python3 scripts/verify_dlab_governance_v15.py --self-test
+
+      - name: Verify D-Lab governance v1.5
+        run: python3 scripts/verify_dlab_governance_v15.py
 
       - name: Required evolution amendments gate
         shell: bash
         run: |
+          set -euo pipefail
           python3 - <<'PY'
-          import json
-          import subprocess
-          import sys
+          import json, os, subprocess, sys
           from pathlib import Path
+          roadmap=json.loads(Path("audit/EVOLUTION_ROADMAP.json").read_text(encoding="utf-8"))
+          amendments=json.loads(Path("audit/EVOLUTION_AMENDMENTS.json").read_text(encoding="utf-8"))
+          stage=roadmap["current_stage"]
+          stage_row=next(row for row in roadmap["stages"] if row["stage_id"]==stage)
+          planned=stage_row["planned_changeset"]
+          required=[row for row in amendments["amendments"] if row.get("required_before_stage")==stage]
+          nonaccepted=[row for row in required if row.get("status")!="accepted"]
 
-          roadmap = json.loads(Path("audit/EVOLUTION_ROADMAP.json").read_text(encoding="utf-8"))
-          amendments = json.loads(Path("audit/EVOLUTION_AMENDMENTS.json").read_text(encoding="utf-8"))
-          stage = roadmap["current_stage"]
-          stage_row = next(row for row in roadmap["stages"] if row["stage_id"] == stage)
-          planned = stage_row["planned_changeset"]
-          required = [
-              row for row in amendments["amendments"]
-              if row.get("required_before_stage") == stage
-          ]
-          nonaccepted = [row for row in required if row.get("status") != "accepted"]
-
-          def run(*args, expect_zero):
-              cmd = [sys.executable, "scripts/authorize_evolution_action.py", *args]
-              proc = subprocess.run(cmd, text=True, capture_output=True, check=False)
-              sys.stdout.write(proc.stdout)
-              sys.stderr.write(proc.stderr)
-              if (proc.returncode == 0) != expect_zero:
-                  raise SystemExit(
-                      f"unexpected authorization result rc={proc.returncode}: {' '.join(cmd)}"
-                  )
+          def invoke(*args, expect_zero):
+              cmd=[sys.executable,"scripts/authorize_evolution_action.py",*args]
+              proc=subprocess.run(cmd,text=True,capture_output=True,check=False)
+              sys.stdout.write(proc.stdout); sys.stderr.write(proc.stderr)
+              if (proc.returncode==0)!=expect_zero:
+                  raise SystemExit(f"unexpected authorization result rc={proc.returncode}: {' '.join(cmd)}")
               return proc
 
-          print(f"current_stage={stage} status={stage_row['status']} planned={planned}")
-          print("required_amendments=" + ",".join(
-              f"{row['changeset']}:{row['status']}" for row in required
-          ))
+          def trusted_base():
+              event=os.environ.get("GITHUB_EVENT_NAME"); ref=os.environ.get("GITHUB_REF")
+              if event=="pull_request":
+                  payload=json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+                  return payload["pull_request"]["base"]["sha"]
+              if event=="push" and ref=="refs/heads/main":
+                  payload=json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+                  before=payload.get("before")
+                  if isinstance(before,str) and len(before)==40 and set(before)!={"0"}: return before
+              p=subprocess.run(["git","merge-base","origin/main","HEAD"],text=True,capture_output=True,check=True)
+              return p.stdout.strip()
 
+          print(f"current_stage={stage} status={stage_row['status']} planned={planned}")
+          print("required_amendments="+",".join(f"{row['changeset']}:{row['status']}" for row in required))
           if nonaccepted:
-              executable = [row for row in nonaccepted if row.get("status") == "in_progress"]
-              if len(executable) != 1:
-                  raise SystemExit(
-                      "expected exactly one in_progress required amendment while blocked"
-                  )
-              amendment = executable[0]["changeset"]
-              run("--action", "governance_amendment", "--changeset", amendment, expect_zero=True)
-              blocked = run(
-                  "--action", "prepare_stage_changeset",
-                  "--stage", stage, "--changeset", planned,
-                  expect_zero=False,
-              )
-              if amendment not in (blocked.stdout + blocked.stderr):
-                  raise SystemExit("preparation rejection did not identify current amendment blocker")
-          elif stage_row["status"] == "not_started":
-              run(
-                  "--action", "prepare_stage_changeset",
-                  "--stage", stage, "--changeset", planned,
-                  expect_zero=True,
-              )
-          elif stage_row["status"] == "in_progress":
-              run(
-                  "--action", "prepare_stage_changeset",
-                  "--stage", stage, "--changeset", planned,
-                  expect_zero=False,
-              )
-              run(
-                  "--action", "start_stage",
-                  "--stage", stage, "--changeset", planned,
-                  expect_zero=True,
-              )
+              executable=[row for row in nonaccepted if row.get("status")=="in_progress"]
+              if len(executable)!=1: raise SystemExit("expected exactly one in_progress required amendment while blocked")
+              amendment=executable[0]["changeset"]
+              base=trusted_base()
+              diff=subprocess.run(["git","diff","--name-only",f"{base}...HEAD"],text=True,capture_output=True,check=True)
+              changed=[line.strip() for line in diff.stdout.splitlines() if line.strip()]
+              if changed:
+                  args=["--action","governance_amendment","--changeset",amendment]
+                  for path in changed: args.extend(["--path",path])
+                  invoke(*args,expect_zero=True)
+              else:
+                  print("No governance write diff in this run; write authorization is not requested.")
+              blocked=invoke("--action","prepare_stage_changeset","--stage",stage,"--changeset",planned,expect_zero=False)
+              if amendment not in (blocked.stdout+blocked.stderr): raise SystemExit("preparation rejection did not identify current amendment blocker")
+          elif stage_row["status"]=="not_started":
+              invoke("--action","prepare_stage_changeset","--stage",stage,"--changeset",planned,expect_zero=True)
+          elif stage_row["status"]=="in_progress":
+              invoke("--action","prepare_stage_changeset","--stage",stage,"--changeset",planned,expect_zero=False)
+              invoke("--action","start_stage","--stage",stage,"--changeset",planned,expect_zero=True)
+          elif stage_row["status"]=="accepted":
+              invoke("--action","advance_stage","--stage",stage,"--changeset",planned,expect_zero=True)
           else:
-              raise SystemExit(
-                  f"unsupported current stage state for governance gate: {stage_row['status']}"
-              )
+              raise SystemExit(f"unsupported current stage state for governance gate: {stage_row['status']}")
           PY
 
       - name: Evolution verifier self-test
         run: python3 scripts/verify_evolution_plan.py --self-test
-
       - name: Verify evolution plan
         run: python3 scripts/verify_evolution_plan.py
-
       - name: Verify product contract
         run: python3 scripts/verify_product_contract.py
-
       - name: Verify product assurance
         run: python3 scripts/verify_product_assurance.py
-
       - name: Verify tracked-file manifest
         id: manifest_check
         run: python3 scripts/generate_manifest.py --check
+
+      - name: Verify bootstrap repository protection
+        if: github.event_name == 'pull_request'
+        env:
+          GOVERNANCE_ADMIN_TOKEN: ${{ secrets.GOVERNANCE_ADMIN_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PHASE="$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          doc=json.loads(Path('audit/EVOLUTION_AMENDMENTS.json').read_text())
+          row=next((r for r in doc['amendments'] if r.get('changeset')=='CS016E'),None)
+          print('steady' if row and row.get('status')=='accepted' else 'bootstrap')
+          PY
+          )"
+          python3 scripts/verify_repository_protection.py --phase "$PHASE"
 
       - name: Generate expected manifest evidence
         if: always()
@@ -130,13 +168,7 @@ jobs:
           cp MANIFEST.sha256 "${RUNNER_TEMP}/evolution-governance/MANIFEST.before.sha256"
           python3 scripts/generate_manifest.py
           cp MANIFEST.sha256 "${RUNNER_TEMP}/evolution-governance/MANIFEST.expected.sha256"
-          {
-            echo "repository=${GITHUB_REPOSITORY}"
-            echo "sha=${GITHUB_SHA}"
-            echo "ref=${GITHUB_REF}"
-            echo "run_id=${GITHUB_RUN_ID}"
-            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
-          } > "${RUNNER_TEMP}/evolution-governance/run-identity.txt"
+          { echo "repository=${GITHUB_REPOSITORY}"; echo "sha=${GITHUB_SHA}"; echo "ref=${GITHUB_REF}"; echo "run_id=${GITHUB_RUN_ID}"; echo "run_attempt=${GITHUB_RUN_ATTEMPT}"; } > "${RUNNER_TEMP}/evolution-governance/run-identity.txt"
 
       - name: Upload governance evidence
         if: always()
@@ -160,18 +192,13 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-
       - name: Generate tracked-file manifest
-        shell: bash
         run: python3 scripts/generate_manifest.py
-
       - name: Commit manifest only when changed
         shell: bash
         run: |
-          if git diff --quiet -- MANIFEST.sha256; then
-            echo "MANIFEST.sha256 already reconciled"
-            exit 0
-          fi
+          set -euo pipefail
+          if git diff --quiet -- MANIFEST.sha256; then echo "MANIFEST.sha256 already reconciled"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add MANIFEST.sha256

@@ -21,20 +21,45 @@
     "all_actions": [
       "source_of_truth_present",
       "roadmap_present",
-      "amendment_ledger_present"
+      "amendment_ledger_present",
+      "governance_root_of_trust_present",
+      "stage_scope_maxima_present",
+      "governance_acceptance_chain_present"
     ],
     "stage_actions": [
       "required_amendments_accepted",
       "current_stage_matches",
       "planned_changeset_matches"
     ],
+    "governance_amendment": [
+      "explicit_nonempty_paths",
+      "action_scope_present",
+      "action_scope_within_root_maximum",
+      "actual_diff_within_root_maximum"
+    ],
     "stage_operation": [
       "stage_status_in_progress",
+      "explicit_nonempty_paths",
       "action_scope_present",
-      "paths_within_allowlist"
+      "action_scope_within_root_maximum",
+      "paths_within_allowlist",
+      "actual_diff_uses_trusted_base",
+      "scope_sealed_after_stage_start"
+    ],
+    "advance_stage": [
+      "current_stage_accepted",
+      "dependencies_accepted",
+      "exact_accepted_commit_present",
+      "evidence_manifest_present",
+      "decision_record_present"
     ],
     "release": [
-      "release_authorized_true"
+      "release_authorized_true",
+      "all_stages_accepted",
+      "all_stage_acceptance_bindings_present",
+      "release_assurance_verifier_passed",
+      "final_acceptance_verifier_passed",
+      "cryptographic_attestation_present"
     ]
   },
   "default_forbidden_patterns": [
@@ -80,5 +105,18 @@
     "in_progress_start_expected": "AUTHORIZED",
     "immutable_accepted_artifact_tamper_expected": "REJECT",
     "release_authorized_expected": false
+  },
+  "root_of_trust_regression": {
+    "scenario_id": "SCN-REGRESSION-005",
+    "empty_stage_operation_paths_expected": "REJECT",
+    "empty_governance_amendment_paths_expected": "REJECT",
+    "self_expanding_action_scope_expected": "REJECT",
+    "dropped_forbidden_pattern_expected": "REJECT",
+    "candidate_selected_diff_base_expected": "REJECT",
+    "post_start_scope_mutation_expected": "REJECT",
+    "fabricated_local_run_metadata_without_live_github_match_expected": "REJECT",
+    "root_policy_weakening_expected": "REJECT",
+    "release_with_incomplete_stage_closure_expected": "REJECT",
+    "undefined_future_stage_scope_expected": "REJECT"
   }
 }

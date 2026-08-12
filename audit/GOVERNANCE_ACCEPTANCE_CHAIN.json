@@ -1,0 +1,61 @@
+{
+  "schema": "neoeng.dcore.governance-acceptance-chain.v1",
+  "program_id": "POST_1_14_1",
+  "hash_algorithm": "sha256",
+  "canonicalization": "json-sort-keys-no-whitespace-utf8",
+  "entries": [
+    {
+      "changeset": "CS016A",
+      "pr_number": 23,
+      "qualifying_source_commit": "fd7c5d1645a044ff8db8ab60ea1290c1d20137d9",
+      "qualifying_run_id": 31592095622,
+      "accepted_state_commit": "2d79345fcce52b5d28b17c45a5e4d0ad0a0dd344",
+      "accepted_state_run_id": 31592517642,
+      "merge_commit": "adf763617a3788d6c711ec72cfa8a0ae38c1c1bc",
+      "post_merge_run_id": 31594495351,
+      "conclusion": "accepted_closed",
+      "previous_entry_hash": "GENESIS",
+      "entry_hash": "82a396dfc17465caca97daf13f59a7fd702f96650ac9dec4da7c3fc9f1b93e23"
+    },
+    {
+      "changeset": "CS016B",
+      "pr_number": 24,
+      "qualifying_source_commit": "b11f91fc0db5610c7e195ff1a282e04aee80e987",
+      "qualifying_run_id": 31596214152,
+      "accepted_state_commit": "9b5b664f1de58f5d5152bc4b9fcb1470bec8d03f",
+      "accepted_state_run_id": 31597494227,
+      "merge_commit": "855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1",
+      "post_merge_run_id": 31600068830,
+      "conclusion": "accepted_closed",
+      "previous_entry_hash": "82a396dfc17465caca97daf13f59a7fd702f96650ac9dec4da7c3fc9f1b93e23",
+      "entry_hash": "2b501d68cbffe392da3ea2d5f1c03d5c320edc8c3e881c44c92e0e63eca9697d"
+    },
+    {
+      "changeset": "CS016C",
+      "pr_number": 25,
+      "qualifying_source_commit": "2dfa5c0fae6a2639277bf2b6f2917428fbde4383",
+      "qualifying_run_id": 31611909872,
+      "accepted_state_commit": "fb858d7b54814470d3afa2d7c3c57f81d162d5bc",
+      "accepted_state_run_id": 31612681835,
+      "merge_commit": "7393b32d2be3fd2e65eab6a738a0066c13848f6c",
+      "post_merge_run_id": 31614134680,
+      "conclusion": "accepted_closed",
+      "previous_entry_hash": "2b501d68cbffe392da3ea2d5f1c03d5c320edc8c3e881c44c92e0e63eca9697d",
+      "entry_hash": "560a822b30e5d94d5fa3095cd2c9475848d877caca05bf4c174323ee3db28453"
+    },
+    {
+      "changeset": "CS016D",
+      "pr_number": 26,
+      "qualifying_source_commit": "3831d1080059811fe3f7e906607ef8c60917dae0",
+      "qualifying_run_id": 31615538151,
+      "accepted_state_commit": "71d46710f3bc3f48158aa39e39d78e20bc8ff6f3",
+      "accepted_state_run_id": 31617299321,
+      "merge_commit": "de55e0882c6400a0409b5cf881c6ee796a975cdf",
+      "post_merge_run_id": 31617939501,
+      "conclusion": "accepted_closed",
+      "previous_entry_hash": "560a822b30e5d94d5fa3095cd2c9475848d877caca05bf4c174323ee3db28453",
+      "entry_hash": "3d867a133d1e6c44c8d48799be4b8742b493f0a0d7878ffdac996270fc5d63f0"
+    }
+  ],
+  "next_entry_rule": "A new accepted governance ChangeSet appends exactly one entry; existing entries and hashes are immutable."
+}

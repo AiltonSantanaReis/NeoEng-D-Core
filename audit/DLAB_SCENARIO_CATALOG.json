@@ -85,6 +85,14 @@
       "oracle":"O verifier preserva a prova histórica 1.3 e a imutabilidade de artefatos aceitos, mas não rejeita uma transição operacional autorizada apenas porque roadmap/ledgers diferem do snapshot histórico.","expected_failure_class":null,
       "randomized":false,"seed":null,"generator_version":"lifecycle-aware-verifier-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
       "evidence":["docs/changesets/016D/evidence/github-actions-run-31615538151/validation-summary.json"]
+    },
+    {
+      "scenario_id":"SCN-REGRESSION-005","version":1,"class":"regression","type":"simulated","risk":"critical","status":"planned",
+      "preconditions":["CS016E in_progress or accepted","Governance root verifier and hardened authorizer available"],
+      "steps":["Exigir REJECT para stage_operation e governance_amendment sem paths explícitos.","Tentar ACTION_SCOPE com allowed_paths contendo ** e exigir REJECT.","Remover padrão forbidden obrigatório e exigir REJECT.","Alterar control_base_commit no candidato e exigir REJECT contra o base derivado pelo trusted verifier.","Alterar ACTION_SCOPE após início do stage e exigir REJECT.","Alterar política root para fail_closed=false e exigir REJECT pelo verificador da base.","Tentar modificar workflow/verifier raiz steady-state e exigir REJECT pelo verifier vindo da base protegida.","Apresentar metadado local de run sem correspondência na API oficial do GitHub e exigir REJECT.","Solicitar release com stages incompletos e exigir REJECT.","Solicitar stage futuro sem máximo previamente definido e exigir REJECT."],
+      "oracle":"Nenhum candidato pode escolher o próprio juiz, ampliar o próprio escopo, omitir o objeto da escrita, falsificar proveniência local ou promover release/stage sem fechamento derivado e verificável.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":"governance-root-ratchet-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
+      "evidence":[]
     }
   ]
 }

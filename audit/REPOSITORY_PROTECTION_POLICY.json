@@ -1,0 +1,34 @@
+{
+  "schema": "neoeng.dcore.repository-protection-policy.v1",
+  "branch": "main",
+  "maintainer_model": "single_maintainer",
+  "declared_maintainer": "AiltonSantanaReis",
+  "human_review_required": false,
+  "minimum_approvals": 0,
+  "dismiss_stale_reviews": false,
+  "require_pull_request": true,
+  "require_strict_status_checks": true,
+  "require_empty_pull_request_bypass_allowances": true,
+  "require_enforce_admins": true,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_check_apps": {
+    "Evolution governance gate": 15368,
+    "Trusted governance root gate": 15368
+  },
+  "bootstrap_required_checks": [
+    "Evolution governance gate"
+  ],
+  "steady_state_required_checks": [
+    "Evolution governance gate",
+    "Trusted governance root gate"
+  ],
+  "bootstrap_human_review_exception_changeset": "CS016E",
+  "bootstrap_closure_requires_post_merge_trusted_root": true,
+  "bootstrap_closure_requires_followup_pr": true,
+  "future_root_replacement_without_external_authority": "BLOCKED",
+  "bootstrap_rule": "CS016E cannot be considered accepted merely by bootstrap merge. Before merge, main must be externally protected and the exact candidate SHA must pass all bootstrap gates. After merge, Trusted governance root gate must become required and a separate closure PR must pass the trusted-base verifier before CS016E can be accepted.",
+  "steady_state_rule": "Single-maintainer operation does not require a fictitious human approval. Every later merge still requires a pull request, strict required checks, no routine bypass, and Trusted governance root gate sourced from protected main. Root-of-trust replacement remains BLOCKED without an external independent authority.",
+  "no_bypass_policy": "No routine bypass is authorized. Emergency administrative bypass must create a deviation record and invalidate acceptance until independently revalidated.",
+  "single_maintainer_decision_record": "docs/changesets/016E/SINGLE_MAINTAINER_DECISION.md"
+}
