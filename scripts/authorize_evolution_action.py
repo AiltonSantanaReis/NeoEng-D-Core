@@ -277,17 +277,34 @@ def authorize_state(
 def self_test(root: Path) -> list[str]:
     failures: list[str] = []
     roadmap = load_json(root / ROADMAP)
-    amendments = load_json(root / AMENDMENTS)
+    actual_amendments = load_json(root / AMENDMENTS)
     policy = load_json(root / POLICY)
 
     scope = load_scope(root, "CS016A")
     if scope is None:
         return ["CS016A ACTION_SCOPE missing"]
 
+    # Self-tests are state-independent: explicit fixtures prevent the test from
+    # becoming invalid merely because the repository advanced from in_progress
+    # to accepted.
+    in_progress = copy.deepcopy(actual_amendments)
+    row = amendment_map(in_progress).get("CS016A")
+    if row is None:
+        return ["CS016A amendment missing"]
+    row["status"] = "in_progress"
+    row["accepted_source_commit"] = None
+    row["evidence_manifest"] = None
+
+    accepted = copy.deepcopy(in_progress)
+    accepted_row = amendment_map(accepted)["CS016A"]
+    accepted_row["status"] = "accepted"
+    accepted_row["accepted_source_commit"] = "a" * 40
+    accepted_row["evidence_manifest"] = "evidence.json"
+
     gov = authorize_state(
         root=root,
         roadmap=roadmap,
-        amendments=amendments,
+        amendments=in_progress,
         policy=policy,
         action="governance_amendment",
         changeset="CS016A",
@@ -296,12 +313,12 @@ def self_test(root: Path) -> list[str]:
         scope_override=scope,
     )
     if not gov["authorized"]:
-        failures.append("valid CS016A governance amendment was rejected")
+        failures.append("valid in-progress CS016A governance amendment was rejected")
 
     premature = authorize_state(
         root=root,
         roadmap=roadmap,
-        amendments=amendments,
+        amendments=in_progress,
         policy=policy,
         action="preflight",
         changeset="CS017",
@@ -315,10 +332,6 @@ def self_test(root: Path) -> list[str]:
     ):
         failures.append("PRE-CS017 rejection did not identify amendment blocker")
 
-    accepted = copy.deepcopy(amendments)
-    accepted["amendments"][0]["status"] = "accepted"
-    accepted["amendments"][0]["accepted_source_commit"] = "a" * 40
-    accepted["amendments"][0]["evidence_manifest"] = "evidence.json"
     ready = authorize_state(
         root=root,
         roadmap=roadmap,
@@ -335,10 +348,24 @@ def self_test(root: Path) -> list[str]:
             + "; ".join(ready["reasons"])
         )
 
+    closed_governance = authorize_state(
+        root=root,
+        roadmap=roadmap,
+        amendments=accepted,
+        policy=policy,
+        action="governance_amendment",
+        changeset="CS016A",
+        stage=None,
+        paths=[],
+        scope_override=scope,
+    )
+    if closed_governance["authorized"]:
+        failures.append("accepted CS016A still authorized governance_amendment work")
+
     unknown = authorize_state(
         root=root,
         roadmap=roadmap,
-        amendments=amendments,
+        amendments=in_progress,
         policy=policy,
         action="invented_action",
         changeset="CS016A",
@@ -351,7 +378,7 @@ def self_test(root: Path) -> list[str]:
     outside = authorize_state(
         root=root,
         roadmap=roadmap,
-        amendments=amendments,
+        amendments=in_progress,
         policy=policy,
         action="governance_amendment",
         changeset="CS016A",

@@ -1,58 +1,49 @@
 # ChangeSet 016A — status de validação
 
-State: accepted
+State: in_progress
 
-## Decisão
+## Estado atual
 
-O amendment normativo D-Lab v2 foi aceito com base no source commit
-`eaa37e84d6e5a32830b01177ee0531b260ea97b5` e no workflow GitHub Actions
-`31591410348`, evento `push`, conclusão `success`.
+A primeira campanha candidata pré-aceitação passou no source commit
+`eaa37e84d6e5a32830b01177ee0531b260ea97b5` (run `31591410348`). Ao promover o
+ledger experimentalmente para `accepted`, o run `31591689618` expôs um defeito
+real no self-test do Action Authorization Gate: o teste herdava o estado atual
+do amendment e, portanto, deixou de ser válido depois da promoção.
 
-A decisão aceita somente governança. EV-00 permanece `not_started`; CS017 não
-foi iniciado; nenhuma alteração de runtime, ABI, Host SDK, replay, rollback,
-snapshot, serialização, semântica canônica, claim pública ou release é inferida.
+A promoção foi revertida para `in_progress`. Nenhuma evidência de falha foi
+apagada e CS017/EV-00 continuam bloqueados.
 
-## Gates da decisão de aceitação
+## Gates executados
 
 | Gate | Estado | Evidência |
 |---|---|---|
-| D-Lab action authorization self-test | PASS | run `31591410348` |
-| D-Lab governance self-test | PASS | run `31591410348` |
-| D-Lab governance verifier | PASS | run `31591410348` |
-| Anti-skip PRE-CS017 enquanto CS016A `in_progress` | PASS | run `31591410348` |
+| D-Lab action authorization self-test no candidato pré-aceitação | PASS | run `31591410348` |
+| D-Lab governance self-test no candidato pré-aceitação | PASS | run `31591410348` |
+| D-Lab governance verifier no candidato pré-aceitação | PASS | run `31591410348` |
+| Anti-skip PRE-CS017 no candidato pré-aceitação | PASS | run `31591410348` |
 | Evolution verifier self-test | PASS | run `31591410348` |
 | Evolution verifier | PASS | run `31591410348` |
 | Product contract verifier | PASS | run `31591410348` |
 | Product assurance verifier | PASS | run `31591410348` |
 | Manifest | PASS | run `31591410348` |
-| GitHub Actions candidato | PASS | run `31591410348` |
-| Evidence manifest | PASS | `docs/changesets/016A/evidence/EVIDENCE_MANIFEST.json` |
+| Accepted-state Action Authorization self-test | FAILED | run `31591689618` |
 
-## Evidência vinculada
+## Causa da falha aceita como achado
 
-- source commit aceito: `eaa37e84d6e5a32830b01177ee0531b260ea97b5`;
-- run: `31591410348`;
-- job: `94097010987`;
-- artifact: `9139254445`;
-- artifact digest: `sha256:a97f54c890b98fdeeebb60a49c0063203988c2095be4e38b4c4f36317b77ee8f`;
-- evidence manifest: `docs/changesets/016A/evidence/EVIDENCE_MANIFEST.json`.
+O self-test usava o ledger corrente para testar o cenário `in_progress`.
+Quando o próprio ledger passou a `accepted`, isso gerou três falhas corretas no
+runner: trabalho de amendment já aceito foi rejeitado, PRE-CS017 passou a ser
+autorizável e o bloqueador CS016A deixou de existir. O teste confundiu estado
+real com fixture de regressão.
 
-## Falha preservada durante reconciliação
+A correção obrigatória é tornar o self-test independente do estado corrente,
+criando explicitamente fixtures `in_progress` e `accepted` e verificando ambos.
 
-O primeiro candidato `b18215c61e5e786dfaf4b4e2868779ea02bfa1ae`, run
-`31591359623`, passou os novos gates, evolution verifier, product contract e
-product assurance, mas falhou no `MANIFEST.sha256` deliberadamente ainda não
-reconciliado. O job controlado atualizou somente o manifesto no commit
-`0541efcc1ad490ee2517e0732ca99cd11b0f60c8`. O estado reconciliado foi então
-validado independentemente pelo source commit aceito acima.
+## Regra de continuidade
 
-A falha inicial permanece registrada em
-`evidence/github-actions-run-31591410348/reconciliation-history.json` e não foi
-reclassificada como sucesso.
+CS016A só poderá voltar a `accepted` depois que a correção do self-test produzir
+novo source commit, novo run candidato integralmente PASS e nova evidência
+vinculada ao SHA corrigido.
 
-## Gates de integração
-
-A promoção deste ledger para `accepted` ainda precisa sobreviver aos gates de
-integração sobre a árvore que contém esta própria decisão/evidência e, após o
-merge, sobre a `main`. Esses gates não podem ser substituídos pelo run candidato
-acima; se falharem, o merge/ativação oficial permanece bloqueado.
+`NOT_TESTED`, `BLOCKED`, `FAILED` ou evidência de SHA anterior nunca equivalem à
+aprovação do código corrigido.
