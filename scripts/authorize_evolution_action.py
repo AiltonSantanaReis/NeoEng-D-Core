@@ -71,11 +71,7 @@ def path_allowed(path: str, allowed: list[str], forbidden: list[str]) -> bool:
 
 
 def load_scope(root: Path, changeset: str) -> dict[str, Any] | None:
-    rel = Path(f"docs/changesets/{changeset.removeprefix('CS')}/ACTION_SCOPE.json")
-    path = root / rel
-    if not path.is_file():
-        if changeset == "CS016A":
-            path = root / "docs/changesets/016A/ACTION_SCOPE.json"
+    path = root / f"docs/changesets/{changeset.removeprefix('CS')}/ACTION_SCOPE.json"
     if not path.is_file():
         return None
     return load_json(path)
@@ -135,7 +131,7 @@ def authorize_state(
             reasons.append(f"missing ACTION_SCOPE for {changeset}")
             return result
         if scope.get("runtime_change_authorized") is not False:
-            reasons.append("CS016A governance amendment cannot authorize runtime change")
+            reasons.append("governance amendment cannot authorize runtime change")
             return result
         if paths:
             allowed = scope.get("allowed_paths")
@@ -274,101 +270,180 @@ def authorize_state(
     return result
 
 
+def set_stage_status(roadmap: dict[str, Any], stage: str, status: str) -> None:
+    row = stage_map(roadmap).get(stage)
+    if row is None:
+        raise ValueError(f"stage fixture missing: {stage}")
+    row["status"] = status
+    row["accepted_commit"] = None
+    row["evidence_manifest"] = None
+    row["decision_record"] = None
+
+
+def set_amendment_status(
+    amendments: dict[str, Any], changeset: str, status: str
+) -> None:
+    row = amendment_map(amendments).get(changeset)
+    if row is None:
+        raise ValueError(f"amendment fixture missing: {changeset}")
+    row["status"] = status
+    if status == "accepted":
+        row["accepted_source_commit"] = "a" * 40
+        row["evidence_manifest"] = "fixture-evidence.json"
+    else:
+        row["accepted_source_commit"] = None
+        row["evidence_manifest"] = None
+
+
 def self_test(root: Path) -> list[str]:
     failures: list[str] = []
-    roadmap = load_json(root / ROADMAP)
+    actual_roadmap = load_json(root / ROADMAP)
     actual_amendments = load_json(root / AMENDMENTS)
     policy = load_json(root / POLICY)
 
-    scope = load_scope(root, "CS016A")
-    if scope is None:
+    scope_a = load_scope(root, "CS016A")
+    if scope_a is None:
         return ["CS016A ACTION_SCOPE missing"]
+    scope_b = load_scope(root, "CS016B")
+    if scope_b is None:
+        return ["CS016B ACTION_SCOPE missing"]
 
-    # Self-tests are state-independent: explicit fixtures prevent the test from
-    # becoming invalid merely because the repository advanced from in_progress
-    # to accepted.
-    in_progress = copy.deepcopy(actual_amendments)
-    row = amendment_map(in_progress).get("CS016A")
-    if row is None:
-        return ["CS016A amendment missing"]
-    row["status"] = "in_progress"
-    row["accepted_source_commit"] = None
-    row["evidence_manifest"] = None
+    # Every lifecycle state used by a regression is explicit. The live repository
+    # state must never become an implicit precondition of a synthetic self-test.
+    roadmap_not_started = copy.deepcopy(actual_roadmap)
+    set_stage_status(roadmap_not_started, "EV-00", "not_started")
+    roadmap_in_progress = copy.deepcopy(actual_roadmap)
+    set_stage_status(roadmap_in_progress, "EV-00", "in_progress")
 
-    accepted = copy.deepcopy(in_progress)
-    accepted_row = amendment_map(accepted)["CS016A"]
-    accepted_row["status"] = "accepted"
-    accepted_row["accepted_source_commit"] = "a" * 40
-    accepted_row["evidence_manifest"] = "evidence.json"
+    all_accepted = copy.deepcopy(actual_amendments)
+    set_amendment_status(all_accepted, "CS016A", "accepted")
+    set_amendment_status(all_accepted, "CS016B", "accepted")
 
-    gov = authorize_state(
+    a_in_progress = copy.deepcopy(all_accepted)
+    set_amendment_status(a_in_progress, "CS016A", "in_progress")
+    b_in_progress = copy.deepcopy(all_accepted)
+    set_amendment_status(b_in_progress, "CS016B", "in_progress")
+
+    # Preserve SCN-REGRESSION-001: CS016A not accepted blocks PRE-CS017.
+    premature_a = authorize_state(
         root=root,
-        roadmap=roadmap,
-        amendments=in_progress,
-        policy=policy,
-        action="governance_amendment",
-        changeset="CS016A",
-        stage=None,
-        paths=["docs/governance/DLAB_VALIDATION_STANDARD.md"],
-        scope_override=scope,
-    )
-    if not gov["authorized"]:
-        failures.append("valid in-progress CS016A governance amendment was rejected")
-
-    premature = authorize_state(
-        root=root,
-        roadmap=roadmap,
-        amendments=in_progress,
+        roadmap=roadmap_not_started,
+        amendments=a_in_progress,
         policy=policy,
         action="preflight",
         changeset="CS017",
         stage="EV-00",
         paths=[],
     )
-    if premature["authorized"]:
+    if premature_a["authorized"]:
         failures.append("PRE-CS017 was authorized before CS016A acceptance")
-    if not any(
-        "required amendments not accepted" in r for r in premature["reasons"]
-    ):
-        failures.append("PRE-CS017 rejection did not identify amendment blocker")
+    if not any("CS016A" in r for r in premature_a["reasons"]):
+        failures.append("PRE-CS017 rejection did not identify CS016A blocker")
 
+    # New CS016B governance work is authorized only while CS016B is in_progress.
+    gov_b = authorize_state(
+        root=root,
+        roadmap=roadmap_not_started,
+        amendments=b_in_progress,
+        policy=policy,
+        action="governance_amendment",
+        changeset="CS016B",
+        stage=None,
+        paths=["scripts/authorize_evolution_action.py"],
+        scope_override=scope_b,
+    )
+    if not gov_b["authorized"]:
+        failures.append(
+            "valid in-progress CS016B governance amendment was rejected: "
+            + "; ".join(gov_b["reasons"])
+        )
+
+    premature_b = authorize_state(
+        root=root,
+        roadmap=roadmap_not_started,
+        amendments=b_in_progress,
+        policy=policy,
+        action="prepare_stage_changeset",
+        changeset="CS017",
+        stage="EV-00",
+        paths=[],
+    )
+    if premature_b["authorized"]:
+        failures.append("CS017 preparation was authorized before CS016B acceptance")
+    if not any("CS016B" in r for r in premature_b["reasons"]):
+        failures.append("CS017 preparation rejection did not identify CS016B blocker")
+
+    # Ready-to-prepare fixture: amendments accepted + stage not_started.
     ready = authorize_state(
         root=root,
-        roadmap=roadmap,
-        amendments=accepted,
+        roadmap=roadmap_not_started,
+        amendments=all_accepted,
         policy=policy,
-        action="preflight",
+        action="prepare_stage_changeset",
         changeset="CS017",
         stage="EV-00",
         paths=[],
     )
     if not ready["authorized"]:
         failures.append(
-            "EV-00 preflight remained rejected after simulated amendment acceptance: "
+            "EV-00 preparation rejected in explicit not_started fixture: "
             + "; ".join(ready["reasons"])
         )
 
-    closed_governance = authorize_state(
+    # SCN-REGRESSION-002: once stage is in_progress, preparation must be rejected
+    # while start_stage remains the valid lifecycle action.
+    repeated_prepare = authorize_state(
         root=root,
-        roadmap=roadmap,
-        amendments=accepted,
+        roadmap=roadmap_in_progress,
+        amendments=all_accepted,
+        policy=policy,
+        action="prepare_stage_changeset",
+        changeset="CS017",
+        stage="EV-00",
+        paths=[],
+    )
+    if repeated_prepare["authorized"]:
+        failures.append("CS017 re-preparation was authorized while EV-00 is in_progress")
+    if not any("status not_started" in r for r in repeated_prepare["reasons"]):
+        failures.append("in_progress preparation rejection did not expose lifecycle reason")
+
+    start = authorize_state(
+        root=root,
+        roadmap=roadmap_in_progress,
+        amendments=all_accepted,
+        policy=policy,
+        action="start_stage",
+        changeset="CS017",
+        stage="EV-00",
+        paths=[],
+    )
+    if not start["authorized"]:
+        failures.append(
+            "start_stage rejected in explicit in_progress fixture: "
+            + "; ".join(start["reasons"])
+        )
+
+    closed_b = authorize_state(
+        root=root,
+        roadmap=roadmap_not_started,
+        amendments=all_accepted,
         policy=policy,
         action="governance_amendment",
-        changeset="CS016A",
+        changeset="CS016B",
         stage=None,
         paths=[],
-        scope_override=scope,
+        scope_override=scope_b,
     )
-    if closed_governance["authorized"]:
-        failures.append("accepted CS016A still authorized governance_amendment work")
+    if closed_b["authorized"]:
+        failures.append("accepted CS016B still authorized governance_amendment work")
 
     unknown = authorize_state(
         root=root,
-        roadmap=roadmap,
-        amendments=in_progress,
+        roadmap=roadmap_not_started,
+        amendments=b_in_progress,
         policy=policy,
         action="invented_action",
-        changeset="CS016A",
+        changeset="CS016B",
         stage=None,
         paths=[],
     )
@@ -377,17 +452,17 @@ def self_test(root: Path) -> list[str]:
 
     outside = authorize_state(
         root=root,
-        roadmap=roadmap,
-        amendments=in_progress,
+        roadmap=roadmap_not_started,
+        amendments=b_in_progress,
         policy=policy,
         action="governance_amendment",
-        changeset="CS016A",
+        changeset="CS016B",
         stage=None,
         paths=["src/core.cpp"],
-        scope_override=scope,
+        scope_override=scope_b,
     )
     if outside["authorized"]:
-        failures.append("runtime path was authorized by CS016A")
+        failures.append("runtime path was authorized by CS016B")
 
     return failures
 

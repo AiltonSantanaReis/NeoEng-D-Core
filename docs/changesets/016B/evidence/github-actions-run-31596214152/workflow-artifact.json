@@ -1,0 +1,13 @@
+{
+  "schema": "neoeng.dcore.github-actions-artifact-record.v1",
+  "changeset": "CS016B",
+  "source_commit": "b11f91fc0db5610c7e195ff1a282e04aee80e987",
+  "workflow_run_id": 31596214152,
+  "artifact_id": 9141135665,
+  "name": "evolution-governance-b11f91fc0db5610c7e195ff1a282e04aee80e987",
+  "size_in_bytes": 67916,
+  "digest": "sha256:1be80d276c7915196d244c65a4aae828492f1c4702481e4e7b4c09d76bff77af",
+  "expired": false,
+  "created_at": "2026-08-12T12:23:47Z",
+  "expires_at": "2026-11-10T12:23:40Z"
+}

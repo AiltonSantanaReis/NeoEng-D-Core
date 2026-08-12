@@ -1,0 +1,14 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants-amendment-016b.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016B",
+  "invariants": [
+    {
+      "invariant_id": "INV-EV-028",
+      "statement": "Self-test sintético de governança não pode herdar implicitamente o lifecycle state real que pretende simular; precondições de stage usadas pelo teste devem ser fixtures explícitos.",
+      "status": "active",
+      "enforcement": "authorize_evolution_action.py self-test, SCN-REGRESSION-002 e verify_dlab_governance.py."
+    }
+  ]
+}

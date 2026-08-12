@@ -61,6 +61,14 @@
       "steps":["Solicitar PRE-CS017/ação EV-00 enquanto CS016A estiver não accepted."],
       "oracle":"Action Authorization Gate retorna REJECT e exit code não-zero.","expected_failure_class":null,
       "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Governança operacional","evidence":[]
+    },
+    {
+      "scenario_id":"SCN-REGRESSION-002","version":1,"class":"regression","type":"simulated","risk":"critical","status":"passed",
+      "preconditions":["CS016B in_progress or accepted","Action Authorization self-test available"],
+      "steps":["Construir fixture explícito EV-00 not_started com todos os amendments aceitos e exigir prepare_stage_changeset AUTHORIZED.","Construir fixture explícito EV-00 in_progress com todos os amendments aceitos e exigir prepare_stage_changeset REJECT.","No mesmo fixture in_progress exigir start_stage AUTHORIZED."],
+      "oracle":"O self-test independe do lifecycle real do repositório, preserva as decisões fail-closed corretas para not_started/in_progress e termina ACCEPT.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":"explicit-fixture-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
+      "evidence":["docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json"]
     }
   ]
 }
