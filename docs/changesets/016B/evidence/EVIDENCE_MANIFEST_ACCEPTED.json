@@ -1,0 +1,24 @@
+{
+  "schema": "neoeng.dcore.evolution-amendment-evidence-manifest.v1",
+  "changeset": "CS016B",
+  "source_commit": "b11f91fc0db5610c7e195ff1a282e04aee80e987",
+  "hash_mode": "lf-normalized-text",
+  "files": [
+    {
+      "path": "docs/changesets/016B/evidence/triggering-failure.json",
+      "sha256": "d3c14be26541b70af325a79da969b2141bbb7f5cb37b96e740d36db3b557fbe4"
+    },
+    {
+      "path": "docs/changesets/016B/evidence/github-actions-run-31596214152/run-identity.txt",
+      "sha256": "ed6cd062ea896e143b93d8356d2d995a99e0e365dbe93921e7e87e5a42c4a1f2"
+    },
+    {
+      "path": "docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json",
+      "sha256": "fec456c8dd1ce0f2e714bd433436279829fefac817e08554b751235d4e097f29"
+    },
+    {
+      "path": "docs/changesets/016B/evidence/github-actions-run-31596214152/workflow-artifact.json",
+      "sha256": "e7ede2cf34d9d375fd0431d50430bca6d8929f906ad3359604bfeb13db867d9d"
+    }
+  ]
+}

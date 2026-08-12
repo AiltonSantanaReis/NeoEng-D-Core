@@ -210,7 +210,7 @@
       "class": "regression",
       "type": "simulated",
       "risk": "critical",
-      "status": "ready",
+      "status": "passed",
       "preconditions": [
         "CS016B in_progress or accepted",
         "Action Authorization self-test available"
@@ -226,7 +226,9 @@
       "seed": null,
       "generator_version": "explicit-fixture-v1",
       "claim_scope": "Governança operacional; não qualifica comportamento do runtime.",
-      "evidence": []
+      "evidence": [
+        "docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json"
+      ]
     }
   ]
 }

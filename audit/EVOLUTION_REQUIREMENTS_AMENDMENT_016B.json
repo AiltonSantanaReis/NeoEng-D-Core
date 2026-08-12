@@ -9,14 +9,17 @@
       "requirement_id": "EVREQ-072",
       "stage": "EV-00",
       "statement": "Action Authorization self-tests devem construir fixtures explícitos de lifecycle do stage e provar que preparação é autorizada apenas em not_started após amendments aceitos, enquanto in_progress rejeita nova preparação e autoriza a ação de início correspondente.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "authorizer self-test evidence",
         "SCN-REGRESSION-002",
         "candidate CI",
         "accepted-state CI"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json",
+        "audit/DLAB_SCENARIO_CATALOG.json#SCN-REGRESSION-002"
+      ]
     }
   ]
 }

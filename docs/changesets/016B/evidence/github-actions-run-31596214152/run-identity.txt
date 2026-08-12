@@ -1,0 +1,14 @@
+repository=AiltonSantanaReis/NeoEng-D-Core
+changeset=CS016B
+stage=EV-00
+branch=agent/cs016b-authorizer-lifecycle-fix
+source_commit=b11f91fc0db5610c7e195ff1a282e04aee80e987
+source_tree=33a8c0193b2de00a9d52ea8bdf1ed09971c0714e
+workflow=Evolution governance
+workflow_run_id=31596214152
+workflow_event=push
+job_id=94112263299
+conclusion=success
+artifact_id=9141135665
+artifact_digest=sha256:1be80d276c7915196d244c65a4aae828492f1c4702481e4e7b4c09d76bff77af
+protected_baseline_commit=e3fff973554a2e56b8bd7afdc1132f75f3ec337c
