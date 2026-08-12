@@ -1,0 +1,22 @@
+{
+  "schema": "neoeng.dcore.evolution-requirements-amendment-016d.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016D",
+  "stage": "EV-00",
+  "requirements": [
+    {
+      "requirement_id": "EVREQ-074",
+      "stage": "EV-00",
+      "statement": "O D-Lab governance verifier deve distinguir artefatos aceitos imutáveis de ledgers operacionais mutáveis, revalidar snapshots históricos no SHA em que foram aceitos e permitir somente transições operacionais autorizadas pelo lifecycle atual, sem congelar permanentemente roadmap ou ledgers de stage.",
+      "status": "planned",
+      "evidence_required": [
+        "SCN-REGRESSION-004",
+        "accepted v1.3 verifier replay",
+        "D-Lab governance self-test",
+        "D-Lab governance verification"
+      ],
+      "evidence": []
+    }
+  ]
+}

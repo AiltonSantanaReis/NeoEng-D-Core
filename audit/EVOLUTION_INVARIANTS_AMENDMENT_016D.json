@@ -1,0 +1,20 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants-amendment-016d.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016D",
+  "invariants": [
+    {
+      "invariant_id": "INV-EV-030",
+      "status": "active",
+      "statement": "Verificação de imutabilidade histórica não pode impedir uma transição de lifecycle explicitamente autorizada, e uma transição operacional autorizada não pode enfraquecer a imutabilidade de documentos/evidências já aceitos.",
+      "enforcement": [
+        "scripts/verify_dlab_governance.py --self-test",
+        "scripts/verify_dlab_governance.py",
+        "scripts/authorize_evolution_action.py --self-test",
+        "SCN-REGRESSION-004",
+        ".github/workflows/evolution-governance.yml"
+      ]
+    }
+  ]
+}
