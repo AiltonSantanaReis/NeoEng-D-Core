@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
       - name: Evolution verifier self-test
         run: python3 scripts/verify_evolution_plan.py --self-test
