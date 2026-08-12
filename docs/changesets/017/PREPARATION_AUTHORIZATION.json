@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dcore.evolution-action-authorization-record.v1",
+  "action": "prepare_stage_changeset",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "control_source_commit": "7393b32d2be3fd2e65eab6a738a0066c13848f6c",
+  "workflow_run_id": 31613040252,
+  "workflow_job_id": 94168915002,
+  "workflow_event": "push",
+  "branch": "main",
+  "roadmap_stage_status": "not_started",
+  "required_amendments": [
+    {"changeset": "CS016A", "status": "accepted"},
+    {"changeset": "CS016B", "status": "accepted"},
+    {"changeset": "CS016C", "status": "accepted"}
+  ],
+  "decision": "AUTHORIZED",
+  "authorized": true,
+  "reasons": [],
+  "scope": "Preparation only. This record does not authorize start_stage or stage_operation."
+}
