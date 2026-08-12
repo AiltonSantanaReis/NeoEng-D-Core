@@ -63,6 +63,7 @@
         "audit/FINAL_ACCEPTANCE_POLICY.json",
         "scripts/authorize_evolution_action.py",
         "scripts/verify_dlab_governance.py",
+        "scripts/verify_dlab_governance_v15.py",
         "scripts/verify_governance_root.py",
         "scripts/verify_github_evidence.py",
         "scripts/verify_repository_protection.py",
