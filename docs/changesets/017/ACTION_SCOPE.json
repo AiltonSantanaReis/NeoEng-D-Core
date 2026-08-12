@@ -1,0 +1,49 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "state": "in_progress",
+  "control_base_commit": "adf763617a3788d6c711ec72cfa8a0ae38c1c1bc",
+  "source_under_test": {
+    "release_tag": "v1.14.1",
+    "commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "immutable_during_qualifying_run": true
+  },
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "allowed_paths": [
+    "docs/changesets/017/**",
+    "audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json",
+    "audit/DLAB_SCENARIO_CATALOG.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json",
+    "docs/records/evolution/**",
+    "scripts/dlab/**",
+    "MANIFEST.sha256"
+  ],
+  "forbidden_paths": [
+    "src/**",
+    "include/**",
+    "CMakeLists.txt",
+    "cmake/**",
+    "tests/**",
+    "tools/**",
+    "examples/**",
+    ".github/workflows/**",
+    "docs/governance/**",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "audit/RELEASE_ASSURANCE_POLICY.json",
+    "audit/FINAL_ACCEPTANCE_POLICY.json",
+    "docs/commercial/**"
+  ],
+  "destructive_operations_authorized": false,
+  "stage_operation_requires_authorization": true,
+  "notes": [
+    "Harness changes belong to the control repository only; the historical source-under-test remains unchanged.",
+    "A path being allowlisted does not by itself authorize an action; authorize_evolution_action.py must return AUTHORIZED for the current stage/action.",
+    "Findings never authorize product remediation inside CS017."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "neoeng.dcore.evolution-action-authorization.v1",
+  "action": "prepare_stage_changeset",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "evaluated_repository_sha": "adf763617a3788d6c711ec72cfa8a0ae38c1c1bc",
+  "authorizer_path": "scripts/authorize_evolution_action.py",
+  "authorizer_blob_sha": "1e8072d77cb79afef4e43ec5ea1af5c9acbc8b52",
+  "roadmap_blob_sha": "55d462754b6671fb4fdb393098bd5f2fcd2d4859",
+  "amendments_blob_sha": "be2283c798de9b605853ff5f335f9e497d38963b",
+  "execution_policy_blob_sha": "478c892ccaed97e62c268d25afe0869ac91a51a0",
+  "paths": [
+    "docs/changesets/017/CHANGESET.md",
+    "docs/changesets/017/ACTION_SCOPE.json",
+    "docs/changesets/017/TEST_STATUS.md",
+    "docs/changesets/017/PREPARE_AUTHORIZATION.json",
+    "audit/EVOLUTION_ROADMAP.json"
+  ],
+  "preconditions": {
+    "fail_closed": true,
+    "current_stage": "EV-00",
+    "stage_status_before_transition": "not_started",
+    "planned_changeset": "CS017",
+    "required_amendments": {
+      "CS016A": "accepted"
+    },
+    "protected_baseline_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c"
+  },
+  "authorized": true,
+  "decision": "AUTHORIZED",
+  "reasons": [],
+  "evaluation_note": "Decision derived from the exact fail-closed rules and exact ledger state read from the identified main commit. This preparation decision does not authorize start_stage or stage_operation; those require a new evaluation on the resulting exact branch state."
+}
