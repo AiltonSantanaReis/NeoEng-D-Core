@@ -2,233 +2,73 @@
   "schema": "neoeng.dlab.scenario-catalog.v1",
   "program_id": "POST_1_14_1",
   "stage": "EV-00",
-  "classes": [
-    "normal",
-    "integration",
-    "degraded",
-    "adversarial",
-    "recovery",
-    "soak",
-    "combinatorial",
-    "regression"
-  ],
-  "types": [
-    "real",
-    "simulated",
-    "hybrid",
-    "physical"
-  ],
-  "statuses": [
-    "planned",
-    "ready",
-    "running",
-    "passed",
-    "failed",
-    "blocked",
-    "not_applicable"
-  ],
+  "classes": ["normal", "integration", "degraded", "adversarial", "recovery", "soak", "combinatorial", "regression"],
+  "types": ["real", "simulated", "hybrid", "physical"],
+  "statuses": ["planned", "ready", "running", "passed", "failed", "blocked", "not_applicable"],
   "scenarios": [
     {
-      "scenario_id": "SCN-NORMAL-001",
-      "version": 1,
-      "class": "normal",
-      "type": "real",
-      "risk": "high",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Executar fluxo suportado da baseline pelas fronteiras oficiais aplicáveis."
-      ],
-      "oracle": "Resultado esperado conforme contratos/testes oficiais da baseline.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "v1.14.1 no ambiente executado",
-      "evidence": []
+      "scenario_id":"SCN-NORMAL-001","version":1,"class":"normal","type":"real","risk":"high","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Executar fluxo suportado da baseline pelas fronteiras oficiais aplicáveis."],
+      "oracle":"Resultado esperado conforme contratos/testes oficiais da baseline.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"v1.14.1 no ambiente executado","evidence":[]
     },
     {
-      "scenario_id": "SCN-INTEGRATION-001",
-      "version": 1,
-      "class": "integration",
-      "type": "real",
-      "risk": "high",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Exercitar consumidor Host SDK instalado pela fronteira oficial."
-      ],
-      "oracle": "Consumidor externo conclui operações suportadas sem acesso direto ao estado canônico.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Host SDK no ambiente executado",
-      "evidence": []
+      "scenario_id":"SCN-INTEGRATION-001","version":1,"class":"integration","type":"real","risk":"high","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Exercitar consumidor Host SDK instalado pela fronteira oficial."],
+      "oracle":"Consumidor externo conclui operações suportadas sem acesso direto ao estado canônico.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Host SDK no ambiente executado","evidence":[]
     },
     {
-      "scenario_id": "SCN-DEGRADED-001",
-      "version": 1,
-      "class": "degraded",
-      "type": "simulated",
-      "risk": "high",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Remover/corromper evidência obrigatória em fixture controlado."
-      ],
-      "oracle": "Validação deve rejeitar fail-closed e preservar a falha.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Somente falha lógica simulada",
-      "evidence": []
+      "scenario_id":"SCN-DEGRADED-001","version":1,"class":"degraded","type":"simulated","risk":"high","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Remover/corromper evidência obrigatória em fixture controlado."],
+      "oracle":"Validação deve rejeitar fail-closed e preservar a falha.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Somente falha lógica simulada","evidence":[]
     },
     {
-      "scenario_id": "SCN-ADVERSARIAL-001",
-      "version": 1,
-      "class": "adversarial",
-      "type": "simulated",
-      "risk": "critical",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Adulterar hashes/manifests ou payload de evidência em fixture controlado."
-      ],
-      "oracle": "Verificador rejeita determinística e explicitamente a adulteração.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Somente corrupção simulada",
-      "evidence": []
+      "scenario_id":"SCN-ADVERSARIAL-001","version":1,"class":"adversarial","type":"simulated","risk":"critical","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Adulterar hashes/manifests ou payload de evidência em fixture controlado."],
+      "oracle":"Verificador rejeita determinística e explicitamente a adulteração.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Somente corrupção simulada","evidence":[]
     },
     {
-      "scenario_id": "SCN-RECOVERY-001",
-      "version": 1,
-      "class": "recovery",
-      "type": "hybrid",
-      "risk": "critical",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Combinar execução real suportada com interrupção lógica/recovery aplicável."
-      ],
-      "oracle": "Último estado válido/contrato de recovery é preservado; nenhum claim de power-loss físico.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Interrupção lógica no ambiente executado",
-      "evidence": []
+      "scenario_id":"SCN-RECOVERY-001","version":1,"class":"recovery","type":"hybrid","risk":"critical","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Combinar execução real suportada com interrupção lógica/recovery aplicável."],
+      "oracle":"Último estado válido/contrato de recovery é preservado; nenhum claim de power-loss físico.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Interrupção lógica no ambiente executado","evidence":[]
     },
     {
-      "scenario_id": "SCN-SOAK-001",
-      "version": 1,
-      "class": "soak",
-      "type": "real",
-      "risk": "high",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Executar campanha longa definida no CS017 com carga e duração registradas."
-      ],
-      "oracle": "Sem divergência canônica não explicada; métricas e limites ficam vinculados ao ambiente.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Somente duração/carga efetivamente executadas",
-      "evidence": []
+      "scenario_id":"SCN-SOAK-001","version":1,"class":"soak","type":"real","risk":"high","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Executar campanha longa definida no CS017 com carga e duração registradas."],
+      "oracle":"Sem divergência canônica não explicada; métricas e limites ficam vinculados ao ambiente.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Somente duração/carga efetivamente executadas","evidence":[]
     },
     {
-      "scenario_id": "SCN-COMBINATORIAL-001",
-      "version": 1,
-      "class": "combinatorial",
-      "type": "real",
-      "risk": "critical",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Combinar snapshot, rollback e replay conforme contratos suportados."
-      ],
-      "oracle": "Resultado canônico final satisfaz propriedades/oráculos definidos pela baseline.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Somente combinações suportadas pela baseline",
-      "evidence": []
+      "scenario_id":"SCN-COMBINATORIAL-001","version":1,"class":"combinatorial","type":"real","risk":"critical","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Combinar snapshot, rollback e replay conforme contratos suportados."],
+      "oracle":"Resultado canônico final satisfaz propriedades/oráculos definidos pela baseline.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Somente combinações suportadas pela baseline","evidence":[]
     },
     {
-      "scenario_id": "SCN-REGRESSION-001",
-      "version": 1,
-      "class": "regression",
-      "type": "simulated",
-      "risk": "critical",
-      "status": "planned",
-      "preconditions": [
-        "CS016A accepted before EV-00 execution",
-        "CS017 action authorization when executed"
-      ],
-      "steps": [
-        "Solicitar PRE-CS017/ação EV-00 enquanto CS016A estiver não accepted."
-      ],
-      "oracle": "Action Authorization Gate retorna REJECT e exit code não-zero.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": null,
-      "claim_scope": "Governança operacional",
-      "evidence": []
+      "scenario_id":"SCN-REGRESSION-001","version":1,"class":"regression","type":"simulated","risk":"critical","status":"planned",
+      "preconditions":["CS016A accepted before EV-00 execution","CS017 action authorization when executed"],
+      "steps":["Solicitar PRE-CS017/ação EV-00 enquanto CS016A estiver não accepted."],
+      "oracle":"Action Authorization Gate retorna REJECT e exit code não-zero.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":null,"claim_scope":"Governança operacional","evidence":[]
     },
     {
-      "scenario_id": "SCN-REGRESSION-002",
-      "version": 1,
-      "class": "regression",
-      "type": "simulated",
-      "risk": "critical",
-      "status": "passed",
-      "preconditions": [
-        "CS016B in_progress or accepted",
-        "Action Authorization self-test available"
-      ],
-      "steps": [
-        "Construir fixture explícito EV-00 not_started com todos os amendments aceitos e exigir prepare_stage_changeset AUTHORIZED.",
-        "Construir fixture explícito EV-00 in_progress com todos os amendments aceitos e exigir prepare_stage_changeset REJECT.",
-        "No mesmo fixture in_progress exigir start_stage AUTHORIZED."
-      ],
-      "oracle": "O self-test independe do lifecycle real do repositório, preserva as decisões fail-closed corretas para not_started/in_progress e termina ACCEPT.",
-      "expected_failure_class": null,
-      "randomized": false,
-      "seed": null,
-      "generator_version": "explicit-fixture-v1",
-      "claim_scope": "Governança operacional; não qualifica comportamento do runtime.",
-      "evidence": [
-        "docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json"
-      ]
+      "scenario_id":"SCN-REGRESSION-002","version":1,"class":"regression","type":"simulated","risk":"critical","status":"passed",
+      "preconditions":["CS016B in_progress or accepted","Action Authorization self-test available"],
+      "steps":["Construir fixture explícito EV-00 not_started com todos os amendments aceitos e exigir prepare_stage_changeset AUTHORIZED.","Construir fixture explícito EV-00 in_progress com todos os amendments aceitos e exigir prepare_stage_changeset REJECT.","No mesmo fixture in_progress exigir start_stage AUTHORIZED."],
+      "oracle":"O self-test independe do lifecycle real do repositório, preserva as decisões fail-closed corretas para not_started/in_progress e termina ACCEPT.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":"explicit-fixture-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
+      "evidence":["docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json"]
     }
   ]
 }
