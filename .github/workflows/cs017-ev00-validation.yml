@@ -1,0 +1,118 @@
+name: CS017 EV-00 validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-validation:
+    name: CS017 EV-00 evidence validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: EV-00 verifier self-test
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --self-test
+
+      - name: Resolve local evidence package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' >> "$GITHUB_ENV"
+          import json
+          from pathlib import Path
+          pointer = Path('docs/changesets/017/ACTIVE_LOCAL_RUN.json')
+          if not pointer.is_file():
+              raise SystemExit('ACTIVE_LOCAL_RUN.json is missing')
+          data = json.loads(pointer.read_text(encoding='utf-8'))
+          if data.get('schema') != 'neoeng.dlab.ev00-active-local-run.v1':
+              raise SystemExit('ACTIVE_LOCAL_RUN schema mismatch')
+          path = data.get('evidence_path')
+          if not isinstance(path, str) or not path.startswith('docs/changesets/017/evidence/local-windows/'):
+              raise SystemExit('ACTIVE_LOCAL_RUN evidence_path is invalid')
+          candidate = Path(path)
+          if '..' in candidate.parts or not candidate.is_dir():
+              raise SystemExit('ACTIVE_LOCAL_RUN evidence package not found/safe')
+          print(f'EV00_EVIDENCE={candidate.as_posix()}')
+          PY
+
+      - name: Verify exact baseline source identity
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check source
+
+      - name: Verify physical Windows environment identity
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check environment
+
+      - name: Verify fresh isolated build evidence
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check fresh-build
+
+      - name: Verify supported CTest surface
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check ctest
+
+      - name: Verify determinism repeat
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check determinism
+
+      - name: Verify Host SDK boundary
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check host-sdk
+
+      - name: Verify replay rollback surface
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check replay-rollback
+
+      - name: Verify state evidence probe
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check state-evidence
+
+      - name: Verify support bundle probe
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check support-bundle
+
+      - name: Verify historical release gate revalidation
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check release-gate
+
+      - name: Verify complete evidence manifest
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check manifest
+
+      - name: Verify historical CTest comparison
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --repo-root . --check historical-comparison
+
+      - name: Verify CS001-CS015 historical assurance
+        run: >-
+          python3 scripts/ev00/verify_ev00_dlab_evidence.py
+          --evidence "$EV00_EVIDENCE"
+          --repo-root .
+          --historical-result docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json
+          --check historical-assurance
+
+      - name: Verify local terminal PASSED state
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --evidence "$EV00_EVIDENCE" --check terminal
+
+      - name: Verify CS017 has no product behavior change
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="$(python3 - <<'PY'
+          import json
+          print(json.load(open('audit/validation/CS017/VALIDATION_PLAN.json', encoding='utf-8'))['base_sha'])
+          PY
+          )"
+          mapfile -t changed < <(git diff --name-only "$base"...HEAD)
+          for path in "${changed[@]}"; do
+            case "$path" in
+              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml|.github/workflows/cs017-ev00-validation.yml|audit/validation/CS017/*|audit/CURRENT_CHANGESET_VALIDATION.json)
+                ;;
+              *)
+                echo "CS017 unauthorized path: $path" >&2
+                exit 1
+                ;;
+            esac
+          done
+          if git diff --name-only "$base"...HEAD -- src include apps modules tests CMakeLists.txt CMakePresets.json vcpkg.json | grep -q .; then
+            echo 'Product/runtime/build-definition surface changed in baseline-certification ChangeSet.' >&2
+            exit 1
+          fi
+          echo 'CS017 product-behavior scope: PASS'
