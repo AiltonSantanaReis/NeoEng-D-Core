@@ -49,9 +49,15 @@ Após stage entrar `in_progress`, seu ACTION_SCOPE fica byte-imutável em relaç
 
 `.github/workflows/governance-root.yml` usa `pull_request_target`: verifier/root/maximums vêm da base `main`; candidato é apenas dado; nenhum script candidato é executado no job confiável. Portanto uma PR não troca o juiz e usa o juiz novo para autoaprovar a mesma mudança. CS016E é o bootstrap e não alega proteção retroativa; seu fechamento exige proteção externa e validação pós-merge.
 
+A camada D-Lab v1.5 **não reescreve** o verificador aceito por CS016D. `scripts/verify_dlab_governance_v15.py` deve primeiro reexecutar `scripts/verify_dlab_governance.py` e seu self-test no snapshot oficial de governança v1.4 aceito:
+
+`de55e0882c6400a0409b5cf881c6ee796a975cdf`
+
+Somente após essa reexecução integral pode aplicar os novos fixtures e regras de CS016E. Uma falha do verifier 1.4 naquele snapshot bloqueia o verifier 1.5; não pode ser compensada por teste novo.
+
 ### 11.1 Selagem do próprio juiz
 
-Após bootstrap tornam-se steady-state immutable: `.github/workflows/governance-root.yml`, `audit/GOVERNANCE_ROOT_OF_TRUST.json`, `audit/REPOSITORY_PROTECTION_POLICY.json`, `scripts/verify_governance_root.py`, `scripts/verify_github_evidence.py`, `scripts/verify_repository_protection.py` e `scripts/verify_release_attestation.py`. Amendment normal não pode modificá-los. Futuro defeito na própria raiz exige novo bootstrap de root-of-trust com STOP global, documento normativo superior, revisão externa e novo ratchet; a raiz substituída não pode autoaprovar a substituta. Artefatos de amendments já `accepted` também são preservados genericamente pelo trusted verifier.
+Após bootstrap tornam-se steady-state immutable: `.github/workflows/governance-root.yml`, `audit/GOVERNANCE_ROOT_OF_TRUST.json`, `audit/REPOSITORY_PROTECTION_POLICY.json`, `scripts/verify_dlab_governance.py`, `scripts/verify_dlab_governance_v15.py`, `scripts/verify_governance_root.py`, `scripts/verify_github_evidence.py`, `scripts/verify_repository_protection.py` e `scripts/verify_release_attestation.py`. Amendment normal não pode modificá-los. Futuro defeito na própria raiz exige novo bootstrap de root-of-trust com STOP global, documento normativo superior, revisão externa e novo ratchet; a raiz substituída não pode autoaprovar a substituta. Artefatos de amendments já `accepted` também são preservados genericamente pelo trusted verifier.
 
 ## 12. Proteção externa obrigatória
 
