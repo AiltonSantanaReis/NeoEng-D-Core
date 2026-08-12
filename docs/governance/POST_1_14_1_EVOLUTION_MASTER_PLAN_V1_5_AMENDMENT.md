@@ -55,9 +55,13 @@ A camada D-Lab v1.5 **não reescreve** o verificador aceito por CS016D. `scripts
 
 Somente após essa reexecução integral pode aplicar os novos fixtures e regras de CS016E. Uma falha do verifier 1.4 naquele snapshot bloqueia o verifier 1.5; não pode ser compensada por teste novo.
 
-### 11.1 Selagem do próprio juiz
+### 11.1 Selagem do próprio juiz e dos executores de governança
 
-Após bootstrap tornam-se steady-state immutable: `.github/workflows/governance-root.yml`, `audit/GOVERNANCE_ROOT_OF_TRUST.json`, `audit/REPOSITORY_PROTECTION_POLICY.json`, `scripts/verify_dlab_governance.py`, `scripts/verify_dlab_governance_v15.py`, `scripts/verify_governance_root.py`, `scripts/verify_github_evidence.py`, `scripts/verify_repository_protection.py` e `scripts/verify_release_attestation.py`. Amendment normal não pode modificá-los. Futuro defeito na própria raiz exige novo bootstrap de root-of-trust com STOP global, documento normativo superior, revisão externa e novo ratchet; a raiz substituída não pode autoaprovar a substituta. Artefatos de amendments já `accepted` também são preservados genericamente pelo trusted verifier.
+Após bootstrap tornam-se steady-state immutable: `.github/workflows/evolution-governance.yml`, `.github/workflows/governance-root.yml`, `audit/GOVERNANCE_ROOT_OF_TRUST.json`, `audit/REPOSITORY_PROTECTION_POLICY.json`, `scripts/authorize_evolution_action.py`, `scripts/verify_dlab_governance.py`, `scripts/verify_dlab_governance_v15.py`, `scripts/verify_governance_root.py`, `scripts/verify_governance_history.py`, `scripts/verify_github_evidence.py`, `scripts/verify_repository_protection.py` e `scripts/verify_release_attestation.py`. Amendment comum não pode modificá-los. Futuro defeito na própria raiz exige novo bootstrap de root-of-trust com STOP global, documento normativo superior, revisão externa e novo ratchet; a raiz substituída não pode autoaprovar a substituta.
+
+### 11.2 Imutabilidade semântica da história aceita
+
+`scripts/verify_governance_history.py`, executado a partir da base protegida em PRs futuros, exige que toda linha de amendment já `accepted` permaneça exatamente igual à linha da base confiável; verifica também a preservação das regressões aceitas 002/003/004, `fail_closed`, bindings de regressão 001–005 e o registro do conjunto efetivo de verificadores no Source of Truth Index. Uma nova revisão pode acrescentar nova linha/novo amendment, mas não pode reescrever título, documento, deviation record, evidence binding, validation history ou qualquer outro campo de uma linha aceita anterior.
 
 ## 12. Proteção externa obrigatória
 
@@ -69,7 +73,7 @@ Após bootstrap tornam-se steady-state immutable: `.github/workflows/governance-
 
 ## 14. SCN-REGRESSION-005
 
-Deve provar permanentemente: empty paths em writes => REJECT; `allowed_paths=["**"]` => REJECT; forbidden obrigatório removido => REJECT; candidato não escolhe base; scope não muda após start; root/juiz steady-state não pode ser modificado por amendment comum; acceptance chain não pode ser reescrita/truncada; provenance local sem correspondência GitHub não basta; release incompleto => REJECT; stage futuro sem máximo => REJECT.
+Deve provar permanentemente: empty paths em writes => REJECT; `allowed_paths=["**"]` => REJECT; forbidden obrigatório removido => REJECT; candidato não escolhe base; scope não muda após start; root/juiz/workflow/authorizer steady-state não pode ser modificado por amendment comum; linhas aceitas do amendment ledger e acceptance chain não podem ser reescritas/truncadas; regressões aceitas 002/003/004 não podem desaparecer ou perder evidência; provenance local sem correspondência GitHub não basta; release incompleto => REJECT; stage futuro sem máximo => REJECT.
 
 ## 15. Requisitos e invariantes
 

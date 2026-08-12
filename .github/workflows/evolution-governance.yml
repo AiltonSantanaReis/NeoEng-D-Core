@@ -32,6 +32,9 @@ jobs:
       - name: Governance root self-test
         run: python3 scripts/verify_governance_root.py --self-test
 
+      - name: Governance history self-test
+        run: python3 scripts/verify_governance_history.py --self-test
+
       - name: Verify candidate governance root
         shell: bash
         run: |
@@ -50,6 +53,9 @@ jobs:
             HEAD_SHA="$(git rev-parse HEAD)"
           fi
           python3 scripts/verify_governance_root.py --candidate-root . --trusted-root . --base-sha "$BASE" --head-sha "$HEAD_SHA"
+
+      - name: Verify candidate governance history
+        run: python3 scripts/verify_governance_history.py --candidate-root . --trusted-root .
 
       - name: Verify live GitHub governance provenance
         env:

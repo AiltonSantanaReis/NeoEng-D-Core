@@ -15,6 +15,7 @@
   "cryptographic_attestation_required_for_release": true,
   "trusted_root_workflow": ".github/workflows/governance-root.yml",
   "trusted_root_verifier": "scripts/verify_governance_root.py",
+  "trusted_history_verifier": "scripts/verify_governance_history.py",
   "effective_dlab_verifier": "scripts/verify_dlab_governance_v15.py",
   "historical_dlab_verifier": "scripts/verify_dlab_governance.py",
   "live_evidence_verifier": "scripts/verify_github_evidence.py",
@@ -33,7 +34,6 @@
   ],
   "governance_amendment_maximum": {
     "allowed_patterns": [
-      ".github/workflows/evolution-governance.yml",
       "MANIFEST.sha256",
       "audit/DLAB_EXECUTION_POLICY.json",
       "audit/DLAB_SCENARIO_CATALOG.json",
@@ -45,21 +45,21 @@
       "audit/SOURCE_OF_TRUTH_INDEX.json",
       "docs/changesets/016[A-Z]/**",
       "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_*_AMENDMENT.md",
-      "docs/records/evolution/DEV-*.md",
-      "scripts/authorize_evolution_action.py"
+      "docs/records/evolution/DEV-*.md"
     ],
     "mandatory_forbidden_patterns": [
       "src/**","include/**","CMakeLists.txt","cmake/**","tests/**","tools/**","examples/**","modules/**","apps/**","fuzz/**","docs/commercial/**",
       "audit/PRODUCT_CLAIMS_LEDGER.json","audit/RELEASE_ASSURANCE_POLICY.json","audit/FINAL_ACCEPTANCE_POLICY.json",
-      "scripts/verify_evolution_plan.py","scripts/verify_product_contract.py","scripts/verify_product_assurance.py","scripts/verify_release_assurance.py","scripts/verify_final_acceptance.py",
+      ".github/workflows/evolution-governance.yml",".github/workflows/governance-root.yml",
+      "scripts/authorize_evolution_action.py","scripts/verify_evolution_plan.py","scripts/verify_product_contract.py","scripts/verify_product_assurance.py","scripts/verify_release_assurance.py","scripts/verify_final_acceptance.py",
       "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md",
       "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_1_AMENDMENT.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_2_AMENDMENT.md",
       "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_3_AMENDMENT.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_4_AMENDMENT.md",
       "docs/governance/DLAB_VALIDATION_STANDARD.md","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json",
       "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016C.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016D.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json",
       "audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016C.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016D.json",
-      ".github/workflows/governance-root.yml","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/REPOSITORY_PROTECTION_POLICY.json",
-      "scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"
+      "audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/REPOSITORY_PROTECTION_POLICY.json",
+      "scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_governance_history.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"
     ]
   },
   "release_derivation": {
@@ -73,15 +73,15 @@
   "stage_scope_global_mandatory_forbidden_patterns": [
     ".github/workflows/evolution-governance.yml",".github/workflows/governance-root.yml","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/GOVERNANCE_ACCEPTANCE_CHAIN.json",
     "audit/STAGE_SCOPE_MAXIMA.json","audit/REPOSITORY_PROTECTION_POLICY.json","audit/SOURCE_OF_TRUTH_INDEX.json","audit/EVOLUTION_AMENDMENTS.json",
-    "audit/DLAB_EXECUTION_POLICY.json","scripts/authorize_evolution_action.py","scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py",
+    "audit/DLAB_EXECUTION_POLICY.json","scripts/authorize_evolution_action.py","scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_governance_history.py",
     "scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_evolution_plan.py","docs/governance/**","docs/commercial/**",
     "scripts/verify_release_attestation.py"
   ],
   "release_attestation_verifier": "scripts/verify_release_attestation.py",
   "bootstrap_changeset": "CS016E",
   "steady_state_immutable_paths": [
-    ".github/workflows/governance-root.yml","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/REPOSITORY_PROTECTION_POLICY.json",
-    "scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"
+    ".github/workflows/evolution-governance.yml",".github/workflows/governance-root.yml","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/REPOSITORY_PROTECTION_POLICY.json",
+    "scripts/authorize_evolution_action.py","scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_governance_history.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"
   ],
   "bootstrap_governance_amendment_maximum": {
     "allowed_patterns": [
@@ -89,7 +89,7 @@
       "audit/DLAB_SCENARIO_CATALOG.json","audit/EVOLUTION_AMENDMENTS.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_*.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_*.json",
       "audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/GOVERNANCE_ACCEPTANCE_CHAIN.json","audit/STAGE_SCOPE_MAXIMA.json","audit/REPOSITORY_PROTECTION_POLICY.json",
       "audit/SOURCE_OF_TRUTH_INDEX.json","docs/changesets/016[A-Z]/**","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_*_AMENDMENT.md",
-      "docs/records/evolution/DEV-*.md","scripts/authorize_evolution_action.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_github_evidence.py",
+      "docs/records/evolution/DEV-*.md","scripts/authorize_evolution_action.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_governance_history.py","scripts/verify_github_evidence.py",
       "scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"
     ],
     "mandatory_forbidden_patterns": [

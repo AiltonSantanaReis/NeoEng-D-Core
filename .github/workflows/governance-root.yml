@@ -50,6 +50,10 @@ jobs:
             --base-sha "${{ github.event.pull_request.base.sha }}" \
             --head-sha "${{ github.event.pull_request.head.sha }}"
 
+      - name: Verify accepted governance history with trusted base verifier
+        if: github.event_name == 'pull_request_target'
+        run: python3 trusted/scripts/verify_governance_history.py --trusted-root trusted --candidate-root candidate
+
       - name: Verify accepted-history provenance with trusted verifier
         if: github.event_name == 'pull_request_target'
         env:
@@ -74,6 +78,10 @@ jobs:
         if: github.event_name != 'pull_request_target'
         run: python3 scripts/verify_governance_root.py --self-test
 
+      - name: Governance history self-test
+        if: github.event_name != 'pull_request_target'
+        run: python3 scripts/verify_governance_history.py --self-test
+
       - name: Verify main root state
         if: github.event_name != 'pull_request_target'
         shell: bash
@@ -87,6 +95,10 @@ jobs:
           python3 scripts/verify_governance_root.py \
             --candidate-root . --trusted-root . \
             --base-sha "$BASE" --head-sha "$(git rev-parse HEAD)"
+
+      - name: Verify main accepted governance history
+        if: github.event_name != 'pull_request_target'
+        run: python3 scripts/verify_governance_history.py --candidate-root . --trusted-root .
 
       - name: Verify main accepted-history provenance
         if: github.event_name != 'pull_request_target'
