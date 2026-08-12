@@ -82,3 +82,54 @@ Deve provar permanentemente: empty paths em writes => REJECT; `allowed_paths=["*
 ## 16. Limites
 
 CS016E não altera runtime, ABI, comportamento canônico, testes de produto, claims comerciais ou release da v1.14.1. Não promete impossibilidade matemática de toda vulnerabilidade futura; transforma brechas conhecidas em regressões fail-closed e separa autoridade confiável do candidato para reduzir falso PASS silencioso.
+
+## 17. Topologia single-maintainer declarada antes da aceitação
+
+Durante o bootstrap de CS016E, ainda em estado `in_progress`, o mantenedor declarou que `AiltonSantanaReis` será o único mantenedor humano do repositório. Não existe um segundo reviewer humano independente disponível.
+
+Esta declaração não pode ser satisfeita por uma segunda conta controlada pela mesma pessoa. Tal prática seria revisão fictícia e é expressamente proibida.
+
+Por precedência definida em `audit/SOURCE_OF_TRUTH_INDEX.json`, `audit/REPOSITORY_PROTECTION_POLICY.json` controla a configuração efetiva de proteção da `main`. Para o modelo explicitamente declarado `single_maintainer`, a cláusula `>=1 aprovação` da Seção 12 é substituída **somente quanto ao número de aprovações humanas** por `minimum_approvals=0` e `human_review_required=false`.
+
+Todos os demais controles da Seção 12 permanecem obrigatórios ou são fortalecidos.
+
+### 17.1 Controles compensatórios obrigatórios
+
+No modo `single_maintainer`:
+
+- PR continua obrigatório para alteração da `main`;
+- required status checks devem operar em modo strict/up-to-date;
+- cada required check deve estar vinculado ao GitHub App esperado, não apenas ao mesmo nome textual;
+- bypass allowances rotineiros de PR devem permanecer vazios;
+- proteção deve alcançar administradores;
+- force push permanece desabilitado;
+- deletion permanece desabilitada;
+- um required approval count diferente de zero é `REJECT`, pois é incompatível com a topologia declarada e criaria incentivo a revisão fictícia;
+- a ausência de reviewer humano deve ser declarada como limitação e nunca descrita como “independent review”.
+
+### 17.2 Aceitação em duas fases torna-se obrigatória
+
+A inexistência de segundo reviewer não transforma o bootstrap merge em aceitação.
+
+CS016E somente pode fechar após:
+
+1. candidate head exato passar todos os gates internos e `verify_repository_protection.py`;
+2. bootstrap merge real na `main` protegida;
+3. `Trusted governance root gate` ser adicionado aos required checks imediatamente após o merge;
+4. post-merge run real da `main` concluir `success`;
+5. novo PR separado de closure ser criado a partir da `main` pós-bootstrap;
+6. esse PR de closure ser avaliado pelo trusted verifier proveniente da `main` protegida, nunca pelo verifier candidato;
+7. SHAs/runs/PR/merge/post-merge reais serem ligados à acceptance chain;
+8. somente então CS016E poder ser marcado `accepted`.
+
+### 17.3 Substituição futura da própria root
+
+Modo single-maintainer não concede poder para a root aprovar a própria substituição.
+
+Se no futuro um defeito exigir substituir workflow/verificadores root-critical, a operação permanece `BLOCKED` enquanto não existir autoridade externa independente capaz de revisar o novo bootstrap. Essa indisponibilidade é um bloqueio legítimo, não justificativa para enfraquecer o ratchet.
+
+### 17.4 Evidência da decisão
+
+A decisão operacional e sua análise estão registradas em `docs/changesets/016E/SINGLE_MAINTAINER_DECISION.md` e no update append-only de `DEV-0005`.
+
+Nenhuma aceitação histórica A/B/C/D é alterada por esta seção.
