@@ -40,14 +40,18 @@ def verify(repo: str, token: str, phase: str) -> list[str]:
     errors: list[str] = []
     policy = load_json(ROOT / POLICY)
     branch = str(policy.get("branch", "main"))
-    status, info = api(f"https://api.github.com/repos/{repo}/branches/{branch}", token)
-    if status != 200 or not isinstance(info, dict): return [f"cannot read branch metadata: HTTP {status}"]
-    if info.get("protected") is not True: errors.append(f"branch {branch} is not protected")
 
+    # Least-privilege boundary: do not query GET /branches/{branch} here.
+    # That endpoint requires Contents:read for a fine-grained PAT, while the
+    # protection endpoint below requires only Administration:read and is the
+    # authoritative source for every property this verifier evaluates.
     status, protection = api(f"https://api.github.com/repos/{repo}/branches/{branch}/protection", token)
     if status != 200 or not isinstance(protection, dict):
-        errors.append(f"cannot verify detailed branch protection: HTTP {status}")
+        detail = protection.get("message") if isinstance(protection, dict) else None
+        suffix = f" ({detail})" if isinstance(detail, str) and detail else ""
+        errors.append(f"cannot verify detailed branch protection: HTTP {status}{suffix}")
         return errors
+
     if protection.get("allow_force_pushes", {}).get("enabled") is True: errors.append("force pushes are enabled")
     if protection.get("allow_deletions", {}).get("enabled") is True: errors.append("branch deletion is enabled")
     reviews = protection.get("required_pull_request_reviews")
