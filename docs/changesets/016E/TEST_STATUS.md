@@ -23,9 +23,35 @@ Passaram antes da falha:
 - Governance root self-test;
 - Verify candidate governance root.
 
-A execução foi interrompida em `Verify live GitHub governance provenance` com `PR #23/#24/#25/#26: merge SHA mismatch`. A consulta independente do PR #23 e a acceptance chain apontam o mesmo merge SHA esperado, portanto a falha permanece aberta como problema de observabilidade/semântica da resposta vista dentro do Actions. A checagem de merge SHA **não foi removida nem relaxada**; o verificador seguinte apenas expõe `expected` e `actual` para causa raiz reproduzível.
+A execução foi interrompida em `Verify live GitHub governance provenance` com `PR #23/#24/#25/#26: merge SHA mismatch`. A checagem de merge SHA não foi removida nem relaxada.
 
-D-Lab, evolution verifier, produto, manifest e proteção não foram executados nesse run por causa do fail-fast. O artifact de diagnóstico do workflow foi preservado pelo GitHub Actions.
+### Diagnostic run 31625568909 — failure
+
+O diagnóstico expôs que a resposta obtida dentro do GitHub Actions fornecia `merge_commit_sha=null` para os PRs históricos #23–#26. Isso não foi tratado como sucesso. O verificador foi endurecido para, na ausência desse campo, exigir simultaneamente:
+
+- resolução exata do merge commit esperado pela API;
+- presença do accepted-state head como parent do merge commit;
+- associação oficial do commit esperado ao PR correto via `/commits/{sha}/pulls`;
+- PR fechado/merged e base `main`.
+
+### Hardened provenance run 31625679559 — failure posterior
+
+Head validado: `13663a2267f994a9031e4e1124dac88c7541d812`.
+
+Passaram:
+
+- D-Lab action authorization self-test;
+- Governance root self-test;
+- Verify candidate governance root;
+- **Verify live GitHub governance provenance**.
+
+A execução então falhou em `D-Lab governance self-test` com:
+
+`lifecycle fixture: in_progress start_stage was not AUTHORIZED`
+
+Causa: o verificador CS016D aceito modelava lifecycle sintético sem ACTION_SCOPE porque o authorizer anterior não exigia scope em `start_stage`; o authorizer endurecido de CS016E passou corretamente a exigir um scope válido. O teste histórico não será enfraquecido nem reescrito. CS016E adiciona `verify_dlab_governance_v15.py`, que primeiro reexecuta integralmente o verificador/self-test CS016D no snapshot aceito `de55e0882c6400a0409b5cf881c6ee796a975cdf` e, só depois, executa fixtures v1.5 explícitos com ACTION_SCOPE válido.
+
+D-Lab corrente, evolution verifier, produto, manifest e proteção não foram executados após essa falha por fail-fast.
 
 ## Evidência ainda ausente
 
