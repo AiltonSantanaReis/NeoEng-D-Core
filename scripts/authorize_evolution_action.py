@@ -5,6 +5,7 @@ import argparse
 import copy
 import fnmatch
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -63,8 +64,29 @@ def required_amendments_for_stage(
     ]
 
 
+def normalize_repository_path(path: str) -> str | None:
+    """Canonicalize one concrete repository-relative path, fail-closed."""
+    if not isinstance(path, str) or not path:
+        return None
+    normalized = path.replace("\\", "/")
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    if not normalized:
+        return None
+    if normalized.startswith("/") or normalized.startswith("//"):
+        return None
+    if re.match(r"^[A-Za-z]:/", normalized):
+        return None
+    parts = normalized.split("/")
+    if any(part in {"", ".", ".."} for part in parts):
+        return None
+    return normalized
+
+
 def path_allowed(path: str, allowed: list[str], forbidden: list[str]) -> bool:
-    normalized = path.replace("\\", "/").lstrip("./")
+    normalized = normalize_repository_path(path)
+    if normalized is None:
+        return False
     if any(fnmatch.fnmatch(normalized, pat) for pat in forbidden):
         return False
     return any(fnmatch.fnmatch(normalized, pat) for pat in allowed)
@@ -301,34 +323,36 @@ def self_test(root: Path) -> list[str]:
     actual_amendments = load_json(root / AMENDMENTS)
     policy = load_json(root / POLICY)
 
-    scope_a = load_scope(root, "CS016A")
-    if scope_a is None:
-        return ["CS016A ACTION_SCOPE missing"]
-    scope_b = load_scope(root, "CS016B")
-    if scope_b is None:
-        return ["CS016B ACTION_SCOPE missing"]
+    scopes: dict[str, dict[str, Any]] = {}
+    for changeset in ("CS016A", "CS016B", "CS016C"):
+        scope = load_scope(root, changeset)
+        if scope is None:
+            return [f"{changeset} ACTION_SCOPE missing"]
+        scopes[changeset] = scope
 
-    # Every lifecycle state used by a regression is explicit. The live repository
-    # state must never become an implicit precondition of a synthetic self-test.
     roadmap_not_started = copy.deepcopy(actual_roadmap)
     set_stage_status(roadmap_not_started, "EV-00", "not_started")
     roadmap_in_progress = copy.deepcopy(actual_roadmap)
     set_stage_status(roadmap_in_progress, "EV-00", "in_progress")
 
     all_accepted = copy.deepcopy(actual_amendments)
-    set_amendment_status(all_accepted, "CS016A", "accepted")
-    set_amendment_status(all_accepted, "CS016B", "accepted")
+    required_ids = [
+        str(row.get("changeset"))
+        for row in required_amendments_for_stage(all_accepted, "EV-00")
+    ]
+    for changeset in required_ids:
+        set_amendment_status(all_accepted, changeset, "accepted")
 
-    a_in_progress = copy.deepcopy(all_accepted)
-    set_amendment_status(a_in_progress, "CS016A", "in_progress")
-    b_in_progress = copy.deepcopy(all_accepted)
-    set_amendment_status(b_in_progress, "CS016B", "in_progress")
+    staged_amendments: dict[str, dict[str, Any]] = {}
+    for changeset in ("CS016A", "CS016B", "CS016C"):
+        fixture = copy.deepcopy(all_accepted)
+        set_amendment_status(fixture, changeset, "in_progress")
+        staged_amendments[changeset] = fixture
 
-    # Preserve SCN-REGRESSION-001: CS016A not accepted blocks PRE-CS017.
     premature_a = authorize_state(
         root=root,
         roadmap=roadmap_not_started,
-        amendments=a_in_progress,
+        amendments=staged_amendments["CS016A"],
         policy=policy,
         action="preflight",
         changeset="CS017",
@@ -340,40 +364,40 @@ def self_test(root: Path) -> list[str]:
     if not any("CS016A" in r for r in premature_a["reasons"]):
         failures.append("PRE-CS017 rejection did not identify CS016A blocker")
 
-    # New CS016B governance work is authorized only while CS016B is in_progress.
-    gov_b = authorize_state(
-        root=root,
-        roadmap=roadmap_not_started,
-        amendments=b_in_progress,
-        policy=policy,
-        action="governance_amendment",
-        changeset="CS016B",
-        stage=None,
-        paths=["scripts/authorize_evolution_action.py"],
-        scope_override=scope_b,
-    )
-    if not gov_b["authorized"]:
-        failures.append(
-            "valid in-progress CS016B governance amendment was rejected: "
-            + "; ".join(gov_b["reasons"])
+    for changeset in ("CS016A", "CS016B", "CS016C"):
+        gov = authorize_state(
+            root=root,
+            roadmap=roadmap_not_started,
+            amendments=staged_amendments[changeset],
+            policy=policy,
+            action="governance_amendment",
+            changeset=changeset,
+            stage=None,
+            paths=["scripts/authorize_evolution_action.py"],
+            scope_override=scopes[changeset],
         )
+        if not gov["authorized"]:
+            failures.append(
+                f"valid in-progress {changeset} governance amendment was rejected: "
+                + "; ".join(gov["reasons"])
+            )
+        blocked = authorize_state(
+            root=root,
+            roadmap=roadmap_not_started,
+            amendments=staged_amendments[changeset],
+            policy=policy,
+            action="prepare_stage_changeset",
+            changeset="CS017",
+            stage="EV-00",
+            paths=[],
+        )
+        if blocked["authorized"]:
+            failures.append(f"CS017 preparation was authorized before {changeset} acceptance")
+        if not any(changeset in r for r in blocked["reasons"]):
+            failures.append(
+                f"CS017 preparation rejection did not identify {changeset} blocker"
+            )
 
-    premature_b = authorize_state(
-        root=root,
-        roadmap=roadmap_not_started,
-        amendments=b_in_progress,
-        policy=policy,
-        action="prepare_stage_changeset",
-        changeset="CS017",
-        stage="EV-00",
-        paths=[],
-    )
-    if premature_b["authorized"]:
-        failures.append("CS017 preparation was authorized before CS016B acceptance")
-    if not any("CS016B" in r for r in premature_b["reasons"]):
-        failures.append("CS017 preparation rejection did not identify CS016B blocker")
-
-    # Ready-to-prepare fixture: amendments accepted + stage not_started.
     ready = authorize_state(
         root=root,
         roadmap=roadmap_not_started,
@@ -390,8 +414,6 @@ def self_test(root: Path) -> list[str]:
             + "; ".join(ready["reasons"])
         )
 
-    # SCN-REGRESSION-002: once stage is in_progress, preparation must be rejected
-    # while start_stage remains the valid lifecycle action.
     repeated_prepare = authorize_state(
         root=root,
         roadmap=roadmap_in_progress,
@@ -423,27 +445,84 @@ def self_test(root: Path) -> list[str]:
             + "; ".join(start["reasons"])
         )
 
-    closed_b = authorize_state(
+    synthetic_cs017_scope = {
+        "changeset": "CS017",
+        "runtime_change_authorized": False,
+        "allowed_paths": [
+            ".github/workflows/ev00-dlab.yml",
+            "scripts/dlab/**",
+        ],
+        "forbidden_paths": [
+            ".github/workflows/evolution-governance.yml",
+            "src/**",
+            "include/**",
+        ],
+    }
+    for path in (
+        ".github/workflows/ev00-dlab.yml",
+        "./.github/workflows/ev00-dlab.yml",
+        ".github\\workflows\\ev00-dlab.yml",
+    ):
+        decision = authorize_state(
+            root=root,
+            roadmap=roadmap_in_progress,
+            amendments=all_accepted,
+            policy=policy,
+            action="stage_operation",
+            changeset="CS017",
+            stage="EV-00",
+            paths=[path],
+            scope_override=synthetic_cs017_scope,
+        )
+        if not decision["authorized"]:
+            failures.append(
+                f"allowlisted dot-path representation rejected: {path}: "
+                + "; ".join(decision["reasons"])
+            )
+
+    for path in (
+        ".github/workflows/evolution-governance.yml",
+        "../.github/workflows/ev00-dlab.yml",
+        "/tmp/ev00-dlab.yml",
+        "C:/tmp/ev00-dlab.yml",
+        "scripts//dlab/run.py",
+        "scripts/./dlab/run.py",
+    ):
+        decision = authorize_state(
+            root=root,
+            roadmap=roadmap_in_progress,
+            amendments=all_accepted,
+            policy=policy,
+            action="stage_operation",
+            changeset="CS017",
+            stage="EV-00",
+            paths=[path],
+            scope_override=synthetic_cs017_scope,
+        )
+        if decision["authorized"]:
+            failures.append(f"unsafe or forbidden path was authorized: {path}")
+
+    closed_c = authorize_state(
         root=root,
         roadmap=roadmap_not_started,
         amendments=all_accepted,
         policy=policy,
         action="governance_amendment",
-        changeset="CS016B",
+        changeset="CS016C",
         stage=None,
         paths=[],
-        scope_override=scope_b,
+        scope_override=scopes["CS016C"],
     )
-    if closed_b["authorized"]:
-        failures.append("accepted CS016B still authorized governance_amendment work")
+    if closed_c["authorized"]:
+        failures.append("accepted CS016C still authorized governance_amendment work")
 
     unknown = authorize_state(
         root=root,
         roadmap=roadmap_not_started,
-        amendments=b_in_progress,
+        amendments=staged_amendments["CS016C"],
         policy=policy,
         action="invented_action",
-        changeset="CS016B",
+        changeset="CS016C",
         stage=None,
         paths=[],
     )
@@ -453,16 +532,16 @@ def self_test(root: Path) -> list[str]:
     outside = authorize_state(
         root=root,
         roadmap=roadmap_not_started,
-        amendments=b_in_progress,
+        amendments=staged_amendments["CS016C"],
         policy=policy,
         action="governance_amendment",
-        changeset="CS016B",
+        changeset="CS016C",
         stage=None,
         paths=["src/core.cpp"],
-        scope_override=scope_b,
+        scope_override=scopes["CS016C"],
     )
     if outside["authorized"]:
-        failures.append("runtime path was authorized by CS016B")
+        failures.append("runtime path was authorized by CS016C")
 
     return failures
 

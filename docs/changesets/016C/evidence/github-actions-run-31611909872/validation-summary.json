@@ -1,0 +1,78 @@
+{
+  "schema": "neoeng.dcore.cs016c-validation.v1",
+  "changeset": "CS016C",
+  "stage": "EV-00",
+  "source_commit": "2dfa5c0fae6a2639277bf2b6f2917428fbde4383",
+  "source_tree": "e31a4d7615261d5c91910f786e8f85410d800d84",
+  "workflow_run_id": 31611909872,
+  "job_id": 94165076420,
+  "event": "push",
+  "conclusion": "success",
+  "gates": [
+    {
+      "name": "D-Lab action authorization self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "D-Lab governance self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify D-Lab governance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Required evolution amendments gate",
+      "conclusion": "success"
+    },
+    {
+      "name": "Evolution verifier self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify evolution plan",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product contract",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product assurance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify tracked-file manifest",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload governance evidence",
+      "conclusion": "success"
+    }
+  ],
+  "regressions": {
+    "SCN-REGRESSION-001": "passed_by_authorizer_self_test",
+    "SCN-REGRESSION-002": "passed_by_authorizer_self_test",
+    "SCN-REGRESSION-003": "passed_by_authorizer_self_test"
+  },
+  "preserved_governance": {
+    "accepted_v12_control_commit": "855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1",
+    "v12_verifier_reexecuted": "success",
+    "v12_self_test_reexecuted": "success",
+    "protected_files_unchanged": "verified_by_current_dlab_verifier"
+  },
+  "scope": {
+    "runtime_changed": false,
+    "claims_changed": false,
+    "release_authorized": false,
+    "ev00_product_campaign_executed": false
+  },
+  "triggering_blocker": {
+    "cs017_control_commit": "871f4c571f776e599c136ccbd131123003a69a77",
+    "cs017_workflow_run_id": 31598613467,
+    "classification": "governance_path_canonicalization",
+    "product_campaign_executed_after_detection": false,
+    "preserved_by": "docs/records/evolution/DEV-0003.md"
+  },
+  "protected_baseline_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c"
+}

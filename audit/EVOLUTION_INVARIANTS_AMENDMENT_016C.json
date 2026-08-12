@@ -1,0 +1,19 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants-amendment-016c.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016C",
+  "invariants": [
+    {
+      "invariant_id": "INV-EV-029",
+      "status": "active",
+      "statement": "Canonicalização de path para autorização não pode alterar a identidade de componente válido do repositório nem transformar path inválido em path autorizado.",
+      "enforcement": [
+        "scripts/authorize_evolution_action.py --self-test",
+        "SCN-REGRESSION-003",
+        "scripts/verify_dlab_governance.py",
+        ".github/workflows/evolution-governance.yml"
+      ]
+    }
+  ]
+}
