@@ -1,0 +1,18 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants-amendment-016e.v1",
+  "program_id": "POST_1_14_1",
+  "changeset": "CS016E",
+  "invariants": [
+    {"invariant_id":"INV-EV-031","status":"active","statement":"No write-capable action is AUTHORIZED with an empty target-path set.","enforcement":["scripts/authorize_evolution_action.py --self-test","SCN-REGRESSION-005"]},
+    {"invariant_id":"INV-EV-032","status":"active","statement":"A candidate never selects the authoritative base used to enumerate its diff.","enforcement":["scripts/verify_governance_root.py",".github/workflows/governance-root.yml"]},
+    {"invariant_id":"INV-EV-033","status":"active","statement":"ACTION_SCOPE cannot expand the trusted maximum or drop mandatory forbidden patterns.","enforcement":["scripts/authorize_evolution_action.py","scripts/verify_governance_root.py"]},
+    {"invariant_id":"INV-EV-034","status":"active","statement":"An in-progress stage ACTION_SCOPE cannot change after its introduction commit.","enforcement":["scripts/verify_governance_root.py"]},
+    {"invariant_id":"INV-EV-035","status":"active","statement":"Local evidence metadata cannot establish acceptance without matching official GitHub run and PR metadata.","enforcement":["scripts/verify_github_evidence.py"]},
+    {"invariant_id":"INV-EV-036","status":"active","statement":"Historical governance acceptance entries are append-only and hash chained.","enforcement":["audit/GOVERNANCE_ACCEPTANCE_CHAIN.json","scripts/verify_governance_root.py"]},
+    {"invariant_id":"INV-EV-037","status":"active","statement":"A pull request cannot replace the verifier that judges that same pull request, and root-critical judge files are immutable under ordinary post-bootstrap amendments.","enforcement":[".github/workflows/governance-root.yml"]},
+    {"invariant_id":"INV-EV-038","status":"active","statement":"main without externally verified protection is a blocking governance failure.","enforcement":["scripts/verify_repository_protection.py","audit/REPOSITORY_PROTECTION_POLICY.json"]},
+    {"invariant_id":"INV-EV-039","status":"active","statement":"Release authorization is derived from complete accepted stages, exact bindings and release/final verifiers; a boolean alone is insufficient.","enforcement":["scripts/authorize_evolution_action.py"]},
+    {"invariant_id":"INV-EV-040","status":"active","statement":"A future stage with undefined root maximum scope is REJECT by default.","enforcement":["audit/STAGE_SCOPE_MAXIMA.json","scripts/authorize_evolution_action.py"]},
+    {"invariant_id":"INV-EV-041","status":"active","statement":"No runtime, product claim, product test or historical normative document may be modified by CS016E.","enforcement":["docs/changesets/016E/ACTION_SCOPE.json","scripts/verify_governance_root.py"]}
+  ]
+}

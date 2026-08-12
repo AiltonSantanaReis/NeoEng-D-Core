@@ -1,0 +1,15 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v2",
+  "changeset": "CS016E",
+  "stage": null,
+  "state": "in_progress",
+  "control_base_commit": "de55e0882c6400a0409b5cf881c6ee796a975cdf",
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "destructive_operations_authorized": false,
+  "allowed_paths": [".github/workflows/evolution-governance.yml",".github/workflows/governance-root.yml","MANIFEST.sha256","audit/DLAB_EXECUTION_POLICY.json","audit/DLAB_SCENARIO_CATALOG.json","audit/EVOLUTION_AMENDMENTS.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_*.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_*.json","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/GOVERNANCE_ACCEPTANCE_CHAIN.json","audit/STAGE_SCOPE_MAXIMA.json","audit/REPOSITORY_PROTECTION_POLICY.json","audit/SOURCE_OF_TRUTH_INDEX.json","docs/changesets/016[A-Z]/**","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_*_AMENDMENT.md","docs/records/evolution/DEV-*.md","scripts/authorize_evolution_action.py","scripts/verify_governance_root.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_release_attestation.py"],
+  "forbidden_paths": ["src/**","include/**","CMakeLists.txt","cmake/**","tests/**","tools/**","examples/**","modules/**","apps/**","fuzz/**","docs/commercial/**","audit/PRODUCT_CLAIMS_LEDGER.json","audit/RELEASE_ASSURANCE_POLICY.json","audit/FINAL_ACCEPTANCE_POLICY.json","scripts/verify_evolution_plan.py","scripts/verify_product_contract.py","scripts/verify_product_assurance.py","scripts/verify_release_assurance.py","scripts/verify_final_acceptance.py","docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_1_AMENDMENT.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_2_AMENDMENT.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_3_AMENDMENT.md","docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_4_AMENDMENT.md","docs/governance/DLAB_VALIDATION_STANDARD.md","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016C.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016D.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016C.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016D.json"],
+  "root_contract": {"authority":"audit/GOVERNANCE_ROOT_OF_TRUST.json","candidate_control_base_is_non_authoritative":true,"scope_cannot_expand_root_maximum":true,"explicit_paths_required_for_governance_writes":true},
+  "notes": ["This is a governance-only correction. Product runtime, ABI, product tests and public claims are outside scope.","The control_base_commit field is documentary only; trusted verification derives the authoritative base independently.","CS017 R4 is preserved as non-qualifying start-state evidence and must not be resumed after CS016E."]
+}

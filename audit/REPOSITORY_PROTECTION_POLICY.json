@@ -1,0 +1,20 @@
+{
+  "schema": "neoeng.dcore.repository-protection-policy.v1",
+  "branch": "main",
+  "minimum_approvals": 1,
+  "dismiss_stale_reviews": true,
+  "require_enforce_admins": true,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "require_pull_request": true,
+  "bootstrap_required_checks": [
+    "Evolution governance gate"
+  ],
+  "steady_state_required_checks": [
+    "Evolution governance gate",
+    "Trusted governance root gate"
+  ],
+  "bootstrap_rule": "CS016E cannot be considered accepted unless main is externally protected before merge.",
+  "steady_state_rule": "After CS016E merge, Trusted governance root gate must be required before any later ChangeSet can merge.",
+  "no_bypass_policy": "No routine bypass is authorized. Emergency administrative bypass must create a deviation record and invalidate acceptance until independently revalidated."
+}

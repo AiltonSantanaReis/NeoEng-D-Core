@@ -1,0 +1,19 @@
+{
+  "schema": "neoeng.dcore.evolution-requirements-amendment-016e.v1",
+  "program_id": "POST_1_14_1",
+  "changeset": "CS016E",
+  "requirements": [
+    {"requirement_id":"EVREQ-075","title":"Explicit write targets","status":"planned","statement":"Every write-capable governance_amendment or stage_operation authorization requires at least one explicit repository path; an empty write target set is REJECT.","evidence":[]},
+    {"requirement_id":"EVREQ-076","title":"Trusted diff base","status":"planned","statement":"The candidate cannot choose the authoritative diff base. The trusted verifier derives the base from the protected main lineage or an externally supplied PR base SHA.","evidence":[]},
+    {"requirement_id":"EVREQ-077","title":"Non-self-authorizing scope","status":"planned","statement":"ACTION_SCOPE may restrict but cannot expand the root maximum and cannot remove mandatory forbidden patterns.","evidence":[]},
+    {"requirement_id":"EVREQ-078","title":"Scope sealing","status":"planned","statement":"Once a stage is in_progress, its ACTION_SCOPE is byte-sealed to the introduction commit and later mutation is REJECT.","evidence":[]},
+    {"requirement_id":"EVREQ-079","title":"Live GitHub provenance","status":"planned","statement":"Accepted governance evidence must be cross-checked against the official GitHub API for repository, run id, workflow path, exact head SHA, terminal status and success conclusion.","evidence":[]},
+    {"requirement_id":"EVREQ-080","title":"Acceptance chain","status":"planned","statement":"Governance acceptance history is represented by an append-only SHA-256 hash chain containing qualifying source/run, accepted-state source/run, PR, merge commit and post-merge run.","evidence":[]},
+    {"requirement_id":"EVREQ-081","title":"Derived stage advance and release","status":"planned","statement":"advance_stage and release require dependency/closure evidence and exact acceptance bindings; release cannot be authorized by a manually editable boolean alone.","evidence":[]},
+    {"requirement_id":"EVREQ-082","title":"Trusted verifier ratchet","status":"planned","statement":"Future pull requests are evaluated by a pull_request_target workflow and verifier sourced from the protected base branch, never by the candidate copy of the judge; root-critical verifier/workflow identities become steady-state immutable after bootstrap.","evidence":[]},
+    {"requirement_id":"EVREQ-083","title":"External main protection","status":"planned","statement":"main must require pull requests, approvals and required checks, reject force pushes/deletion and enforce administrators before CS016E can close.","evidence":[]},
+    {"requirement_id":"EVREQ-084","title":"Undefined future stage scopes block","status":"planned","statement":"EV-01..EV-20 are fail-closed until a prior accepted governance amendment defines each stage maximum scope.","evidence":[]},
+    {"requirement_id":"EVREQ-085","title":"Permanent governance mutation tests","status":"planned","statement":"SCN-REGRESSION-005 permanently tests empty write targets, scope expansion, forbidden removal, candidate diff-base selection, post-start scope mutation, root weakening, fabricated local provenance and incomplete release closure.","evidence":[]},
+    {"requirement_id":"EVREQ-086","title":"Release attestation boundary","status":"planned","statement":"A release requires cryptographic provenance attestation. When GitHub private-repository attestations are unavailable on the repository plan, release remains blocked until an approved attestation capability is configured; local JSON is not a substitute.","evidence":[]}
+  ]
+}
