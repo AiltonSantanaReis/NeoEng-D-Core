@@ -2,22 +2,110 @@
   "schema": "neoeng.dlab.execution-policy.v1",
   "program_id": "POST_1_14_1",
   "fail_closed": true,
-  "terminal_run_states": ["PASSED", "FAILED", "BLOCKED", "ABORTED"],
-  "action_types": ["governance_amendment", "preflight", "prepare_stage_changeset", "start_stage", "stage_operation", "advance_stage", "release"],
+  "terminal_run_states": [
+    "PASSED",
+    "FAILED",
+    "BLOCKED",
+    "ABORTED"
+  ],
+  "action_types": [
+    "governance_amendment",
+    "preflight",
+    "prepare_stage_changeset",
+    "start_stage",
+    "stage_operation",
+    "advance_stage",
+    "release"
+  ],
   "requirements": {
-    "all_actions": ["source_of_truth_present", "roadmap_present", "amendment_ledger_present", "governance_root_of_trust_present", "stage_scope_maxima_present", "governance_acceptance_chain_present"],
-    "stage_actions": ["required_amendments_accepted", "current_stage_matches", "planned_changeset_matches"],
-    "governance_amendment": ["explicit_nonempty_paths", "action_scope_present", "action_scope_within_root_maximum", "actual_diff_within_root_maximum"],
-    "stage_operation": ["stage_status_in_progress", "explicit_nonempty_paths", "action_scope_present", "action_scope_within_root_maximum", "paths_within_allowlist", "actual_diff_uses_trusted_base", "scope_sealed_after_stage_start"],
-    "advance_stage": ["current_stage_accepted", "dependencies_accepted", "exact_accepted_commit_present", "evidence_manifest_present", "decision_record_present"],
-    "release": ["release_authorized_true", "all_stages_accepted", "all_stage_acceptance_bindings_present", "release_assurance_verifier_passed", "final_acceptance_verifier_passed", "cryptographic_attestation_present"]
+    "all_actions": [
+      "source_of_truth_present",
+      "roadmap_present",
+      "amendment_ledger_present",
+      "governance_root_of_trust_present",
+      "stage_scope_maxima_present",
+      "governance_acceptance_chain_present"
+    ],
+    "stage_actions": [
+      "required_amendments_accepted",
+      "current_stage_matches",
+      "planned_changeset_matches"
+    ],
+    "governance_amendment": [
+      "explicit_nonempty_paths",
+      "action_scope_present",
+      "action_scope_within_root_maximum",
+      "actual_diff_within_root_maximum"
+    ],
+    "stage_operation": [
+      "stage_status_in_progress",
+      "explicit_nonempty_paths",
+      "action_scope_present",
+      "action_scope_within_root_maximum",
+      "paths_within_allowlist",
+      "actual_diff_uses_trusted_base",
+      "scope_sealed_after_stage_start"
+    ],
+    "advance_stage": [
+      "current_stage_accepted",
+      "dependencies_accepted",
+      "exact_accepted_commit_present",
+      "evidence_manifest_present",
+      "decision_record_present"
+    ],
+    "release": [
+      "release_authorized_true",
+      "all_stages_accepted",
+      "all_stage_acceptance_bindings_present",
+      "release_assurance_verifier_passed",
+      "final_acceptance_verifier_passed",
+      "cryptographic_attestation_present"
+    ]
   },
-  "default_forbidden_patterns": ["src/**", "include/**"],
-  "destructive_operations_default_denied": ["git reset --hard", "git clean -fdx", "git apply --reject", "force push", "delete terminal evidence"],
-  "anti_skip_regression": {"scenario_id": "SCN-REGRESSION-001", "requested_action": "prepare_stage_changeset", "stage": "EV-00", "changeset": "CS017", "expected_while_cs016a_not_accepted": "REJECT"},
-  "lifecycle_selftest_regression": {"scenario_id": "SCN-REGRESSION-002", "not_started_prepare_expected": "AUTHORIZED", "in_progress_prepare_expected": "REJECT", "in_progress_start_expected": "AUTHORIZED", "fixture_state_source": "explicit"},
-  "path_canonicalization_regression": {"scenario_id": "SCN-REGRESSION-003", "allowlisted_dotpath_expected": "AUTHORIZED", "literal_dot_slash_prefix_equivalent": true, "dot_component_preserved": true, "forbidden_path_expected": "REJECT", "absolute_path_expected": "REJECT", "traversal_path_expected": "REJECT", "ambiguous_component_expected": "REJECT"},
-  "verifier_lifecycle_scope_regression": {"scenario_id": "SCN-REGRESSION-004", "accepted_v13_snapshot_replay_expected": "ACCEPT", "authorized_roadmap_lifecycle_change_expected": "ACCEPT", "in_progress_reprepare_expected": "REJECT", "in_progress_start_expected": "AUTHORIZED", "immutable_accepted_artifact_tamper_expected": "REJECT", "release_authorized_expected": false},
+  "default_forbidden_patterns": [
+    "src/**",
+    "include/**"
+  ],
+  "destructive_operations_default_denied": [
+    "git reset --hard",
+    "git clean -fdx",
+    "git apply --reject",
+    "force push",
+    "delete terminal evidence"
+  ],
+  "anti_skip_regression": {
+    "scenario_id": "SCN-REGRESSION-001",
+    "requested_action": "prepare_stage_changeset",
+    "stage": "EV-00",
+    "changeset": "CS017",
+    "expected_while_cs016a_not_accepted": "REJECT"
+  },
+  "lifecycle_selftest_regression": {
+    "scenario_id": "SCN-REGRESSION-002",
+    "not_started_prepare_expected": "AUTHORIZED",
+    "in_progress_prepare_expected": "REJECT",
+    "in_progress_start_expected": "AUTHORIZED",
+    "fixture_state_source": "explicit"
+  },
+  "path_canonicalization_regression": {
+    "scenario_id": "SCN-REGRESSION-003",
+    "allowlisted_dotpath_expected": "AUTHORIZED",
+    "literal_dot_slash_prefix_equivalent": true,
+    "dot_component_preserved": true,
+    "forbidden_path_expected": "REJECT",
+    "absolute_path_expected": "REJECT",
+    "traversal_path_expected": "REJECT",
+    "ambiguous_component_expected": "REJECT"
+  },
+  "verifier_lifecycle_scope_regression": {
+    "scenario_id": "SCN-REGRESSION-004",
+    "accepted_v13_snapshot_replay_expected": "ACCEPT",
+    "authorized_roadmap_lifecycle_change_expected": "ACCEPT",
+    "in_progress_reprepare_expected": "REJECT",
+    "in_progress_start_expected": "AUTHORIZED",
+    "immutable_accepted_artifact_tamper_expected": "REJECT",
+    "release_authorized_expected": false
+  },
   "root_of_trust_regression": {
     "scenario_id": "SCN-REGRESSION-005",
     "empty_stage_operation_paths_expected": "REJECT",
