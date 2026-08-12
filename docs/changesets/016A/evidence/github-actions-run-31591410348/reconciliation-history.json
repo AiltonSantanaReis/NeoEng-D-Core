@@ -1,0 +1,23 @@
+{
+  "schema": "neoeng.dcore.cs016a-manifest-reconciliation.v1",
+  "initial_candidate_commit": "b18215c61e5e786dfaf4b4e2868779ea02bfa1ae",
+  "initial_run_id": 31591359623,
+  "initial_run_conclusion": "failure",
+  "initial_gate_results": {
+    "dlab_authorizer_self_test": "success",
+    "dlab_governance_self_test": "success",
+    "dlab_governance_verify": "success",
+    "anti_skip_gate": "success",
+    "evolution_self_test": "success",
+    "evolution_verify": "success",
+    "product_contract": "success",
+    "product_assurance": "success",
+    "tracked_file_manifest": "failure"
+  },
+  "controlled_manifest_reconciliation": "success",
+  "reconciled_manifest_commit": "0541efcc1ad490ee2517e0732ca99cd11b0f60c8",
+  "independent_validation_commit": "eaa37e84d6e5a32830b01177ee0531b260ea97b5",
+  "independent_validation_run_id": 31591410348,
+  "independent_validation_conclusion": "success",
+  "interpretation": "The initial failure is preserved and was limited to the intentionally stale tracked-file manifest. The reconciled tree was then validated independently on a new commit and passed every mandatory gate."
+}

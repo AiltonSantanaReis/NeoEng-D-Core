@@ -1,0 +1,23 @@
+{
+  "schema": "neoeng.dcore.evolution-amendment-evidence-manifest.v1",
+  "source_commit": "eaa37e84d6e5a32830b01177ee0531b260ea97b5",
+  "hash_mode": "lf-normalized-text",
+  "files": [
+    {
+      "path": "docs/changesets/016A/evidence/github-actions-run-31591410348/run-identity.txt",
+      "sha256": "bde52a9d2b80c5a343e42e228d422a0a82ccb9de82ac075159d8547a03f4b130"
+    },
+    {
+      "path": "docs/changesets/016A/evidence/github-actions-run-31591410348/validation-summary.json",
+      "sha256": "b5316dc7c69b6078a4991c4d925b15f599d439c4074cc0db1e88ecb49aa00141"
+    },
+    {
+      "path": "docs/changesets/016A/evidence/github-actions-run-31591410348/workflow-artifact.json",
+      "sha256": "6e6961b40f746b2ad43a2387cc96b7ac3faf41b0ef0de93273a4c4f85d34222d"
+    },
+    {
+      "path": "docs/changesets/016A/evidence/github-actions-run-31591410348/reconciliation-history.json",
+      "sha256": "3d20647397d98af6d706452b80bd38a6238a223133522e804e671bf8ad467930"
+    }
+  ]
+}

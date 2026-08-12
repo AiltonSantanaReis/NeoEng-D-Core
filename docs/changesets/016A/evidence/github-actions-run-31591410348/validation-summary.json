@@ -1,0 +1,57 @@
+{
+  "schema": "neoeng.dcore.cs016a-validation.v1",
+  "source_commit": "eaa37e84d6e5a32830b01177ee0531b260ea97b5",
+  "run_id": 31591410348,
+  "job_id": 94097010987,
+  "event": "push",
+  "conclusion": "success",
+  "gates": [
+    {
+      "name": "D-Lab action authorization self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "D-Lab governance self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify D-Lab governance",
+      "conclusion": "success"
+    },
+    {
+      "name": "CS016A authorization-state gate",
+      "conclusion": "success",
+      "assertion": "PRE-CS017 rejected while CS016A was in_progress"
+    },
+    {
+      "name": "Evolution verifier self-test",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify evolution plan",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product contract",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify product assurance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify tracked-file manifest",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload governance evidence",
+      "conclusion": "success"
+    }
+  ],
+  "limits": [
+    "This run validates CS016A governance only.",
+    "EV-00 remains not_started.",
+    "CS017 is not started by this evidence.",
+    "No runtime, ABI, replay, rollback, snapshot, canonical semantics, public claim or release is qualified by CS016A."
+  ]
+}

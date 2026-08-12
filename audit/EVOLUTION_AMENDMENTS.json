@@ -13,12 +13,12 @@
     {
       "changeset": "CS016A",
       "title": "D-Lab v2 governance, historical revalidation, scenario corpus and execution authorization",
-      "status": "in_progress",
+      "status": "accepted",
       "required_before_stage": "EV-00",
       "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_1_AMENDMENT.md",
       "deviation_record": "docs/records/evolution/DEV-0001.md",
-      "accepted_source_commit": null,
-      "evidence_manifest": null
+      "accepted_source_commit": "eaa37e84d6e5a32830b01177ee0531b260ea97b5",
+      "evidence_manifest": "docs/changesets/016A/evidence/EVIDENCE_MANIFEST.json"
     }
   ]
 }
