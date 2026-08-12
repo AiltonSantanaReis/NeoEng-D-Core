@@ -57,12 +57,12 @@
     {
       "changeset": "CS016D",
       "title": "D-Lab verifier lifecycle-scope correction",
-      "status": "in_progress",
+      "status": "accepted",
       "required_before_stage": "EV-00",
       "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_4_AMENDMENT.md",
       "deviation_record": "docs/records/evolution/DEV-0004.md",
-      "accepted_source_commit": null,
-      "evidence_manifest": null,
+      "accepted_source_commit": "3831d1080059811fe3f7e906607ef8c60917dae0",
+      "evidence_manifest": "docs/changesets/016D/evidence/EVIDENCE_MANIFEST_ACCEPTED.json",
       "validation_history": [
         {
           "source_commit": "5c5f328afc919527775742c702e3d1a47c1490c9",
@@ -70,6 +70,19 @@
           "state": "cs017_r3_start_attempt",
           "conclusion": "failure",
           "reason": "D-Lab verifier permanently byte-froze lifecycle-mutable audit/EVOLUTION_ROADMAP.json against the CS016C control snapshot"
+        },
+        {
+          "source_commit": "ea00032b92178cbb5aff64ae3a92e1d719a21e35",
+          "run_id": 31615355668,
+          "state": "candidate_pre_manifest_reconciliation",
+          "conclusion": "failure",
+          "reason": "tracked-file manifest not yet reconciled; all logical governance/product gates passed"
+        },
+        {
+          "source_commit": "3831d1080059811fe3f7e906607ef8c60917dae0",
+          "run_id": 31615538151,
+          "state": "qualifying_candidate",
+          "conclusion": "success"
         }
       ]
     }

@@ -2,7 +2,7 @@
   "schema": "neoeng.dcore.changeset-action-scope.v1",
   "changeset": "CS016D",
   "stage": "EV-00",
-  "state": "in_progress",
+  "state": "accepted",
   "control_base_commit": "7393b32d2be3fd2e65eab6a738a0066c13848f6c",
   "triggering_cs017_attempt": {
     "branch": "agent/cs017-ev00-baseline-certification-r3",
@@ -66,6 +66,6 @@
     "CS016D corrects D-Lab verifier lifecycle scope only; it does not authorize EV-00 product execution.",
     "Plans 1.0/1.1/1.2/1.3 and D-Lab Standard remain immutable inputs.",
     "The failed CS017 R3 branch remains blocker evidence and is not reused after CS016D acceptance.",
-    "Operational roadmap/requirement state is not modified by CS016D."
+    "Acceptance still requires PR CI, merge and post-merge main CI before CS017 is rebuilt."
   ]
 }
