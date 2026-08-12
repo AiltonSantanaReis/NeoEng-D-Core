@@ -1,0 +1,50 @@
+{
+  "schema": "neoeng.dcore.evolution-invariants-amendment-016a.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016A",
+  "invariants": [
+    {
+      "invariant_id": "INV-EV-021",
+      "statement": "Laboratório nunca modifica o source-under-test de um run qualificante.",
+      "status": "active",
+      "enforcement": "Workspace isolation, dirty-tree checks e comparação pré/pós."
+    },
+    {
+      "invariant_id": "INV-EV-022",
+      "statement": "Revalidação histórica nunca reescreve decisão ou evidência histórica; novos achados são append-only.",
+      "status": "active",
+      "enforcement": "Historical matrix, findings e Git history."
+    },
+    {
+      "invariant_id": "INV-EV-023",
+      "statement": "Simulação não promove claim físico ou de ambiente não executado.",
+      "status": "active",
+      "enforcement": "Scenario type e claims scope verifier."
+    },
+    {
+      "invariant_id": "INV-EV-024",
+      "statement": "Toda tentativa de campanha possui identidade prévia e exatamente um estado terminal.",
+      "status": "active",
+      "enforcement": "Run schema e terminal-state verifier."
+    },
+    {
+      "invariant_id": "INV-EV-025",
+      "statement": "Evidência qualificante identifica product SHA, harness SHA, configuração e ambiente.",
+      "status": "active",
+      "enforcement": "Run identity e evidence manifest."
+    },
+    {
+      "invariant_id": "INV-EV-026",
+      "statement": "Evidência bruta de run terminal permanece imutável; correção gera novo run/registro.",
+      "status": "active",
+      "enforcement": "Append-only evidence policy e manifests."
+    },
+    {
+      "invariant_id": "INV-EV-027",
+      "statement": "Nenhuma ação operacional evolutiva ocorre sem autorização fail-closed compatível com stage, ChangeSet e amendments.",
+      "status": "active",
+      "enforcement": "authorize_evolution_action.py e self-tests."
+    }
+  ]
+}
