@@ -62,3 +62,37 @@ jobs:
           name: evolution-governance-${{ github.sha }}
           path: ${{ runner.temp }}/evolution-governance
           if-no-files-found: error
+
+  reconcile-manifest:
+    name: Controlled manifest reconciliation
+    if: >-
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/agent/') &&
+      github.event.head_commit.message == 'governance: reconcile tracked manifest'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate tracked-file manifest
+        shell: bash
+        run: python3 scripts/generate_manifest.py
+
+      - name: Commit manifest only when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- MANIFEST.sha256; then
+            echo "MANIFEST.sha256 already reconciled"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add MANIFEST.sha256
+          git diff --cached --name-only | grep -Fxq MANIFEST.sha256
+          test "$(git diff --cached --name-only | wc -l)" -eq 1
+          git commit -m "governance: reconcile tracked-file manifest"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
