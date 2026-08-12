@@ -1,0 +1,104 @@
+name: CS017 EV-00 harness preflight (NON-QUALIFYING)
+
+on:
+  push:
+    branches:
+      - agent/cs017-ev00-baseline-certification-r5
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-harness-static:
+    name: NON-QUALIFYING Windows harness static checks
+    runs-on: windows-latest
+    steps:
+      - name: Checkout preparation branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Parse PowerShell harness
+        shell: pwsh
+        run: |
+          $tokens = $null
+          $parseErrors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path 'scripts/ev00/run_ev00_dlab_windows.ps1'),
+            [ref]$tokens,
+            [ref]$parseErrors
+          )
+          if ($parseErrors.Count -ne 0) {
+            $parseErrors | Format-List | Out-String | Write-Error
+            exit 1
+          }
+          Write-Host 'PowerShell parser: PASS'
+      - name: Verify local-only qualification guardrails
+        shell: pwsh
+        run: |
+          $text = Get-Content 'scripts/ev00/run_ev00_dlab_windows.ps1' -Raw
+          $required = @(
+            "[ValidateSet('Preflight','Qualify')]",
+            "EV-00 qualifying laboratory requires physical Windows",
+            "PowerShell 7+",
+            "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+            "`$EvidenceRoot = Join-Path `$RunRoot 'evidence'",
+            "preexisting_build_used = `$false",
+            "Write-EvidenceManifest `$EvidenceRoot",
+            "No result is accepted until the independent verifier and Trusted ChangeSet validation gate pass"
+          )
+          foreach ($needle in $required) {
+            if (-not $text.Contains($needle)) {
+              Write-Error "Missing guardrail token: $needle"
+              exit 1
+            }
+          }
+          Write-Host 'Local-only qualification guardrails: PASS'
+
+  verifier-selftest:
+    name: NON-QUALIFYING EV-00 verifier self-test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout preparation branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Python syntax
+        run: python3 -m py_compile scripts/ev00/verify_ev00_dlab_evidence.py
+      - name: Negative self-test
+        run: python3 scripts/ev00/verify_ev00_dlab_evidence.py --self-test
+
+  preparation-scope:
+    name: NON-QUALIFYING preparation scope check
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout preparation branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject product/runtime changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='d092ac56290d76dddf51982549a98234f038f3ee'
+          mapfile -t changed < <(git diff --name-only "$base"...HEAD)
+          printf 'Preparation paths:\n'
+          printf '  %s\n' "${changed[@]}"
+          for path in "${changed[@]}"; do
+            case "$path" in
+              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml)
+                ;;
+              *)
+                echo "Unexpected preparation path: $path" >&2
+                exit 1
+                ;;
+            esac
+          done
+          if git diff --name-only "$base"...HEAD -- src include CMakeLists.txt CMakePresets.json modules tests apps | grep -q .; then
+            echo 'Product/runtime/build surface changed during EV-00 preparation.' >&2
+            exit 1
+          fi
+          echo 'Preparation scope: PASS'
