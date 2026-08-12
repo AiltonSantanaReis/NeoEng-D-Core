@@ -1,0 +1,61 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000A",
+  "plan_commit": "639d56f288291b88cc350e8041eb8766d4a0feba",
+  "plan_sha256": "0e25f7b5542b3798550f5b8f1a6b3c0d354d836ac45f48b5a752bf91511fc2c1",
+  "source_sha": "639d56f288291b88cc350e8041eb8766d4a0feba",
+  "run_id": 31648282686,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000a-legacy-retirement-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "legacy.manual-only",
+      "status": "PASS",
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify legacy workflows are manual-only"
+    },
+    {
+      "test_id": "legacy.body-preserved",
+      "status": "PASS",
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify legacy workflow bodies are preserved"
+    },
+    {
+      "test_id": "scope.administrative-only",
+      "status": "PASS",
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify administrative-only scope"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "run_id": 31648282646,
+      "run_attempt": 1,
+      "event": "pull_request",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "source_sha": "639d56f288291b88cc350e8041eb8766d4a0feba",
+      "result": "FAIL",
+      "reason": "Expected pre-closure failure: CURRENT_CHANGESET_VALIDATION still referenced CS000 whose base SHA differs from PR #30 base."
+    },
+    {
+      "run_id": 31648282700,
+      "run_attempt": 1,
+      "event": "pull_request_target",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "source_sha": "639d56f288291b88cc350e8041eb8766d4a0feba",
+      "result": "FAIL",
+      "reason": "Expected pre-closure trusted-gate rejection while the active descriptor still referenced CS000 instead of CS000A."
+    },
+    {
+      "run_id": 31648282707,
+      "run_attempt": 1,
+      "event": "pull_request_target",
+      "workflow_path": ".github/workflows/governance-root.yml",
+      "source_sha": "639d56f288291b88cc350e8041eb8766d4a0feba",
+      "result": "FAIL",
+      "reason": "Preserved legacy CS016 Trusted Root rejection during its final automatic PR trigger; it is not an authority in the new regime."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000A",
+  "objective": "Retire automatic triggers from the historical CS016 Evolution governance and Trusted governance root workflows while preserving their workflow bodies and keeping all product/runtime/ABI, EV-00, and release state unchanged.",
+  "base_sha": "c7c608ba04edb74303a971bdcdf4ca60d1b44119",
+  "execution_workflow": ".github/workflows/cs000a-legacy-retirement-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "legacy.manual-only",
+      "required": true,
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify legacy workflows are manual-only"
+    },
+    {
+      "test_id": "legacy.body-preserved",
+      "required": true,
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify legacy workflow bodies are preserved"
+    },
+    {
+      "test_id": "scope.administrative-only",
+      "required": true,
+      "evidence_job": "CS000A legacy retirement validation",
+      "evidence_step": "Verify administrative-only scope"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000a-legacy-retirement-validation.yml",
+    ".github/workflows/evolution-governance.yml",
+    ".github/workflows/governance-root.yml"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
