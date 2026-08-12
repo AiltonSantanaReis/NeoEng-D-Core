@@ -1,0 +1,112 @@
+name: ChangeSet validation
+
+on:
+  pull_request:
+  pull_request_target:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+jobs:
+  candidate-diagnostic:
+    if: github.event_name == 'pull_request'
+    name: Candidate ChangeSet diagnostic
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verifier self-test
+        run: python3 scripts/verify_changeset_validation.py --self-test
+      - name: Validate policy
+        run: python3 scripts/verify_changeset_validation.py --policy-only
+      - name: Validate active descriptor when present
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f audit/CURRENT_CHANGESET_VALIDATION.json ]]; then
+            python3 scripts/verify_changeset_validation.py \
+              --head-sha "${{ github.event.pull_request.head.sha }}" \
+              --expected-base-sha "${{ github.event.pull_request.base.sha }}"
+          else
+            echo "No active ChangeSet descriptor: transition/policy-only candidate."
+          fi
+
+  trusted-pr-gate:
+    if: github.event_name == 'pull_request_target'
+    name: Trusted ChangeSet validation gate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout trusted base
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout candidate as data only
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Trusted verifier self-test
+        run: python3 trusted/scripts/verify_changeset_validation.py --self-test
+      - name: Validate trusted policy
+        run: python3 trusted/scripts/verify_changeset_validation.py --root trusted --policy-only
+      - name: Verify accepted candidate from trusted base
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ ! -f candidate/audit/CURRENT_CHANGESET_VALIDATION.json ]]; then
+            echo "Candidate has no active ChangeSet descriptor." >&2
+            exit 1
+          fi
+          python3 trusted/scripts/verify_changeset_validation.py \
+            --root candidate \
+            --policy ../trusted/audit/CHANGESET_VALIDATION_POLICY.json \
+            --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --expected-base-sha "${{ github.event.pull_request.base.sha }}" \
+            --require-accepted \
+            --github-repo "${{ github.repository }}"
+
+  main-verification:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    name: Main ChangeSet validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact main source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verifier self-test
+        run: python3 scripts/verify_changeset_validation.py --self-test
+      - name: Validate policy
+        run: python3 scripts/verify_changeset_validation.py --policy-only
+      - name: Verify current accepted ChangeSet when descriptor exists
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ -f audit/CURRENT_CHANGESET_VALIDATION.json ]]; then
+            python3 scripts/verify_changeset_validation.py \
+              --head-sha "${{ github.sha }}" \
+              --require-accepted \
+              --github-repo "${{ github.repository }}"
+          else
+            echo "No active ChangeSet descriptor. Policy/verifier integrity checks only."
+          fi

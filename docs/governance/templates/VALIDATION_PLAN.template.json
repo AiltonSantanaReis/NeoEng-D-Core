@@ -1,0 +1,20 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000",
+  "objective": "REPLACE_WITH_OBJECTIVE",
+  "base_sha": "0000000000000000000000000000000000000000",
+  "execution_workflow": ".github/workflows/replace-with-changeset-workflow.yml",
+  "required_tests": [
+    {
+      "test_id": "replace.test.id",
+      "required": true,
+      "evidence_job": "Replace job name",
+      "evidence_step": "Replace step name or null"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/replace-with-changeset-workflow.yml"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
