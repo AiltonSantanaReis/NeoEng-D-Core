@@ -22,7 +22,7 @@ def load_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def api_json(url: str, token: str) -> dict[str, Any]:
+def api_value(url: str, token: str) -> Any:
     req = urllib.request.Request(url, headers={
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {token}",
@@ -31,11 +31,15 @@ def api_json(url: str, token: str) -> dict[str, Any]:
     })
     try:
         with urllib.request.urlopen(req, timeout=20) as r:
-            value = json.load(r)
+            return json.load(r)
     except urllib.error.HTTPError as exc:
         raise ValueError(f"GitHub API HTTP {exc.code} for {url}") from exc
     except urllib.error.URLError as exc:
         raise ValueError(f"GitHub API unavailable for {url}: {exc}") from exc
+
+
+def api_object(url: str, token: str) -> dict[str, Any]:
+    value = api_value(url, token)
     if not isinstance(value, dict):
         raise ValueError(f"GitHub API response is not object: {url}")
     return value
@@ -43,7 +47,7 @@ def api_json(url: str, token: str) -> dict[str, Any]:
 
 def verify_run(repo: str, token: str, run_id: int, expected_sha: str, label: str) -> list[str]:
     errors: list[str] = []
-    run = api_json(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}", token)
+    run = api_object(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}", token)
     if run.get("id") != run_id: errors.append(f"{label}: run id mismatch expected={run_id} actual={run.get('id')!r}")
     if run.get("head_sha") != expected_sha: errors.append(f"{label}: head_sha mismatch expected={expected_sha} actual={run.get('head_sha')!r}")
     if run.get("status") != "completed": errors.append(f"{label}: run not completed actual={run.get('status')!r}")
@@ -56,9 +60,26 @@ def verify_run(repo: str, token: str, run_id: int, expected_sha: str, label: str
     return errors
 
 
+def verify_merge_association(repo: str, token: str, pr_number: int, expected_head: str, expected_merge: str) -> list[str]:
+    errors: list[str] = []
+    commit = api_object(f"https://api.github.com/repos/{repo}/commits/{expected_merge}", token)
+    if commit.get("sha") != expected_merge:
+        errors.append(f"PR #{pr_number}: expected merge commit does not resolve exactly")
+    parents = commit.get("parents")
+    parent_shas = {p.get("sha") for p in parents if isinstance(p, dict) and isinstance(p.get("sha"), str)} if isinstance(parents, list) else set()
+    if expected_head not in parent_shas:
+        errors.append(f"PR #{pr_number}: accepted head is not a parent of expected merge commit")
+    associated = api_value(f"https://api.github.com/repos/{repo}/commits/{expected_merge}/pulls", token)
+    if not isinstance(associated, list):
+        errors.append(f"PR #{pr_number}: associated-pulls response is not a list")
+    elif not any(isinstance(item, dict) and item.get("number") == pr_number and item.get("merged_at") for item in associated):
+        errors.append(f"PR #{pr_number}: expected merge commit is not associated with the merged PR")
+    return errors
+
+
 def verify_pr(repo: str, token: str, pr_number: int, expected_head: str, expected_merge: str) -> list[str]:
     errors: list[str] = []
-    pr = api_json(f"https://api.github.com/repos/{repo}/pulls/{pr_number}", token)
+    pr = api_object(f"https://api.github.com/repos/{repo}/pulls/{pr_number}", token)
     head = pr.get("head")
     actual_head = head.get("sha") if isinstance(head, dict) else None
     actual_merge = pr.get("merge_commit_sha")
@@ -66,12 +87,16 @@ def verify_pr(repo: str, token: str, pr_number: int, expected_head: str, expecte
         errors.append(f"PR #{pr_number}: head SHA mismatch expected={expected_head} actual={actual_head!r}")
     if pr.get("merged") is not True:
         errors.append(f"PR #{pr_number}: not merged actual={pr.get('merged')!r}")
-    if actual_merge != expected_merge:
+    if actual_merge is not None and actual_merge != expected_merge:
         errors.append(f"PR #{pr_number}: merge SHA mismatch expected={expected_merge} actual={actual_merge!r}")
     base = pr.get("base")
     actual_base = base.get("ref") if isinstance(base, dict) else None
     if actual_base != "main":
         errors.append(f"PR #{pr_number}: base is not main actual={actual_base!r}")
+    # Some GITHUB_TOKEN responses omit merge_commit_sha for historical PRs. Omission is never accepted alone:
+    # independently prove that the exact expected merge commit exists, has the accepted head as a parent,
+    # and GitHub associates that exact commit with this merged PR.
+    errors.extend(verify_merge_association(repo, token, pr_number, expected_head, expected_merge))
     return errors
 
 
