@@ -2,16 +2,52 @@
   "schema": "neoeng.dlab.execution-policy.v1",
   "program_id": "POST_1_14_1",
   "fail_closed": true,
-  "terminal_run_states": ["PASSED", "FAILED", "BLOCKED", "ABORTED"],
-  "action_types": ["governance_amendment", "preflight", "prepare_stage_changeset", "start_stage", "stage_operation", "advance_stage", "release"],
+  "terminal_run_states": [
+    "PASSED",
+    "FAILED",
+    "BLOCKED",
+    "ABORTED"
+  ],
+  "action_types": [
+    "governance_amendment",
+    "preflight",
+    "prepare_stage_changeset",
+    "start_stage",
+    "stage_operation",
+    "advance_stage",
+    "release"
+  ],
   "requirements": {
-    "all_actions": ["source_of_truth_present", "roadmap_present", "amendment_ledger_present"],
-    "stage_actions": ["required_amendments_accepted", "current_stage_matches", "planned_changeset_matches"],
-    "stage_operation": ["stage_status_in_progress", "action_scope_present", "paths_within_allowlist"],
-    "release": ["release_authorized_true"]
+    "all_actions": [
+      "source_of_truth_present",
+      "roadmap_present",
+      "amendment_ledger_present"
+    ],
+    "stage_actions": [
+      "required_amendments_accepted",
+      "current_stage_matches",
+      "planned_changeset_matches"
+    ],
+    "stage_operation": [
+      "stage_status_in_progress",
+      "action_scope_present",
+      "paths_within_allowlist"
+    ],
+    "release": [
+      "release_authorized_true"
+    ]
   },
-  "default_forbidden_patterns": ["src/**", "include/**"],
-  "destructive_operations_default_denied": ["git reset --hard", "git clean -fdx", "git apply --reject", "force push", "delete terminal evidence"],
+  "default_forbidden_patterns": [
+    "src/**",
+    "include/**"
+  ],
+  "destructive_operations_default_denied": [
+    "git reset --hard",
+    "git clean -fdx",
+    "git apply --reject",
+    "force push",
+    "delete terminal evidence"
+  ],
   "anti_skip_regression": {
     "scenario_id": "SCN-REGRESSION-001",
     "requested_action": "prepare_stage_changeset",
