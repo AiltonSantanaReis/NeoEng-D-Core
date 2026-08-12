@@ -431,6 +431,13 @@ def copy_fixture(dst: Path) -> None:
         target = dst / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / rel, target)
+    evidence = ROOT / "docs/changesets/016/evidence"
+    if evidence.is_dir():
+        shutil.copytree(
+            evidence,
+            dst / "docs/changesets/016/evidence",
+            dirs_exist_ok=True,
+        )
     (dst / "scripts").mkdir(parents=True, exist_ok=True)
 
 
