@@ -56,11 +56,11 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/verify_github_evidence.py
 
-      - name: D-Lab governance self-test
-        run: python3 scripts/verify_dlab_governance.py --self-test
+      - name: D-Lab governance v1.5 self-test
+        run: python3 scripts/verify_dlab_governance_v15.py --self-test
 
-      - name: Verify D-Lab governance
-        run: python3 scripts/verify_dlab_governance.py
+      - name: Verify D-Lab governance v1.5
+        run: python3 scripts/verify_dlab_governance_v15.py
 
       - name: Required evolution amendments gate
         shell: bash
