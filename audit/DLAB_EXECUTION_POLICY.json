@@ -71,5 +71,14 @@
     "absolute_path_expected": "REJECT",
     "traversal_path_expected": "REJECT",
     "ambiguous_component_expected": "REJECT"
+  },
+  "verifier_lifecycle_scope_regression": {
+    "scenario_id": "SCN-REGRESSION-004",
+    "accepted_v13_snapshot_replay_expected": "ACCEPT",
+    "authorized_roadmap_lifecycle_change_expected": "ACCEPT",
+    "in_progress_reprepare_expected": "REJECT",
+    "in_progress_start_expected": "AUTHORIZED",
+    "immutable_accepted_artifact_tamper_expected": "REJECT",
+    "release_authorized_expected": false
   }
 }

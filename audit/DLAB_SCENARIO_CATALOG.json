@@ -77,6 +77,14 @@
       "oracle":"A canonicalização preserva o componente .github e somente paths relativos canônicos explicitamente allowlisted recebem AUTHORIZED; representações proibidas ou ambíguas recebem REJECT.","expected_failure_class":null,
       "randomized":false,"seed":null,"generator_version":"repository-path-canonicalization-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
       "evidence":["docs/changesets/016C/evidence/github-actions-run-31611909872/validation-summary.json"]
+    },
+    {
+      "scenario_id":"SCN-REGRESSION-004","version":1,"class":"regression","type":"simulated","risk":"critical","status":"passed",
+      "preconditions":["CS016D in_progress or accepted","D-Lab governance verifier available"],
+      "steps":["Reexecutar verifier 1.3 e self-test no snapshot aceito 7393b32d2be3fd2e65eab6a738a0066c13848f6c.","Validar fixture EV-00 not_started e fixture EV-00 in_progress com amendments aceitos.","Em in_progress exigir prepare_stage_changeset REJECT e start_stage AUTHORIZED.","Adulterar em fixture um artefato normativo aceito e exigir rejeição."],
+      "oracle":"O verifier preserva a prova histórica 1.3 e a imutabilidade de artefatos aceitos, mas não rejeita uma transição operacional autorizada apenas porque roadmap/ledgers diferem do snapshot histórico.","expected_failure_class":null,
+      "randomized":false,"seed":null,"generator_version":"lifecycle-aware-verifier-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
+      "evidence":["docs/changesets/016D/evidence/github-actions-run-31615538151/validation-summary.json"]
     }
   ]
 }
