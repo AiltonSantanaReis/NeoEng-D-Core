@@ -1,0 +1,50 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v1",
+  "changeset": "CS016B",
+  "stage": "EV-00",
+  "state": "in_progress",
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "allowed_paths": [
+    "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_2_AMENDMENT.md",
+    "docs/records/evolution/DEV-0002.md",
+    "docs/changesets/016B/**",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json",
+    "audit/DLAB_EXECUTION_POLICY.json",
+    "audit/DLAB_SCENARIO_CATALOG.json",
+    "scripts/authorize_evolution_action.py",
+    "scripts/verify_dlab_governance.py",
+    ".github/workflows/evolution-governance.yml",
+    "MANIFEST.sha256"
+  ],
+  "forbidden_paths": [
+    "src/**",
+    "include/**",
+    "CMakeLists.txt",
+    "cmake/**",
+    "tests/**",
+    "tools/**",
+    "examples/**",
+    "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
+    "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md",
+    "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_1_AMENDMENT.md",
+    "docs/governance/DLAB_VALIDATION_STANDARD.md",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "docs/commercial/**"
+  ],
+  "destructive_operations_authorized": false,
+  "notes": [
+    "CS016B is governance-only and exists because the formal deviation flow blocked CS017.",
+    "Existing Plan 1.0, Amendment 1.1 and D-Lab Standard are read-only.",
+    "No gate may be weakened to make CS016B pass."
+  ]
+}

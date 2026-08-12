@@ -32,37 +32,79 @@ jobs:
       - name: Verify D-Lab governance
         run: python3 scripts/verify_dlab_governance.py
 
-      - name: CS016A authorization-state gate
+      - name: Required evolution amendments gate
         shell: bash
         run: |
-          status="$(python3 - <<'PY'
+          python3 - <<'PY'
           import json
+          import subprocess
+          import sys
           from pathlib import Path
-          doc = json.loads(Path("audit/EVOLUTION_AMENDMENTS.json").read_text(encoding="utf-8"))
-          row = next(item for item in doc["amendments"] if item["changeset"] == "CS016A")
-          print(row["status"])
+
+          roadmap = json.loads(Path("audit/EVOLUTION_ROADMAP.json").read_text(encoding="utf-8"))
+          amendments = json.loads(Path("audit/EVOLUTION_AMENDMENTS.json").read_text(encoding="utf-8"))
+          stage = roadmap["current_stage"]
+          stage_row = next(row for row in roadmap["stages"] if row["stage_id"] == stage)
+          planned = stage_row["planned_changeset"]
+          required = [
+              row for row in amendments["amendments"]
+              if row.get("required_before_stage") == stage
+          ]
+          nonaccepted = [row for row in required if row.get("status") != "accepted"]
+
+          def run(*args, expect_zero):
+              cmd = [sys.executable, "scripts/authorize_evolution_action.py", *args]
+              proc = subprocess.run(cmd, text=True, capture_output=True, check=False)
+              sys.stdout.write(proc.stdout)
+              sys.stderr.write(proc.stderr)
+              if (proc.returncode == 0) != expect_zero:
+                  raise SystemExit(
+                      f"unexpected authorization result rc={proc.returncode}: {' '.join(cmd)}"
+                  )
+              return proc
+
+          print(f"current_stage={stage} status={stage_row['status']} planned={planned}")
+          print("required_amendments=" + ",".join(
+              f"{row['changeset']}:{row['status']}" for row in required
+          ))
+
+          if nonaccepted:
+              executable = [row for row in nonaccepted if row.get("status") == "in_progress"]
+              if len(executable) != 1:
+                  raise SystemExit(
+                      "expected exactly one in_progress required amendment while blocked"
+                  )
+              amendment = executable[0]["changeset"]
+              run("--action", "governance_amendment", "--changeset", amendment, expect_zero=True)
+              blocked = run(
+                  "--action", "prepare_stage_changeset",
+                  "--stage", stage, "--changeset", planned,
+                  expect_zero=False,
+              )
+              if amendment not in (blocked.stdout + blocked.stderr):
+                  raise SystemExit("preparation rejection did not identify current amendment blocker")
+          elif stage_row["status"] == "not_started":
+              run(
+                  "--action", "prepare_stage_changeset",
+                  "--stage", stage, "--changeset", planned,
+                  expect_zero=True,
+              )
+          elif stage_row["status"] == "in_progress":
+              run(
+                  "--action", "prepare_stage_changeset",
+                  "--stage", stage, "--changeset", planned,
+                  expect_zero=False,
+              )
+              run(
+                  "--action", "start_stage",
+                  "--stage", stage, "--changeset", planned,
+                  expect_zero=True,
+              )
+          else:
+              raise SystemExit(
+                  f"unsupported current stage state for governance gate: {stage_row['status']}"
+              )
           PY
-          )"
-          echo "CS016A status=${status}"
-          if [ "${status}" = "in_progress" ]; then
-            python3 scripts/authorize_evolution_action.py \
-              --action governance_amendment \
-              --changeset CS016A
-            if python3 scripts/authorize_evolution_action.py \
-              --action preflight \
-              --stage EV-00 \
-              --changeset CS017; then
-              echo "ERROR: PRE-CS017 was authorized before CS016A acceptance"
-              exit 1
-            else
-              echo "PRE-CS017 correctly rejected while CS016A is in_progress"
-            fi
-          elif [ "${status}" = "accepted" ]; then
-            echo "CS016A is accepted; amendment-work authorization is no longer required"
-          else
-            echo "ERROR: CS016A status ${status} is not an executable governance state"
-            exit 1
-          fi
 
       - name: Evolution verifier self-test
         run: python3 scripts/verify_evolution_plan.py --self-test

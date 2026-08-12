@@ -1,0 +1,22 @@
+{
+  "schema": "neoeng.dcore.evolution-requirements-amendment-016b.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016B",
+  "stage": "EV-00",
+  "requirements": [
+    {
+      "requirement_id": "EVREQ-072",
+      "stage": "EV-00",
+      "statement": "Action Authorization self-tests devem construir fixtures explícitos de lifecycle do stage e provar que preparação é autorizada apenas em not_started após amendments aceitos, enquanto in_progress rejeita nova preparação e autoriza a ação de início correspondente.",
+      "status": "in_progress",
+      "evidence_required": [
+        "authorizer self-test evidence",
+        "SCN-REGRESSION-002",
+        "candidate CI",
+        "accepted-state CI"
+      ],
+      "evidence": []
+    }
+  ]
+}

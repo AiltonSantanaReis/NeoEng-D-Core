@@ -1,0 +1,17 @@
+{
+  "schema": "neoeng.dcore.cs016b-triggering-failure.v1",
+  "classification": "governance_self_test_defect",
+  "source_commit": "bfafa432ad4dc7c402753293da080fc6d920c8ce",
+  "branch": "agent/cs017-ev00-baseline-certification",
+  "workflow_run_id": 31594048822,
+  "job_id": 94105277107,
+  "failing_gate": "D-Lab action authorization self-test",
+  "conclusion": "failure",
+  "failure": "EV-00 preflight remained rejected after simulated amendment acceptance: preflight requires stage status not_started; actual='in_progress'",
+  "artifact_id": 9140281348,
+  "artifact_digest": "sha256:b39c31a632fc8344acfe9aa5c8a2c1f4e24dc0a53360d9220e1ca1777891ee05",
+  "product_source_executed": false,
+  "ev00_qualifying_campaign_started": false,
+  "failure_preserved": true,
+  "reclassification_allowed": false
+}

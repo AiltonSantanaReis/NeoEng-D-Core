@@ -54,5 +54,12 @@
     "stage": "EV-00",
     "changeset": "CS017",
     "expected_while_cs016a_not_accepted": "REJECT"
+  },
+  "lifecycle_selftest_regression": {
+    "scenario_id": "SCN-REGRESSION-002",
+    "not_started_prepare_expected": "AUTHORIZED",
+    "in_progress_prepare_expected": "REJECT",
+    "in_progress_start_expected": "AUTHORIZED",
+    "fixture_state_source": "explicit"
   }
 }

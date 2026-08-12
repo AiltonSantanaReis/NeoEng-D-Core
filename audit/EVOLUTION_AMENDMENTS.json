@@ -40,6 +40,25 @@
           "conclusion": "success"
         }
       ]
+    },
+    {
+      "changeset": "CS016B",
+      "title": "Action Authorization lifecycle-independent self-test correction",
+      "status": "in_progress",
+      "required_before_stage": "EV-00",
+      "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_2_AMENDMENT.md",
+      "deviation_record": "docs/records/evolution/DEV-0002.md",
+      "accepted_source_commit": null,
+      "evidence_manifest": null,
+      "validation_history": [
+        {
+          "source_commit": "bfafa432ad4dc7c402753293da080fc6d920c8ce",
+          "run_id": 31594048822,
+          "state": "cs017_start_attempt",
+          "conclusion": "failure",
+          "reason": "authorizer self-test used live EV-00 lifecycle state for a synthetic ready-to-prepare assertion"
+        }
+      ]
     }
   ]
 }
