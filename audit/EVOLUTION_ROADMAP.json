@@ -10,12 +10,12 @@
   },
   "governance_bootstrap": {
     "changeset": "CS016",
-    "status": "in_progress",
-    "accepted_source_commit": null,
-    "evidence_manifest": null
+    "status": "accepted",
+    "accepted_source_commit": "f8884c463cdcf11720f5abc359034c65d8c0c8a9",
+    "evidence_manifest": "docs/changesets/016/evidence/EVIDENCE_MANIFEST.json"
   },
-  "program_state": "locked_pending_bootstrap_acceptance",
-  "current_stage": null,
+  "program_state": "active",
+  "current_stage": "EV-00",
   "release_authorized": false,
   "stage_statuses": [
     "not_started",

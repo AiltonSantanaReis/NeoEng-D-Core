@@ -3,7 +3,7 @@
 Baseline histórica protegida: `v1.14.1`  
 Baseline SHA: `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`  
 Branch de trabalho: `agent/evolution-governance-foundation`  
-State: in_progress
+State: accepted
 
 ## Objetivo
 
@@ -118,3 +118,27 @@ CS016 pode ser aceito somente quando:
 Qualquer divergência entre Markdown, ledgers, ChangeSet, manifesto, SHA ou
 evidência bloqueia CS016. Não é permitido marcar o ChangeSet como aceito por
 inspeção visual ou por resultado parcial.
+
+## Registro de aceitação
+
+O candidato reconciliado no source commit
+`f8884c463cdcf11720f5abc359034c65d8c0c8a9` foi validado pelo workflow
+`Evolution governance` no run `31557764638`, evento `push`, conclusão `success`.
+
+A campanha registrou:
+
+- self-test fail-closed: PASS;
+- evolution plan verifier: PASS;
+- product contract verifier: PASS;
+- product assurance verifier: PASS;
+- `MANIFEST.sha256`: PASS;
+- artifact de evidência: `9126581075`;
+- digest do artifact: `sha256:146493a9c39994510fe00d8313fa21bf28d7c370e127340221c28abd24f0ba65`.
+
+A evidência imutável do ChangeSet está indexada por
+`docs/changesets/016/evidence/EVIDENCE_MANIFEST.json`.
+
+A aceitação ativa o programa de evolução e seleciona `EV-00` como etapa
+corrente administrativa, porém **EV-00 permanece `not_started`**. Nenhuma
+implementação técnica EV-* é inferida, nenhuma release é autorizada e nenhum
+claim do produto é ampliado por CS016.
