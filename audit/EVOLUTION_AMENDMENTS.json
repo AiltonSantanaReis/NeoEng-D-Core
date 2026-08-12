@@ -13,12 +13,12 @@
     {
       "changeset": "CS016A",
       "title": "D-Lab v2 governance, historical revalidation, scenario corpus and execution authorization",
-      "status": "in_progress",
+      "status": "accepted",
       "required_before_stage": "EV-00",
       "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_1_AMENDMENT.md",
       "deviation_record": "docs/records/evolution/DEV-0001.md",
-      "accepted_source_commit": null,
-      "evidence_manifest": null,
+      "accepted_source_commit": "fd7c5d1645a044ff8db8ab60ea1290c1d20137d9",
+      "evidence_manifest": "docs/changesets/016A/evidence/EVIDENCE_MANIFEST_ACCEPTED.json",
       "validation_history": [
         {
           "source_commit": "eaa37e84d6e5a32830b01177ee0531b260ea97b5",
@@ -32,6 +32,12 @@
           "state": "accepted_state_attempt",
           "conclusion": "failure",
           "reason": "action authorizer self-test inherited current accepted state instead of explicit fixtures"
+        },
+        {
+          "source_commit": "fd7c5d1645a044ff8db8ab60ea1290c1d20137d9",
+          "run_id": 31592095622,
+          "state": "corrected_candidate",
+          "conclusion": "success"
         }
       ]
     }
