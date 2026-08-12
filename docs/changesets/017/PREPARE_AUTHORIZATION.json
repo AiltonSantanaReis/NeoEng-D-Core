@@ -1,0 +1,35 @@
+{
+  "schema": "neoeng.dcore.evolution-action-authorization-record.v1",
+  "action": "prepare_stage_changeset",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "evaluated_repository_sha": "855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1",
+  "evaluated_repository_tree": "ece73136a2099a90a635f3748d47fd3e91c8db7c",
+  "workflow_run_id": 31597796536,
+  "workflow_job_id": 94117484428,
+  "authorizer_path": "scripts/authorize_evolution_action.py",
+  "roadmap_path": "audit/EVOLUTION_ROADMAP.json",
+  "roadmap_blob_sha": "55d462754b6671fb4fdb393098bd5f2fcd2d4859",
+  "amendments_path": "audit/EVOLUTION_AMENDMENTS.json",
+  "amendments_blob_sha": "3288f109d5a8777f57546c78d1c5e9fb04ece6ac",
+  "execution_policy_path": "audit/DLAB_EXECUTION_POLICY.json",
+  "execution_policy_blob_sha": "cbca3955855390f7bdc538d726e21569aee4536f",
+  "source_of_truth_index_blob_sha": "34ec2be6893b942c4c81ae896822e54fba2e5e17",
+  "preconditions": {
+    "current_stage": "EV-00",
+    "stage_status": "not_started",
+    "planned_changeset": "CS017",
+    "required_amendments": {
+      "CS016A": "accepted",
+      "CS016B": "accepted"
+    },
+    "protected_baseline_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "release_authorized": false
+  },
+  "command_decision": {
+    "authorized": true,
+    "decision": "AUTHORIZED",
+    "reasons": []
+  },
+  "note": "This record binds the preparation authorization actually executed by the post-CS016B main governance workflow. It authorizes preparation only; start_stage and stage_operation require new decisions on the resulting exact branch state."
+}

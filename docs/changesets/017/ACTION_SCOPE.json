@@ -1,0 +1,67 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "state": "in_progress",
+  "control_base_commit": "855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1",
+  "predecessor_attempt": {
+    "branch": "agent/cs017-ev00-baseline-certification",
+    "source_commit": "bfafa432ad4dc7c402753293da080fc6d920c8ce",
+    "workflow_run_id": 31594048822,
+    "status": "failed_before_qualifying_product_campaign",
+    "reusable_as_qualifying_evidence": false
+  },
+  "source_under_test": {
+    "release_tag": "v1.14.1",
+    "commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "immutable_during_qualifying_run": true
+  },
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "allowed_paths": [
+    "docs/changesets/017/**",
+    "audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json",
+    "audit/DLAB_SCENARIO_CATALOG.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json",
+    "docs/records/evolution/**",
+    "scripts/dlab/**",
+    ".github/workflows/ev00-dlab.yml",
+    "MANIFEST.sha256"
+  ],
+  "forbidden_paths": [
+    "src/**",
+    "include/**",
+    "CMakeLists.txt",
+    "cmake/**",
+    "tests/**",
+    "tools/**",
+    "examples/**",
+    ".github/workflows/evolution-governance.yml",
+    "docs/governance/**",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json",
+    "audit/DLAB_EXECUTION_POLICY.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "audit/RELEASE_ASSURANCE_POLICY.json",
+    "audit/FINAL_ACCEPTANCE_POLICY.json",
+    "scripts/authorize_evolution_action.py",
+    "scripts/verify_dlab_governance.py",
+    "scripts/verify_evolution_plan.py",
+    "docs/commercial/**"
+  ],
+  "destructive_operations_authorized": false,
+  "stage_operation_requires_authorization": true,
+  "notes": [
+    "A path being allowlisted does not authorize an action by itself; stage_operation must be AUTHORIZED on the exact branch state.",
+    "The dedicated ev00-dlab workflow is laboratory harness only and must checkout the immutable historical product SHA into a fresh workspace.",
+    "Product findings are recorded, never fixed inside CS017.",
+    "Existing normative plans, amendments and D-Lab Standard are read-only for CS017."
+  ]
+}
