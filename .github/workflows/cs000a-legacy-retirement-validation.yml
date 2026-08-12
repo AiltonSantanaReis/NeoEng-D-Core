@@ -1,0 +1,134 @@
+name: CS000A legacy governance retirement validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000A legacy retirement validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify legacy workflows are manual-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          targets = [
+              Path('.github/workflows/evolution-governance.yml'),
+              Path('.github/workflows/governance-root.yml'),
+          ]
+
+          def on_keys(text: str) -> set[str]:
+              lines = text.splitlines()
+              try:
+                  start = lines.index('on:') + 1
+              except ValueError as exc:
+                  raise SystemExit('missing top-level on: block') from exc
+              keys: set[str] = set()
+              for line in lines[start:]:
+                  if not line.strip() or line.lstrip().startswith('#'):
+                      continue
+                  if not line.startswith(' '):
+                      break
+                  if line.startswith('  ') and not line.startswith('    '):
+                      token = line.strip()
+                      if token.endswith(':'):
+                          keys.add(token[:-1])
+              return keys
+
+          for path in targets:
+              keys = on_keys(path.read_text(encoding='utf-8'))
+              if keys != {'workflow_dispatch'}:
+                  raise SystemExit(f'{path}: automatic trigger remains: {sorted(keys)}')
+              print(f'{path}: workflow_dispatch only')
+          PY
+
+      - name: Verify legacy workflow bodies are preserved
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          plan = json.loads(Path('audit/validation/CS000A/VALIDATION_PLAN.json').read_text(encoding='utf-8'))
+          base = plan['base_sha']
+          targets = [
+              '.github/workflows/evolution-governance.yml',
+              '.github/workflows/governance-root.yml',
+          ]
+
+          def base_text(path: str) -> str:
+              proc = subprocess.run(['git', 'show', f'{base}:{path}'], text=True, capture_output=True, check=False)
+              if proc.returncode != 0:
+                  raise SystemExit(f'cannot read {path} at base {base}')
+              return proc.stdout
+
+          def preserved_suffix(text: str, path: str) -> str:
+              marker = '\npermissions:\n'
+              pos = text.find(marker)
+              if pos < 0:
+                  raise SystemExit(f'{path}: permissions marker not found')
+              return text[pos + 1:]
+
+          for path in targets:
+              prior = base_text(path)
+              current = Path(path).read_text(encoding='utf-8')
+              if prior.splitlines()[0] != current.splitlines()[0]:
+                  raise SystemExit(f'{path}: workflow name changed')
+              if preserved_suffix(prior, path) != preserved_suffix(current, path):
+                  raise SystemExit(f'{path}: workflow body changed outside trigger retirement')
+              print(f'{path}: body preserved exactly from permissions: onward')
+          PY
+
+      - name: Verify administrative-only scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          plan = json.loads(Path('audit/validation/CS000A/VALIDATION_PLAN.json').read_text(encoding='utf-8'))
+          base = plan['base_sha']
+          proc = subprocess.run(['git', 'diff', '--name-only', f'{base}...HEAD'], text=True, capture_output=True, check=True)
+          changed = {line.strip() for line in proc.stdout.splitlines() if line.strip()}
+          allowed = {
+              '.github/workflows/evolution-governance.yml',
+              '.github/workflows/governance-root.yml',
+              '.github/workflows/cs000a-legacy-retirement-validation.yml',
+              'audit/validation/CS000A/VALIDATION_PLAN.json',
+              'audit/validation/CS000A/VALIDATION_RESULT.json',
+              'audit/CURRENT_CHANGESET_VALIDATION.json',
+          }
+          extra = sorted(changed - allowed)
+          if extra:
+              raise SystemExit('non-administrative paths changed: ' + ', '.join(extra))
+          required = {
+              '.github/workflows/evolution-governance.yml',
+              '.github/workflows/governance-root.yml',
+              '.github/workflows/cs000a-legacy-retirement-validation.yml',
+              'audit/validation/CS000A/VALIDATION_PLAN.json',
+          }
+          missing = sorted(required - changed)
+          if missing:
+              raise SystemExit('required CS000A paths missing from diff: ' + ', '.join(missing))
+          print('administrative-only scope verified:')
+          for path in sorted(changed):
+              print(' -', path)
+          PY
