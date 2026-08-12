@@ -1,0 +1,62 @@
+name: Evolution governance
+
+on:
+  push:
+    branches:
+      - main
+      - "agent/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    name: Evolution governance gate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Evolution verifier self-test
+        run: python3 scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify evolution plan
+        run: python3 scripts/verify_evolution_plan.py
+
+      - name: Verify product contract
+        run: python3 scripts/verify_product_contract.py
+
+      - name: Verify product assurance
+        run: python3 scripts/verify_product_assurance.py
+
+      - name: Verify tracked-file manifest
+        id: manifest_check
+        run: python3 scripts/generate_manifest.py --check
+
+      - name: Generate expected manifest evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "${RUNNER_TEMP}/evolution-governance"
+          cp MANIFEST.sha256 "${RUNNER_TEMP}/evolution-governance/MANIFEST.before.sha256"
+          python3 scripts/generate_manifest.py
+          cp MANIFEST.sha256 "${RUNNER_TEMP}/evolution-governance/MANIFEST.expected.sha256"
+          {
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+          } > "${RUNNER_TEMP}/evolution-governance/run-identity.txt"
+
+      - name: Upload governance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evolution-governance-${{ github.sha }}
+          path: ${{ runner.temp }}/evolution-governance
+          if-no-files-found: error
