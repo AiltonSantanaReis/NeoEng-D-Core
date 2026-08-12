@@ -85,7 +85,45 @@ Passaram integralmente antes do manifest:
 - Verify product contract;
 - Verify product assurance.
 
-A única falha foi `Verify tracked-file manifest`, como esperado enquanto os novos arquivos ainda não estavam reconciliados. O manifest não será alterado manualmente; o job `Controlled manifest reconciliation` deve gerar e commitar somente `MANIFEST.sha256`.
+A única falha foi `Verify tracked-file manifest`, como esperado enquanto os novos arquivos ainda não estavam reconciliados. O manifest foi reconciliado exclusivamente pelo job controlado, que confirmou somente `MANIFEST.sha256` staged antes do commit do bot.
+
+### Reconciled-head PR run 31626622067 — internal gates passed; external protection blocked
+
+Head efetivamente testado: `5e7086ce2b35c1ab62bb288131ce3dd3f3a29364`.
+
+Passaram no mesmo head reconciliado:
+
+- D-Lab action authorization self-test;
+- Governance root self-test;
+- Verify candidate governance root;
+- Verify live GitHub governance provenance;
+- D-Lab governance v1.5 self-test;
+- Verify D-Lab governance v1.5;
+- Required evolution amendments gate;
+- Evolution verifier self-test;
+- Verify evolution plan;
+- Verify product contract;
+- Verify product assurance;
+- Verify tracked-file manifest (`OK: MANIFEST.sha256 confere`).
+
+O PR foi bloqueado somente em `Verify bootstrap repository protection` porque o secret administrativo de leitura não existe no repositório:
+
+`required administrative read token environment variable missing: GOVERNANCE_ADMIN_TOKEN`
+
+Esse blocker não foi removido nem convertido em warning.
+
+### Second-order root audit — additional sealing before closure
+
+Depois do primeiro head reconciliado, a auditoria do próprio hardening identificou duas superfícies que ainda poderiam permitir enfraquecimento prospectivo: `scripts/authorize_evolution_action.py` e `.github/workflows/evolution-governance.yml` ainda estavam no máximo mutável de amendment comum; e as linhas `accepted` do amendment ledger não eram comparadas integralmente com a base confiável. Antes de qualquer merge:
+
+- authorizer e evolution-governance workflow passam a steady-state immutable;
+- `scripts/verify_governance_history.py` é introduzido e também selado;
+- PRs futuros executam o history verifier vindo da base protegida;
+- toda linha de amendment já `accepted` deve permanecer exatamente igual à base;
+- regressões históricas 002/003/004, `fail_closed`, bindings 001–005 e o registry de verificadores do Source of Truth passam a ser verificados explicitamente;
+- o verificador efetivo D-Lab v1.5 e o histórico v1.4 passam a ter bindings distintos no Source of Truth Index.
+
+Essas alterações tornam o manifest novamente stale e exigem uma nova reconciliação controlada e nova validação do head reconciliado.
 
 ## Evidência ainda ausente
 
