@@ -1,0 +1,43 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000",
+  "plan_commit": "e9bef3b021c02febd99d7d678800215dc7d62270",
+  "plan_sha256": "53e1b0064cd9c3c307071152ae48e0e8bd3c0f9c3fc9409b2d99474fce351c63",
+  "source_sha": "74cf8e36fb6173764de99d9acc3c94edeabb69cb",
+  "run_id": 31647131308,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/changeset-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "validator.selftest",
+      "status": "PASS",
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Verifier self-test"
+    },
+    {
+      "test_id": "policy.validation",
+      "status": "PASS",
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Validate policy"
+    },
+    {
+      "test_id": "descriptor.validation",
+      "status": "PASS",
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Validate active descriptor when present"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "run_id": 31647131505,
+      "run_attempt": 1,
+      "event": "pull_request_target",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "source_sha": "74cf8e36fb6173764de99d9acc3c94edeabb69cb",
+      "result": "FAIL",
+      "reason": "Expected bootstrap proof rejection before result_path existed: accepted validation requires result_path"
+    }
+  ]
+}

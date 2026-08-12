@@ -1,0 +1,34 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000",
+  "objective": "Administrative bootstrap proof of the Trusted ChangeSet validation gate after the authorized governance regime transition; no product, runtime, ABI, release, or EV-00 changes.",
+  "base_sha": "ffe41397783d1550d39d7c1c0ea445e69d2750bd",
+  "execution_workflow": ".github/workflows/changeset-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "validator.selftest",
+      "required": true,
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Verifier self-test"
+    },
+    {
+      "test_id": "policy.validation",
+      "required": true,
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Validate policy"
+    },
+    {
+      "test_id": "descriptor.validation",
+      "required": true,
+      "evidence_job": "Candidate ChangeSet diagnostic",
+      "evidence_step": "Validate active descriptor when present"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
