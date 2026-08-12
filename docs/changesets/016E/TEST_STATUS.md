@@ -49,9 +49,43 @@ A execução então falhou em `D-Lab governance self-test` com:
 
 `lifecycle fixture: in_progress start_stage was not AUTHORIZED`
 
-Causa: o verificador CS016D aceito modelava lifecycle sintético sem ACTION_SCOPE porque o authorizer anterior não exigia scope em `start_stage`; o authorizer endurecido de CS016E passou corretamente a exigir um scope válido. O teste histórico não será enfraquecido nem reescrito. CS016E adiciona `verify_dlab_governance_v15.py`, que primeiro reexecuta integralmente o verificador/self-test CS016D no snapshot aceito `de55e0882c6400a0409b5cf881c6ee796a975cdf` e, só depois, executa fixtures v1.5 explícitos com ACTION_SCOPE válido.
+Causa: o verificador CS016D aceito modelava lifecycle sintético sem ACTION_SCOPE porque o authorizer anterior não exigia scope em `start_stage`; o authorizer endurecido de CS016E passou corretamente a exigir um scope válido. O teste histórico não foi enfraquecido nem reescrito. CS016E adicionou `verify_dlab_governance_v15.py`, que primeiro reexecuta integralmente o verificador/self-test CS016D no snapshot aceito `de55e0882c6400a0409b5cf881c6ee796a975cdf` e, só depois, executa fixtures v1.5 explícitos com ACTION_SCOPE válido.
 
-D-Lab corrente, evolution verifier, produto, manifest e proteção não foram executados após essa falha por fail-fast.
+### PR run 31626266023 — root drift rejected
+
+Ao tornar `verify_dlab_governance_v15.py` root-critical, o global forbidden set passou a exigi-lo. O máximo EV-00 ainda não o continha e `Verify candidate governance root` rejeitou:
+
+`stage maximum omits global governance forbidden paths EV-00: scripts/verify_dlab_governance_v15.py`
+
+A correção propagou a proibição ao `STAGE_SCOPE_MAXIMA`; nenhum forbidden foi removido.
+
+### Push run 31626332281 — normative binding rejected
+
+Depois da propagação, root e live provenance passaram. O D-Lab v1.5 self-test rejeitou porque o Amendment 1.5 ainda não continha literalmente o snapshot 1.4 que o ratchet reexecuta:
+
+`Amendment 1.5 missing token: de55e0882c6400a0409b5cf881c6ee796a975cdf`
+
+O Amendment foi fortalecido para declarar explicitamente que o verifier/self-test CS016D é reexecutado nesse SHA e que uma falha histórica não pode ser compensada por testes novos.
+
+### Push run 31626425222 — logical gates passed; manifest stale
+
+Head validado: `c1ef8adedc07d493f16bf4f15db4096743f94906`.
+
+Passaram integralmente antes do manifest:
+
+- D-Lab action authorization self-test;
+- Governance root self-test;
+- Verify candidate governance root;
+- Verify live GitHub governance provenance;
+- D-Lab governance v1.5 self-test;
+- Verify D-Lab governance v1.5;
+- Required evolution amendments gate;
+- Evolution verifier self-test;
+- Verify evolution plan;
+- Verify product contract;
+- Verify product assurance.
+
+A única falha foi `Verify tracked-file manifest`, como esperado enquanto os novos arquivos ainda não estavam reconciliados. O manifest não será alterado manualmente; o job `Controlled manifest reconciliation` deve gerar e commitar somente `MANIFEST.sha256`.
 
 ## Evidência ainda ausente
 
