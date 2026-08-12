@@ -61,5 +61,15 @@
     "in_progress_prepare_expected": "REJECT",
     "in_progress_start_expected": "AUTHORIZED",
     "fixture_state_source": "explicit"
+  },
+  "path_canonicalization_regression": {
+    "scenario_id": "SCN-REGRESSION-003",
+    "allowlisted_dotpath_expected": "AUTHORIZED",
+    "literal_dot_slash_prefix_equivalent": true,
+    "dot_component_preserved": true,
+    "forbidden_path_expected": "REJECT",
+    "absolute_path_expected": "REJECT",
+    "traversal_path_expected": "REJECT",
+    "ambiguous_component_expected": "REJECT"
   }
 }

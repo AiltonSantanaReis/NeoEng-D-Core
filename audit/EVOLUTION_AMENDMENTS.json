@@ -65,6 +65,25 @@
           "conclusion": "success"
         }
       ]
+    },
+    {
+      "changeset": "CS016C",
+      "title": "Action Authorization repository dot-path canonicalization correction",
+      "status": "in_progress",
+      "required_before_stage": "EV-00",
+      "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_3_AMENDMENT.md",
+      "deviation_record": "docs/records/evolution/DEV-0003.md",
+      "accepted_source_commit": null,
+      "evidence_manifest": null,
+      "validation_history": [
+        {
+          "source_commit": "871f4c571f776e599c136ccbd131123003a69a77",
+          "run_id": 31598613467,
+          "state": "cs017_pre_stage_operation_control",
+          "conclusion": "success",
+          "note": "CS017 start state passed governance; dot-path blocker was identified before qualifying EV-00 product execution."
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dcore.evolution-requirements-amendment-016c.v1",
+  "program_id": "POST_1_14_1",
+  "project_version": "1.14.1",
+  "amendment": "CS016C",
+  "stage": "EV-00",
+  "requirements": [
+    {
+      "requirement_id": "EVREQ-073",
+      "stage": "EV-00",
+      "statement": "O Action Authorization Gate deve preservar componentes válidos iniciados por ponto, remover somente prefixos relativos literais autorizados e rejeitar paths absolutos, traversais ou ambíguos de forma fail-closed.",
+      "status": "planned",
+      "evidence_required": [
+        "SCN-REGRESSION-003",
+        "action authorizer self-test",
+        "D-Lab governance verification"
+      ],
+      "evidence": []
+    }
+  ]
+}
