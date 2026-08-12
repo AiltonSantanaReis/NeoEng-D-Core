@@ -71,12 +71,12 @@
       "evidence":["docs/changesets/016B/evidence/github-actions-run-31596214152/validation-summary.json"]
     },
     {
-      "scenario_id":"SCN-REGRESSION-003","version":1,"class":"regression","type":"simulated","risk":"critical","status":"planned",
+      "scenario_id":"SCN-REGRESSION-003","version":1,"class":"regression","type":"simulated","risk":"critical","status":"passed",
       "preconditions":["CS016C in_progress or accepted","Action Authorization self-test available"],
       "steps":["Autorizar .github/workflows/ev00-dlab.yml quando explicitamente allowlisted.","Exigir equivalência para ./.github/workflows/ev00-dlab.yml e separadores Windows.","Rejeitar workflow forbidden, traversal, path absoluto, drive path e componentes internos ambíguos."],
       "oracle":"A canonicalização preserva o componente .github e somente paths relativos canônicos explicitamente allowlisted recebem AUTHORIZED; representações proibidas ou ambíguas recebem REJECT.","expected_failure_class":null,
       "randomized":false,"seed":null,"generator_version":"repository-path-canonicalization-v1","claim_scope":"Governança operacional; não qualifica comportamento do runtime.",
-      "evidence":[]
+      "evidence":["docs/changesets/016C/evidence/github-actions-run-31611909872/validation-summary.json"]
     }
   ]
 }

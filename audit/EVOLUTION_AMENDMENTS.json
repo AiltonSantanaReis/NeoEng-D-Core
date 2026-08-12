@@ -69,12 +69,12 @@
     {
       "changeset": "CS016C",
       "title": "Action Authorization repository dot-path canonicalization correction",
-      "status": "in_progress",
+      "status": "accepted",
       "required_before_stage": "EV-00",
       "amendment_document": "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN_V1_3_AMENDMENT.md",
       "deviation_record": "docs/records/evolution/DEV-0003.md",
-      "accepted_source_commit": null,
-      "evidence_manifest": null,
+      "accepted_source_commit": "2dfa5c0fae6a2639277bf2b6f2917428fbde4383",
+      "evidence_manifest": "docs/changesets/016C/evidence/EVIDENCE_MANIFEST_ACCEPTED.json",
       "validation_history": [
         {
           "source_commit": "871f4c571f776e599c136ccbd131123003a69a77",
@@ -82,6 +82,19 @@
           "state": "cs017_pre_stage_operation_control",
           "conclusion": "success",
           "note": "CS017 start state passed governance; dot-path blocker was identified before qualifying EV-00 product execution."
+        },
+        {
+          "source_commit": "1ad9ffafe532da839450230f9bb9b30e87b18827",
+          "run_id": 31611574312,
+          "state": "candidate_pre_manifest_reconciliation",
+          "conclusion": "failure",
+          "reason": "tracked-file manifest not yet reconciled; all logical governance/product gates passed"
+        },
+        {
+          "source_commit": "2dfa5c0fae6a2639277bf2b6f2917428fbde4383",
+          "run_id": 31611909872,
+          "state": "qualifying_candidate",
+          "conclusion": "success"
         }
       ]
     }

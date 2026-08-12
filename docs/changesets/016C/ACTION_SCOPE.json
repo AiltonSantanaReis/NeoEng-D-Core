@@ -2,7 +2,7 @@
   "schema": "neoeng.dcore.changeset-action-scope.v1",
   "changeset": "CS016C",
   "stage": "EV-00",
-  "state": "in_progress",
+  "state": "accepted",
   "control_base_commit": "855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1",
   "triggering_cs017_control_commit": "871f4c571f776e599c136ccbd131123003a69a77",
   "runtime_change_authorized": false,
@@ -56,6 +56,6 @@
     "CS016C corrects governance path canonicalization only; it does not authorize EV-00 product execution.",
     "Plans 1.0/1.1/1.2 and D-Lab Standard are immutable inputs to this correction.",
     "The interrupted CS017 R2 branch is not a source of qualifying product evidence.",
-    "Any runtime/product change requires STOP and a separate authorized ChangeSet."
+    "Acceptance does not authorize CS017 reuse; post-merge main validation and a fresh CS017 branch remain mandatory."
   ]
 }

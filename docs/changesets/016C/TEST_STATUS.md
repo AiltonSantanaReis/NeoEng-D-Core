@@ -1,31 +1,51 @@
 # CS016C — Test Status
 
-State: in_progress
+State: accepted
 
 Protected baseline: `v1.14.1` / `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`  
 Control base: `855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1`  
-Triggering CS017 control commit: `871f4c571f776e599c136ccbd131123003a69a77`
+Accepted source commit: `2dfa5c0fae6a2639277bf2b6f2917428fbde4383`  
+Qualifying workflow run: `31611909872`  
+Qualifying job: `94165076420`
 
-## Current evidence state
+## Qualifying result
 
-No candidate source SHA has been accepted yet.
+The candidate source above completed the `Evolution governance` push workflow
+with conclusion `success`.
 
-No EV-00 product build, CTest campaign, determinism probe, Host SDK campaign,
-replay/rollback campaign, state-evidence campaign or support-bundle campaign is
-claimed by CS016C.
+Passed gates:
 
-The corrective candidate must still pass:
-
-- Action Authorization self-test including SCN-REGRESSION-003;
-- D-Lab governance self-test and verifier;
-- preserved v1.2 governance validation on the accepted control snapshot;
-- evolution governance self-test/verifier;
+- D-Lab action authorization self-test;
+- D-Lab governance self-test;
+- D-Lab governance verifier;
+- Required evolution amendments gate;
+- evolution verifier self-test;
+- evolution plan verifier;
 - product contract verifier;
 - product assurance verifier;
-- tracked-file manifest verification.
+- tracked-file manifest verifier;
+- governance evidence upload.
 
-`EVREQ-073` remains `planned` until qualifying CI evidence is recorded.
-`SCN-REGRESSION-003` remains `planned` until qualifying CI evidence is recorded.
+The accepted v1.2 D-Lab verifier and its self-test were reexecuted at the exact
+accepted control commit `855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1` by the current verifier.
+Protected prior governance files were verified unchanged.
 
-EV-00 official state remains `not_started` in `main`.
+`SCN-REGRESSION-001`, `SCN-REGRESSION-002` and `SCN-REGRESSION-003` passed via
+the Action Authorization self-test on the qualifying source.
+
+Evidence manifest:
+`docs/changesets/016C/evidence/EVIDENCE_MANIFEST_ACCEPTED.json`
+
+## Scope boundary
+
+CS016C changes governance only.
+
+No EV-00 qualifying product build, CTest campaign, determinism probe, Host SDK
+campaign, replay/rollback campaign, state-evidence campaign or support-bundle
+campaign is claimed by this ChangeSet.
+
+No runtime/ABI/canonical-data claim is expanded.
 `release_authorized` remains `false`.
+
+EV-00 remains `not_started` in the official roadmap until CS017 is rebuilt after
+CS016C merge and post-merge validation.

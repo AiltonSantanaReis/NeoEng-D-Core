@@ -1,10 +1,12 @@
 # ChangeSet 016C — Action Authorization dot-path canonicalization fix
 
-State: `in_progress`  
+State: `accepted`  
 Program: `POST_1_14_1`  
-Affected stage: EV-00 (blocked until this amendment is accepted)  
+Affected stage: EV-00 (blocked until this amendment is accepted and merged)  
 Protected product baseline: `v1.14.1` / `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`  
-Control base: `855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1`
+Control base: `855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1`  
+Accepted source commit: `2dfa5c0fae6a2639277bf2b6f2917428fbde4383`  
+Qualifying run: `31611909872`
 
 ## Objective
 
@@ -15,13 +17,13 @@ any existing rule.
 ## Trigger
 
 `DEV-0003` records that `.github/workflows/ev00-dlab.yml`, explicitly allowlisted
-for the intended CS017 stage operation, loses its leading dot because the
-current authorizer uses `lstrip("./")`.
+for the intended CS017 stage operation, lost its leading dot because the
+previous authorizer used `lstrip("./")`.
 
 The defect was detected before the EV-00 D-Lab harness was published or a
 qualifying product campaign was executed.
 
-## Authorized delta
+## Accepted delta
 
 - append-only Amendment 1.3;
 - DEV-0003;
@@ -31,9 +33,9 @@ qualifying product campaign was executed.
 - execution-policy binding for that regression;
 - conservative path canonicalization fix in the Action Authorization Gate;
 - D-Lab verifier evolution that reexecutes the accepted 1.2 verifier on the
-  accepted `855ff456...` snapshot and validates only the current append-only delta;
+  accepted `855ff456...` snapshot and validates only the append-only 1.3 delta;
 - Source of Truth Index registration for the new amendment/ledgers;
-- CS016C evidence and manifests.
+- SHA-bound CS016C evidence and manifest.
 
 Exact path control is defined by `ACTION_SCOPE.json`.
 
@@ -51,31 +53,30 @@ CS016C does not authorize:
 
 ## Required regression
 
-`SCN-REGRESSION-003` must prove both sides of the authorization boundary:
+`SCN-REGRESSION-003` proves both sides of the authorization boundary:
 
 1. legitimate `.github/...` paths retain identity and can match an explicit
    allowlist;
 2. forbidden, absolute, traversal and ambiguous paths remain rejected.
 
-SCN-REGRESSION-001 and SCN-REGRESSION-002 must continue to pass.
+SCN-REGRESSION-001 and SCN-REGRESSION-002 also remain passing.
 
-## Acceptance conditions
+## Acceptance evidence
 
-CS016C may be accepted only when:
+Qualifying source:
+`2dfa5c0fae6a2639277bf2b6f2917428fbde4383`
 
-1. Action Authorization self-test passes with regressions 001/002/003;
-2. D-Lab governance self-test passes;
-3. D-Lab governance verifier passes and reexecutes the accepted v1.2 gate;
-4. evolution-plan verifier and self-test pass;
-5. product contract and assurance gates pass unchanged;
-6. tracked-file manifest matches;
-7. a candidate source SHA has a successful GitHub Actions run;
-8. qualifying evidence is SHA-bound and independently manifest-verified;
-9. EVREQ-073 is `verified` only after qualifying evidence exists;
-10. SCN-REGRESSION-003 is `passed` only after qualifying evidence exists;
-11. accepted-state CI passes on the promoted state;
-12. pull-request CI passes on the same final head;
-13. post-merge `main` CI passes before CS017 is rebuilt.
+Qualifying workflow run:
+`31611909872`
 
-A failure at any condition remains failure/blocker evidence; the condition is not
-edited to obtain approval.
+Evidence manifest:
+`docs/changesets/016C/evidence/EVIDENCE_MANIFEST_ACCEPTED.json`
+
+The qualifying source passed Action Authorization self-test, D-Lab self-test,
+D-Lab verifier, required-amendments gate, evolution self-test/verifier, product
+contract, product assurance, tracked-file manifest and evidence upload.
+
+This accepted ChangeSet is still not permission to execute EV-00 from the old
+CS017 branch. Merge, PR CI and post-merge `main` validation remain mandatory
+before CS017 is rebuilt from the new `main` and the operational gates are
+requested again.

@@ -9,13 +9,15 @@
       "requirement_id": "EVREQ-073",
       "stage": "EV-00",
       "statement": "O Action Authorization Gate deve preservar componentes válidos iniciados por ponto, remover somente prefixos relativos literais autorizados e rejeitar paths absolutos, traversais ou ambíguos de forma fail-closed.",
-      "status": "planned",
+      "status": "verified",
       "evidence_required": [
         "SCN-REGRESSION-003",
         "action authorizer self-test",
         "D-Lab governance verification"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/changesets/016C/evidence/github-actions-run-31611909872/validation-summary.json"
+      ]
     }
   ]
 }

@@ -1,0 +1,15 @@
+repository=AiltonSantanaReis/NeoEng-D-Core
+changeset=CS016C
+stage=EV-00
+branch=agent/cs016c-dotpath-authorization-fix
+source_commit=2dfa5c0fae6a2639277bf2b6f2917428fbde4383
+source_tree=e31a4d7615261d5c91910f786e8f85410d800d84
+workflow=Evolution governance
+workflow_run_id=31611909872
+workflow_event=push
+job_id=94165076420
+conclusion=success
+artifact_id=9147534746
+artifact_digest=sha256:8e4a23e4fc3be7b2ca70de9d24ed0a70dbcd9d15a2d1a100338dc2ac45664c59
+protected_baseline_commit=e3fff973554a2e56b8bd7afdc1132f75f3ec337c
+accepted_v12_control_commit=855ff4563b96c4e5b2a7acac6e200fdf7f8d20d1
