@@ -339,9 +339,7 @@ try {
     $environment['vcpkg_commit_observed'] = $observedVcpkg
     Write-JsonFile $environment (Join-Path $EvidenceRoot 'environment.json')
 
-    $bootstrapPath = Join-Path $VcpkgDir 'bootstrap-vcpkg.bat'
-    $bootstrapCommand = '""' + $bootstrapPath + '" -disableMetrics"'
-    $bootstrap = Invoke-RecordedCommand -Name 'vcpkg-bootstrap' -Executable 'cmd.exe' -Arguments @('/d','/s','/c',$bootstrapCommand) -WorkingDirectory $VcpkgDir -EvidenceRoot $EvidenceRoot
+    $bootstrap = Invoke-RecordedCommand -Name 'vcpkg-bootstrap' -Executable 'cmd.exe' -Arguments @('/d','/c','bootstrap-vcpkg.bat','-disableMetrics') -WorkingDirectory $VcpkgDir -EvidenceRoot $EvidenceRoot
     if ($bootstrap.exit_code -ne 0) { throw 'vcpkg bootstrap failed' }
 
     $toolchain = Join-Path $VcpkgDir 'scripts\buildsystems\vcpkg.cmake'
