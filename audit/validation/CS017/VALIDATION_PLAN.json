@@ -1,7 +1,8 @@
 {
   "schema": "neoeng.dcore.changeset-validation-plan.v1",
   "changeset": "CS017",
-  "objective": "Certify the immutable v1.14.1 baseline at e3fff973554a2e56b8bd7afdc1132f75f3ec337c using a fresh D-Lab campaign on the maintainer's physical Windows PC, with exact environment/source identity, fresh build, all 17 required validation checks PASS, deterministic replayable evidence, historical comparison, and no product behavior change.",
+  "campaign_revision": "R6",
+  "objective": "Certify the immutable v1.14.1 baseline at e3fff973554a2e56b8bd7afdc1132f75f3ec337c using a fresh R6 D-Lab campaign on the maintainer's physical Windows PC, with exact environment/source identity, fresh build, all 17 required validation checks PASS, deterministic replayable evidence, historical comparison, preserved R5 failure history, and no product behavior change.",
   "base_sha": "d092ac56290d76dddf51982549a98234f038f3ee",
   "execution_workflow": ".github/workflows/cs017-ev00-validation.yml",
   "required_tests": [
@@ -115,7 +116,9 @@
     ".github/workflows/cs017-ev00-validation.yml",
     "docs/changesets/015/evidence/windows-x86_64-clang-20260810/raw/ctest-output.txt",
     "audit/CHANGESET_VALIDATION_POLICY.json",
-    "scripts/verify_changeset_validation.py"
+    "scripts/verify_changeset_validation.py",
+    "docs/changesets/017/R5_FAILURE_RECORD.json",
+    "docs/changesets/017/R6_PREPARATION_RECORD.json"
   ],
   "acceptance_requires_all_required_pass": true,
   "allow_test_removal_after_execution": false
