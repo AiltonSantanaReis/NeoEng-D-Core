@@ -59,6 +59,15 @@ CS017 does not authorize:
 
 The required-test inventory and harness/verifier files must be frozen in `audit/validation/CS017/VALIDATION_PLAN.json` before the first qualifying local command. The qualifying GitHub result must later bind the closure candidate to `source_sha + run_id + run_attempt + workflow_path`, while the local evidence package independently binds the physical D-Lab run to the historical product SHA and exact harness SHA.
 
+## Preserved R5 preparation failures
+
+These failures occurred before `VALIDATION_PLAN` freeze and before any `-Mode Qualify` execution. They are preparation evidence only and cannot qualify EV-00.
+
+1. Local preflight on the physical Windows control clone initially stopped with `Required tool not found in PATH: link.exe`. Root cause: the normal PowerShell session had not loaded the installed Visual Studio C++ developer environment. The same machine exposed `link.exe`, `rc.exe`, `clang-cl`, CMake, CTest and Ninja after `Launch-VsDevShell.ps1`; no tool requirement was removed.
+2. The next local preflight stopped at `Cannot overwrite variable Host because it is read-only or constant.` Root cause: the harness assigned to `$host`, which collides case-insensitively with PowerShell's automatic read-only `$Host`. The harness was corrected by renaming the local value to `$hostAssessment`, and the non-qualifying CI preflight gained a regression that rejects direct `$Host/$host` assignment.
+
+Neither failure is reclassified as PASS. Qualification remains not started until a later frozen plan and explicit local `Qualify` run.
+
 ## Current state
 
 Preparation only. No qualifying EV-00 local D-Lab command has been executed in R5 yet. Release remains unauthorized.
