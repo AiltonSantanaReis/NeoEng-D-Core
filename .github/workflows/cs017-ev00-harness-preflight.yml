@@ -3,7 +3,7 @@ name: CS017 EV-00 harness preflight (NON-QUALIFYING)
 on:
   push:
     branches:
-      - agent/cs017-ev00-baseline-certification-r6
+      - agent/cs017-ev00-baseline-certification-r7
   workflow_dispatch:
 
 permissions:
@@ -47,7 +47,8 @@ jobs:
             "preexisting_build_used = `$false",
             "Write-EvidenceManifest `$EvidenceRoot",
             "No result is accepted until the independent verifier and Trusted ChangeSet validation gate pass",
-            "-Arguments @('/d','/c','bootstrap-vcpkg.bat','-disableMetrics') -WorkingDirectory `$VcpkgDir"
+            "-Arguments @('/d','/c','bootstrap-vcpkg.bat','-disableMetrics') -WorkingDirectory `$VcpkgDir",
+            '[Parameter(Mandatory=$true)][AllowEmptyCollection()][string[]]$Arguments'
           )
           foreach ($needle in $required) {
             if (-not $text.Contains($needle)) {
@@ -64,7 +65,7 @@ jobs:
             exit 1
           }
           Write-Host 'Local-only qualification guardrails: PASS'
-      - name: Reproduce R5 quoting class with safe R6 invocation
+      - name: Reproduce R5 quoting class with safe invocation
         shell: pwsh
         run: |
           $root = Join-Path $env:RUNNER_TEMP 'neoeng cmd path with spaces'
@@ -73,7 +74,7 @@ jobs:
           $batchText = @'
           @echo off
           if "%1"=="-disableMetrics" (
-            echo R6_CMD_BOOTSTRAP_OK
+            echo CMD_BOOTSTRAP_OK
             exit /b 0
           )
           echo BAD_ARG:%1
@@ -101,11 +102,32 @@ jobs:
           $process.Dispose()
           Write-Host $stdout
           if (-not [string]::IsNullOrWhiteSpace($stderr)) { Write-Host $stderr }
-          if ($exitCode -ne 0 -or -not $stdout.Contains('R6_CMD_BOOTSTRAP_OK')) {
-            Write-Error "R6 cmd.exe batch invocation regression failed: exit=$exitCode stdout=$stdout stderr=$stderr"
+          if ($exitCode -ne 0 -or -not $stdout.Contains('CMD_BOOTSTRAP_OK')) {
+            Write-Error "cmd.exe batch invocation regression failed: exit=$exitCode stdout=$stdout stderr=$stderr"
             exit 1
           }
-          Write-Host 'R6 cmd.exe batch invocation regression: PASS'
+          Write-Host 'cmd.exe batch invocation regression: PASS'
+      - name: Reproduce R6 zero-argument binding class
+        shell: pwsh
+        run: |
+          $text = Get-Content 'scripts/ev00/run_ev00_dlab_windows.ps1' -Raw
+          $needle = '[Parameter(Mandatory=$true)][AllowEmptyCollection()][string[]]$Arguments'
+          if (-not $text.Contains($needle)) {
+            Write-Error 'Invoke-RecordedCommand must explicitly allow an empty Arguments collection.'
+            exit 1
+          }
+
+          function Test-ZeroArgumentBinding {
+            param([Parameter(Mandatory=$true)][AllowEmptyCollection()][string[]]$Arguments)
+            return @($Arguments).Count
+          }
+
+          $count = Test-ZeroArgumentBinding -Arguments @()
+          if ($count -ne 0) {
+            Write-Error "Zero-argument binding regression failed: count=$count"
+            exit 1
+          }
+          Write-Host 'R6 zero-argument binding regression: PASS'
 
   verifier-selftest:
     name: NON-QUALIFYING EV-00 verifier self-test
