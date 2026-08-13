@@ -1,0 +1,34 @@
+{
+  "schema": "neoeng.dlab.ev00-preparation-record.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R6",
+  "qualifying_execution_started": false,
+  "events": [
+    {
+      "type": "NON_QUALIFYING_PREFLIGHT",
+      "source_sha": "0dd762fe55c19070e8dad1cd30fae49e022dbc6e",
+      "run_id": 31654998356,
+      "run_attempt": 1,
+      "result": "FAIL",
+      "classification": "PREPARATION_ONLY",
+      "reason": "The new R6 quoting regression fixture had invalid PowerShell string syntax around the literal batch token %1. The regression step stopped with ParserError before cmd.exe or the batch fixture executed. The qualifying harness was not executed."
+    },
+    {
+      "type": "NON_QUALIFYING_PREFLIGHT",
+      "source_sha": "581dd87963dad5fb0632f8201c68cfba36b28f9b",
+      "run_id": 31655056741,
+      "run_attempt": 1,
+      "result": "PASS",
+      "classification": "PREPARATION_ONLY",
+      "checks": [
+        "PowerShell harness parser",
+        "local-only qualification guardrails",
+        "R5 quoting-class regression using cmd.exe in a path with spaces",
+        "EV-00 verifier negative self-test",
+        "preparation scope / no product-runtime change"
+      ]
+    }
+  ],
+  "note": "Neither event qualifies EV-00. R6 qualification may start only after the new VALIDATION_PLAN is committed and frozen."
+}
