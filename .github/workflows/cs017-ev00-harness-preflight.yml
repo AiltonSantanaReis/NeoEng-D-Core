@@ -93,7 +93,7 @@ jobs:
           printf '  %s\n' "${changed[@]}"
           for path in "${changed[@]}"; do
             case "$path" in
-              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml|.github/workflows/cs017-ev00-validation.yml)
+              docs/changesets/017/*|scripts/ev00/*|.github/workflows/cs017-ev00-harness-preflight.yml|.github/workflows/cs017-ev00-validation.yml|audit/validation/CS017/*|audit/CURRENT_CHANGESET_VALIDATION.json)
                 ;;
               *)
                 echo "Unexpected preparation path: $path" >&2
