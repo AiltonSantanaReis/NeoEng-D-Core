@@ -63,7 +63,7 @@ function Invoke-RecordedCommand {
     param(
         [Parameter(Mandatory=$true)][string]$Name,
         [Parameter(Mandatory=$true)][string]$Executable,
-        [Parameter(Mandatory=$true)][string[]]$Arguments,
+        [Parameter(Mandatory=$true)][AllowEmptyCollection()][string[]]$Arguments,
         [Parameter(Mandatory=$true)][string]$WorkingDirectory,
         [Parameter(Mandatory=$true)][string]$EvidenceRoot
     )
