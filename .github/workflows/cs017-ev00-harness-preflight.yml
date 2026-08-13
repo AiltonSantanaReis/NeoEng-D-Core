@@ -54,6 +54,10 @@ jobs:
               exit 1
             }
           }
+          if ($text -match '(?im)^\s*\$host\s*=') {
+            Write-Error 'Harness must not assign to PowerShell automatic variable $Host/$host.'
+            exit 1
+          }
           Write-Host 'Local-only qualification guardrails: PASS'
 
   verifier-selftest:
