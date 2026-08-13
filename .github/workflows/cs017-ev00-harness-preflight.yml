@@ -70,11 +70,16 @@ jobs:
           $root = Join-Path $env:RUNNER_TEMP 'neoeng cmd path with spaces'
           New-Item -ItemType Directory -Force -Path $root | Out-Null
           $batch = Join-Path $root 'bootstrap-vcpkg.bat'
-          [System.IO.File]::WriteAllText(
-            $batch,
-            "@echo off`r`nif \"%1\"==\"-disableMetrics\" (`r`n  echo R6_CMD_BOOTSTRAP_OK`r`n  exit /b 0`r`n)`r`necho BAD_ARG:%1`r`nexit /b 7`r`n",
-            [System.Text.Encoding]::ASCII
+          $batchText = @'
+          @echo off
+          if "%1"=="-disableMetrics" (
+            echo R6_CMD_BOOTSTRAP_OK
+            exit /b 0
           )
+          echo BAD_ARG:%1
+          exit /b 7
+          '@
+          [System.IO.File]::WriteAllText($batch, $batchText, [System.Text.Encoding]::ASCII)
 
           $psi = [System.Diagnostics.ProcessStartInfo]::new()
           $psi.FileName = 'cmd.exe'
