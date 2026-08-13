@@ -213,7 +213,7 @@ function Run-Preflight {
     $status = (& git -C $ControlRepo status --porcelain | Out-String).Trim()
     & git -C $ControlRepo cat-file -e "$ProductSha`^{commit}" 2>$null
     $productExists = ($LASTEXITCODE -eq 0)
-    $host = Get-PhysicalHostAssessment
+    $hostAssessment = Get-PhysicalHostAssessment
 
     $result = [ordered]@{
         mode = 'Preflight'
@@ -222,15 +222,15 @@ function Run-Preflight {
         powershell = $PSVersionTable.PSVersion.ToString()
         control_tree_clean = [string]::IsNullOrWhiteSpace($status)
         protected_product_commit_present = $productExists
-        physical_host = $host.physical_host
-        virtualization_indicators = $host.virtualization_indicators
+        physical_host = $hostAssessment.physical_host
+        virtualization_indicators = $hostAssessment.virtualization_indicators
         tools = $tools
         lab_root = $LabRoot
     }
     $result | ConvertTo-Json -Depth 10
     if (-not $result.control_tree_clean) { throw 'Control repository must be clean before a qualifying run.' }
     if (-not $productExists) { throw "Historical product commit is not available locally: $ProductSha. Fetch repository history before qualification." }
-    if (-not $host.physical_host) { throw "Virtualization indicator detected: $($host.virtualization_indicators -join ', ')" }
+    if (-not $hostAssessment.physical_host) { throw "Virtualization indicator detected: $($hostAssessment.virtualization_indicators -join ', ')" }
 }
 
 if ($Mode -eq 'Preflight') {
@@ -255,7 +255,7 @@ $VcpkgDir = Join-Path $DepsDir 'vcpkg'
 if (Test-Path $RunRoot) { throw "Run workspace already exists: $RunRoot" }
 New-Item -ItemType Directory -Force -Path $RunRoot,$BuildDir,$InstallDir,$DepsDir,$EvidenceRoot,(Join-Path $EvidenceRoot 'raw\commands'),(Join-Path $EvidenceRoot 'raw\logs') | Out-Null
 
-$host = Get-PhysicalHostAssessment
+$hostAssessment = Get-PhysicalHostAssessment
 $processor = Get-CimInstance Win32_Processor | Select-Object -First 1
 $computer = Get-CimInstance Win32_ComputerSystem
 $video = Get-CimInstance Win32_VideoController | Select-Object Name,AdapterRAM,DriverVersion
@@ -284,10 +284,10 @@ $environment = [ordered]@{
     os_family = 'Windows'
     os_version = [System.Environment]::OSVersion.VersionString
     architecture = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString()
-    physical_host = $host.physical_host
-    virtualization_indicators = $host.virtualization_indicators
-    computer_manufacturer = $host.manufacturer
-    computer_model = $host.model
+    physical_host = $hostAssessment.physical_host
+    virtualization_indicators = $hostAssessment.virtualization_indicators
+    computer_manufacturer = $hostAssessment.manufacturer
+    computer_model = $hostAssessment.model
     logical_processors = [Environment]::ProcessorCount
     cpu = $processor.Name
     physical_cores = $processor.NumberOfCores
