@@ -61,13 +61,14 @@ The required-test inventory and harness/verifier files must be frozen in `audit/
 
 ## Preserved R5 preparation failures
 
-These failures occurred before `VALIDATION_PLAN` freeze and before any `-Mode Qualify` execution. They are preparation evidence only and cannot qualify EV-00.
+These failures occurred before the final qualifying `VALIDATION_PLAN` freeze and before any `-Mode Qualify` execution. They are preparation evidence only and cannot qualify EV-00.
 
 1. Local preflight on the physical Windows control clone initially stopped with `Required tool not found in PATH: link.exe`. Root cause: the normal PowerShell session had not loaded the installed Visual Studio C++ developer environment. The same machine exposed `link.exe`, `rc.exe`, `clang-cl`, CMake, CTest and Ninja after `Launch-VsDevShell.ps1`; no tool requirement was removed.
 2. The next local preflight stopped at `Cannot overwrite variable Host because it is read-only or constant.` Root cause: the harness assigned to `$host`, which collides case-insensitively with PowerShell's automatic read-only `$Host`. The harness was corrected by renaming the local value to `$hostAssessment`, and the non-qualifying CI preflight gained a regression that rejects direct `$Host/$host` assignment.
+3. After the first provisional plan/descriptor commits, non-qualifying preflight run `31653982113` rejected `audit/CURRENT_CHANGESET_VALIDATION.json` as outside its preparation allowlist. Root cause: that allowlist predated the simplified ChangeSet validation paths. The allowlist was extended only for `audit/validation/CS017/*` and `audit/CURRENT_CHANGESET_VALIDATION.json`; product/runtime paths remain forbidden. The provisional plan is not a qualifying freeze because no `-Mode Qualify` execution occurred before this correction.
 
-Neither failure is reclassified as PASS. Qualification remains not started until a later frozen plan and explicit local `Qualify` run.
+None of these failures is reclassified as PASS. The subsequent physical-PC preflight passed at harness head `84eea8f47925259f227c187d711139a522c21556`, proving a clean control tree, protected product commit presence, physical Windows host, and required tool availability. That preflight remains non-qualifying.
 
 ## Current state
 
-Preparation only. No qualifying EV-00 local D-Lab command has been executed in R5 yet. Release remains unauthorized.
+Preparation complete through physical-PC preflight. No qualifying EV-00 local D-Lab command has been executed in R5 yet. Release remains unauthorized.
