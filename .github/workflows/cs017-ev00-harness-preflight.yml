@@ -3,7 +3,7 @@ name: CS017 EV-00 harness preflight (NON-QUALIFYING)
 on:
   push:
     branches:
-      - agent/cs017-ev00-baseline-certification-r5
+      - agent/cs017-ev00-baseline-certification-r6
   workflow_dispatch:
 
 permissions:
@@ -46,7 +46,8 @@ jobs:
             "`$EvidenceRoot = Join-Path `$RunRoot 'evidence'",
             "preexisting_build_used = `$false",
             "Write-EvidenceManifest `$EvidenceRoot",
-            "No result is accepted until the independent verifier and Trusted ChangeSet validation gate pass"
+            "No result is accepted until the independent verifier and Trusted ChangeSet validation gate pass",
+            "-Arguments @('/d','/c','bootstrap-vcpkg.bat','-disableMetrics') -WorkingDirectory `$VcpkgDir"
           )
           foreach ($needle in $required) {
             if (-not $text.Contains($needle)) {
@@ -58,7 +59,48 @@ jobs:
             Write-Error 'Harness must not assign to PowerShell automatic variable $Host/$host.'
             exit 1
           }
+          if ($text.Contains('$bootstrapCommand')) {
+            Write-Error 'Harness must not reconstruct the vcpkg batch command through a manually quoted command string.'
+            exit 1
+          }
           Write-Host 'Local-only qualification guardrails: PASS'
+      - name: Reproduce R5 quoting class with safe R6 invocation
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'neoeng cmd path with spaces'
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
+          $batch = Join-Path $root 'bootstrap-vcpkg.bat'
+          [System.IO.File]::WriteAllText(
+            $batch,
+            "@echo off`r`nif \"%1\"==\"-disableMetrics\" (`r`n  echo R6_CMD_BOOTSTRAP_OK`r`n  exit /b 0`r`n)`r`necho BAD_ARG:%1`r`nexit /b 7`r`n",
+            [System.Text.Encoding]::ASCII
+          )
+
+          $psi = [System.Diagnostics.ProcessStartInfo]::new()
+          $psi.FileName = 'cmd.exe'
+          $psi.WorkingDirectory = $root
+          $psi.UseShellExecute = $false
+          $psi.CreateNoWindow = $true
+          $psi.RedirectStandardOutput = $true
+          $psi.RedirectStandardError = $true
+          foreach ($argument in @('/d','/c','bootstrap-vcpkg.bat','-disableMetrics')) {
+            [void]$psi.ArgumentList.Add($argument)
+          }
+          $process = [System.Diagnostics.Process]::new()
+          $process.StartInfo = $psi
+          if (-not $process.Start()) { throw 'Unable to start cmd.exe regression process.' }
+          $stdout = $process.StandardOutput.ReadToEnd()
+          $stderr = $process.StandardError.ReadToEnd()
+          $process.WaitForExit()
+          $exitCode = $process.ExitCode
+          $process.Dispose()
+          Write-Host $stdout
+          if (-not [string]::IsNullOrWhiteSpace($stderr)) { Write-Host $stderr }
+          if ($exitCode -ne 0 -or -not $stdout.Contains('R6_CMD_BOOTSTRAP_OK')) {
+            Write-Error "R6 cmd.exe batch invocation regression failed: exit=$exitCode stdout=$stdout stderr=$stderr"
+            exit 1
+          }
+          Write-Host 'R6 cmd.exe batch invocation regression: PASS'
 
   verifier-selftest:
     name: NON-QUALIFYING EV-00 verifier self-test
