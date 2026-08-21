@@ -1,101 +1,94 @@
 # NeoEng D-Core
 
-Infraestrutura C++23 para autoridade canônica de estado, transições determinísticas, replay, rollback e evidência verificável.
+**Infraestrutura determinística C++23 para autoridade canônica de estado, transições reproduzíveis, rollback, replay e evidência verificável.**
 
-> **Release atual:** `v1.14.1` — publicado no tag [`v1.14.1`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/releases/tag/v1.14.1), com CS014 no run `31387419484` e CS015 no run `31387421705`. O release público `v1.14.0` permanece histórico e imutável. A aceitação é restrita aos claims e limites registrados e não é certificação, auditoria externa, qualificação ARM64 ou garantia universal de desempenho.
+O NeoEng D-Core é um produto horizontal e independente. Ele mantém o estado canônico, aplica mudanças exclusivamente por APIs oficiais e expõe superfícies controladas para integração, observabilidade, recuperação e comparação de estado.
 
-## O que é
+> **Release aceita:** `v1.14.1` no commit `e3fff973554a2e56b8bd7afdc1132f75f3ec337c`.  
+> **Baseline administrativa pós-release usada nesta modernização:** `d092ac56290d76dddf51982549a98234f038f3ee` — commit que declara explicitamente nenhuma mudança de produto/runtime/ABI.  
+> **Evolução pós-1.14.1:** programa `POST_1_14_1` ativo; `EV-00` é o estágio corrente no roadmap, permanece `not_started`, com `CS017` planejado; nova release não está autorizada.
 
-O NeoEng D-Core é um produto independente e horizontal. Ele mantém o estado canônico, aplica transições pela API oficial e fornece mecanismos para reconstrução, comparação e recuperação do estado. Hosts e módulos consumidores recebem snapshots, cópias controladas ou evidências; não alteram diretamente a autoridade canônica.
+## Em uma frase
 
-O núcleo não é um renderer, editor, motor de IA, sistema de áudio, biblioteca SDF/voxel ou integração vertical. Esses domínios podem existir como consumidores ou adaptadores futuros, sem fazer parte da autoridade do D-Core.
+O D-Core fornece uma **autoridade canônica de estado** capaz de executar transições determinísticas dentro dos contratos declarados, preservar uma linha temporal verificável e expor evidência suficiente para detectar, localizar e recuperar divergências sem transferir autoridade de mutação para consumidores externos.
 
-## Capacidades suportadas
+## Estado de referência
 
-- estado canônico com transições determinísticas e `fixed tick`;
-- serialização canônica, hashes estáveis, SHA-256, Merkle e evidência encadeada;
-- checkpoints, histórico, replay e correção/ressimulação dentro da janela contratada;
-- localização de divergências por hash, SHA, Merkle e componente semântico;
-- recuperação, observabilidade, traces e support bundles com integridade verificável;
-- Host SDK instalável com ABI C estável 1.0 e handles opacos;
-- referência distribuída limitada a duas instâncias independentes em UDP loopback;
-- View Lab opcional, somente leitura, para inspeção de snapshots e traces.
-
-## Arquitetura e fronteiras
-
-```text
-host / adapter / ferramenta companheira
-                  │
-                  ▼
-       Host SDK ou integração oficial
-                  │
-                  ▼
-            NeoEng D-Core
-       autoridade canônica de estado
-                  │
-                  ▼
-       snapshots, replay e evidências
-```
-
-A dependência é unidirecional: hosts, UI, telemetria, renderers e adapters consomem o núcleo, mas não recebem autoridade para mutar o estado canônico. O módulo distribuído é uma referência de integração; ele não fornece consenso, quorum, BFT, multiwriter, transporte remoto de produção ou `exactly once` sem um host conforme.
-
-## Estado de validação
-
-| Item | Estado documentado |
+| Superfície | Estado |
 |---|---|
-| Baseline do produto | release `v1.14.1` publicado e aceito (tag no merge `e3fff973`) |
-| ChangeSets | CS001–CS015 preservados no histórico; CS015 histórico em `1.14.0` e aceito na candidata `1.14.1` |
-| Requisitos internos obrigatórios | Nenhum aberto no ledger atual |
-| Assurance de release | GCC/Clang Linux, clang-cl Windows, sanitizers, fuzzing, análise estática, SDK em prefixo limpo e evidência independente, conforme CS014 |
-| CS014 do release | Windows clang-cl, Linux GCC/Clang, sanitizers, fuzzing, clang-tidy e atestação: aprovado no run [`31387419484`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/31387419484) |
-| Verificação corretiva de proveniência | Run [`31246260738`](https://github.com/AiltonSantanaReis/NeoEng-D-Core/actions/runs/31246260738); não altera a baseline do produto |
-| Gates deferidos, não bloqueantes para CS015 | Qualificação nativa P0–P4/ARM64, long-run/power-loss, assurance externa e infraestrutura de deployment; continuam fora da aceitação horizontal |
-| Qualificação nativa, ARM64 e certificação | Não declaradas; dependem de campanhas e contratos específicos |
+| Release histórica aceita | `v1.14.1` |
+| Commit da release | `e3fff973554a2e56b8bd7afdc1132f75f3ec337c` |
+| Baseline administrativa desta modernização | `d092ac56290d76dddf51982549a98234f038f3ee` |
+| Host SDK | ABI C `1.0`, pacote CMake instalável |
+| Programa pós-release | `POST_1_14_1` ativo |
+| Estágio corrente | `EV-00`, ainda `not_started` |
+| ChangeSet planejado para EV-00 | `CS017` |
+| Nova release | não autorizada |
+| ARM64 / hardware nativo / certificação | não inferidos da baseline atual |
 
-Os números acima são evidências dos ambientes registrados. Eles não representam uma regra para qualquer outro computador. CPU, GPU, drivers, firmware, modo de energia, temperatura, virtualização e processos concorrentes podem alterar resultados.
+O estado normativo deve ser confirmado em [`docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`](docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md), [`audit/SOURCE_OF_TRUTH_INDEX.json`](audit/SOURCE_OF_TRUTH_INDEX.json) e nos ledgers apontados por esse índice. Este README é uma porta de entrada; não substitui essas autoridades.
 
-## Requisitos para construir
+## D-Core e D-Lab são projetos distintos
 
-O projeto é testado com:
+O **D-Core é o produto/runtime**. Um **D-Lab é infraestrutura externa de validação**. O D-Core possui contratos que definem como evidência externa pode ser usada no programa evolutivo, mas o laboratório não se torna parte do runtime e um resultado externo não amplia automaticamente claims do produto.
 
-- CMake `3.25` ou superior;
-- C++23;
-- Ninja;
-- Boost `1.80` ou superior em configuração CMake;
-- LLVM/clang-cl no Windows;
-- GCC ou Clang no Linux;
-- Git e o baseline de dependências indicado pelo manifesto vcpkg.
+```mermaid
+flowchart LR
+    HOST[Host / aplicação / adapter] --> SDK[Host SDK / integração oficial]
+    SDK --> CORE[NeoEng D-Core<br/>autoridade canônica]
+    CORE --> OBS[Snapshots / hashes / traces / recovery]
+    OBS --> HOST
 
-Os presets oficiais estão em [`CMakePresets.json`](CMakePresets.json):
-
-```text
-windows-clang-release
-windows-clang-debug
-linux-gcc-release
+    LAB[D-Lab externo] -. consome superfície suportada .-> SDK
+    LAB -. produz evidência, não autoridade de runtime .-> EVID[Evidência de validação]
 ```
 
-## Build e testes
+Em caso de conflito entre documentação de apresentação e os documentos normativos do D-Core, **os documentos normativos do D-Core prevalecem**.
 
-### Windows — caminho recomendado
+## Capacidades do produto
 
-Abra um Developer PowerShell do Visual Studio e execute:
+A baseline aceita documenta, dentro de escopos específicos:
 
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\scripts\windows\run-dcore.ps1 -BootstrapDependencies -FullTestSuite
+- estado canônico e transições determinísticas;
+- serialização canônica, stable hash, SHA-256 e Merkle;
+- checkpoints, histórico retido, rollback e ressimulação;
+- replay e reconstrução dentro das fronteiras contratuais;
+- localização de divergência e evidência de estado;
+- recuperação, observabilidade, traces e support bundles;
+- Host SDK C com handles opacos e ABI 1.0;
+- referência distribuída limitada a duas instâncias e UDP loopback;
+- View Lab opcional e somente leitura.
+
+Esses itens não devem ser lidos como promessa de desempenho universal, certificação, ARM64, consenso distribuído, transporte remoto de produção ou prontidão irrestrita para missão crítica. Consulte [`docs/commercial/PUBLIC_CLAIMS.md`](docs/commercial/PUBLIC_CLAIMS.md).
+
+## Arquitetura
+
+```mermaid
+flowchart TB
+    EXT[Host / integração externa]
+    SDK[Host SDK C / targets CMake]
+    CORE[Autoridade canônica]
+    TIME[Replay / rollback / checkpoints]
+    EVID[Hash / SHA-256 / Merkle / evidence]
+    REC[Recovery / traces / support bundle]
+    DIST[Distributed reference<br/>duas instâncias / loopback]
+    VIEW[View Lab<br/>somente leitura]
+
+    EXT --> SDK --> CORE
+    CORE --> TIME
+    CORE --> EVID
+    CORE --> REC
+    SDK --> DIST
+    CORE --> VIEW
 ```
 
-Para usar os comandos CMake diretamente:
+A arquitetura completa e suas fronteiras estão em [`docs/ARCHITECTURE_OVERVIEW.md`](docs/ARCHITECTURE_OVERVIEW.md).
 
-```powershell
-cmake --preset windows-clang-release
-cmake --build --preset windows-clang-release --parallel 2
-ctest --preset windows-clang-release --output-on-failure
-```
-
-O preset Windows pressupõe `VCPKG_ROOT` configurado e `clang-cl` disponível no ambiente do Developer PowerShell.
+## Quick start
 
 ### Linux
+
+Requisitos principais: CMake 3.25+, Ninja, C++23, GCC ou Clang e Boost 1.80+.
 
 ```bash
 cmake --preset linux-gcc-release
@@ -103,110 +96,104 @@ cmake --build --preset linux-gcc-release --parallel
 ctest --preset linux-gcc-release --output-on-failure
 ```
 
-O resultado deve ser reportado junto com sistema operacional, compilador, versão do CMake, commit, configuração e saída bruta dos testes.
+### Windows
 
-## Opções de build relevantes
+Use um Developer PowerShell com `clang-cl`, Ninja e `VCPKG_ROOT` configurados.
 
-As opções abaixo são controladas pelo CMake e não mudam a autoridade do núcleo:
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\windows\run-dcore.ps1 -BootstrapDependencies -FullTestSuite
+```
 
-| Opção | Uso |
-|---|---|
-| `NEOENG_DCORE_BUILD_HOST_SDK` | Gera o Host SDK instalável |
-| `NEOENG_DCORE_BUILD_DISTRIBUTED_REFERENCE` | Gera a referência distribuída de duas instâncias |
-| `NEOENG_DCORE_BUILD_VIEW_LAB` | Gera o diagnóstico visual somente leitura |
-| `NEOENG_ENABLE_SANITIZERS` | Habilita sanitizers nas campanhas compatíveis |
-| `NEOENG_ENABLE_LIBFUZZER` | Habilita os alvos de libFuzzer |
-| `NEOENG_WARNINGS_AS_ERRORS` | Trata warnings como erros; habilitado por padrão |
+Ou diretamente:
 
-## Integração com um host
+```powershell
+cmake --preset windows-clang-release
+cmake --build --preset windows-clang-release --parallel 2
+ctest --preset windows-clang-release --output-on-failure
+```
 
-Após instalar o pacote, o consumidor usa os targets exportados pelo CMake:
+Os presets oficiais estão em [`CMakePresets.json`](CMakePresets.json).
+
+## Consumindo o Host SDK
+
+Após instalar o pacote em um prefixo isolado:
 
 ```cmake
 find_package(NeoEngDCore CONFIG REQUIRED)
 
-target_link_libraries(meu_host
+target_link_libraries(my_host
     PRIVATE
         NeoEng::DCoreHostSdk
-        # Opcional, quando a referência distribuída for necessária:
-        # NeoEng::DCoreDistributedReference
 )
 ```
 
-O contrato C está em [`docs/contracts/HOST_SDK_C_ABI_V1.md`](docs/contracts/HOST_SDK_C_ABI_V1.md) e o header público está em [`modules/host_sdk/include/neoeng/dcore_host.h`](modules/host_sdk/include/neoeng/dcore_host.h). A ABI usa handles opacos, códigos de status estáveis, validação explícita e regras documentadas de thread e ownership; exceções C++ não atravessam a fronteira C.
+O contrato público está em [`docs/contracts/HOST_SDK_C_ABI_V1.md`](docs/contracts/HOST_SDK_C_ABI_V1.md), e o header C em [`modules/host_sdk/include/neoeng/dcore_host.h`](modules/host_sdk/include/neoeng/dcore_host.h).
 
-## View Lab
+Para lifecycle, threading, buffers, rollback, recovery e exemplos de integração, veja [`docs/INTEGRATION_GUIDE.md`](docs/INTEGRATION_GUIDE.md) e [`docs/USER_GUIDE_PT-BR.md`](docs/USER_GUIDE_PT-BR.md).
 
-O View Lab consome snapshots e traces sem alterar o estado canônico e sem introduzir dependência de renderização no núcleo:
+## Evidência, resultados e claims
 
-```powershell
-.\scripts\windows\run-view-lab.ps1 -BootstrapDependencies
-```
+Há três perguntas diferentes:
 
-Os artefatos gerados incluem diagnósticos determinísticos, imagens BMP e viewer HTML. Eles devem ser tratados como evidência de inspeção, não como uma nova autoridade de estado.
+1. **O código existe?**
+2. **O comportamento foi observado/verificado em determinado corpus e ambiente?**
+3. **A claim pública está autorizada com aquele escopo?**
 
-## Verificações normativas
+Essas perguntas não são intercambiáveis. Um CI verde não cria claim universal; uma execução em x86_64 não qualifica ARM64; um hash igual comprova identidade do estado observado, não a correção de toda regra de negócio.
 
-Os verificadores fail-closed conferem os ledgers, contratos e relatórios declarados:
+Use [`docs/RESULTS_AND_CLAIMS_GUIDE.md`](docs/RESULTS_AND_CLAIMS_GUIDE.md) antes de publicar conclusões técnicas.
 
-```powershell
-python .\scripts\generate_manifest.py --check
-python .\scripts\verify_product_contract.py
-python .\scripts\verify_product_assurance.py
-python .\scripts\verify_release_assurance.py
-python .\scripts\verify_consolidated_release.py --self-test
-```
+## Segurança e limites de confiança
 
-Os autotestes dos verificadores também cobrem cenários de adulteração. Uma aprovação confirma a coerência do pacote e das evidências declaradas; não substitui qualificação física, auditoria independente, certificação ou avaliação contratual externa.
+O D-Core implementa fronteiras e mecanismos de segurança, mas não deve ser apresentado como PKI, HSM, proteção DDoS de borda, consenso BFT, transporte WAN de produção ou certificação externa. Responsabilidades de host e deployment continuam explícitas.
 
-## Release, proveniência e evidência
+Consulte [`docs/SECURITY_AND_TRUST_BOUNDARIES.md`](docs/SECURITY_AND_TRUST_BOUNDARIES.md) e [`docs/contracts/PRODUCTION_SECURITY_V1.md`](docs/contracts/PRODUCTION_SECURITY_V1.md).
 
-Uma release deve ser analisada junto de seu manifesto, SBOM, proveniência, hashes e verificações independentes. O contrato de assurance está em [`docs/contracts/RELEASE_ASSURANCE_V1.md`](docs/contracts/RELEASE_ASSURANCE_V1.md). A baseline cumulativa aceita e seus limites estão registrados em [`docs/changesets/015/TEST_STATUS.md`](docs/changesets/015/TEST_STATUS.md), enquanto a campanha de release assurance está em [`docs/changesets/014/TEST_STATUS.md`](docs/changesets/014/TEST_STATUS.md).
+## Documentação
 
-O repositório não contém uma chave privada de assinatura. Quando uma distribuição exigir atestação externa, ela deve ser verificada pelo procedimento e pelos artefatos publicados para aquela release.
+Comece pelo [portal de documentação](docs/README.md).
 
-## Documentação normativa e de operação
-
-- [Guia de uso e integração (Markdown)](docs/USER_GUIDE_PT-BR.md)
-- [Guia de uso e integração (PDF)](output/pdf/NeoEng-D-Core-Guia-Usuario-v1.14.1.pdf)
-- [Fonte de verdade do produto](docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md)
-- [Índice de estado documental](docs/governance/DOCUMENT_STATUS_INDEX.md)
-- [Plano de fechamento do produto](docs/governance/PRODUCT_CLOSURE_PLAN.md)
-- [Padrão de conclusão do produto](docs/governance/PRODUCT_COMPLETION_STANDARD.md)
-- [Padrão de testes de assurance](docs/governance/PRODUCT_ASSURANCE_TEST_STANDARD.md)
-- [Claims públicas autorizadas](docs/commercial/PUBLIC_CLAIMS.md)
-- [Contrato de qualificação de hardware](docs/contracts/HARDWARE_QUALIFICATION_V2.md)
-- [Fronteira do Host SDK](docs/architecture/HOST_SDK_BOUNDARY.md)
-- [Fronteira da referência distribuída](docs/architecture/DISTRIBUTED_REFERENCE_BOUNDARY.md)
-- [Fronteira de segurança de produção](docs/architecture/PRODUCTION_SECURITY_BOUNDARY.md)
-- [Fronteira do View Lab](docs/architecture/VIEW_LAB_BOUNDARY.md)
-- [Ledger de gates deferidos](audit/DEFERRED_VALIDATION_GATES.json)
-- [Relatório histórico de auditoria](docs/AUDIT_STATUS.md)
-- [Avisos e atribuições](NOTICE.md)
+| Objetivo | Documento |
+|---|---|
+| Entender o produto | [`docs/ARCHITECTURE_OVERVIEW.md`](docs/ARCHITECTURE_OVERVIEW.md) |
+| Ver estado atual | [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) |
+| Integrar via Host SDK | [`docs/INTEGRATION_GUIDE.md`](docs/INTEGRATION_GUIDE.md) |
+| Guia operacional detalhado | [`docs/USER_GUIDE_PT-BR.md`](docs/USER_GUIDE_PT-BR.md) |
+| Interpretar resultados/claims | [`docs/RESULTS_AND_CLAIMS_GUIDE.md`](docs/RESULTS_AND_CLAIMS_GUIDE.md) |
+| Resolver problemas | [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) |
+| Segurança e trust boundaries | [`docs/SECURITY_AND_TRUST_BOUNDARIES.md`](docs/SECURITY_AND_TRUST_BOUNDARIES.md) |
+| Contratos normativos | [`docs/contracts/`](docs/contracts/) |
+| Fonte normativa de verdade | [`docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md`](docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md) |
+| Claims autorizadas | [`docs/commercial/PUBLIC_CLAIMS.md`](docs/commercial/PUBLIC_CLAIMS.md) |
+| Histórico de ChangeSets | [`docs/changesets/`](docs/changesets/) |
 
 ## Estrutura do repositório
 
 ```text
-include/                 headers públicos
-src/                     implementação do núcleo
-modules/                 Host SDK, referência distribuída e View Lab
-tests/                   testes C++
-scripts/                 build, verificação e campanhas
-apps/                    ferramentas, probes e fuzz targets
-cmake/                   exportação e suporte de build
-docs/                    arquitetura, contratos e ChangeSets
-audit/                   ledgers e relatórios de assurance
+include/        headers públicos do core
+src/            implementação do núcleo
+modules/        Host SDK, distributed reference e View Lab
+apps/           probes, benchmarks e ferramentas
+tests/          testes do produto
+scripts/        build, verificação e campanhas
+cmake/          package/export e suporte de build
+docs/           arquitetura, contratos, guias e registros
+audit/          ledgers e estado legível por máquina
 ```
 
-## Escopo e limites de declaração
+## Regra de leitura
 
-As claims públicas devem ser lidas em conjunto com [`docs/commercial/PUBLIC_CLAIMS.md`](docs/commercial/PUBLIC_CLAIMS.md) e [`audit/PRODUCT_CLAIMS_LEDGER.json`](audit/PRODUCT_CLAIMS_LEDGER.json). Não se deve inferir a partir desta documentação:
+A documentação de apresentação explica **como usar e interpretar** o produto. Os documentos normativos e ledgers determinam **o que o produto pode declarar**.
 
-- prontidão irrestrita para produção ou missão crítica;
-- desempenho garantido por hardware, CPU, GPU ou sistema operacional;
-- equivalência ARM64 ou qualificação nativa em qualquer máquina;
-- consenso distribuído, BFT, quorum, multiwriter ou transporte remoto de produção;
-- certificação, auditoria externa, PKI, custódia de chaves ou confiança em provider externo;
-- prontidão setorial, ROI ou conformidade regulatória sem campanha específica.
+Quando houver dúvida:
 
-Quando um novo ambiente, adapter, contrato ou requisito for necessário, ele deve ser tratado como uma campanha explicitamente definida, com corpus, configuração, evidência e decisão registrados. O README orienta o uso; a fonte normativa e os ledgers determinam o que pode ser declarado.
+```text
+Source of Truth / ledgers / contratos
+                ↓
+       estado e claims permitidos
+                ↓
+ README / guias / exemplos / apresentações
+```
+
+Não promova inferências de uma camada inferior para uma claim superior sem evidência e autoridade correspondentes.
