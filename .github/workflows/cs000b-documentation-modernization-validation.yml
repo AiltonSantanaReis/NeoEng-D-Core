@@ -1,11 +1,6 @@
 name: CS000B documentation modernization validation
 
 on:
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'audit/validation/CS000B/VALIDATION_RESULT.json'
-      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
   workflow_dispatch:
 
 permissions:

@@ -1,0 +1,36 @@
+{
+  "schema": "neoeng.dcore.documentation-control-plane-correction.v1",
+  "record_id": "DCORE_DOCUMENTATION_CONTROL_PLANE_CORRECTION_001",
+  "authority": "EXPLICIT_PROSPECTIVE_CORRECTION_AUTHORIZATION",
+  "failed_candidate_sha": "49e9edd36a4a7bae75b832231b55e360f7c41ae2",
+  "failed_cs000b_run_id": 32532596759,
+  "legacy_cs000a_run_id": 32532596760,
+  "correction_changeset": "CS000C",
+  "root_causes": [
+    {
+      "id": "CS000B_STATUS_LEXICAL_OVERCONSTRAINT",
+      "classification": "VERIFIER_REFERENCE_MECHANICS",
+      "description": "The CS000B status check bound release_authorized=false to one literal Portuguese substring instead of accepting unambiguous equivalent negative statements."
+    },
+    {
+      "id": "CS000A_STALE_PULL_REQUEST_TRIGGER",
+      "classification": "SUPERSEDED_WORKFLOW_APPLICABILITY",
+      "description": "The historical CS000A validation workflow remained selectable on unrelated future pull requests and applied its old ChangeSet-specific allowlist."
+    }
+  ],
+  "corrections": [
+    "Preserve the failed CS000B candidate, plan, verifier, documentation bytes and run evidence.",
+    "Do not rerun the failed CS000B source SHA.",
+    "Use a new CS000C verifier with semantic negative-release fixtures and explicit negative controls.",
+    "Retire automatic pull_request selection for superseded CS000A and failed CS000B workflows; preserve their bodies from permissions onward.",
+    "Validate the new correction on a new exact candidate SHA."
+  ],
+  "documentation_content_changed": false,
+  "runtime_changed": false,
+  "abi_changed": false,
+  "claims_changed": false,
+  "ev00_or_cs017_effect": "NONE",
+  "release_effect": "NONE",
+  "qualification_effect": "NONE",
+  "ready_merge_authority": false
+}

@@ -1,0 +1,47 @@
+name: CS000C documentation control-plane correction
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'audit/validation/CS000C/VALIDATION_RESULT.json'
+      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000C documentation control-plane correction
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Correction verifier negative self-test
+        run: python3 scripts/verify_documentation_control_plane_correction.py --self-test
+
+      - name: Verify failed CS000B attempt preservation
+        run: python3 scripts/verify_documentation_control_plane_correction.py --failed-attempt
+
+      - name: Verify correction-only delta
+        run: python3 scripts/verify_documentation_control_plane_correction.py --scope
+
+      - name: Verify release authorization semantics
+        run: python3 scripts/verify_documentation_control_plane_correction.py --status
+
+      - name: Verify superseded workflows are manual-only
+        run: python3 scripts/verify_documentation_control_plane_correction.py --legacy-applicability
+
+      - name: Verify D-Core and D-Lab separation
+        run: python3 scripts/verify_documentation_control_plane_correction.py --project-boundary
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000C/VALIDATION_PLAN.json
