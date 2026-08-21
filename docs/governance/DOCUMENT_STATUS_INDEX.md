@@ -36,7 +36,9 @@ A política corrente legível por máquina está em:
 - [`audit/CHANGESET_VALIDATION_POLICY.json`](../../audit/CHANGESET_VALIDATION_POLICY.json);
 - [`audit/CURRENT_CHANGESET_VALIDATION.json`](../../audit/CURRENT_CHANGESET_VALIDATION.json).
 
-O descriptor atual aponta para `CS000A`, que preserva o fechamento administrativo que tornou os workflows legados CS016 manuais. Isso não inicia `EV-00`, não autoriza `CS017` e não altera a release `v1.14.1`.
+Na `main` de base `d092ac56290d76dddf51982549a98234f038f3ee`, o descriptor preservado aponta para `CS000A`, fechamento administrativo que tornou os workflows legados CS016 manuais.
+
+Nesta branch de modernização documental, `CS000B` é ativado prospectivamente apenas como ChangeSet administrativo/documental de validação da candidata. O plano fica em [`../../audit/validation/CS000B/VALIDATION_PLAN.json`](../../audit/validation/CS000B/VALIDATION_PLAN.json). Essa ativação de branch não inicia `EV-00`, não inicia nem aceita `CS017`, não altera runtime/ABI e não autoriza nova release.
 
 ## Registros operacionais e de release
 
