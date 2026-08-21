@@ -1,0 +1,86 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000D",
+  "plan_commit": "0195a4f45d22e5bd8f048e4802e45c61322a9107",
+  "plan_sha256": "967aa64501f97d3a8e494793d5b5661dbdd4b8be8e428e102c9f49e88fb32cb9",
+  "source_sha": "0195a4f45d22e5bd8f048e4802e45c61322a9107",
+  "run_id": 32537691661,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000d-documentation-finalization-correction.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "finalization.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Finalization verifier negative self-test"
+    },
+    {
+      "test_id": "finalization.history-preserved",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000C evidence and closure failure preservation"
+    },
+    {
+      "test_id": "finalization.scope",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000D correction and closure-aware scope"
+    },
+    {
+      "test_id": "finalization.cs000c-retired",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000C workflow is manual-only"
+    },
+    {
+      "test_id": "finalization.documentation-preserved",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify documentation bytes remain preserved"
+    },
+    {
+      "test_id": "finalization.project-boundary",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify D-Core and D-Lab separation"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "changeset": "CS000B",
+      "run_id": 32532596759,
+      "run_attempt": 1,
+      "event": "pull_request",
+      "workflow_path": ".github/workflows/cs000b-documentation-modernization-validation.yml",
+      "source_sha": "49e9edd36a4a7bae75b832231b55e360f7c41ae2",
+      "result": "FAIL",
+      "failed_step": "Verify roadmap and release status binding",
+      "classification": "FAILED_INITIAL_CS000B_DOCUMENTATION_VALIDATION_CANDIDATE",
+      "rerun_allowed": false
+    },
+    {
+      "changeset": "CS000C",
+      "run_id": 32536496359,
+      "run_attempt": 1,
+      "event": "pull_request",
+      "workflow_path": ".github/workflows/cs000c-documentation-control-plane-correction.yml",
+      "source_sha": "9bc97328d9701a08fa9552893728c7e63788b710",
+      "result": "FAIL",
+      "failed_step": "Verify correction-only delta",
+      "classification": "FAILED_POST_ACCEPTANCE_CLOSURE_APPLICABILITY_ATTEMPT",
+      "rerun_allowed": false
+    }
+  ],
+  "qualification_effect": "NONE",
+  "product_runtime_abi_effect": "NONE",
+  "evolution_stage_effect": "NONE",
+  "release_effect": "NONE"
+}
