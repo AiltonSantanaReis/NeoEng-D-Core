@@ -1,11 +1,6 @@
 name: CS000C documentation control-plane correction
 
 on:
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'audit/validation/CS000C/VALIDATION_RESULT.json'
-      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
   workflow_dispatch:
 
 permissions:

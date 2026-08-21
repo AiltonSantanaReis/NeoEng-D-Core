@@ -1,0 +1,123 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000D",
+  "objective": "Prospectively correct post-acceptance documentation finalization applicability after the preserved CS000C closure failure, without rewriting CS000C evidence or changing prepared D-Core documentation, runtime, ABI, claims, evolution, release, or qualification semantics.",
+  "base_sha": "d092ac56290d76dddf51982549a98234f038f3ee",
+  "execution_workflow": ".github/workflows/cs000d-documentation-finalization-correction.yml",
+  "required_tests": [
+    {
+      "test_id": "finalization.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Finalization verifier negative self-test"
+    },
+    {
+      "test_id": "finalization.history-preserved",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000C evidence and closure failure preservation"
+    },
+    {
+      "test_id": "finalization.scope",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000D correction and closure-aware scope"
+    },
+    {
+      "test_id": "finalization.cs000c-retired",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify CS000C workflow is manual-only"
+    },
+    {
+      "test_id": "finalization.documentation-preserved",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify documentation bytes remain preserved"
+    },
+    {
+      "test_id": "finalization.project-boundary",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify D-Core and D-Lab separation"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000D documentation finalization control-plane correction",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    ".github/workflows/cs000a-legacy-retirement-validation.yml",
+    ".github/workflows/cs000b-documentation-modernization-validation.yml",
+    ".github/workflows/cs000c-documentation-control-plane-correction.yml",
+    ".github/workflows/cs000d-documentation-finalization-correction.yml",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_documentation_modernization.py",
+    "scripts/verify_documentation_control_plane_correction.py",
+    "scripts/verify_documentation_finalization_control_plane.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/validation/CS000B/VALIDATION_PLAN.json",
+    "audit/validation/CS000B/FAILED_ATTEMPT_001.json",
+    "audit/validation/CS000C/VALIDATION_PLAN.json",
+    "audit/validation/CS000C/VALIDATION_RESULT.json",
+    "audit/validation/CS000C/FAILED_CLOSURE_ATTEMPT_001.json",
+    "audit/validation/CS000D/VALIDATION_PLAN.json",
+    "README.md",
+    "ABOUT.md",
+    "docs/README.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md",
+    "docs/maintenance/DCORE_DOCUMENTATION_MODERNIZATION_PREPARATION.json",
+    "docs/maintenance/DCORE_DOCUMENTATION_CONTROL_PLANE_CORRECTION_001.json",
+    "docs/maintenance/DCORE_DOCUMENTATION_FINALIZATION_CONTROL_PLANE_CORRECTION_001.json",
+    "docs/changesets/000B/CHANGESET.md",
+    "docs/changesets/000C/CHANGESET.md",
+    "docs/changesets/000D/CHANGESET.md"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false,
+  "reference_closure_sha": "9bc97328d9701a08fa9552893728c7e63788b710",
+  "reference_closure_tree": "c2b32cb95d609dc3cec900bb36dbf937bdf2d979",
+  "preserved_cs000c_qualifying_source_sha": "87d8749cf81964afd4b1e5b35f1bdffbba7851f2",
+  "preserved_cs000c_qualifying_run_id": 32535065912,
+  "preserved_cs000c_qualifying_run_attempt": 1,
+  "preserved_cs000c_closure_failure_run_id": 32536496359,
+  "preserved_cs000c_closure_failure_run_attempt": 1,
+  "correction_delta_from_closure_failure": [
+    ".github/workflows/cs000c-documentation-control-plane-correction.yml",
+    ".github/workflows/cs000d-documentation-finalization-correction.yml",
+    "audit/validation/CS000C/FAILED_CLOSURE_ATTEMPT_001.json",
+    "audit/validation/CS000D/VALIDATION_PLAN.json",
+    "docs/changesets/000D/CHANGESET.md",
+    "docs/maintenance/DCORE_DOCUMENTATION_FINALIZATION_CONTROL_PLANE_CORRECTION_001.json",
+    "scripts/verify_documentation_finalization_control_plane.py"
+  ],
+  "controlled_closure_artifact_paths": [
+    "audit/CURRENT_CHANGESET_VALIDATION.json",
+    "audit/validation/CS000D/VALIDATION_RESULT.json"
+  ],
+  "documentation_paths_preserved_from_closure_failure": [
+    "README.md",
+    "ABOUT.md",
+    "docs/README.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md"
+  ],
+  "qualification_effect": "NONE",
+  "product_runtime_abi_effect": "NONE",
+  "evolution_stage_effect": "NONE",
+  "release_effect": "NONE"
+}

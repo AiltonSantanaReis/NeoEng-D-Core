@@ -1,0 +1,23 @@
+{
+  "schema": "neoeng.dcore.documentation-finalization-control-plane-correction.v1",
+  "record_id": "DCORE_DOCUMENTATION_FINALIZATION_CONTROL_PLANE_CORRECTION_001",
+  "changeset": "CS000D",
+  "reference_closure_sha": "9bc97328d9701a08fa9552893728c7e63788b710",
+  "reference_closure_tree": "c2b32cb95d609dc3cec900bb36dbf937bdf2d979",
+  "preserved_accepted_changeset": "CS000C",
+  "preserved_accepted_source_sha": "87d8749cf81964afd4b1e5b35f1bdffbba7851f2",
+  "preserved_accepted_run_id": 32535065912,
+  "preserved_accepted_run_attempt": 1,
+  "preserved_failed_closure_run_id": 32536496359,
+  "preserved_failed_closure_run_attempt": 1,
+  "root_cause": "CS000C automatic pull-request applicability remained active after evidence binding; its frozen scope verifier rejected the legitimate closure descriptor and validation-result paths.",
+  "correction": "Retire CS000C automatic applicability and introduce a closure-aware CS000D scope that allows only the frozen candidate delta plus the two controlled CS000D closure artifacts.",
+  "documentation_bytes_changed": false,
+  "product_runtime_abi_effect": "NONE",
+  "product_test_effect": "NONE",
+  "normative_claim_effect": "NONE",
+  "evolution_stage_effect": "NONE",
+  "release_effect": "NONE",
+  "qualification_effect": "NONE",
+  "dlab_import_effect": "NONE"
+}
