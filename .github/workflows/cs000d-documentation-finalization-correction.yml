@@ -1,0 +1,44 @@
+name: CS000D documentation finalization control-plane correction
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000D documentation finalization control-plane correction
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Finalization verifier negative self-test
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --self-test
+
+      - name: Verify CS000C evidence and closure failure preservation
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --history
+
+      - name: Verify CS000D correction and closure-aware scope
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --scope
+
+      - name: Verify CS000C workflow is manual-only
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --cs000c-retired
+
+      - name: Verify documentation bytes remain preserved
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --documentation
+
+      - name: Verify D-Core and D-Lab separation
+        run: python3 scripts/verify_documentation_finalization_control_plane.py --project-boundary
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000D/VALIDATION_PLAN.json

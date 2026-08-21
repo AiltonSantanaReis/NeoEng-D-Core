@@ -1,0 +1,32 @@
+{
+  "schema": "neoeng.dcore.failed-changeset-attempt.v1",
+  "changeset": "CS000B",
+  "source_sha": "49e9edd36a4a7bae75b832231b55e360f7c41ae2",
+  "source_tree": "73d40076a1e2a3e57ae00c850b41ad2d891c79cc",
+  "run_id": 32532596759,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000b-documentation-modernization-validation.yml",
+  "event": "pull_request",
+  "conclusion": "failure",
+  "failed_step": "Verify roadmap and release status binding",
+  "classification": "FAILED_INITIAL_CS000B_DOCUMENTATION_VALIDATION_CANDIDATE",
+  "failure_details": [
+    "ABOUT.md used the semantically correct phrase 'sem autorização de nova release', while the frozen verifier required the literal substring 'não autorizada'.",
+    "docs/PROJECT_STATUS.md expressed release authorization as false and used equivalent negative wording, while the frozen verifier required the same literal substring."
+  ],
+  "required_tests_observed": {
+    "docs.verifier-self-test": "PASS",
+    "docs.scope": "PASS",
+    "docs.protected-bytes": "PASS",
+    "docs.markdown-integrity": "PASS",
+    "docs.status-binding": "FAIL",
+    "docs.project-boundary": "NOT_EXECUTED_AFTER_FAILURE",
+    "changeset.plan-structure": "NOT_EXECUTED_AFTER_FAILURE"
+  },
+  "protected_base_files_verified_byte_identical": 858,
+  "rerun_allowed": false,
+  "preserve_failure": true,
+  "qualification_effect": "NONE",
+  "product_runtime_abi_effect": "NONE",
+  "release_effect": "NONE"
+}

@@ -1,0 +1,145 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000B",
+  "objective": "Validate the documentation-only modernization of NeoEng D-Core while preserving product/runtime/ABI, normative claims, historical evidence, the POST_1_14_1 roadmap, and the separation between D-Core and external D-Lab validation.",
+  "base_sha": "d092ac56290d76dddf51982549a98234f038f3ee",
+  "execution_workflow": ".github/workflows/cs000b-documentation-modernization-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "docs.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verifier negative self-test"
+    },
+    {
+      "test_id": "docs.scope",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify documentation-only scope"
+    },
+    {
+      "test_id": "docs.protected-bytes",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify protected base bytes"
+    },
+    {
+      "test_id": "docs.markdown-integrity",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify Markdown links and fences"
+    },
+    {
+      "test_id": "docs.status-binding",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify roadmap and release status binding"
+    },
+    {
+      "test_id": "docs.project-boundary",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify D-Core and D-Lab separation"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000B documentation modernization validation",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    ".github/workflows/cs000b-documentation-modernization-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_documentation_modernization.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/validation/CS000B/VALIDATION_PLAN.json",
+    "README.md",
+    "ABOUT.md",
+    "docs/README.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md",
+    "docs/maintenance/DCORE_DOCUMENTATION_MODERNIZATION_PREPARATION.json",
+    "docs/changesets/000B/CHANGESET.md"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false,
+  "documentation_preparation_commit": "887482da87e823677514f87152a3d944b177c9a0",
+  "documentation_preparation_tree": "268b2fc2f4529d623d7e50e4f7950ddc0a3dd32f",
+  "allowed_changed_paths": [
+    ".github/workflows/cs000b-documentation-modernization-validation.yml",
+    "ABOUT.md",
+    "README.md",
+    "audit/CURRENT_CHANGESET_VALIDATION.json",
+    "audit/validation/CS000B/VALIDATION_PLAN.json",
+    "audit/validation/CS000B/VALIDATION_RESULT.json",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/README.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/changesets/000B/CHANGESET.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md",
+    "docs/maintenance/DCORE_DOCUMENTATION_MODERNIZATION_PREPARATION.json",
+    "scripts/verify_documentation_modernization.py"
+  ],
+  "required_candidate_paths": [
+    ".github/workflows/cs000b-documentation-modernization-validation.yml",
+    "ABOUT.md",
+    "README.md",
+    "audit/CURRENT_CHANGESET_VALIDATION.json",
+    "audit/validation/CS000B/VALIDATION_PLAN.json",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/README.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/changesets/000B/CHANGESET.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md",
+    "docs/maintenance/DCORE_DOCUMENTATION_MODERNIZATION_PREPARATION.json",
+    "scripts/verify_documentation_modernization.py"
+  ],
+  "documentation_paths": [
+    "README.md",
+    "ABOUT.md",
+    "docs/README.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/ARCHITECTURE_OVERVIEW.md",
+    "docs/INTEGRATION_GUIDE.md",
+    "docs/RESULTS_AND_CLAIMS_GUIDE.md",
+    "docs/TROUBLESHOOTING.md",
+    "docs/SECURITY_AND_TRUST_BOUNDARIES.md",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md"
+  ],
+  "changeset_record": "docs/changesets/000B/CHANGESET.md",
+  "protected_base_exclusions": [
+    "README.md",
+    "audit/CURRENT_CHANGESET_VALIDATION.json",
+    "docs/governance/DOCUMENT_STATUS_INDEX.md"
+  ],
+  "status_expectations": {
+    "project_version": "1.14.1",
+    "release_tag": "v1.14.1",
+    "release_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "program_id": "POST_1_14_1",
+    "program_state": "active",
+    "current_stage": "EV-00",
+    "current_stage_status": "not_started",
+    "planned_changeset": "CS017",
+    "release_authorized": false
+  },
+  "qualification_effect": "NONE",
+  "product_runtime_abi_effect": "NONE",
+  "evolution_stage_effect": "NONE",
+  "release_effect": "NONE"
+}

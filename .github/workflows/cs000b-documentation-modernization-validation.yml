@@ -1,0 +1,42 @@
+name: CS000B documentation modernization validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000B documentation modernization validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verifier negative self-test
+        run: python3 scripts/verify_documentation_modernization.py --self-test
+
+      - name: Verify documentation-only scope
+        run: python3 scripts/verify_documentation_modernization.py --scope
+
+      - name: Verify protected base bytes
+        run: python3 scripts/verify_documentation_modernization.py --protected-bytes
+
+      - name: Verify Markdown links and fences
+        run: python3 scripts/verify_documentation_modernization.py --markdown
+
+      - name: Verify roadmap and release status binding
+        run: python3 scripts/verify_documentation_modernization.py --status
+
+      - name: Verify D-Core and D-Lab separation
+        run: python3 scripts/verify_documentation_modernization.py --project-boundary
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000B/VALIDATION_PLAN.json
