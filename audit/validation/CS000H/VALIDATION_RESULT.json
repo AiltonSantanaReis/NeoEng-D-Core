@@ -1,0 +1,73 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000H",
+  "plan_commit": "ae2202d612ee8c2f288fb8146cfd377c2bb0f15d",
+  "plan_sha256": "274fa5aaca2540e49e7b9d57fd09b42d5f88664be7679de4f087a04938fffa46",
+  "source_sha": "151779d6661b9efedbb9a9123265d8039aabdcab",
+  "run_id": 32554925432,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000h-authorizer-selftest-lifecycle-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000h.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "CS000H verifier negative self-test"
+    },
+    {
+      "test_id": "cs000h.wrapper-preservation",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify prior wrapper preservation and semantic isolation"
+    },
+    {
+      "test_id": "cs000h.r8-failure-history",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify preserved R8 failure and live GitHub history"
+    },
+    {
+      "test_id": "cs000h.authorizer-behavior",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify lifecycle-independent authorizer behavior"
+    },
+    {
+      "test_id": "cs000h.future-applicability",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify CS000H workflow is path-scoped"
+    },
+    {
+      "test_id": "cs000h.scope",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify CS000H administrative-only scope"
+    },
+    {
+      "test_id": "cs000h.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify no EV-00 or product effects"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000H authorizer self-test lifecycle correction",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_tests": "NONE",
+    "ev00": "NOT_STARTED",
+    "cs017": "NOT_STARTED",
+    "authorizer": "SELF_TEST_ONLY_CORRECTION_RUNTIME_AUTHORIZATION_SEMANTICS_PRESERVED",
+    "release": "NOT_AUTHORIZED",
+    "qualification": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
