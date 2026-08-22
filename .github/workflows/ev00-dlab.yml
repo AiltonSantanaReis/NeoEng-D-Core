@@ -1,0 +1,207 @@
+name: EV-00 D-Lab evidence validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/dlab/ev00/**'
+      - '.github/workflows/ev00-dlab.yml'
+      - 'docs/changesets/017/**'
+      - 'audit/validation/CS017/**'
+      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
+      - 'audit/EVOLUTION_ROADMAP.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: EV-00 D-Lab evidence validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify R19 stage scope and R9-R18 preservation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import copy, fnmatch, json, subprocess
+          from pathlib import Path
+          BASE='3ebb989c5aaca65501ddbc5e552e1f751079e310'; PRODUCT='e3fff973554a2e56b8bd7afdc1132f75f3ec337c'
+          def read(p): return json.loads(Path(p).read_text(encoding='utf-8'))
+          def base(p): return json.loads(subprocess.run(['git','show',f'{BASE}:{p}'],text=True,capture_output=True,check=True).stdout)
+          def st(d): return next(x for x in d['stages'] if x['stage_id']=='EV-00')
+          b=base('audit/EVOLUTION_ROADMAP.json'); c=read('audit/EVOLUTION_ROADMAP.json')
+          if st(b)['status']!='not_started' or st(c)['status']!='in_progress': raise SystemExit('EV-00 lifecycle mismatch')
+          n=copy.deepcopy(c); st(n)['status']='not_started'
+          if n!=b or c.get('release_authorized') is not False: raise SystemExit('roadmap drift outside EV-00 start')
+          scope=read('docs/changesets/017/ACTION_SCOPE.json')
+          if scope.get('control_base_commit')!=BASE or scope.get('source_under_test',{}).get('commit')!=PRODUCT: raise SystemExit('scope binding mismatch')
+          preds={x['revision']:x for x in scope.get('predecessor_attempts',[])}
+          if set(preds)!={'R9','R10','R11','R12','R13','R14','R15','R16','R17','R18'} or any(x.get('reusable_as_qualifying_evidence') is not False for x in preds.values()): raise SystemExit('predecessor preservation mismatch')
+          r18=read('docs/changesets/017/R18_STATIC_VALIDATION_FAILURE.json')
+          if r18.get('classification')!='FAILED_NONQUALIFYING_STATIC_VALIDATION_CONTROL_TREE_BASELINE_CONTAMINATION_BY_AUTHORIZER_BYTECODE_CACHE' or r18.get('canonical_plan_commit')!='dff0954dc45a46530fe5be3766fbf84c674a2a5c' or r18.get('physical_preflight_executed') is not False or r18.get('reusable_as_qualifying_evidence') is not False: raise SystemExit('R18 failure record mismatch')
+          hashes={
+            'docs/changesets/017/R5_FAILURE_RECORD.json':'02012335696e2fcfeba1516f61f79e15cdd588c5','docs/changesets/017/R6_FAILURE_RECORD.json':'9906b34cc95b50fec8665d482ce77b89a9c304fb','docs/changesets/017/R7_PREPARATION_RECORD.json':'a794910318fe4e8bec38eb804e7e5a011a05c979','docs/changesets/017/R9_PHYSICAL_ATTEMPT1_FAILURE.json':'5bc1b418e60628eb5ff3ec8eee8b3a07e25151ac','docs/changesets/017/R10_PHYSICAL_ATTEMPT1_FAILURE.json':'b154581380797389610fca45b49333d867cbbe0a','docs/changesets/017/R11_PHYSICAL_ATTEMPT1_FAILURE.json':'58eeab7d08beaa0b4f89ce54098eafa13e06927d','docs/changesets/017/R12_STATIC_VALIDATION_FAILURE.json':'857fdce7fdc9401f46687dc4d1a0751485d62155','docs/changesets/017/R13_PHYSICAL_ATTEMPT1_FAILURE.json':'7cc94c43dd6311e192125cdc5baccd3476eeffa8','docs/changesets/017/R14_PHYSICAL_ATTEMPT1_FAILURE.json':'12db81e4a17749e946b15c0cf3093b34c533153d','docs/changesets/017/R15_STATIC_VALIDATION_FAILURE.json':'d8ebc9390acff0f8452d30389c2d6ea300996472','docs/changesets/017/R16_PHYSICAL_PREFLIGHT_FAILURE.json':'01588eb92e4ad83d61f6762e34a4ef109a844d99','docs/changesets/017/R17_PHYSICAL_PREFLIGHT_FAILURE.json':'ff65f9864a5b44289dfbda0c0bda1fe3798295f6','docs/changesets/017/R18_STATIC_VALIDATION_FAILURE.json':'ae172a67cb6bdbb72b811d49e7a44c131015750b','scripts/dlab/ev00/invoke_ev00_r18.ps1':'7400d9675d1f107bb06cf047c18d37b5fed378b7','scripts/dlab/ev00/invoke_ev00_r17.ps1':'09540ceafbeb1336489911897e9b2f7f156f5114','scripts/dlab/ev00/invoke_ev00_r16.ps1':'62ad1a38081ab2778dc2eb3f045cc5f3395cb6c1','scripts/dlab/ev00/run_ev00_dlab_windows.ps1':'2c8f2d41f708dfad27361b1e47774e536b87ade2','scripts/dlab/ev00/run_ev00_dlab_windows_r15.ps1':'2c8f2d41f708dfad27361b1e47774e536b87ade2','scripts/dlab/ev00/verify_ev00_dlab_evidence.py':'b7cff33bbd705f2ba102630899d1ca5fede862f6','scripts/dlab/ev00/verify_ev00_dlab_evidence_r16.py':'b7cff33bbd705f2ba102630899d1ca5fede862f6','scripts/dlab/ev00/verify_ev00_dlab_evidence_r15.py':'6cab62513c717081e4f3f709ad916a850c4244bb'}
+          for p,e in hashes.items():
+              g=subprocess.run(['git','hash-object',p],text=True,capture_output=True,check=True).stdout.strip()
+              if g!=e: raise SystemExit(f'preserved bytes changed: {p} got={g} expected={e}')
+          maxima=read('audit/STAGE_SCOPE_MAXIMA.json'); m=next(x for x in maxima['stages'] if x['stage_id']=='EV-00')
+          allowed=list(m['allowed_patterns'])+['audit/validation/CS017/**','audit/CURRENT_CHANGESET_VALIDATION.json']; forbidden=list(m['mandatory_forbidden_patterns'])
+          for p in subprocess.run(['git','diff','--name-only',f'{BASE}...HEAD'],text=True,capture_output=True,check=True).stdout.splitlines():
+              if any(fnmatch.fnmatch(p,q) for q in forbidden): raise SystemExit(f'forbidden path: {p}')
+              if not any(fnmatch.fnmatch(p,q) for q in allowed): raise SystemExit(f'out-of-scope path: {p}')
+          print('R19 scope/history: PASS')
+          PY
+
+      - name: Canonical evolution authorizer self-test
+        run: python3 -B scripts/authorize_evolution_action.py --self-test
+
+      - name: Authorize EV-00 start state
+        run: python3 -B scripts/authorize_evolution_action.py --action start_stage --changeset CS017 --stage EV-00
+
+      - name: Authorize exact R19 harness paths
+        run: >-
+          python3 -B scripts/authorize_evolution_action.py --action stage_operation --changeset CS017 --stage EV-00
+          --path scripts/dlab/ev00/invoke_ev00_r19.ps1 --path scripts/dlab/ev00/invoke_ev00_r18.ps1
+          --path scripts/dlab/ev00/invoke_ev00_r17.ps1 --path scripts/dlab/ev00/run_ev00_dlab_windows.ps1
+          --path scripts/dlab/ev00/run_ev00_dlab_windows_r15.ps1 --path scripts/dlab/ev00/verify_ev00_dlab_evidence.py
+          --path scripts/dlab/ev00/verify_ev00_dlab_evidence_r16.py --path scripts/dlab/ev00/verify_ev00_dlab_evidence_r15.py
+          --path .github/workflows/ev00-dlab.yml --path docs/changesets/017/LOCAL_DLAB_RUNBOOK.md
+          --path docs/changesets/017/HISTORICAL_ASSURANCE_PROVENANCE_PLAN.json
+
+      - name: Evidence verifier self-test without control-tree side effects
+        shell: bash
+        run: |
+          set -euo pipefail
+          before="$(git status --porcelain --untracked-files=all)"
+          [[ -z "$before" ]] || { echo "tree dirty before verifier self-test"; printf '%s\n' "$before"; exit 1; }
+          python3 -B scripts/dlab/ev00/verify_ev00_dlab_evidence.py --self-test
+          after="$(git status --porcelain --untracked-files=all)"
+          [[ -z "$after" ]] || { echo "verifier self-test dirtied control tree"; printf '%s\n' "$after"; exit 1; }
+          echo 'R19 verifier self-test no-side-effect invariant: PASS'
+
+      - name: PowerShell harness syntax check
+        shell: pwsh
+        run: |
+          foreach ($p in @('scripts/dlab/ev00/invoke_ev00_r19.ps1','scripts/dlab/ev00/invoke_ev00_r18.ps1','scripts/dlab/ev00/invoke_ev00_r17.ps1','scripts/dlab/ev00/run_ev00_dlab_windows.ps1')) {
+            $errors=$null; [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $p),[ref]$null,[ref]$errors)
+            if ($errors.Count -ne 0) { $errors | ForEach-Object { Write-Error "$p :: $($_.Message)" }; exit 1 }
+          }
+          Write-Host 'PowerShell syntax: PASS'
+
+      - name: Execute preserved R17 CTest parser import regression
+        shell: pwsh
+        run: |
+          $wrapper=(Resolve-Path 'scripts/dlab/ev00/invoke_ev00_r17.ps1').Path
+          $runner=(Resolve-Path 'scripts/dlab/ev00/run_ev00_dlab_windows.ps1').Path
+          $tokens=$null; $errors=$null
+          $ast=[System.Management.Automation.Language.Parser]::ParseFile($wrapper,[ref]$tokens,[ref]$errors)
+          if ($errors.Count -ne 0) { throw 'R17 wrapper parse failed.' }
+          $import=$ast.Find({ param($node) $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $node.Name -eq 'Import-CtestParser' },$true)
+          if ($null -eq $import) { throw 'R17 Import-CtestParser missing.' }
+          Invoke-Expression $import.Extent.Text
+          Import-CtestParser -Runner $runner
+          if ($null -eq (Get-Command Parse-CtestInventory -CommandType Function -ErrorAction SilentlyContinue)) { throw 'Parse-CtestInventory not visible after importer returned.' }
+          $normative=(Resolve-Path 'docs/changesets/015/evidence/github-actions-run-30375982639/raw/windows-clang-cl-ctest.txt').Path
+          $parsed=Parse-CtestInventory $normative
+          if ($parsed.percent -ne 100 -or $parsed.failed -ne 0 -or $parsed.total -ne 54 -or @($parsed.names).Count -ne 54) { throw 'Imported parser failed normative reference.' }
+          Write-Host 'Preserved R17 parser import execution: PASS'
+
+      - name: Verify R19 adapter preservation and static hygiene correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import subprocess
+          from pathlib import Path
+          r19=Path('scripts/dlab/ev00/invoke_ev00_r19.ps1').read_text(encoding='utf-8')
+          r18=Path('scripts/dlab/ev00/invoke_ev00_r18.ps1').read_text(encoding='utf-8')
+          if subprocess.run(['git','hash-object','scripts/dlab/ev00/invoke_ev00_r19.ps1'],text=True,capture_output=True,check=True).stdout.strip()!='1c7e0f7eff28ebe8c66c2d93888e4e6324cef41b': raise SystemExit('R19 adapter mismatch')
+          if subprocess.run(['git','hash-object','scripts/dlab/ev00/invoke_ev00_r18.ps1'],text=True,capture_output=True,check=True).stdout.strip()!='7400d9675d1f107bb06cf047c18d37b5fed378b7': raise SystemExit('R18 adapter snapshot mismatch')
+          if subprocess.run(['git','hash-object','scripts/dlab/ev00/invoke_ev00_r17.ps1'],text=True,capture_output=True,check=True).stdout.strip()!='09540ceafbeb1336489911897e9b2f7f156f5114': raise SystemExit('R17 wrapper snapshot mismatch')
+          if subprocess.run(['git','hash-object','scripts/dlab/ev00/run_ev00_dlab_windows.ps1'],text=True,capture_output=True,check=True).stdout.strip()!='2c8f2d41f708dfad27361b1e47774e536b87ade2': raise SystemExit('runtime runner changed')
+          if subprocess.run(['git','hash-object','scripts/dlab/ev00/verify_ev00_dlab_evidence.py'],text=True,capture_output=True,check=True).stdout.strip()!='b7cff33bbd705f2ba102630899d1ca5fede862f6': raise SystemExit('runtime verifier changed')
+          for token in ["PYTHONDONTWRITEBYTECODE = '1'",'status --porcelain --untracked-files=all','invoke_ev00_r17.ps1','wrapper/runner delegation changed the control tree']:
+              if token not in r19: raise SystemExit(f'R19 adapter token missing: {token}')
+          normalized=r19.replace('R19','R18')
+          if normalized!=r18: raise SystemExit('R19 physical adapter differs from R18 beyond revision identifiers')
+          print('R19 physical adapter preservation: PASS')
+          PY
+
+      - name: Verify R19 historical assurance provenance plan
+        run: |
+          python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          PRODUCT='e3fff973554a2e56b8bd7afdc1132f75f3ec337c'
+          p=json.loads(Path('docs/changesets/017/HISTORICAL_ASSURANCE_PROVENANCE_PLAN.json').read_text(encoding='utf-8')); rows=p.get('entries',[])
+          if p.get('schema')!='neoeng.dlab.ev00-historical-assurance-plan.v1' or p.get('baseline_commit')!=PRODUCT or len(rows)!=15 or {x.get('changeset') for x in rows}!={f'CS{i:03d}' for i in range(1,16)}: raise SystemExit('historical provenance plan coverage/binding mismatch')
+          for row in rows:
+              commit=row['historical_commit']; cs=row['changeset']
+              if subprocess.run(['git','merge-base','--is-ancestor',commit,PRODUCT]).returncode!=0: raise SystemExit(f'commit not in baseline ancestry: {cs}')
+              for rel in row['evidence_paths']:
+                  if subprocess.run(['git','cat-file','-e',f'{commit}:{rel}']).returncode!=0 or not Path(rel).is_file(): raise SystemExit(f'evidence provenance invalid: {cs} {rel}')
+          print('R19 historical assurance provenance: PASS')
+          PY
+
+      - name: Verify canonical CS017 validation plan
+        run: |
+          python3 - <<'PY'
+          import json
+          p=json.load(open('audit/validation/CS017/VALIDATION_PLAN.json',encoding='utf-8')); tests=p.get('required_tests',[]); ids=[x.get('test_id') for x in tests]
+          req={'ev00.r19-scope-history','ev00.verifier-self-test-no-side-effect','ev00.r19-parser-import-regression','ev00.r19-adapter-preservation','ev00.r19-static-clean-tree','ev00.r19-historical-provenance','ev00.ctest','ev00.replay-rollback','ev00.historical-assurance','ev00.terminal'}
+          if p.get('schema')!='neoeng.dcore.changeset-validation-plan.v1' or p.get('changeset')!='CS017' or len(ids)!=len(set(ids)) or any(x.get('required') is not True for x in tests) or not req.issubset(ids) or p.get('acceptance_requires_all_required_pass') is not True or p.get('allow_test_removal_after_execution') is not False: raise SystemExit('R19 plan structure invalid')
+          print('CS017 R19 validation plan: PASS')
+          PY
+
+      - name: Verify complete static control tree remains clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          status="$(git status --porcelain --untracked-files=all)"
+          [[ -z "$status" ]] || { echo 'R19 static controls dirtied checkout'; printf '%s\n' "$status"; exit 1; }
+          echo 'R19 static clean-tree invariant: PASS'
+
+      - name: Resolve committed qualifying evidence
+        id: evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='docs/changesets/017/evidence/local-windows/ACTIVE_LOCAL_RUN.json'
+          if [[ ! -f "$marker" ]]; then echo 'active=false' >> "$GITHUB_OUTPUT"; echo 'R19 static plan-frozen mode'; exit 0; fi
+          run_id=$(python3 -B -c "import json; print(json.load(open('$marker',encoding='utf-8'))['run_id'])"); evidence="docs/changesets/017/evidence/local-windows/$run_id"
+          [[ -d "$evidence" ]] || { echo "active evidence directory missing: $evidence"; exit 1; }
+          echo 'active=true' >> "$GITHUB_OUTPUT"; echo "run_id=$run_id" >> "$GITHUB_OUTPUT"; echo "evidence=$evidence" >> "$GITHUB_OUTPUT"
+
+      - name: Verify plan-commit and harness-SHA binding
+        if: steps.evidence.outputs.active == 'true'
+        shell: bash
+        run: |
+          plan_commit=$(git log -n 1 --format=%H HEAD -- audit/validation/CS017/VALIDATION_PLAN.json)
+          python3 -B - '${{ steps.evidence.outputs.evidence }}/run-identity.json' "$plan_commit" <<'PY'
+          import json,sys
+          p=json.load(open(sys.argv[1],encoding='utf-8')); product='e3fff973554a2e56b8bd7afdc1132f75f3ec337c'
+          if p.get('harness_sha')!=sys.argv[2] or p.get('product_sha')!=product or p.get('source_head')!=product: raise SystemExit('plan/product/source binding mismatch')
+          PY
+
+      - name: Verify committed physical evidence matrix
+        if: steps.evidence.outputs.active == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail; evidence='${{ steps.evidence.outputs.evidence }}'
+          for check in source environment fresh-build ctest determinism host-sdk replay-rollback state-evidence support-bundle release-gate manifest historical-comparison terminal; do python3 -B scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence "$evidence" --repo-root . --check "$check"; done
+
+      - name: Verify CS001-CS015 historical assurance
+        if: steps.evidence.outputs.active == 'true'
+        shell: bash
+        run: |
+          result='docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json'; [[ -f "$result" ]] || { echo 'HISTORICAL_ASSURANCE_RESULT.json required with active evidence'; exit 1; }
+          python3 -B scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence }}' --repo-root . --check historical-assurance

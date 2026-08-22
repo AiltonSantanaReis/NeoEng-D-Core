@@ -1,0 +1,65 @@
+{
+  "schema": "neoeng.dcore.ev00-physical-attempt-failure.v1",
+  "changeset": "CS017",
+  "revision": "R13",
+  "attempt": 1,
+  "local_run_id": "ev00-20260822T103002Z-409935dc",
+  "canonical_plan_harness_commit": "0fb46fc5b09d3bc5717d8ebe3fd4d2d35f5e23f0",
+  "protected_product_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "terminal_state": {
+    "state": "FAILED",
+    "reason": "Unable to parse CTest summary from C:\\Users\\atnco\\src\\NeoEng-D-Core-R13\\docs\\changesets\\015\\evidence\\github-actions-run-30375982639\\raw\\windows-clang-cl-ctest.txt",
+    "finished_at_utc": "2026-08-22T10:32:46.6713000Z"
+  },
+  "run_identity": {
+    "control_branch": "cs017-r13-local",
+    "source_head": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "source_dirty": false,
+    "workspace_fresh": true,
+    "preexisting_build_used": false,
+    "created_at_utc": "2026-08-22T10:30:03.8470728Z"
+  },
+  "recorded_command_count": 17,
+  "recorded_command_failures": 0,
+  "all_recorded_commands_pass": true,
+  "passed_recorded_commands": [
+    "source-worktree",
+    "vcpkg-init",
+    "vcpkg-remote",
+    "vcpkg-fetch",
+    "vcpkg-checkout",
+    "vcpkg-head",
+    "vcpkg-bootstrap",
+    "cmake-configure",
+    "cmake-build",
+    "ctest-dcore",
+    "determinism-1",
+    "determinism-2",
+    "ctest-host-sdk",
+    "ctest-replay-rollback",
+    "state-evidence-probe",
+    "support-bundle-probe",
+    "release-gate"
+  ],
+  "historical_comparison": {
+    "historical_reference": "docs/changesets/015/evidence/github-actions-run-30375982639/raw/windows-clang-cl-ctest.txt",
+    "historical_total_tests": null,
+    "local_total_tests": null,
+    "historical_failed_tests": null,
+    "local_failed_tests": null,
+    "inventory_equal": false,
+    "note": "comparison unavailable because the run terminated earlier"
+  },
+  "root_cause": {
+    "component": "EV-00 harness CTest summary parser",
+    "r13_supported_summary": "<percent>% tests passed, <failed> tests failed out of <total>",
+    "normative_cs015_summary": "100% tests passed out of 54",
+    "failure_boundary": "historical CTest reference parse after all recorded external commands passed",
+    "product_failure_observed": false,
+    "command_failure_observed": false
+  },
+  "classification": "FAILED_TERMINAL_HARNESS_CTEST_SUMMARY_PARSER_COMPATIBILITY_DEFECT",
+  "reusable_as_qualifying_evidence": false,
+  "reclassification_as_pass_prohibited": true,
+  "same_plan_qualify_rerun_prohibited": true
+}
