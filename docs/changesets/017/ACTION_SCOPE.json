@@ -1,0 +1,152 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "state": "in_progress",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "predecessor_attempts": [
+    {
+      "revision": "R1",
+      "branch": "agent/cs017-ev00-baseline-certification",
+      "source_commit": "bfafa432ad4dc7c402753293da080fc6d920c8ce",
+      "workflow_run_id": 31594048822,
+      "terminal_disposition": "failed_before_qualifying_product_campaign",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R2",
+      "branch": "agent/cs017-ev00-baseline-certification-r2",
+      "source_commit": "871f4c571f776e599c136ccbd131123003a69a77",
+      "workflow_run_id": 31598613467,
+      "terminal_disposition": "stopped_before_stage_operation_by_DEV-0003",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R3",
+      "branch": "agent/cs017-ev00-baseline-certification-r3",
+      "source_commit": "5c5f328afc919527775742c702e3d1a47c1490c9",
+      "workflow_run_id": 31613924661,
+      "terminal_disposition": "stopped_before_stage_operation_by_DEV-0004",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R4",
+      "branch": "agent/cs017-ev00-baseline-certification-r4",
+      "source_commit": "253859d285963a2519af78cd7a30ba2d69fad9a1",
+      "workflow_run_id": 31618330920,
+      "terminal_disposition": "stopped_before_stage_operation_by_CS016E_root_audit",
+      "qualifying_product_campaign_executed": false,
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R5",
+      "branch": "agent/cs017-ev00-baseline-certification-r5",
+      "local_run_id": "ev00-20260813T002607Z-80c3ae08",
+      "harness_sha": "d478a1b7647eb9d86fdd54e2c8c21ddb0df743ab",
+      "terminal_disposition": "FAILED_vcpkg_bootstrap_invocation_quoting",
+      "record": "docs/changesets/017/R5_FAILURE_RECORD.json",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R6",
+      "branch": "agent/cs017-ev00-baseline-certification-r6",
+      "local_run_id": "ev00-20260813T004225Z-961f7e1a",
+      "harness_sha": "ca172def3b4b0d20fd151f728e6df4302e3b1d03",
+      "terminal_disposition": "FAILED_zero_argument_parameter_binding",
+      "record": "docs/changesets/017/R6_FAILURE_RECORD.json",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R7",
+      "branch": "agent/cs017-ev00-baseline-certification-r7",
+      "preflight_head_sha": "1f5625394e411237295558ea16f7d73091a253f2",
+      "preflight_run_id": 31655844950,
+      "terminal_disposition": "PREPARATION_ONLY_QUALIFICATION_NOT_STARTED",
+      "record": "docs/changesets/017/R7_PREPARATION_RECORD.json",
+      "reusable_as_qualifying_evidence": false
+    },
+    {
+      "revision": "R8",
+      "branch": "agent/cs017-ev00-baseline-certification-r8",
+      "preflight_head_sha": "5697828d499051f9fc397c99dd6f43cc9a021318",
+      "preflight_run_id": 32546849264,
+      "terminal_disposition": "FAILED_NONQUALIFYING_PREPARATION_PREFLIGHT",
+      "record": "audit/validation/CS000H/R8_PREPARATION_FAILURE.json",
+      "reusable_as_qualifying_evidence": false
+    }
+  ],
+  "source_under_test": {
+    "release_tag": "v1.14.1",
+    "commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "immutable_during_qualifying_run": true
+  },
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "allowed_paths": [
+    "docs/changesets/017/**",
+    "audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json",
+    "audit/DLAB_SCENARIO_CATALOG.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json",
+    "docs/records/evolution/**",
+    "scripts/dlab/**",
+    ".github/workflows/ev00-dlab.yml",
+    "MANIFEST.sha256"
+  ],
+  "forbidden_paths": [
+    "src/**",
+    "include/**",
+    "CMakeLists.txt",
+    "cmake/**",
+    "tests/**",
+    "tools/**",
+    "examples/**",
+    "modules/**",
+    "apps/**",
+    ".github/workflows/evolution-governance.yml",
+    ".github/workflows/governance-root.yml",
+    "docs/governance/**",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016C.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016D.json",
+    "audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016E.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016C.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016D.json",
+    "audit/EVOLUTION_INVARIANTS_AMENDMENT_016E.json",
+    "audit/DLAB_EXECUTION_POLICY.json",
+    "audit/GOVERNANCE_ROOT_OF_TRUST.json",
+    "audit/GOVERNANCE_ACCEPTANCE_CHAIN.json",
+    "audit/STAGE_SCOPE_MAXIMA.json",
+    "audit/REPOSITORY_PROTECTION_POLICY.json",
+    "audit/PRODUCT_CLAIMS_LEDGER.json",
+    "audit/RELEASE_ASSURANCE_POLICY.json",
+    "audit/FINAL_ACCEPTANCE_POLICY.json",
+    "scripts/authorize_evolution_action.py",
+    "scripts/verify_dlab_governance.py",
+    "scripts/verify_dlab_governance_v15.py",
+    "scripts/verify_governance_root.py",
+    "scripts/verify_governance_history.py",
+    "scripts/verify_github_evidence.py",
+    "scripts/verify_repository_protection.py",
+    "scripts/verify_evolution_plan.py",
+    "docs/commercial/**",
+    "scripts/verify_release_attestation.py"
+  ],
+  "destructive_operations_authorized": false,
+  "stage_operation_requires_authorization": true,
+  "notes": [
+    "R9 is rebuilt from accepted main 3ebb989c5aaca65501ddbc5e552e1f751079e310 after CS000H corrected the lifecycle-dependent authorizer self-test revealed by R8.",
+    "Historical R1-R8 state is evidence only and is never reused as qualifying output.",
+    "R8 remains a failed non-qualifying preparation preflight and is referenced through the accepted CS000H failure record.",
+    "The local harness may be published only under scripts/dlab/** and the exact EV-00 paths permitted by this scope.",
+    "The qualifying source under test remains immutable v1.14.1; CS017 records laboratory evidence and does not repair product behavior.",
+    "No physical qualifying command may run before the complete R9 harness and frozen ChangeSet VALIDATION_PLAN are committed."
+  ]
+}
