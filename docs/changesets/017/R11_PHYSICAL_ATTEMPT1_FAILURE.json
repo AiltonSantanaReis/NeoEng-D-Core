@@ -1,0 +1,51 @@
+{
+  "schema": "neoeng.dcore.ev00-physical-attempt-failure.v1",
+  "changeset": "CS017",
+  "revision": "R11",
+  "attempt": 1,
+  "classification": "FAILED_TERMINAL_HARNESS_HISTORICAL_COMPARISON_ORACLE_DEFECT",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "canonical_plan_commit": "4ceac7e8ec213e91f1d79a669773e226e93f671c",
+  "local_run_id": "ev00-20260822T093201Z-4a33e537",
+  "product_sha": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "harness_sha": "4ceac7e8ec213e91f1d79a669773e226e93f671c",
+  "control_branch": "cs017-r11-local",
+  "source_head": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "source_dirty": false,
+  "workspace_fresh": true,
+  "preexisting_build_used": false,
+  "physical_host": true,
+  "terminal_state": {
+    "state": "FAILED",
+    "reason": "Local CTest inventory/results differ from accepted historical reference",
+    "finished_at_utc": "2026-08-22T09:34:47.7226410Z"
+  },
+  "historical_comparison": {
+    "reference_used_by_r11": "docs/changesets/015/evidence/windows-x86_64-clang-20260810/raw/ctest-output.txt",
+    "historical_total_tests": 89,
+    "local_total_tests": 54,
+    "historical_failed_tests": 0,
+    "local_failed_tests": 0,
+    "inventory_equal": false
+  },
+  "root_cause": {
+    "summary": "R11 compared its supported-surface CTest inventory against a supplemental pre-existing local CS015 build rather than the immutable CS015 supported-surface acceptance evidence.",
+    "supplemental_reference_configuration": "docs/changesets/015/evidence/windows-x86_64-clang-20260810/configuration.json",
+    "supplemental_reference_provenance": "pre-existing local build; not cryptographically bound to a source commit",
+    "supplemental_reference_scope": "supplemental corroboration only; not the immutable CS015 acceptance package",
+    "normative_cs015_status": "docs/changesets/015/TEST_STATUS.md",
+    "normative_windows_reference": "docs/changesets/015/evidence/github-actions-run-30375982639/raw/windows-clang-cl-ctest.txt",
+    "normative_supported_surface_total": 54
+  },
+  "observed_product_test_failures": 0,
+  "product_defect_established": false,
+  "environment_defect_established": false,
+  "harness_comparability_defect_established": true,
+  "reusable_as_qualifying_evidence": false,
+  "rerun_under_same_plan_prohibited": true,
+  "reclassification_as_pass_prohibited": true,
+  "local_workspace_preservation_required": true,
+  "repository_evidence_package_preservation_required": true,
+  "corrective_disposition": "Prospective R12 must preserve R11 as FAILED and compare newly generated Windows clang-cl supported-surface CTest evidence strictly against the immutable CS015 normative 54-test Windows reference, including exact test-name inventory equality and zero failures."
+}

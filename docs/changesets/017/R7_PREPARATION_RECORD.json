@@ -1,0 +1,22 @@
+{
+  "schema": "neoeng.dcore.ev00-preparation-record.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R7",
+  "qualification_state": "NOT_STARTED",
+  "preflight_workflow": ".github/workflows/cs017-ev00-harness-preflight.yml",
+  "preflight_run_id": 31655844950,
+  "preflight_run_attempt": 1,
+  "preflight_head_sha": "1f5625394e411237295558ea16f7d73091a253f2",
+  "preflight_conclusion": "success",
+  "checks": {
+    "powershell_parser": "PASS",
+    "local_only_guardrails": "PASS",
+    "r5_cmd_quoting_regression": "PASS",
+    "r6_zero_argument_binding_regression": "PASS",
+    "verifier_negative_selftest": "PASS",
+    "preparation_scope": "PASS"
+  },
+  "scope_statement": "No product/runtime/build surface was changed. The R7 harness change only permits an explicitly empty argument collection for recorded zero-argument probes; it does not remove, skip, or weaken any required EV-00 test.",
+  "qualification_note": "This record is non-qualifying. A new validation-plan freeze is required before any R7 local Qualify execution."
+}
