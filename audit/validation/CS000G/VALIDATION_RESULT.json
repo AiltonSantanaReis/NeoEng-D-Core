@@ -1,0 +1,31 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000G",
+  "plan_commit": "29e90eca029309b485f78a3346001e0618c5e76a",
+  "plan_sha256": "2730ff7406ef28b4473579df714408bb201d67db865460e6f6a80a9525a7e77f",
+  "source_sha": "29e90eca029309b485f78a3346001e0618c5e76a",
+  "run_id": 32546367007,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000g-specific-workflow-retirement-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {"test_id":"cs000g.verifier-self-test","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"CS000G verifier negative self-test"},
+    {"test_id":"cs000g.cs000f-r2-retired","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"Verify CS000F R2 workflow is manual-only"},
+    {"test_id":"cs000g.future-applicability","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"Verify CS000G workflow is path-scoped"},
+    {"test_id":"cs000g.scope","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"Verify CS000G administrative-only scope"},
+    {"test_id":"cs000g.non-effects","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"Verify no EV-00 or product effects"},
+    {"test_id":"changeset.plan-structure","status":"PASS","evidence_job":"CS000G specific workflow retirement","evidence_step":"Verify ChangeSet validation plan"}
+  ],
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_tests": "NONE",
+    "ev00": "NOT_STARTED",
+    "cs017": "NOT_STARTED",
+    "authorizer": "UNCHANGED",
+    "release": "NOT_AUTHORIZED",
+    "qualification": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}

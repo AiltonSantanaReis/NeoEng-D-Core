@@ -1,8 +1,9 @@
 name: CS000F R2 evolution authorizer transition correction
 
+# Historical CS000F R2 workflow retained for manual diagnostics only after CS000G.
+# Automatic pull_request applicability is retired prospectively; accepted evidence remains unchanged.
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read

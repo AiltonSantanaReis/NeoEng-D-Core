@@ -1,0 +1,40 @@
+name: CS000G specific workflow retirement
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/cs000f-r2-authorizer-transition-validation.yml'
+      - '.github/workflows/cs000g-specific-workflow-retirement-validation.yml'
+      - 'scripts/verify_cs000g_specific_workflow_retirement.py'
+      - 'audit/validation/CS000G/VALIDATION_PLAN.json'
+      - 'docs/changesets/000G/CHANGESET.md'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000G specific workflow retirement
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: CS000G verifier negative self-test
+        run: python3 scripts/verify_cs000g_specific_workflow_retirement.py --self-test
+      - name: Verify CS000F R2 workflow is manual-only
+        run: python3 scripts/verify_cs000g_specific_workflow_retirement.py --retirement
+      - name: Verify CS000G workflow is path-scoped
+        run: python3 scripts/verify_cs000g_specific_workflow_retirement.py --applicability
+      - name: Verify CS000G administrative-only scope
+        run: python3 scripts/verify_cs000g_specific_workflow_retirement.py --scope
+      - name: Verify no EV-00 or product effects
+        run: python3 scripts/verify_cs000g_specific_workflow_retirement.py --non-effects
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000G/VALIDATION_PLAN.json
