@@ -1,36 +1,36 @@
 # CS000E — Governance transition reconciliation
 
-Status: **IMPLEMENTED CANDIDATE — not accepted until the frozen CS000E validation plan passes and the trusted base gate accepts the closure.**
+Status: **R2 IMPLEMENTED CANDIDATE — not accepted until the frozen R2 plan passes and the trusted base gate accepts the closure.**
 
 Base: `3640394d902c92f620b463f1542e14ab47a10959`.
 
-## Objective
+## Attempt 1 preserved
 
-Reconcile the already-executed transition from the unclosed CS016E root-of-trust control plane to the evidence-driven ChangeSet validation regime, without falsely accepting CS016E and without starting EV-00/CS017.
+Attempt 1 source `71d016850099a3b7e4d5b994c867fe106df12e10` passed its frozen 7/7 CS000E-specific tests in run `32544869579`. It is **not accepted** because the same PR exposed a stale automatic CS000D workflow: run `32544869512` failed when the CS000D-only scope was applied to unrelated CS000E paths.
 
-## Exact candidate scope
+The Attempt 1 test inventory was already frozen and executed. It is not expanded or rewritten after seeing that result. `audit/validation/CS000E/ATTEMPT_001_NONACCEPTANCE.json` preserves the decision and negative history. Attempt 1 must not be rerun as qualifying evidence.
 
-1. `.github/workflows/cs000e-governance-transition-reconciliation.yml`
-2. `scripts/verify_governance_transition_reconciliation.py`
-3. `audit/GOVERNANCE_TRANSITION_STATE.json`
-4. `audit/SOURCE_OF_TRUTH_INDEX.json`
-5. `audit/EVOLUTION_AMENDMENTS.json`
-6. `docs/governance/CHANGESET_VALIDATION_POLICY_ACTIVATION.md`
-7. `docs/changesets/000E/CHANGESET.md`
-8. `audit/validation/CS000E/VALIDATION_PLAN.json`
-9. `audit/CURRENT_CHANGESET_VALIDATION.json`
+## R2 objective
 
-Closure may additionally add only `audit/validation/CS000E/VALIDATION_RESULT.json` and add `result_path` to the already-listed descriptor.
+R2 keeps the original reconciliation semantics and prospectively retires the two stale automatic ChangeSet-specific workflows:
 
-## Required conclusions
+- CS000D finalization validation -> `workflow_dispatch` only;
+- CS000E Attempt 1 validation -> `workflow_dispatch` only.
 
-- ChangeSet validation becomes the prospective operational authorization regime only after CS000E acceptance.
-- CS016E is `superseded`, never `accepted`.
-- accepted CS016A–D entries and the legacy acceptance chain are not rewritten.
-- historical CS016E artifacts remain present and are not reclassified.
-- branch protection continues to require `Trusted ChangeSet validation gate` from app id `15368`.
-- no product/runtime/test/release/qualification/EV-00/CS017 effect is created.
+Their workflow bodies from `permissions:` onward are preserved. Generic `.github/workflows/changeset-validation.yml` remains the prospective trusted control plane.
 
-## Nonclaims
+## R2 candidate scope
 
-CS000E is administrative reconciliation only. It is not a product ChangeSet, not laboratory qualification, not a release decision, and not evidence that CS016E ever satisfied its abandoned acceptance contract.
+The complete diff from base is restricted to the original CS000E administrative reconciliation plus:
+
+- `.github/workflows/cs000d-documentation-finalization-correction.yml`;
+- `.github/workflows/cs000e-r2-governance-transition-reconciliation.yml`;
+- `scripts/verify_governance_transition_reconciliation_r2.py`;
+- `audit/validation/CS000E/ATTEMPT_001_NONACCEPTANCE.json`;
+- `audit/validation/CS000E/VALIDATION_PLAN_R2.json`.
+
+No runtime, ABI, product tests, EV-00/CS017 lifecycle, claims, release or qualification state may change.
+
+## Required conclusion
+
+If R2 passes all frozen tests and the trusted base gate accepts its closure, ChangeSet validation becomes the prospective operational ChangeSet regime, CS016E remains superseded/unaccepted, stale ChangeSet-specific automatic workflows are retired, and EV-00 remains not started.

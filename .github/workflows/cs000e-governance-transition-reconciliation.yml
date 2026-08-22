@@ -1,8 +1,10 @@
 name: CS000E governance transition reconciliation
 
+# Attempt 1 is preserved for historical diagnostics only.
+# Automatic execution retired prospectively by CS000E R2 after a stale
+# CS000D automatic workflow was discovered outside Attempt 1's frozen inventory.
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
