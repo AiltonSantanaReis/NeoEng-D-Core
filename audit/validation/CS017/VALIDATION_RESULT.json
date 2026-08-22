@@ -1,0 +1,199 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS017",
+  "plan_commit": "9325c9940f1059c57cbd6f4994edbce7d525a270",
+  "plan_sha256": "70e5e73ed796a6d873d1f1d0be588aac06be09383696a543fe750c9c40f7e702",
+  "source_sha": "36a186520091adc4df799ac0668c9ca9939b8c36",
+  "run_id": 32601277637,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/ev00-dlab.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "ev00.r22-scope-history",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify R22 stage scope and R9-R21 preservation"
+    },
+    {
+      "test_id": "evolution.authorizer-self-test",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Canonical evolution authorizer self-test"
+    },
+    {
+      "test_id": "evolution.start-stage",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Authorize EV-00 start state"
+    },
+    {
+      "test_id": "evolution.stage-operation",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Authorize exact R22 harness paths"
+    },
+    {
+      "test_id": "ev00.verifier-self-test-no-side-effect",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Evidence verifier self-test without control-tree side effects"
+    },
+    {
+      "test_id": "ev00.r22-direct-wrapper-binding",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify R22 direct wrapper and R20 verifier binding"
+    },
+    {
+      "test_id": "ev00.r22-cmake-test-registration-boundary",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify supported/research CMake test-registration boundary"
+    },
+    {
+      "test_id": "ev00.harness-syntax",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "PowerShell harness syntax check"
+    },
+    {
+      "test_id": "ev00.r22-parser-import-regression",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Execute R22 CTest parser import regression"
+    },
+    {
+      "test_id": "ev00.r22-physical-protection-preservation",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify R22 physical protection preservation"
+    },
+    {
+      "test_id": "ev00.r22-historical-provenance",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify historical assurance provenance plan"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify canonical CS017 validation plan"
+    },
+    {
+      "test_id": "ev00.r22-static-clean-tree",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify complete static control tree remains clean"
+    },
+    {
+      "test_id": "ev00.evidence-resolution",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Resolve committed qualifying evidence"
+    },
+    {
+      "test_id": "ev00.plan-harness-binding",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify plan-commit and harness-SHA binding"
+    },
+    {
+      "test_id": "ev00.source",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.environment",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.fresh-build",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.ctest",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.determinism",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.host-sdk",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.replay-rollback",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.state-evidence",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.support-bundle",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.release-gate",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.manifest",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.historical-comparison",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.terminal",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify committed physical evidence matrix"
+    },
+    {
+      "test_id": "ev00.historical-assurance",
+      "status": "PASS",
+      "evidence_job": "EV-00 D-Lab evidence validation",
+      "evidence_step": "Verify CS001-CS015 historical assurance"
+    }
+  ],
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_tests": "NONE",
+    "product_baseline": "v1.14.1_UNCHANGED",
+    "ev00": "CANDIDATE_ACCEPTANCE_PENDING_TRUSTED_GATE",
+    "cs017": "CANDIDATE_ACCEPTANCE_PENDING_TRUSTED_GATE",
+    "release": "NOT_AUTHORIZED",
+    "ev01": "NOT_STARTED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
