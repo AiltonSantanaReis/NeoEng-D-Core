@@ -1,0 +1,28 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000F",
+  "objective": "Align the canonical evolution action authorizer with the accepted CS000E transition by resolving only the explicitly bound CS016E superseded/unaccepted state for prospective EV-00 authorization, while preserving the legacy authorizer byte-for-byte and creating no EV-00, runtime, release, or qualification effect.",
+  "base_sha": "4ad5e0629ef2c9a0ce9503b71af1c15fa9d21491",
+  "execution_workflow": ".github/workflows/cs000f-authorizer-transition-validation.yml",
+  "required_tests": [
+    {"test_id":"cs000f.verifier-self-test","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"CS000F verifier negative self-test"},
+    {"test_id":"cs000f.authorizer-self-test","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"Evolution authorizer self-test"},
+    {"test_id":"cs000f.transition-behavior","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"Verify supersession-aware authorizer behavior"},
+    {"test_id":"cs000f.scope","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"Verify CS000F administrative-only scope"},
+    {"test_id":"cs000f.non-effects","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"Verify no EV-00 or product effects"},
+    {"test_id":"changeset.plan-structure","required":true,"evidence_job":"CS000F evolution authorizer transition correction","evidence_step":"Verify ChangeSet validation plan"}
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000f-authorizer-transition-validation.yml",
+    "scripts/authorize_evolution_action.py",
+    "scripts/authorize_evolution_action_legacy.py",
+    "scripts/verify_cs000f_authorizer_transition.py",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/EVOLUTION_AMENDMENTS.json"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
