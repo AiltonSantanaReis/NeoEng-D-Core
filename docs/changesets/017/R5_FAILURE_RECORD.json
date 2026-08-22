@@ -1,0 +1,53 @@
+{
+  "schema": "neoeng.dlab.ev00-failed-attempt.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R5",
+  "classification": "FAILED",
+  "run_id": "ev00-20260813T002607Z-80c3ae08",
+  "control_branch": "agent/cs017-ev00-baseline-certification-r5",
+  "harness_sha": "d478a1b7647eb9d86fdd54e2c8c21ddb0df743ab",
+  "baseline_tag": "v1.14.1",
+  "product_sha": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "source_head": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "source_dirty": false,
+  "workspace_fresh": true,
+  "preexisting_build_used": false,
+  "vcpkg_commit_expected": "0878b5224d4a4968940ee296a2e7fae2d3b62983",
+  "vcpkg_commit_observed": "0878b5224d4a4968940ee296a2e7fae2d3b62983",
+  "terminal_reason": "vcpkg bootstrap failed",
+  "root_cause": "The harness constructed a cmd.exe command string with escaped quote characters as literal input. cmd.exe therefore rejected the quoted bootstrap-vcpkg.bat string before the batch file executed. This is a harness invocation defect, not a vcpkg, baseline, compiler, build or test failure.",
+  "failed_command": {
+    "name": "vcpkg-bootstrap",
+    "classification": "FAIL",
+    "exit_code": 1,
+    "stderr_summary": "The escaped quoted bootstrap-vcpkg.bat command was not recognized as an internal or external command, operable program, or batch file."
+  },
+  "completed_before_failure": [
+    "source-worktree",
+    "vcpkg-init",
+    "vcpkg-remote",
+    "vcpkg-fetch",
+    "vcpkg-checkout",
+    "vcpkg-head"
+  ],
+  "not_tested_after_failure": [
+    "cmake-configure",
+    "cmake-build",
+    "ctest-dcore",
+    "determinism-1",
+    "determinism-2",
+    "ctest-host-sdk",
+    "ctest-replay-rollback",
+    "state-evidence-probe",
+    "support-bundle-probe",
+    "release-gate",
+    "historical-comparison"
+  ],
+  "evidence_manifest_sha256": "fc5b39c052ebd5513053050d377d3c98384359f87831570a3cc44ea270fbf09c",
+  "local_evidence_relative_path": "docs/changesets/017/evidence/local-windows/ev00-20260813T002607Z-80c3ae08",
+  "evidence_storage_note": "The full local evidence package is preserved on the maintainer physical Windows PC. The repository .gitignore excludes /docs for untracked local evidence, so this record binds the failed local package by exact run identity and SHA-256 manifest hash without reclassifying it as PASS.",
+  "validation_state": "FAILED",
+  "accepted": false,
+  "release_authorized": false
+}
