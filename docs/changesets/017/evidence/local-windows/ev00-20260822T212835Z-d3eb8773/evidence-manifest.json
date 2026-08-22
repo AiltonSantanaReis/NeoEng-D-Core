@@ -1,0 +1,316 @@
+{
+  "schema": "neoeng.dlab.evidence-manifest.v1",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "environment.json",
+      "size": 1651,
+      "sha256": "7b6abb4a5b7a15e2d8c70417ca26aabec04d33276c46c8916f2c160e37f6fa33"
+    },
+    {
+      "path": "historical-comparison.json",
+      "size": 387,
+      "sha256": "f05d0da5d7695215b154970ca930ab8ed482d94bed9c02ba6d4a8a758005a465"
+    },
+    {
+      "path": "raw/commands/cmake-build.json",
+      "size": 613,
+      "sha256": "33eecfaa4e2cab29fe74e6312e02f9893f69013713e123c27dceeeb0d65c8e3d"
+    },
+    {
+      "path": "raw/commands/cmake-configure.json",
+      "size": 1164,
+      "sha256": "71714f3d08751b6ba79ca90e225696583183bc69eb10c788be0ebacf7e54fba0"
+    },
+    {
+      "path": "raw/commands/ctest-dcore.json",
+      "size": 667,
+      "sha256": "66454b49b30e70ce1d355d1787deefe66834d85439f1086307b04d95260bd358"
+    },
+    {
+      "path": "raw/commands/ctest-host-sdk.json",
+      "size": 679,
+      "sha256": "d859ec3dbd3583d6092d47ad6e213959a266f0ddb211016ebe9259535c0f0401"
+    },
+    {
+      "path": "raw/commands/ctest-replay-rollback.json",
+      "size": 787,
+      "sha256": "7920a605c66b7afcd2ecd37620955d0e7929f60f80323bb8831ef327d1aa2a8f"
+    },
+    {
+      "path": "raw/commands/determinism-1.json",
+      "size": 594,
+      "sha256": "3c2139424086ee48a79e1eccb0dc30d17292b7464567becf69a9a6d2f8206040"
+    },
+    {
+      "path": "raw/commands/determinism-2.json",
+      "size": 594,
+      "sha256": "4c3d28c1966766477a9916f78763d3839cdd7be7c9047c7b271995accf4e6453"
+    },
+    {
+      "path": "raw/commands/release-gate.json",
+      "size": 677,
+      "sha256": "6caa48b2b2dfc6a3bff92fc4d035b7a0682fbd26a886205abcb21569131a817f"
+    },
+    {
+      "path": "raw/commands/research-cmake-build.json",
+      "size": 736,
+      "sha256": "a33e9adf4822b58f85e919cec3bd70fe8eaa6252aff47ef0284089c2bce4fce2"
+    },
+    {
+      "path": "raw/commands/research-cmake-configure.json",
+      "size": 1199,
+      "sha256": "008f7ef88385f2647a039e2f6044e0de0893185b6604eb448b6117141bd1bafe"
+    },
+    {
+      "path": "raw/commands/source-worktree.json",
+      "size": 700,
+      "sha256": "4df6000813f171bb4ec2d52f7b520710bae115a091c4bb649ac5caee9f697cab"
+    },
+    {
+      "path": "raw/commands/state-evidence-probe.json",
+      "size": 618,
+      "sha256": "390a7e7acb81e462b25032cae49b9f0ec4823888b27b379cbb7ae42a033b3c5e"
+    },
+    {
+      "path": "raw/commands/support-bundle-probe.json",
+      "size": 618,
+      "sha256": "8eef0402fd10b1c9b0d4068178199ece31f68533239c64c30197d148f7172d4b"
+    },
+    {
+      "path": "raw/commands/vcpkg-bootstrap.json",
+      "size": 579,
+      "sha256": "7bd2ee6f5bb287e8f572b3707ee189381c6db13b1f06e40d42b5979d2c6bb754"
+    },
+    {
+      "path": "raw/commands/vcpkg-checkout.json",
+      "size": 551,
+      "sha256": "ebf26bcadbd8ce7d8886ce5c9263f4addb61b7871583795a086156aa7cbe9ee6"
+    },
+    {
+      "path": "raw/commands/vcpkg-fetch.json",
+      "size": 593,
+      "sha256": "11b188a320a4845fa1665b66e62ffc6d9b35546a8c9684ed443a07c188494564"
+    },
+    {
+      "path": "raw/commands/vcpkg-head.json",
+      "size": 517,
+      "sha256": "0f3add350431002d9c35317664aa444d08de000ad665202ded2e5871789fa2f6"
+    },
+    {
+      "path": "raw/commands/vcpkg-init.json",
+      "size": 499,
+      "sha256": "f42aa90308edb5ea6f63d118479880e5914aeb22823f982367f818c58071ab4d"
+    },
+    {
+      "path": "raw/commands/vcpkg-remote.json",
+      "size": 581,
+      "sha256": "fd9c1b382703c722d7522238aa80b902cfc4454b8d9622e6d1a07464f215fad8"
+    },
+    {
+      "path": "raw/logs/cmake-build.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/cmake-build.stdout.txt",
+      "size": 11560,
+      "sha256": "4556249677e181531df18ddaaa82c7db439610c2331d9d235f868549a64f7622"
+    },
+    {
+      "path": "raw/logs/cmake-configure.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/cmake-configure.stdout.txt",
+      "size": 11054,
+      "sha256": "b15678636667ba546e3f7378599a8cc6acc5241586d8fdd0b77d9570980fd074"
+    },
+    {
+      "path": "raw/logs/ctest-dcore.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/ctest-dcore.stdout.txt",
+      "size": 9429,
+      "sha256": "636856c8a7132d05b4c58bbe3bde29bd51214fabbdcc4f57318c5cc8601466ab"
+    },
+    {
+      "path": "raw/logs/ctest-host-sdk.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/ctest-host-sdk.stdout.txt",
+      "size": 804,
+      "sha256": "13dcb80132e767a28ca2bdc93549e57a8b511d65100a011e57d95398dbdf74a9"
+    },
+    {
+      "path": "raw/logs/ctest-replay-rollback.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/ctest-replay-rollback.stdout.txt",
+      "size": 724,
+      "sha256": "dab3ad65097556ac7deeebb92d3068adb4bca392cbfef96f7a955ef436e72ff9"
+    },
+    {
+      "path": "raw/logs/determinism-1.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/determinism-1.stdout.txt",
+      "size": 532,
+      "sha256": "dd76aae3de5f05fd52788d42cbdfd417e2958519b941ed1326514eee1602f8a5"
+    },
+    {
+      "path": "raw/logs/determinism-2.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/determinism-2.stdout.txt",
+      "size": 532,
+      "sha256": "dd76aae3de5f05fd52788d42cbdfd417e2958519b941ed1326514eee1602f8a5"
+    },
+    {
+      "path": "raw/logs/release-gate.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/release-gate.stdout.txt",
+      "size": 4278,
+      "sha256": "eadd932c7e454d8f44dadfe5f94de287efca9b1b541178f38a1b2bba52da1e50"
+    },
+    {
+      "path": "raw/logs/research-cmake-build.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/research-cmake-build.stdout.txt",
+      "size": 5692,
+      "sha256": "878db5084f7cf74a6b3b6a36cf01d5ccfdc5fb7702d299336b67ebabdb3f97f4"
+    },
+    {
+      "path": "raw/logs/research-cmake-configure.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/research-cmake-configure.stdout.txt",
+      "size": 10373,
+      "sha256": "9eb97cd3c8faaba70a3148980c457d4e47ccf1d20459c925aba2239ba7b83cc4"
+    },
+    {
+      "path": "raw/logs/source-worktree.stderr.txt",
+      "size": 43,
+      "sha256": "b2ccee46529860e37ccfeea2df9fc8ece0cb7a2e50555d1972cd2d438b7a4f3d"
+    },
+    {
+      "path": "raw/logs/source-worktree.stdout.txt",
+      "size": 55,
+      "sha256": "a76ba83bde786ac4ef5584a5b146e8c87a80bef02a6e6e800788b8e84e209bd5"
+    },
+    {
+      "path": "raw/logs/state-evidence-probe.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/state-evidence-probe.stdout.txt",
+      "size": 520,
+      "sha256": "147f44bac20460d19052258e7768b01998fccbc96beefab1faba9d071adba77e"
+    },
+    {
+      "path": "raw/logs/support-bundle-probe.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/support-bundle-probe.stdout.txt",
+      "size": 169,
+      "sha256": "167ef651f3dc423d7b806ab1fda33e315f65aae7b0d0105fcae60784fa2bb2cc"
+    },
+    {
+      "path": "raw/logs/vcpkg-bootstrap.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-bootstrap.stdout.txt",
+      "size": 361,
+      "sha256": "1495d56369785ed5c010050d56d19793ca6f8350a86666912c1a28e486b7fbb0"
+    },
+    {
+      "path": "raw/logs/vcpkg-checkout.stderr.txt",
+      "size": 75,
+      "sha256": "1d7a17dacddeeb4809956700f7a44833e1be6c5961b9fd490d3fe913deeed41c"
+    },
+    {
+      "path": "raw/logs/vcpkg-checkout.stdout.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-fetch.stderr.txt",
+      "size": 118,
+      "sha256": "8f431b314e1b0c89003299e63d5698a43423ea4eb4c0acb3f8f3b7eb9b3b36db"
+    },
+    {
+      "path": "raw/logs/vcpkg-fetch.stdout.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-head.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-head.stdout.txt",
+      "size": 41,
+      "sha256": "9132da8a815ef77613e218235519fd25f78fb03a56bfec780d749e1814561793"
+    },
+    {
+      "path": "raw/logs/vcpkg-init.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-init.stdout.txt",
+      "size": 122,
+      "sha256": "590234efeaff1f3f085bf433b03ed3462bf2e1f3f2abc2773aeda0e8aa710323"
+    },
+    {
+      "path": "raw/logs/vcpkg-remote.stderr.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/logs/vcpkg-remote.stdout.txt",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "replay-rollback-validation.json",
+      "size": 516,
+      "sha256": "e174330abb4a8521b2b5ff01a1b7f527e47329c872e51448d20cbb12e48aacc8"
+    },
+    {
+      "path": "run-identity.json",
+      "size": 638,
+      "sha256": "7c2a5c771c215a1040c07d7129519581c75b024fe486f425f52fd1db427b00c0"
+    },
+    {
+      "path": "terminal-state.json",
+      "size": 257,
+      "sha256": "14b46f2952de51be054a6d696168d2ed2b7efb1079f0daf4473a78db4e79200d"
+    }
+  ]
+}

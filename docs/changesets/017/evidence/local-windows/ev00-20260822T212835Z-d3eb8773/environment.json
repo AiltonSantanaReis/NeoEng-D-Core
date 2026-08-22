@@ -1,0 +1,34 @@
+{
+  "schema": "neoeng.dlab.ev00-environment.v1",
+  "collected_at_utc": "2026-08-22T21:28:36.3407278Z",
+  "os_family": "Windows",
+  "os_version": "Microsoft Windows NT 10.0.26200.0",
+  "architecture": "X64",
+  "physical_host": true,
+  "virtualization_indicators": [],
+  "computer_manufacturer": "Gigabyte Technology Co., Ltd.",
+  "computer_model": "B550M AORUS ELITE",
+  "logical_processors": 16,
+  "cpu": "AMD Ryzen 7 5700X3D 8-Core Processor           ",
+  "physical_cores": 8,
+  "memory_bytes": 34278793216,
+  "video_controllers": [
+    {
+      "Name": "NVIDIA GeForce RTX 3070 Ti",
+      "AdapterRAM": 4293918720,
+      "DriverVersion": "32.0.16.1047"
+    }
+  ],
+  "tools": {
+    "git": "git version 2.54.0.windows.1",
+    "python": "Python 3.13.5",
+    "cmake": "cmake version 4.3.1-msvc1\r\n\r\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+    "ctest": "ctest version 4.3.1-msvc1\r\n\r\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+    "ninja": "1.13.2",
+    "clang-cl": "clang version 22.1.0 (https://github.com/llvm/llvm-project 4434dabb69916856b824f68a64b029c67175e532)\r\nTarget: x86_64-pc-windows-msvc\r\nThread model: posix\r\nInstalledDir: C:\\Program Files\\LLVM\\bin",
+    "link.exe": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\link.exe",
+    "rc.exe": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64\\rc.exe"
+  },
+  "vcpkg_commit_expected": "0878b5224d4a4968940ee296a2e7fae2d3b62983",
+  "vcpkg_commit_observed": "0878b5224d4a4968940ee296a2e7fae2d3b62983"
+}

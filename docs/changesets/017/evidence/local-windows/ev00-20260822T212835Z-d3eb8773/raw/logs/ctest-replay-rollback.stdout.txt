@@ -1,0 +1,17 @@
+Test project C:/Users/atnco/NeoEng-DLab/EV-00/runs/ev00-20260822T212835Z-d3eb8773/research-build
+    Start 32: neoeng_temporal_closure_tests
+1/3 Test #32: neoeng_temporal_closure_tests ....   Passed    0.05 sec
+    Start 55: neoeng_dcore_replay_smoke
+2/3 Test #55: neoeng_dcore_replay_smoke ........   Passed    0.07 sec
+    Start 56: neoeng_dcore_history_smoke
+3/3 Test #56: neoeng_dcore_history_smoke .......   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Label Time Summary:
+cs012               =   0.05 sec*proc (1 test)
+dcore               =   0.15 sec*proc (3 tests)
+smoke               =   0.15 sec*proc (3 tests)
+temporal-closure    =   0.05 sec*proc (1 test)
+
+Total Test time (real) =   0.18 sec

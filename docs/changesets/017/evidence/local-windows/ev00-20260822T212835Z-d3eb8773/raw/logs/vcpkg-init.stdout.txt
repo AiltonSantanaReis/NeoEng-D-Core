@@ -1,0 +1,1 @@
+Initialized empty Git repository in C:/Users/atnco/NeoEng-DLab/EV-00/runs/ev00-20260822T212835Z-d3eb8773/deps/vcpkg/.git/

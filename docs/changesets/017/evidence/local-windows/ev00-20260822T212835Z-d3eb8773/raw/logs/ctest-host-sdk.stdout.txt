@@ -1,0 +1,19 @@
+Test project C:/Users/atnco/NeoEng-DLab/EV-00/runs/ev00-20260822T212835Z-d3eb8773/build
+    Start 49: neoeng_host_sdk_install_consumer
+1/4 Test #49: neoeng_host_sdk_install_consumer ...   Passed    5.14 sec
+    Start 50: neoeng_host_sdk_tests
+2/4 Test #50: neoeng_host_sdk_tests ..............   Passed    0.01 sec
+    Start 51: neoeng_host_sdk_c_header_test
+3/4 Test #51: neoeng_host_sdk_c_header_test ......   Passed    0.01 sec
+    Start 52: neoeng_host_sdk_reference
+4/4 Test #52: neoeng_host_sdk_reference ..........   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+dcore       =   5.17 sec*proc (4 tests)
+host-sdk    =   5.17 sec*proc (4 tests)
+install     =   5.14 sec*proc (1 test)
+smoke       =   5.17 sec*proc (4 tests)
+
+Total Test time (real) =   5.18 sec

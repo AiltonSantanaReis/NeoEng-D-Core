@@ -1,0 +1,286 @@
+{
+  "schema": "neoeng.dlab.ev00-historical-assurance.v2",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "baseline_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "plan_commit": "9325c9940f1059c57cbd6f4994edbce7d525a270",
+  "qualifying_run_id": "ev00-20260822T212835Z-d3eb8773",
+  "overall_status": "PASS",
+  "procedure_note": "PASS means the CS001-CS015 Historical Assurance audit procedure completed. It does not retroactively promote historical limitations, failed/unqualified hardware profiles, external certifications, or claims outside their original scope.",
+  "entries": [
+    {
+      "changeset": "CS001",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 supported surface reran operational hardening, hostile-packet/fuzz, session-security and recovery contracts. Historical P0-P3 physical qualification limitations remain unpromoted.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_operational_hardening_tests",
+        "R22:ctest:neoeng_network_packet_fuzz_smoke",
+        "R22:ctest:neoeng_recovery_fault_injection"
+      ]
+    },
+    {
+      "changeset": "CS002",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 supported surface reran session/recovery contract, handshake-fuzz and recovery-probe paths. Historical physical/deployment exclusions remain preserved.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_session_recovery_contract_tests",
+        "R22:ctest:neoeng_session_handshake_fuzz_smoke",
+        "R22:ctest:neoeng_recovery_contract_probe"
+      ]
+    },
+    {
+      "changeset": "CS003",
+      "audit_status": "PASS",
+      "assessment_status": "historical_only",
+      "risk_class": "medium",
+      "reproducible": false,
+      "rerun_status": "not_required",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Historical View Lab evidence integrity is verifiable, but the optional View Lab campaign is outside the R22 supported physical surface and was not represented as a current reproduction.",
+      "rerun_evidence": []
+    },
+    {
+      "changeset": "CS004",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md",
+        "docs/changesets/004/evidence/state-evidence-clang.txt",
+        "docs/changesets/004/evidence/state-evidence-gcc.txt"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 reran state-evidence tests, probe and fuzz-smoke. Historical exclusions for external notary/asymmetric provider remain preserved.",
+      "rerun_evidence": [
+        "R22:state-evidence",
+        "R22:ctest:neoeng_state_evidence_tests",
+        "R22:ctest:neoeng_state_evidence_fuzz_smoke"
+      ]
+    },
+    {
+      "changeset": "CS005",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "medium",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md",
+        "docs/changesets/005/CHANGESET.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 reran observability/support and support-bundle probe/fuzz contracts.",
+      "rerun_evidence": [
+        "R22:support-bundle",
+        "R22:ctest:neoeng_observability_support_tests",
+        "R22:ctest:neoeng_support_bundle_fuzz_smoke"
+      ]
+    },
+    {
+      "changeset": "CS006",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 reran hardware-qualification decision logic under a fail-closed qualifying harness. This does not promote any P0-P4 physical profile.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_hardware_qualification_tests",
+        "R22:environment",
+        "R22:fresh-build",
+        "R22:terminal"
+      ]
+    },
+    {
+      "changeset": "CS007",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "medium",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "f11c28e127e86f447e0ad136e038f0147b352df0",
+      "evidence_paths": [
+        "docs/VALIDATION_REPORT.md",
+        "docs/changesets/007/TEST_STATUS.md"
+      ],
+      "provenance_kind": "consolidated_validation",
+      "assessment_note": "Current R22 reran Host SDK tests, C header boundary, reference and clean install consumer.",
+      "rerun_evidence": [
+        "R22:host-sdk",
+        "R22:ctest:neoeng_host_sdk_install_consumer",
+        "R22:ctest:neoeng_host_sdk_tests"
+      ]
+    },
+    {
+      "changeset": "CS008",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "e4ac487587b118fd4bc6bffb89ef5f61407deb1f",
+      "evidence_paths": [
+        "docs/changesets/008/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Current R22 reran product-contract/product-assurance fail-closed governance tests and the frozen R22 static governance validation. Planned technical claims remain unpromoted.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_product_contract_verify",
+        "R22:ctest:neoeng_product_assurance_verify",
+        "GitHubActions:32590474915"
+      ]
+    },
+    {
+      "changeset": "CS009",
+      "audit_status": "PASS",
+      "assessment_status": "verified_integrity",
+      "risk_class": "high",
+      "reproducible": false,
+      "rerun_status": "not_required",
+      "historical_commit": "b1015d2f6f9508225539933ca5ac1d149c093606",
+      "evidence_paths": [
+        "docs/changesets/009/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Historical ECS evidence is intact. R22 reran ECS smoke/verifier paths only; it did not reproduce the complete historical virtualized/host-local qualification campaigns, and no native P0-P4 claim is promoted.",
+      "rerun_evidence": []
+    },
+    {
+      "changeset": "CS010",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "711bdbbfc953f03daeb235a4a69e3d9ab600beca",
+      "evidence_paths": [
+        "docs/changesets/010/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Current R22 supported surface reran distributed-reference tests, probe and boundary/verifier contracts.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_distributed_reference_tests",
+        "R22:ctest:neoeng_distributed_reference_probe",
+        "R22:ctest:neoeng_distributed_reference_boundary_verify"
+      ]
+    },
+    {
+      "changeset": "CS011",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "cee4c053c3cb6761b7fcfb9e95a58e103b10cec9",
+      "evidence_paths": [
+        "docs/changesets/011/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Current R22 supported surface reran numeric-closure tests, probe, boundary and evidence-verifier contracts within the declared narrow domain.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_numeric_closure_tests",
+        "R22:ctest:neoeng_numeric_closure_probe",
+        "R22:ctest:neoeng_numeric_closure_boundary_verify"
+      ]
+    },
+    {
+      "changeset": "CS012",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "02fc48739084f849733b68cd644c66e56660a655",
+      "evidence_paths": [
+        "docs/changesets/012/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Current R22 reran temporal-closure tests/probe/boundary and also the isolated research replay/history/temporal surface at exact 3/0.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_temporal_closure_tests",
+        "R22:ctest:neoeng_temporal_closure_probe",
+        "R22:replay-rollback"
+      ]
+    },
+    {
+      "changeset": "CS013",
+      "audit_status": "PASS",
+      "assessment_status": "reproduced",
+      "risk_class": "high",
+      "reproducible": true,
+      "rerun_status": "passed",
+      "historical_commit": "48d016f6211c7617cae96c5fcb735bb0bfe66a5c",
+      "evidence_paths": [
+        "docs/changesets/013/TEST_STATUS.md"
+      ],
+      "provenance_kind": "direct_changeset",
+      "assessment_note": "Current R22 supported surface reran production-security tests, probe, boundary and evidence-verifier contracts. Provider-strength/external-trust exclusions remain preserved.",
+      "rerun_evidence": [
+        "R22:ctest:neoeng_production_security_tests",
+        "R22:ctest:neoeng_production_security_probe",
+        "R22:ctest:neoeng_production_security_boundary_verify"
+      ]
+    },
+    {
+      "changeset": "CS014",
+      "audit_status": "PASS",
+      "assessment_status": "verified_integrity",
+      "risk_class": "critical",
+      "reproducible": false,
+      "rerun_status": "not_required",
+      "historical_commit": "1933dad93ca137a11ff0b3f05c7be34c59423c01",
+      "evidence_paths": [
+        "docs/changesets/014/TEST_STATUS.md"
+      ],
+      "provenance_kind": "accepted_baseline_closure",
+      "assessment_note": "Historical immutable release-assurance evidence and provenance remain verifiable. R22 release-assurance/release-gate checks are corroboration, not recreation of the historical external Sigstore/Fulcio/Rekor campaign.",
+      "rerun_evidence": []
+    },
+    {
+      "changeset": "CS015",
+      "audit_status": "PASS",
+      "assessment_status": "verified_integrity",
+      "risk_class": "critical",
+      "reproducible": false,
+      "rerun_status": "not_required",
+      "historical_commit": "fea93021315668a3314b9e23b659cf4843548486",
+      "evidence_paths": [
+        "docs/changesets/015/TEST_STATUS.md"
+      ],
+      "provenance_kind": "accepted_baseline_closure",
+      "assessment_note": "Historical final-acceptance packages remain verifiable and immutable. R22 reran the 54-test supported surface, manifest, historical comparison and final-acceptance oracles, but does not recreate or replace the historical immutable provenance package.",
+      "rerun_evidence": []
+    }
+  ]
+}

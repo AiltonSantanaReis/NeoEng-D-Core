@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "source-worktree",
+  "executable": "git",
+  "arguments": [
+    "-C",
+    "C:\\Users\\atnco\\src\\NeoEng-D-Core-R22",
+    "worktree",
+    "add",
+    "--detach",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\source",
+    "e3fff973554a2e56b8bd7afdc1132f75f3ec337c"
+  ],
+  "working_directory": "C:\\Users\\atnco\\src\\NeoEng-D-Core-R22",
+  "started_at_utc": "2026-08-22T21:28:36.5309715Z",
+  "finished_at_utc": "2026-08-22T21:28:37.1681335Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/source-worktree.stdout.txt",
+  "stderr": "raw/logs/source-worktree.stderr.txt"
+}

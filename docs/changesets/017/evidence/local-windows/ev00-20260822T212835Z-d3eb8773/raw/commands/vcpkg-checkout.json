@@ -1,0 +1,17 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "vcpkg-checkout",
+  "executable": "git",
+  "arguments": [
+    "checkout",
+    "--detach",
+    "FETCH_HEAD"
+  ],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\deps\\vcpkg",
+  "started_at_utc": "2026-08-22T21:28:39.0506305Z",
+  "finished_at_utc": "2026-08-22T21:28:51.4515634Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/vcpkg-checkout.stdout.txt",
+  "stderr": "raw/logs/vcpkg-checkout.stderr.txt"
+}

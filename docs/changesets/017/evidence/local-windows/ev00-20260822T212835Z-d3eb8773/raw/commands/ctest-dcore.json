@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "ctest-dcore",
+  "executable": "ctest",
+  "arguments": [
+    "--test-dir",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build",
+    "-C",
+    "Release",
+    "--output-on-failure",
+    "-L",
+    "dcore"
+  ],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773",
+  "started_at_utc": "2026-08-22T21:30:50.2691194Z",
+  "finished_at_utc": "2026-08-22T21:31:06.9170496Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/ctest-dcore.stdout.txt",
+  "stderr": "raw/logs/ctest-dcore.stderr.txt"
+}

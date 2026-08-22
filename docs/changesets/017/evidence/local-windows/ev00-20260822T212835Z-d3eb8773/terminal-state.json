@@ -1,0 +1,6 @@
+{
+  "schema": "neoeng.dlab.ev00-terminal-state.v1",
+  "state": "PASSED",
+  "reason": "supported 54-test surface, isolated research replay/history surface, and all EV-00 qualifying commands passed",
+  "finished_at_utc": "2026-08-22T21:32:29.8835349Z"
+}

@@ -1,0 +1,1 @@
+HEAD is now at 0878b522 [harfbuzz] Fix build on wasm32-emscripten (#52924)

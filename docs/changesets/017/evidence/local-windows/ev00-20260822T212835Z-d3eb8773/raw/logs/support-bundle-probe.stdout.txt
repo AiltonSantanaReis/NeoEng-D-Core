@@ -1,0 +1,5 @@
+schema=neoeng.dcore.support-bundle.v1
+entries=6
+manifest_sha256=6b23b2c7710cba6b3688bcfbff154d42ad946058e802e30ee1702d38ee7393fd
+deferred_gates=2
+verification=none

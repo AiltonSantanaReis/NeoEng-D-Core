@@ -1,0 +1,28 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "research-cmake-configure",
+  "executable": "cmake",
+  "arguments": [
+    "-S",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\source",
+    "-B",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\research-build",
+    "-G",
+    "Ninja",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCMAKE_C_COMPILER=clang-cl",
+    "-DCMAKE_CXX_COMPILER=clang-cl",
+    "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\deps\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+    "-DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF",
+    "-DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON",
+    "-DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=ON",
+    "-DNEOENG_DCORE_BUILD_VIEW_LAB=OFF"
+  ],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773",
+  "started_at_utc": "2026-08-22T21:31:14.4226752Z",
+  "finished_at_utc": "2026-08-22T21:31:32.9027653Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/research-cmake-configure.stdout.txt",
+  "stderr": "raw/logs/research-cmake-configure.stderr.txt"
+}

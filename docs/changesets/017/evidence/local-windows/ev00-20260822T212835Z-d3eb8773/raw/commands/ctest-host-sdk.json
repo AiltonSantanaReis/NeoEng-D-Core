@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "ctest-host-sdk",
+  "executable": "ctest",
+  "arguments": [
+    "--test-dir",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build",
+    "-C",
+    "Release",
+    "--output-on-failure",
+    "-L",
+    "host-sdk"
+  ],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773",
+  "started_at_utc": "2026-08-22T21:31:09.1872811Z",
+  "finished_at_utc": "2026-08-22T21:31:14.4171509Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/ctest-host-sdk.stdout.txt",
+  "stderr": "raw/logs/ctest-host-sdk.stderr.txt"
+}

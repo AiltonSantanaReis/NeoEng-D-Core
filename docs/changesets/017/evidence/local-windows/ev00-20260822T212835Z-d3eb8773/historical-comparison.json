@@ -1,0 +1,10 @@
+{
+  "schema": "neoeng.dlab.ev00-historical-comparison.v1",
+  "historical_reference": "docs/changesets/015/evidence/github-actions-run-30375982639/raw/windows-clang-cl-ctest.txt",
+  "historical_total_tests": 54,
+  "local_total_tests": 54,
+  "historical_failed_tests": 0,
+  "local_failed_tests": 0,
+  "inventory_equal": true,
+  "compared_at_utc": "2026-08-22T21:32:29.8825284Z"
+}

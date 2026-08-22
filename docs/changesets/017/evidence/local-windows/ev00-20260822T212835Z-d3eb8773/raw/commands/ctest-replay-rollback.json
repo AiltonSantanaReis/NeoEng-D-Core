@@ -1,0 +1,21 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "ctest-replay-rollback",
+  "executable": "ctest",
+  "arguments": [
+    "--test-dir",
+    "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\research-build",
+    "-C",
+    "Release",
+    "--output-on-failure",
+    "-R",
+    "^(neoeng_dcore_replay_smoke|neoeng_dcore_history_smoke|neoeng_temporal_closure_tests)$"
+  ],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773",
+  "started_at_utc": "2026-08-22T21:32:23.7929450Z",
+  "finished_at_utc": "2026-08-22T21:32:24.0457818Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/ctest-replay-rollback.stdout.txt",
+  "stderr": "raw/logs/ctest-replay-rollback.stderr.txt"
+}
