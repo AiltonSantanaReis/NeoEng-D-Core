@@ -1,0 +1,57 @@
+{
+  "schema": "neoeng.dcore.cs017-physical-attempt-failure.v1",
+  "changeset": "CS017",
+  "revision": "R14",
+  "attempt": 1,
+  "pull_request": 42,
+  "canonical_plan_commit": "3b7c4e215871c14835b57f3529931032d9f08a07",
+  "local_run_id": "ev00-20260822T135050Z-cdc30b2a",
+  "physical_qualify_executed": true,
+  "qualify_process_exit_code": 0,
+  "local_terminal_state": "PASSED",
+  "local_terminal_reason": "all local EV-00 qualifying commands and normative CS015 Windows supported-surface comparison passed",
+  "product_sha": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "harness_sha": "3b7c4e215871c14835b57f3529931032d9f08a07",
+  "control_branch": "cs017-r14-local",
+  "source_clean": true,
+  "workspace_fresh": true,
+  "preexisting_build_used": false,
+  "historical_comparison": {
+    "reference": "docs/changesets/015/evidence/github-actions-run-30375982639/raw/windows-clang-cl-ctest.txt",
+    "historical_total_tests": 54,
+    "local_total_tests": 54,
+    "historical_failed_tests": 0,
+    "local_failed_tests": 0,
+    "inventory_equal": true
+  },
+  "recorded_external_commands": {
+    "count": 17,
+    "pass": 17,
+    "fail": 0
+  },
+  "independent_verifier": {
+    "self_test": "PASS",
+    "checks_completed_before_rejection": ["source", "environment", "fresh-build"],
+    "rejected_check": "ctest",
+    "rejection": "required CTest members missing: neoeng_dcore_history_smoke, neoeng_dcore_replay_smoke"
+  },
+  "root_cause": {
+    "class": "QUALIFICATION_CONFIGURATION_CONTRACT_MISMATCH",
+    "normative_supported_surface": "54-test CS015 Windows clang-cl dcore inventory with NEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF",
+    "contradictory_requirement": "frozen independent verifier required neoeng_dcore_replay_smoke and neoeng_dcore_history_smoke inside that same 54-test inventory even though baseline CMake registers both only when NEOENG_DCORE_BUILD_RESEARCH_TOOLS=ON",
+    "additional_observation": "ctest-replay-rollback could return success with only neoeng_temporal_closure_tests matching the unanchored alternation; exit code 0 did not prove replay/history were present"
+  },
+  "classification": "PHYSICAL_PASSED_INDEPENDENT_VERIFIER_REJECTED_QUALIFICATION_CONFIGURATION_CONTRACT_MISMATCH",
+  "product_defect_evidence": false,
+  "accepted_as_ev00_evidence": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_qualify_rerun_allowed": false,
+  "workspace_preservation_required": true,
+  "repository_evidence_package_preservation_required": true,
+  "origin": "MAINTAINER_OBSERVED_LOCAL_TERMINAL_PACKAGE_AND_INDEPENDENT_VERIFIER_OUTPUT",
+  "notes": [
+    "The R14 local PASSED terminal is preserved and is not rewritten as a local harness failure.",
+    "The independent verifier rejection prevents qualification/acceptance.",
+    "R15 must preserve the normative 54-test research-OFF surface and independently exercise replay/history in a separate research-enabled build without reusing R14 output."
+  ]
+}

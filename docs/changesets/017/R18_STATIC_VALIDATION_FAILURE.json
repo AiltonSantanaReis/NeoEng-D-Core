@@ -1,0 +1,31 @@
+{
+  "schema": "neoeng.dcore.cs017-static-validation-failure.v1",
+  "changeset": "CS017",
+  "revision": "R18",
+  "pull_request": 46,
+  "canonical_plan_commit": "dff0954dc45a46530fe5be3766fbf84c674a2a5c",
+  "physical_preflight_executed": false,
+  "physical_qualify_executed": false,
+  "ev00_workflow_run": 32586064458,
+  "ev00_workflow_job": 97062500446,
+  "changeset_validation_run": 32586064492,
+  "passed_before_failure": [
+    "Verify R18 stage scope and R9-R17 preservation",
+    "Canonical evolution authorizer self-test",
+    "Authorize EV-00 start state",
+    "Authorize exact R18 harness paths"
+  ],
+  "failed_step": "Evidence verifier self-test without control-tree side effects",
+  "exact_failure": "tree dirty before verifier self-test: ?? scripts/__pycache__/authorize_evolution_action_legacy.cpython-312.pyc",
+  "verifier_self_test_executed": false,
+  "root_cause": {
+    "class": "STATIC_CONTROL_TREE_BASELINE_CONTAMINATION_BY_AUTHORIZER_BYTECODE_CACHE",
+    "detail": "The R18 no-side-effect check required a clean checkout before running the verifier, but earlier authorizer invocations used ordinary python3 and imported the legacy authorizer, generating an untracked __pycache__ .pyc. The intended verifier no-side-effect invariant was therefore not reached."
+  },
+  "classification": "FAILED_NONQUALIFYING_STATIC_VALIDATION_CONTROL_TREE_BASELINE_CONTAMINATION_BY_AUTHORIZER_BYTECODE_CACHE",
+  "product_defect_evidence": false,
+  "accepted_as_ev00_evidence": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_physical_execution_allowed": false,
+  "prospective_correction": "Invoke authorizer/verifier Python controls with -B, execute the clean-tree verifier self-test on an uncontaminated checkout, and add a final static clean-tree invariant before physical Preflight authorization."
+}

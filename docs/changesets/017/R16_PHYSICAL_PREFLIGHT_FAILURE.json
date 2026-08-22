@@ -1,0 +1,52 @@
+{
+  "schema": "neoeng.dcore.cs017-physical-preflight-failure.v1",
+  "changeset": "CS017",
+  "revision": "R16",
+  "pull_request": 44,
+  "canonical_plan_commit": "8ab016056e2e4191a7e24cb2d6192b4c5836e6d2",
+  "physical_preflight_executed": true,
+  "runner_preflight_reached": false,
+  "physical_qualify_executed": false,
+  "local_run_id": null,
+  "control_checkout": {
+    "branch": "cs017-r16-local",
+    "head": "8ab016056e2e4191a7e24cb2d6192b4c5836e6d2",
+    "clean": true,
+    "protected_product_commit_present": true
+  },
+  "maintainer_observed_environment": {
+    "VCToolsInstallDir": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.51.36231\\",
+    "WindowsSdkDir": "C:\\Program Files (x86)\\Windows Kits\\10\\",
+    "cmake_version": "4.3.1-msvc1",
+    "ninja_version": "1.13.2",
+    "clang_cl_version": "22.1.0",
+    "msvcrtd_lib_present": true,
+    "oldnames_lib_present": true
+  },
+  "passed_before_failure": [
+    "exact frozen plan checkout and named branch binding",
+    "clean-tree check",
+    "manual protected product commit presence check",
+    "R16 wrapper MSVC environment prerequisites",
+    "R16 wrapper Assert-MsvcEnvironment",
+    "R16 wrapper Invoke-ToolchainLinkSmoke"
+  ],
+  "failed_wrapper_line": 145,
+  "failed_call": "Assert-CtestParserCompatibility -Runner $runner",
+  "exact_failure": "The term 'Parse-CtestInventory' is not recognized as a name of a cmdlet, function, script file, or executable program.",
+  "root_cause": {
+    "class": "WRAPPER_FUNCTION_SCOPE_DEFECT",
+    "detail": "Import-CtestParser extracted Parse-CtestInventory from the preserved runner and evaluated the function definition with Invoke-Expression inside the Import-CtestParser function scope. The imported function existed only in that local scope and was unavailable after Import-CtestParser returned, so Assert-CtestParserCompatibility could not call Parse-CtestInventory."
+  },
+  "classification": "FAILED_NONQUALIFYING_PHYSICAL_PREFLIGHT_WRAPPER_FUNCTION_SCOPE_DEFECT",
+  "runner_delegated": false,
+  "qualifying_workspace_created": false,
+  "qualifying_evidence_package_created": false,
+  "product_build_started": false,
+  "product_test_started": false,
+  "product_defect_evidence": false,
+  "accepted_as_ev00_evidence": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_preflight_rerun_allowed": false,
+  "prospective_correction": "Start a fresh successor revision from accepted main, preserve the R16 wrapper bytes and failure record, promote the extracted Parse-CtestInventory definition explicitly into wrapper script scope, and add an executable pwsh regression that imports and invokes the parser before any physical Preflight is authorized."
+}
