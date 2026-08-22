@@ -1,0 +1,170 @@
+name: EV-00 D-Lab evidence validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/dlab/ev00/**'
+      - '.github/workflows/ev00-dlab.yml'
+      - 'docs/changesets/017/evidence/**'
+      - 'docs/changesets/017/ACTIVE_LOCAL_RUN.json'
+      - 'docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: EV-00 D-Lab evidence validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Evidence verifier self-test
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --self-test
+
+      - name: PowerShell harness syntax check
+        shell: pwsh
+        run: |
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path 'scripts/dlab/ev00/run_ev00_dlab_windows.ps1'),
+            [ref]$null,
+            [ref]$errors)
+          if ($errors.Count -ne 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
+          Write-Host 'PowerShell syntax: PASS'
+
+      - name: Resolve committed qualifying evidence
+        id: evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f audit/validation/CS017/VALIDATION_PLAN.json ]]; then
+            echo 'mode=static' >> "$GITHUB_OUTPUT"
+            echo 'Canonical CS017 validation plan not frozen yet; static harness validation only.'
+            exit 0
+          fi
+          if [[ ! -f docs/changesets/017/ACTIVE_LOCAL_RUN.json ]]; then
+            echo 'Canonical plan exists but ACTIVE_LOCAL_RUN.json is missing.' >&2
+            exit 1
+          fi
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          p = Path('docs/changesets/017/ACTIVE_LOCAL_RUN.json')
+          doc = json.loads(p.read_text(encoding='utf-8'))
+          if doc.get('schema') != 'neoeng.dcore.ev00-active-local-run.v1':
+              raise SystemExit('ACTIVE_LOCAL_RUN schema mismatch')
+          run_id = doc.get('run_id')
+          evidence = doc.get('evidence_path')
+          if not isinstance(run_id, str) or not run_id.startswith('ev00-'):
+              raise SystemExit('invalid active local run_id')
+          expected = f'docs/changesets/017/evidence/local-windows/{run_id}'
+          if evidence != expected:
+              raise SystemExit(f'evidence_path mismatch: {evidence!r} != {expected!r}')
+          if not Path(evidence).is_dir():
+              raise SystemExit(f'evidence directory missing: {evidence}')
+          if doc.get('terminal_state') != 'PASSED':
+              raise SystemExit('active local run is not terminal PASSED')
+          print('mode=evidence')
+          print(f'evidence_path={evidence}')
+          print(f'run_id={run_id}')
+          PY
+
+      - name: Verify plan-commit and harness-SHA binding
+        if: steps.evidence.outputs.mode == 'evidence'
+        shell: bash
+        env:
+          EVIDENCE_PATH: ${{ steps.evidence.outputs.evidence_path }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, subprocess, os
+          from pathlib import Path
+          plan = 'audit/validation/CS017/VALIDATION_PLAN.json'
+          evidence = Path(os.environ['EVIDENCE_PATH'])
+          identity = json.loads((evidence / 'run-identity.json').read_text(encoding='utf-8'))
+          active = json.loads(Path('docs/changesets/017/ACTIVE_LOCAL_RUN.json').read_text(encoding='utf-8'))
+          plan_commit = subprocess.run(
+              ['git','log','-n','1','--format=%H','--',plan],
+              text=True,capture_output=True,check=True).stdout.strip()
+          if len(plan_commit) != 40:
+              raise SystemExit('cannot derive canonical plan commit')
+          if identity.get('harness_sha') != plan_commit:
+              raise SystemExit(f"local harness_sha {identity.get('harness_sha')!r} != plan commit {plan_commit}")
+          if active.get('harness_sha') != plan_commit:
+              raise SystemExit('ACTIVE_LOCAL_RUN harness_sha differs from plan commit')
+          if active.get('product_sha') != 'e3fff973554a2e56b8bd7afdc1132f75f3ec337c':
+              raise SystemExit('ACTIVE_LOCAL_RUN product SHA mismatch')
+          print('plan/harness binding: PASS', plan_commit)
+          PY
+
+      - name: Verify protected source identity
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check source
+
+      - name: Verify physical Windows environment
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check environment
+
+      - name: Verify fresh isolated build
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check fresh-build
+
+      - name: Verify supported CTest surface
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check ctest
+
+      - name: Verify deterministic repeat probe
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check determinism
+
+      - name: Verify Host SDK boundary
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check host-sdk
+
+      - name: Verify replay and rollback surface
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check replay-rollback
+
+      - name: Verify state evidence probe
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check state-evidence
+
+      - name: Verify support bundle probe
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check support-bundle
+
+      - name: Verify historical release-gate revalidation
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check release-gate
+
+      - name: Verify SHA-256 evidence manifest
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check manifest
+
+      - name: Verify historical CTest comparison
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check historical-comparison
+
+      - name: Verify local terminal state
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py --evidence '${{ steps.evidence.outputs.evidence_path }}' --repo-root . --check terminal
+
+      - name: Verify CS001-CS015 historical assurance
+        if: steps.evidence.outputs.mode == 'evidence'
+        run: >-
+          python3 scripts/dlab/ev00/verify_ev00_dlab_evidence.py
+          --evidence '${{ steps.evidence.outputs.evidence_path }}'
+          --repo-root .
+          --historical-result docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json
+          --check historical-assurance
