@@ -1,0 +1,59 @@
+{
+  "schema": "neoeng.dcore.cs017-r9-preparation-validation-state.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R9",
+  "classification": "PREPARATION_VALIDATED_NONQUALIFYING_AND_RETIRED",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "canonical_plan_commit": "e12d3780eb95af076399ace7ef906dc6489948f3",
+  "canonical_plan_path": "audit/validation/CS017/VALIDATION_PLAN.json",
+  "preparation_workflow_path": ".github/workflows/cs017-r9-preparation-preflight.yml",
+  "validated_preparation_workflow_blob": "3689f3d7611774364522fc3877a81ddfdfd831d5",
+  "attempts": [
+    {
+      "source_sha": "dd15f4acf6c2af04f9e5f7be2a444eb41f772722",
+      "stage_preflight_run_id": 32556567193,
+      "stage_preflight_conclusion": "success",
+      "changeset_diagnostic_run_id": 32556567335,
+      "changeset_diagnostic_conclusion": "failure",
+      "classification": "STAGE_PREFLIGHT_PASSED_CHANGESET_DESCRIPTOR_STALE"
+    },
+    {
+      "source_sha": "cda15c2b9c71085f02df58660922fca534261895",
+      "stage_preflight_run_id": 32556682454,
+      "stage_preflight_conclusion": "success",
+      "changeset_diagnostic_run_id": 32556682451,
+      "changeset_diagnostic_conclusion": "success",
+      "classification": "PREPARATION_PLAN_BOUND_VALIDATION_PASS"
+    },
+    {
+      "source_sha": "691ca96b129fbfab9fb7a2566a19598eb8343a61",
+      "stage_preflight_run_id": 32556873349,
+      "stage_preflight_conclusion": "success",
+      "changeset_diagnostic_run_id": 32556873331,
+      "changeset_diagnostic_conclusion": "success",
+      "ev00_static_validation_run_id": 32556873365,
+      "ev00_static_validation_conclusion": "success",
+      "classification": "HARNESS_PUBLISHED_PREPARATION_STILL_VALID"
+    },
+    {
+      "source_sha": "e12d3780eb95af076399ace7ef906dc6489948f3",
+      "stage_preflight_run_id": 32557049344,
+      "stage_preflight_conclusion": "failure",
+      "failed_step": "Verify combined stage and control-plane scope",
+      "observed_error": "path belongs to neither EV-00 scope nor R9 preparation control plane: audit/validation/CS017/VALIDATION_PLAN.json",
+      "changeset_diagnostic_run_id": 32557049360,
+      "changeset_diagnostic_conclusion": "success",
+      "ev00_plan_frozen_run_id": 32557049349,
+      "ev00_plan_frozen_conclusion": "success",
+      "classification": "FAILED_POST_PREPARATION_APPLICABILITY_ATTEMPT"
+    }
+  ],
+  "retirement_reason": "The preparation workflow completed its authority after validating stage start and harness-publication scope. GitHub pull_request path filters use the cumulative PR diff, so the historical preparation workflow would continue to execute and reject later canonical-plan/evidence paths that are intentionally outside its frozen preparation scope.",
+  "retirement_rule": "Prospectively replace automatic pull_request applicability with workflow_dispatch only. The previously validated workflow bytes remain preserved by blob SHA and repository ancestry; no prior run is rerun, rewritten, or reclassified.",
+  "qualifying_campaign_started": false,
+  "physical_windows_command_executed": false,
+  "ev00_accepted": false,
+  "release_authorized": false,
+  "product_runtime_effect": "NONE"
+}
