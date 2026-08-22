@@ -1,0 +1,94 @@
+{
+  "schema": "neoeng.dcore.evolution-evidence-manifest.v1",
+  "stage": "EV-00",
+  "changeset": "CS017",
+  "closure_changeset": "CS000I",
+  "source_commit": "89c134795e41357cc204265f7cd96ddadd804c57",
+  "hash_mode": "lf-normalized-text",
+  "files": [
+    {
+      "path": "audit/validation/CS017/VALIDATION_RESULT.json",
+      "sha256": "da955c6325874727725957368a5bf229dd29c059c3d6f6a1aed869b02bd958d4"
+    },
+    {
+      "path": "audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json",
+      "sha256": "38590a8329f84cb2809fc49090704c9e6aeab2ea4dee8f027b1420ed08d64744"
+    },
+    {
+      "path": "docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json",
+      "sha256": "6a5b35775f5aa0881c5606f3be99375f041a6c8696adcb6c70de98f732a93f69"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ACTIVE_LOCAL_RUN.json",
+      "sha256": "2c0e27b471f8345e45d5359766e0bbb2c2d2a09bb6e5ab4f9a9f5166d153905f"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/run-identity.json",
+      "sha256": "d85ccd055170a64f6959655462449110f33d5609a50131c23a894923b9d6163e"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/environment.json",
+      "sha256": "2f55f99cf097c73e304f8f538d840d740b16afe85d594897f6fbae0eee362866"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/evidence-manifest.json",
+      "sha256": "482e63c88929b96db7c8b42cbe811809cefa5d7b9d2fd3a9ff30f928c1f5aa45"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/terminal-state.json",
+      "sha256": "1359e5e18aeed6468bbf9d18a58136e052bf453213c9195d0b625aaf3e1e1066"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/historical-comparison.json",
+      "sha256": "bdbfa3738e2c2474433d9c8e7dc59c6244ea32bc4d94ba505497df2f7cfc17e8"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/replay-rollback-validation.json",
+      "sha256": "f8cd35a58b235d8ad6964f248a4d469bfd2c73c650228bddfedb518ac16dabe7"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/commands/cmake-configure.json",
+      "sha256": "a87012ce1f63162b9bbee6e2acf16734dbfed3653ec52009d55c159d0b8e6502"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/cmake-configure.stdout.txt",
+      "sha256": "b15678636667ba546e3f7378599a8cc6acc5241586d8fdd0b77d9570980fd074"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/cmake-build.stdout.txt",
+      "sha256": "c56a806d21ce6576c22c4c26c74efea2272108fe9b659aa7355449d477ad3760"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/ctest-dcore.stdout.txt",
+      "sha256": "636856c8a7132d05b4c58bbe3bde29bd51214fabbdcc4f57318c5cc8601466ab"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/ctest-host-sdk.stdout.txt",
+      "sha256": "13dcb80132e767a28ca2bdc93549e57a8b511d65100a011e57d95398dbdf74a9"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/ctest-replay-rollback.stdout.txt",
+      "sha256": "dab3ad65097556ac7deeebb92d3068adb4bca392cbfef96f7a955ef436e72ff9"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/determinism-1.stdout.txt",
+      "sha256": "d787bb9afc9f55a3c7f79803f5cad46bdb181484060214f250109531926a4ade"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/determinism-2.stdout.txt",
+      "sha256": "d787bb9afc9f55a3c7f79803f5cad46bdb181484060214f250109531926a4ade"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/state-evidence-probe.stdout.txt",
+      "sha256": "fe2e91e747400295a40e47884c2a8cc7acf13cdbb759dd5e5f46748f4d89263e"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/support-bundle-probe.stdout.txt",
+      "sha256": "1aca69694d0beabdf918f5a7c0e9139f4753d9b60d27412c15b18cf98f59d61a"
+    },
+    {
+      "path": "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/raw/logs/release-gate.stdout.txt",
+      "sha256": "eadd932c7e454d8f44dadfe5f94de287efca9b1b541178f38a1b2bba52da1e50"
+    }
+  ]
+}

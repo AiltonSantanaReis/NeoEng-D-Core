@@ -1,0 +1,104 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000I",
+  "plan_commit": "00b75831a9491d7e82b2ea54ddd04722bc181f58",
+  "plan_sha256": "9ddc1e80d77c211f02f6849dd223c2836f52e1e7e827dc29333ce7b16d26c467",
+  "source_sha": "00b75831a9491d7e82b2ea54ddd04722bc181f58",
+  "run_id": 32605662566,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000i-ev00-ledger-closure-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000i.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "CS000I verifier negative self-test"
+    },
+    {
+      "test_id": "cs000i.cs017-integration",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify accepted CS017 integration binding"
+    },
+    {
+      "test_id": "cs000i.github-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify live GitHub acceptance provenance"
+    },
+    {
+      "test_id": "cs000i.r22-workflow-retirement",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify R22 workflow is manual-only"
+    },
+    {
+      "test_id": "cs000i.ledger-closure",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify exact EV-00 ledger closure"
+    },
+    {
+      "test_id": "cs000i.requirements-closure",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EVREQ-001 through EVREQ-004"
+    },
+    {
+      "test_id": "cs000i.acceptance-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EV-00 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000i.scope",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify CS000I administrative-only scope"
+    },
+    {
+      "test_id": "cs000i.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify no product release or EV-01 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "evolution.advance-stage",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EV-00 advance authorization boundary"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "effects": {
+    "ev00": "LEDGER_ACCEPTED",
+    "ev01": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "build_definitions": "NONE",
+    "product_tests": "NONE",
+    "product_baseline": "v1.14.1_UNCHANGED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}

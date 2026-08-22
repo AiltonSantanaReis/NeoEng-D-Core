@@ -34,26 +34,255 @@
     "superseded"
   ],
   "stages": [
-    {"stage_id":"EV-00","title":"Certificação da baseline no laboratório","status":"in_progress","depends_on":[],"planned_changeset":"CS017","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-01","title":"Hardening de build, CI e governança operacional","status":"not_started","depends_on":["EV-00"],"planned_changeset":"CS018","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-02","title":"Hardening dos contratos fundamentais","status":"not_started","depends_on":["EV-01"],"planned_changeset":"CS019","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-03","title":"Corpus ouro determinístico","status":"not_started","depends_on":["EV-02"],"planned_changeset":"CS020","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-04","title":"Property-based e model-based testing","status":"not_started","depends_on":["EV-03"],"planned_changeset":"CS021","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-05","title":"Fuzzing semântico e corrupção adversarial","status":"not_started","depends_on":["EV-04"],"planned_changeset":"CS022","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-06","title":"Desacoplamento interno do contrato de estado","status":"not_started","depends_on":["EV-05"],"planned_changeset":"CS023","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-07","title":"Transações canônicas atômicas","status":"not_started","depends_on":["EV-06"],"planned_changeset":"CS024","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-08","title":"Checkpoints crash-consistent","status":"not_started","depends_on":["EV-07"],"planned_changeset":"CS025","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-09","title":"Identidade explícita de replay","status":"not_started","depends_on":["EV-08"],"planned_changeset":"CS026","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-10","title":"Replay multiversão","status":"not_started","depends_on":["EV-09"],"planned_changeset":"CS027","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-11","title":"Canonical Schema Registry","status":"not_started","depends_on":["EV-10"],"planned_changeset":"CS028","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-12","title":"WorldState v1 através do registry","status":"not_started","depends_on":["EV-11"],"planned_changeset":"CS029","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-13","title":"Componentes canônicos versionados","status":"not_started","depends_on":["EV-12"],"planned_changeset":"CS030","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-14","title":"Estado canônico genérico","status":"not_started","depends_on":["EV-13"],"planned_changeset":"CS031","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-15","title":"Localização genérica de divergência","status":"not_started","depends_on":["EV-14"],"planned_changeset":"CS032","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-16","title":"View Lab diagnóstico orientado por schema","status":"not_started","depends_on":["EV-15"],"planned_changeset":"CS033","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-17","title":"Evolução de capabilities e Host SDK","status":"not_started","depends_on":["EV-16"],"planned_changeset":"CS034","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-18","title":"Paralelismo determinístico","status":"not_started","depends_on":["EV-17"],"planned_changeset":"CS035","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-19","title":"Large-state stress e qualificação de escala","status":"not_started","depends_on":["EV-18"],"planned_changeset":"CS036","accepted_commit":null,"evidence_manifest":null,"decision_record":null},
-    {"stage_id":"EV-20","title":"Regressão integral e release assurance","status":"not_started","depends_on":["EV-19"],"planned_changeset":"CS037","accepted_commit":null,"evidence_manifest":null,"decision_record":null}
+    {
+      "stage_id": "EV-00",
+      "title": "Certificação da baseline no laboratório",
+      "status": "accepted",
+      "depends_on": [],
+      "planned_changeset": "CS017",
+      "accepted_commit": "89c134795e41357cc204265f7cd96ddadd804c57",
+      "evidence_manifest": "docs/changesets/000I/evidence/EV00_ACCEPTANCE_MANIFEST.json",
+      "decision_record": "docs/records/evolution/DEV-0007.md"
+    },
+    {
+      "stage_id": "EV-01",
+      "title": "Hardening de build, CI e governança operacional",
+      "status": "not_started",
+      "depends_on": [
+        "EV-00"
+      ],
+      "planned_changeset": "CS018",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-02",
+      "title": "Hardening dos contratos fundamentais",
+      "status": "not_started",
+      "depends_on": [
+        "EV-01"
+      ],
+      "planned_changeset": "CS019",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-03",
+      "title": "Corpus ouro determinístico",
+      "status": "not_started",
+      "depends_on": [
+        "EV-02"
+      ],
+      "planned_changeset": "CS020",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-04",
+      "title": "Property-based e model-based testing",
+      "status": "not_started",
+      "depends_on": [
+        "EV-03"
+      ],
+      "planned_changeset": "CS021",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-05",
+      "title": "Fuzzing semântico e corrupção adversarial",
+      "status": "not_started",
+      "depends_on": [
+        "EV-04"
+      ],
+      "planned_changeset": "CS022",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-06",
+      "title": "Desacoplamento interno do contrato de estado",
+      "status": "not_started",
+      "depends_on": [
+        "EV-05"
+      ],
+      "planned_changeset": "CS023",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-07",
+      "title": "Transações canônicas atômicas",
+      "status": "not_started",
+      "depends_on": [
+        "EV-06"
+      ],
+      "planned_changeset": "CS024",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-08",
+      "title": "Checkpoints crash-consistent",
+      "status": "not_started",
+      "depends_on": [
+        "EV-07"
+      ],
+      "planned_changeset": "CS025",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-09",
+      "title": "Identidade explícita de replay",
+      "status": "not_started",
+      "depends_on": [
+        "EV-08"
+      ],
+      "planned_changeset": "CS026",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-10",
+      "title": "Replay multiversão",
+      "status": "not_started",
+      "depends_on": [
+        "EV-09"
+      ],
+      "planned_changeset": "CS027",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-11",
+      "title": "Canonical Schema Registry",
+      "status": "not_started",
+      "depends_on": [
+        "EV-10"
+      ],
+      "planned_changeset": "CS028",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-12",
+      "title": "WorldState v1 através do registry",
+      "status": "not_started",
+      "depends_on": [
+        "EV-11"
+      ],
+      "planned_changeset": "CS029",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-13",
+      "title": "Componentes canônicos versionados",
+      "status": "not_started",
+      "depends_on": [
+        "EV-12"
+      ],
+      "planned_changeset": "CS030",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-14",
+      "title": "Estado canônico genérico",
+      "status": "not_started",
+      "depends_on": [
+        "EV-13"
+      ],
+      "planned_changeset": "CS031",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-15",
+      "title": "Localização genérica de divergência",
+      "status": "not_started",
+      "depends_on": [
+        "EV-14"
+      ],
+      "planned_changeset": "CS032",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-16",
+      "title": "View Lab diagnóstico orientado por schema",
+      "status": "not_started",
+      "depends_on": [
+        "EV-15"
+      ],
+      "planned_changeset": "CS033",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-17",
+      "title": "Evolução de capabilities e Host SDK",
+      "status": "not_started",
+      "depends_on": [
+        "EV-16"
+      ],
+      "planned_changeset": "CS034",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-18",
+      "title": "Paralelismo determinístico",
+      "status": "not_started",
+      "depends_on": [
+        "EV-17"
+      ],
+      "planned_changeset": "CS035",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-19",
+      "title": "Large-state stress e qualificação de escala",
+      "status": "not_started",
+      "depends_on": [
+        "EV-18"
+      ],
+      "planned_changeset": "CS036",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    },
+    {
+      "stage_id": "EV-20",
+      "title": "Regressão integral e release assurance",
+      "status": "not_started",
+      "depends_on": [
+        "EV-19"
+      ],
+      "planned_changeset": "CS037",
+      "accepted_commit": null,
+      "evidence_manifest": null,
+      "decision_record": null
+    }
   ]
 }
