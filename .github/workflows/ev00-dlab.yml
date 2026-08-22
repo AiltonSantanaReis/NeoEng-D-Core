@@ -43,6 +43,12 @@ jobs:
           }
           Write-Host 'PowerShell syntax: PASS'
 
+      - name: Verify canonical CS017 validation plan
+        if: hashFiles('audit/validation/CS017/VALIDATION_PLAN.json') != ''
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS017/VALIDATION_PLAN.json
+
       - name: Resolve committed qualifying evidence
         id: evidence
         shell: bash
@@ -54,8 +60,9 @@ jobs:
             exit 0
           fi
           if [[ ! -f docs/changesets/017/ACTIVE_LOCAL_RUN.json ]]; then
-            echo 'Canonical plan exists but ACTIVE_LOCAL_RUN.json is missing.' >&2
-            exit 1
+            echo 'mode=plan-frozen' >> "$GITHUB_OUTPUT"
+            echo 'Canonical CS017 plan is frozen; awaiting physical Windows evidence.'
+            exit 0
           fi
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
