@@ -1,0 +1,39 @@
+{
+  "schema": "neoeng.dcore.cs017-physical-preflight-failure.v1",
+  "changeset": "CS017",
+  "revision": "R17",
+  "pull_request": 45,
+  "canonical_plan_commit": "d9d8c86a6f483df148c336a1ab8f02deec2c5eec",
+  "physical_preflight_executed": true,
+  "physical_qualify_executed": false,
+  "control_branch": "cs017-r17-local",
+  "control_head": "d9d8c86a6f483df148c336a1ab8f02deec2c5eec",
+  "control_tree_clean_before_wrapper": true,
+  "protected_product_commit_present": true,
+  "physical_host": true,
+  "virtualization_indicators": [],
+  "runner_delegated": true,
+  "runner_preflight_reported_control_tree_clean": false,
+  "runner_failure": "Control repository must be clean before a qualifying run.",
+  "observed_sequence": [
+    "fresh clone bound to exact R17 plan commit on named branch",
+    "manual git status --porcelain was empty before wrapper invocation",
+    "R17 wrapper parser-import regression path passed",
+    "R17 wrapper verifier self-test completed before runner delegation",
+    "preserved runner reported control_tree_clean=false and rejected Preflight"
+  ],
+  "root_cause": {
+    "class": "WRAPPER_CONTROL_TREE_SIDE_EFFECT",
+    "proven_fact": "The control tree was clean immediately before wrapper invocation and dirty when the preserved runner performed its clean-tree invariant after wrapper-side checks.",
+    "leading_mechanism": "The wrapper invokes the Python verifier self-test immediately before runner delegation. The verifier imports sibling snapshots via importlib and the repository .gitignore does not ignore Python __pycache__ or *.pyc. The historical classification does not depend on this mechanism being the only possible side effect."
+  },
+  "classification": "FAILED_NONQUALIFYING_PHYSICAL_PREFLIGHT_WRAPPER_CONTROL_TREE_SIDE_EFFECT",
+  "local_run_id": null,
+  "qualifying_workspace_created": false,
+  "product_build_test_campaign_began": false,
+  "product_defect_evidence": false,
+  "accepted_as_ev00_evidence": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_retry_allowed": false,
+  "prospective_correction": "Run wrapper-side Python verifier self-tests with bytecode generation disabled and assert git status --porcelain --untracked-files=all is unchanged and clean before and after wrapper-side self-tests before runner delegation."
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "neoeng.dlab.ev00-attempt-failure.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R19",
+  "classification": "FAILED_NONQUALIFYING_INDEPENDENT_VERIFIER_SUPPORTED_SURFACE_RESEARCH_SET_CONFLATION_DEFECT",
+  "canonical_plan_commit": "7f9d552b2665b134171256d56dd5642df4ec0f8b",
+  "trusted_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "product_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "physical_preflight_executed": true,
+  "physical_preflight_passed": true,
+  "physical_qualify_executed": true,
+  "physical_qualify_terminal_state": "PASSED",
+  "physical_run_id": "ev00-20260822T171439Z-03ca937d",
+  "physical_qualify_exit_code": 0,
+  "supported_surface": {
+    "historical_total_tests": 54,
+    "local_total_tests": 54,
+    "historical_failed_tests": 0,
+    "local_failed_tests": 0,
+    "inventory_equal": true
+  },
+  "research_surface": {
+    "expected_tests": [
+      "neoeng_dcore_history_smoke",
+      "neoeng_dcore_replay_smoke",
+      "neoeng_temporal_closure_tests"
+    ],
+    "observed_tests": [
+      "neoeng_dcore_history_smoke",
+      "neoeng_dcore_replay_smoke",
+      "neoeng_temporal_closure_tests"
+    ],
+    "total_tests": 3,
+    "failed_tests": 0,
+    "exact_inventory": true
+  },
+  "recorded_command_count": 19,
+  "all_recorded_commands_passed": true,
+  "post_qualify_control_tree_clean": true,
+  "independent_verifier_self_test_passed": true,
+  "independent_verifier_rejection_check": "ctest",
+  "independent_verifier_rejection": "research-only replay/history tests leaked into the normative supported-surface inventory",
+  "root_cause": {
+    "kind": "independent_verifier_semantic_set_conflation",
+    "details": "The R19 verifier used one three-test EXPECTED_RESEARCH_TESTS set for both the exact isolated research surface and the forbidden intersection against the supported 54-test surface. neoeng_temporal_closure_tests belongs to the normative supported dcore surface and also to the explicit three-test research validation surface, so the frozen verifier rejected every correct supported inventory by construction. Only neoeng_dcore_replay_smoke and neoeng_dcore_history_smoke are research-only and forbidden from the supported surface."
+  },
+  "product_defect_established": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_rerun_authorized": false,
+  "post_freeze_remote_ancestry_note": "After the physical campaign, connector-routing mistakes created and removed placeholder root files in sequential post-freeze commits. Net tree effect is zero. No history rewrite occurred. Those commits are not part of the physical harness binding and do not change canonical_plan_commit or the local evidence package.",
+  "required_successor_correction": "Split research-surface expected tests from research-only forbidden-in-supported tests; preserve exact 3/3 Build-B validation while allowing neoeng_temporal_closure_tests in the normative 54-test Build-A inventory. Add an executable static regression proving both positive and negative cases before physical execution.",
+  "effects": {
+    "cs017_accepted": false,
+    "ev00_accepted": false,
+    "trusted_gate_passed": false,
+    "release_authorized": false,
+    "ev01_started": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "neoeng.dlab.ev00-attempt-failure.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R20",
+  "classification": "FAILED_NONQUALIFYING_STATIC_VALIDATION_CMAKE_RESEARCH_BLOCK_SELECTION_ORACLE_DEFECT",
+  "canonical_plan_commit": "5106b7eead9df006785e6f0ecbd37e7c13c28309",
+  "trusted_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "product_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "static_ev00_run_id": 32588929087,
+  "static_ev00_job_id": 97069564155,
+  "changeset_validation_run_id": 32588929123,
+  "static_failure_step": "Verify R20 supported/research set split oracle",
+  "static_failure_message": "baseline CMake supported/research registration boundary mismatch",
+  "verifier_self_test_passed_before_failure": true,
+  "verifier_clean_tree_invariant_passed_before_failure": true,
+  "physical_preflight_executed": false,
+  "physical_qualify_executed": false,
+  "root_cause": {
+    "kind": "auxiliary_static_oracle_wrong_research_block_selection",
+    "details": "The auxiliary CMake proof used the first global occurrence of if(NEOENG_DCORE_BUILD_RESEARCH_TOOLS). The immutable baseline contains earlier research-tools blocks for building research executables before the BUILD_TESTING test-registration section. The relevant replay/history test-registration block occurs later, after neoeng_temporal_closure_tests is registered and labeled dcore. The canonical R20 verifier self-test had already passed."
+  },
+  "r20_verifier_blob": "e22d0e8b73264a993b912abd77379a53853ae50b",
+  "r20_verifier_semantic_correction_established_by_self_test": true,
+  "product_defect_established": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_rerun_authorized": false,
+  "required_successor_correction": "Preserve the exact R20 verifier bytes and correct only the auxiliary CMake oracle to select the research-tools block after supported temporal-closure test registration (or the block within the testing section), then assert replay/history are inside that block while temporal closure remains supported and dcore-labeled.",
+  "effects": {
+    "cs017_accepted": false,
+    "ev00_accepted": false,
+    "trusted_gate_passed": false,
+    "release_authorized": false,
+    "ev01_started": false
+  }
+}

@@ -1,0 +1,62 @@
+Test project C:/Users/atnco/NeoEng-DLab/EV-00/runs/ev00-20260822T212835Z-d3eb8773/build
+      Start  1: neoeng_product_contract_verify
+ 1/24 Test  #1: neoeng_product_contract_verify .............................   Passed    0.27 sec
+      Start  2: neoeng_product_contract_self_test
+ 2/24 Test  #2: neoeng_product_contract_self_test ..........................   Passed    0.61 sec
+      Start  3: neoeng_product_assurance_verify
+ 3/24 Test  #3: neoeng_product_assurance_verify ............................   Passed    0.22 sec
+      Start  4: neoeng_product_assurance_self_test
+ 4/24 Test  #4: neoeng_product_assurance_self_test .........................   Passed    0.40 sec
+      Start  5: neoeng_public_claims_verify
+ 5/24 Test  #5: neoeng_public_claims_verify ................................   Passed    0.12 sec
+      Start  6: neoeng_release_assurance_verify
+ 6/24 Test  #6: neoeng_release_assurance_verify ............................   Passed    0.12 sec
+      Start  7: neoeng_release_assurance_self_test
+ 7/24 Test  #7: neoeng_release_assurance_self_test .........................   Passed    0.14 sec
+      Start  8: neoeng_release_assurance_evidence_verifier_self_test
+ 8/24 Test  #8: neoeng_release_assurance_evidence_verifier_self_test .......   Passed    0.25 sec
+      Start  9: neoeng_final_acceptance_verify
+ 9/24 Test  #9: neoeng_final_acceptance_verify .............................   Passed    0.40 sec
+      Start 10: neoeng_final_acceptance_self_test
+10/24 Test #10: neoeng_final_acceptance_self_test ..........................   Passed    0.98 sec
+      Start 11: neoeng_final_acceptance_evidence_verifier_self_test
+11/24 Test #11: neoeng_final_acceptance_evidence_verifier_self_test ........   Passed    0.21 sec
+      Start 12: neoeng_consolidated_release_verifier_self_test
+12/24 Test #12: neoeng_consolidated_release_verifier_self_test .............   Passed    0.18 sec
+      Start 13: neoeng_distributed_reference_evidence_verifier_self_test
+13/24 Test #13: neoeng_distributed_reference_evidence_verifier_self_test ...   Passed    0.18 sec
+      Start 14: neoeng_distributed_reference_boundary_verify
+14/24 Test #14: neoeng_distributed_reference_boundary_verify ...............   Passed    0.16 sec
+      Start 15: neoeng_distributed_reference_boundary_self_test
+15/24 Test #15: neoeng_distributed_reference_boundary_self_test ............   Passed    0.18 sec
+      Start 16: neoeng_numeric_closure_evidence_verifier_self_test
+16/24 Test #16: neoeng_numeric_closure_evidence_verifier_self_test .........   Passed    0.18 sec
+      Start 17: neoeng_temporal_closure_evidence_verifier_self_test
+17/24 Test #17: neoeng_temporal_closure_evidence_verifier_self_test ........   Passed    0.17 sec
+      Start 18: neoeng_production_security_evidence_verifier_self_test
+18/24 Test #18: neoeng_production_security_evidence_verifier_self_test .....   Passed    0.18 sec
+      Start 19: neoeng_numeric_closure_boundary_verify
+19/24 Test #19: neoeng_numeric_closure_boundary_verify .....................   Passed    0.11 sec
+      Start 20: neoeng_numeric_closure_boundary_self_test
+20/24 Test #20: neoeng_numeric_closure_boundary_self_test ..................   Passed    0.11 sec
+      Start 21: neoeng_temporal_closure_boundary_verify
+21/24 Test #21: neoeng_temporal_closure_boundary_verify ....................   Passed    0.11 sec
+      Start 22: neoeng_temporal_closure_boundary_self_test
+22/24 Test #22: neoeng_temporal_closure_boundary_self_test .................   Passed    0.11 sec
+      Start 23: neoeng_production_security_boundary_verify
+23/24 Test #23: neoeng_production_security_boundary_verify .................   Passed    0.11 sec
+      Start 24: neoeng_production_security_boundary_self_test
+24/24 Test #24: neoeng_production_security_boundary_self_test ..............   Passed    0.11 sec
+
+100% tests passed, 0 tests failed out of 24
+
+Label Time Summary:
+cs014                =   0.81 sec*proc (5 tests)
+cs015                =   1.59 sec*proc (3 tests)
+dcore                =   5.60 sec*proc (24 tests)
+final-acceptance     =   1.59 sec*proc (3 tests)
+governance           =   5.60 sec*proc (24 tests)
+release-assurance    =   0.81 sec*proc (5 tests)
+release-gate         =   5.60 sec*proc (24 tests)
+
+Total Test time (real) =   5.64 sec

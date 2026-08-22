@@ -1,0 +1,162 @@
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
+The following packages will be built and installed:
+  * boost-assert:x64-windows@1.91.0
+  * boost-cmake:x64-windows@1.91.0
+  * boost-compat:x64-windows@1.91.0
+  * boost-concept-check:x64-windows@1.91.0
+  * boost-config:x64-windows@1.91.0
+  * boost-container:x64-windows@1.91.0
+  * boost-container-hash:x64-windows@1.91.0
+  * boost-core:x64-windows@1.91.0
+  * boost-describe:x64-windows@1.91.0
+  * boost-dynamic-bitset:x64-windows@1.91.0
+  * boost-headers:x64-windows@1.91.0
+  * boost-integer:x64-windows@1.91.0
+  * boost-intrusive:x64-windows@1.91.0
+  * boost-io:x64-windows@1.91.0
+  * boost-lexical-cast:x64-windows@1.91.0
+  * boost-math:x64-windows@1.91.0
+  * boost-move:x64-windows@1.91.0
+  * boost-mp11:x64-windows@1.91.0
+    boost-multiprecision:x64-windows@1.91.0
+  * boost-predef:x64-windows@1.91.0
+  * boost-preprocessor:x64-windows@1.91.0
+  * boost-random:x64-windows@1.91.0
+  * boost-system:x64-windows@1.91.0
+  * boost-throw-exception:x64-windows@1.91.0
+  * boost-type-traits:x64-windows@1.91.0
+  * boost-uninstall:x64-windows@1.91.0
+  * boost-utility:x64-windows@1.91.0
+  * boost-variant2:x64-windows@1.91.0
+  * boost-winapi:x64-windows@1.91.0
+  * vcpkg-boost:x64-windows@2025-03-29
+  * vcpkg-cmake:x64-windows@2024-04-23
+  * vcpkg-cmake-config:x64-windows@2024-05-23
+Additional packages (*) will be modified to complete this operation.
+Restored 32 package(s) from C:\Users\atnco\AppData\Local\vcpkg\archives in 2.2 s. Use --debug to see more details.
+Installing 1/32 vcpkg-cmake-config:x64-windows@2024-05-23...
+vcpkg-cmake-config:x64-windows@2024-05-23 package ABI: 56ca7db09c7e691ab8585547cee39ade2a59762ba5b32f92808efa174dcf5c5a
+Elapsed time to handle vcpkg-cmake-config:x64-windows: 37.4 ms
+Installing 2/32 vcpkg-cmake:x64-windows@2024-04-23...
+vcpkg-cmake:x64-windows@2024-04-23 package ABI: ae134c52e6ead3452e8cc16f59bb68fff8cbdb4e95900b42c0615d88bd1a4e95
+Elapsed time to handle vcpkg-cmake:x64-windows: 76.4 ms
+Installing 3/32 vcpkg-boost:x64-windows@2025-03-29...
+vcpkg-boost:x64-windows@2025-03-29 package ABI: 80224d44afb3df089d24eb068ab130e9e9d77570a68b748008505c2ff72a27f3
+Elapsed time to handle vcpkg-boost:x64-windows: 63 ms
+Installing 4/32 boost-uninstall:x64-windows@1.91.0...
+boost-uninstall:x64-windows@1.91.0 package ABI: 92d94002f3e618153673eaf22344618f0b267aefa5216348c31b0d740d761984
+Elapsed time to handle boost-uninstall:x64-windows: 8.77 ms
+Installing 5/32 boost-cmake:x64-windows@1.91.0...
+boost-cmake:x64-windows@1.91.0 package ABI: 07cdf110c2e3e76110d41be5efbb32df037e84e78ddbbbf0311132e02c8f5f31
+Elapsed time to handle boost-cmake:x64-windows: 38.5 ms
+Installing 6/32 boost-headers:x64-windows@1.91.0...
+boost-headers:x64-windows@1.91.0 package ABI: 6060289a1538262675da5e0c615bcc47a905d88e1c62570403ffd65c0527f596
+Elapsed time to handle boost-headers:x64-windows: 47.3 ms
+Installing 7/32 boost-config:x64-windows@1.91.0...
+boost-config:x64-windows@1.91.0 package ABI: 88156e689169bb6d4e6cdd4bc777c188d28be281526a6c966c3ef96a7568d314
+Elapsed time to handle boost-config:x64-windows: 254 ms
+Installing 8/32 boost-assert:x64-windows@1.91.0...
+boost-assert:x64-windows@1.91.0 package ABI: abf3dbdb26825c0c8490ec6d72a6466ae8a20e1dce5aeb2507bc2cbce1168178
+Elapsed time to handle boost-assert:x64-windows: 40.6 ms
+Installing 9/32 boost-throw-exception:x64-windows@1.91.0...
+boost-throw-exception:x64-windows@1.91.0 package ABI: 7b52d226b5926845dd352447fadc225b0c89ac3e2508d40cac2f3843770c737f
+Elapsed time to handle boost-throw-exception:x64-windows: 49.2 ms
+Installing 10/32 boost-type-traits:x64-windows@1.91.0...
+boost-type-traits:x64-windows@1.91.0 package ABI: b4fe81213fe4d72b0c915cb8369777a98cb4e42d462802f415657a8673e383a3
+Elapsed time to handle boost-type-traits:x64-windows: 214 ms
+Installing 11/32 boost-preprocessor:x64-windows@1.91.0...
+boost-preprocessor:x64-windows@1.91.0 package ABI: 8e8cbbf9e9753d9bbb317c25945c1a4ec217c6fa1a122955bc373e12bbc5c676
+Elapsed time to handle boost-preprocessor:x64-windows: 243 ms
+Installing 12/32 boost-io:x64-windows@1.91.0...
+boost-io:x64-windows@1.91.0 package ABI: eb0b43ae94a9de24613f55b2cdf036e48d92814014d74987c3ac3a20ed17b04e
+Elapsed time to handle boost-io:x64-windows: 73.2 ms
+Installing 13/32 boost-core:x64-windows@1.91.0...
+boost-core:x64-windows@1.91.0 package ABI: 000ad76de17af43bd89278189565d8d8f9d6a219550d407852ee26af2fe65e16
+Elapsed time to handle boost-core:x64-windows: 189 ms
+Installing 14/32 boost-utility:x64-windows@1.91.0...
+boost-utility:x64-windows@1.91.0 package ABI: 9ea28d6f1c0855c5d0bdd30e8e06e2a021fc9eadde1a945d682b85cb27718903
+Elapsed time to handle boost-utility:x64-windows: 162 ms
+Installing 15/32 boost-predef:x64-windows@1.91.0...
+boost-predef:x64-windows@1.91.0 package ABI: 6a73cdef6415b0ac5b6a0c44be8a48e9ebf6ee3e8b7b6fe3541705e5c6d0e909
+Elapsed time to handle boost-predef:x64-windows: 187 ms
+Installing 16/32 boost-winapi:x64-windows@1.91.0...
+boost-winapi:x64-windows@1.91.0 package ABI: b81756b2aa0b9dba7de757f5905888793799fba1a6a25cc621e23977b578e97f
+Elapsed time to handle boost-winapi:x64-windows: 199 ms
+Installing 17/32 boost-mp11:x64-windows@1.91.0...
+boost-mp11:x64-windows@1.91.0 package ABI: 2dff8e7214622f9a106ba24cefd46f7611e518be21fe6f1d54bc95aa8638ac41
+Elapsed time to handle boost-mp11:x64-windows: 171 ms
+Installing 18/32 boost-variant2:x64-windows@1.91.0...
+boost-variant2:x64-windows@1.91.0 package ABI: a56495ee03432eff5a0c697efccbe07ed6484fb476996e9026b1efaeffa0f372
+Elapsed time to handle boost-variant2:x64-windows: 59.4 ms
+Installing 19/32 boost-compat:x64-windows@1.91.0...
+boost-compat:x64-windows@1.91.0 package ABI: dc8b37cba5ff9fdee4cae3fd079d56405f72cb410443dcd6237fefa988792daa
+Elapsed time to handle boost-compat:x64-windows: 128 ms
+Installing 20/32 boost-system:x64-windows@1.91.0...
+boost-system:x64-windows@1.91.0 package ABI: 44475cd3824e5b78eb7603a32dd4b1a91f502e98ef95b17fb49e9ff61b31f531
+Elapsed time to handle boost-system:x64-windows: 172 ms
+Installing 21/32 boost-integer:x64-windows@1.91.0...
+boost-integer:x64-windows@1.91.0 package ABI: 64947ff0afc2ef5f88672d5cf581ee09445ece3d06498a20c889eacee09fb47b
+Elapsed time to handle boost-integer:x64-windows: 61.9 ms
+Installing 22/32 boost-describe:x64-windows@1.91.0...
+boost-describe:x64-windows@1.91.0 package ABI: 0e902bc8878504f2d4a60a8541b237d2ecd761f926ad36f7a7291d52e236bdaa
+Elapsed time to handle boost-describe:x64-windows: 107 ms
+Installing 23/32 boost-container-hash:x64-windows@1.91.0...
+boost-container-hash:x64-windows@1.91.0 package ABI: 8ee73a7ebb5398db93a0603752a2c43c373c3f40c3f2f856a548aa73b110731c
+Elapsed time to handle boost-container-hash:x64-windows: 150 ms
+Installing 24/32 boost-dynamic-bitset:x64-windows@1.91.0...
+boost-dynamic-bitset:x64-windows@1.91.0 package ABI: 7ed4df9675a691b6975b4660fa7439e6d752ac9736b7611d77afc061ed67ba00
+Elapsed time to handle boost-dynamic-bitset:x64-windows: 63.3 ms
+Installing 25/32 boost-random:x64-windows@1.91.0...
+boost-random:x64-windows@1.91.0 package ABI: 4586fb5ad259cac79d3ced1592a799cd36b9b02d38018264eb1667b79021984d
+Elapsed time to handle boost-random:x64-windows: 181 ms
+Installing 26/32 boost-move:x64-windows@1.91.0...
+boost-move:x64-windows@1.91.0 package ABI: d0f211ccc69ebb6b56c4af0681e85aa10ce5b829bffd5cde598bd52bcbe045e8
+Elapsed time to handle boost-move:x64-windows: 157 ms
+Installing 27/32 boost-intrusive:x64-windows@1.91.0...
+boost-intrusive:x64-windows@1.91.0 package ABI: f01e71a8a24d0697aea4467841a6e00e3026a34e3a8290a95b3aa2270640d4f0
+Elapsed time to handle boost-intrusive:x64-windows: 186 ms
+Installing 28/32 boost-container:x64-windows@1.91.0...
+boost-container:x64-windows@1.91.0 package ABI: 0047b7b7e2df4ac30db7a9f3242958ebc468bdb0c28f1eae99697e01edeb8284
+Elapsed time to handle boost-container:x64-windows: 187 ms
+Installing 29/32 boost-lexical-cast:x64-windows@1.91.0...
+boost-lexical-cast:x64-windows@1.91.0 package ABI: 159441aa9d326a358aa0fbd9955628c2d0ee6bb23e07e681296ee4b072647457
+Elapsed time to handle boost-lexical-cast:x64-windows: 142 ms
+Installing 30/32 boost-concept-check:x64-windows@1.91.0...
+boost-concept-check:x64-windows@1.91.0 package ABI: 94d4f4e202f8715e89ee4133b1abde4d64af91928e615b412b1592e1c8792f63
+Elapsed time to handle boost-concept-check:x64-windows: 67.5 ms
+Installing 31/32 boost-math:x64-windows@1.91.0...
+boost-math:x64-windows@1.91.0 package ABI: 51dfa7959ddeeea752882fc86aaa816bd5107c750a6222e39e66c9726058d902
+Elapsed time to handle boost-math:x64-windows: 454 ms
+Installing 32/32 boost-multiprecision:x64-windows@1.91.0...
+boost-multiprecision:x64-windows@1.91.0 package ABI: 6d170741af7e0c879dd185c58971ad76181fad91025c64dcad5fb3618f2ca12c
+Elapsed time to handle boost-multiprecision:x64-windows: 197 ms
+Installed contents are licensed to you by owners. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Packages installed in this vcpkg installation declare the following licenses:
+BSL-1.0
+MIT
+boost-multiprecision provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(boost_multiprecision CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE Boost::multiprecision)
+
+All requested installations completed successfully in: 4.4 s
+-- Running vcpkg install - done
+-- The C compiler identification is Clang 22.1.0 with MSVC-like command-line
+-- The CXX compiler identification is Clang 22.1.0 with MSVC-like command-line
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/LLVM/bin/clang-cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/LLVM/bin/clang-cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: C:/Users/atnco/AppData/Local/python/pythoncore-3.14-64/python.exe (found suitable version "3.14.6", minimum required is "3.10") found components: Interpreter
+-- Configuring done (18.0s)
+-- Generating done (0.4s)
+-- Build files have been written to: C:/Users/atnco/NeoEng-DLab/EV-00/runs/ev00-20260822T212835Z-d3eb8773/research-build

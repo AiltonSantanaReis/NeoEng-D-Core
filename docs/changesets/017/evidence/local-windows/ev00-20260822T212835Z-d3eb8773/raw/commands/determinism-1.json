@@ -1,0 +1,13 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "determinism-1",
+  "executable": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build\\neoeng_determinism_probe.exe",
+  "arguments": [],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build",
+  "started_at_utc": "2026-08-22T21:31:06.9352507Z",
+  "finished_at_utc": "2026-08-22T21:31:08.0754314Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/determinism-1.stdout.txt",
+  "stderr": "raw/logs/determinism-1.stderr.txt"
+}

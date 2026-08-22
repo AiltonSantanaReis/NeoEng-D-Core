@@ -1,0 +1,13 @@
+{
+  "schema": "neoeng.dlab.command-record.v1",
+  "name": "support-bundle-probe",
+  "executable": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build\\neoeng_support_bundle_probe.exe",
+  "arguments": [],
+  "working_directory": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T212835Z-d3eb8773\\build",
+  "started_at_utc": "2026-08-22T21:32:24.1394249Z",
+  "finished_at_utc": "2026-08-22T21:32:24.1747948Z",
+  "exit_code": 0,
+  "classification": "PASS",
+  "stdout": "raw/logs/support-bundle-probe.stdout.txt",
+  "stderr": "raw/logs/support-bundle-probe.stderr.txt"
+}

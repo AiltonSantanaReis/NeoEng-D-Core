@@ -1,0 +1,19 @@
+{
+  "schema": "neoeng.dlab.ev00-replay-rollback-validation.v1",
+  "build_configuration": "research_enabled_isolated",
+  "research_tools": true,
+  "full_toolset": false,
+  "expected_tests": [
+    "neoeng_dcore_history_smoke",
+    "neoeng_dcore_replay_smoke",
+    "neoeng_temporal_closure_tests"
+  ],
+  "observed_tests": [
+    "neoeng_dcore_history_smoke",
+    "neoeng_dcore_replay_smoke",
+    "neoeng_temporal_closure_tests"
+  ],
+  "total_tests": 3,
+  "failed_tests": 0,
+  "exact_inventory": true
+}
