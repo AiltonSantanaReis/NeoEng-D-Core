@@ -1,0 +1,30 @@
+{
+  "schema": "neoeng.dlab.ev00-historical-assurance-plan.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "baseline_commit": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "purpose": "Freeze verifiable provenance inputs for the post-physical CS001-CS015 Historical Assurance Revalidation without pre-classifying risk or rewriting historical outcomes.",
+  "entries": [
+    {"changeset":"CS001","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md","docs/changesets/001/CS001_AUDIT_RECONCILIATION.md"]},
+    {"changeset":"CS002","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md"]},
+    {"changeset":"CS003","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md"]},
+    {"changeset":"CS004","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md","docs/changesets/004/evidence/state-evidence-clang.txt","docs/changesets/004/evidence/state-evidence-gcc.txt"]},
+    {"changeset":"CS005","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md","docs/changesets/005/CHANGESET.md"]},
+    {"changeset":"CS006","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md"]},
+    {"changeset":"CS007","historical_commit":"f11c28e127e86f447e0ad136e038f0147b352df0","provenance_kind":"consolidated_validation","evidence_paths":["docs/VALIDATION_REPORT.md","docs/changesets/007/TEST_STATUS.md"]},
+    {"changeset":"CS008","historical_commit":"e4ac487587b118fd4bc6bffb89ef5f61407deb1f","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/008/TEST_STATUS.md"]},
+    {"changeset":"CS009","historical_commit":"b1015d2f6f9508225539933ca5ac1d149c093606","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/009/TEST_STATUS.md"]},
+    {"changeset":"CS010","historical_commit":"711bdbbfc953f03daeb235a4a69e3d9ab600beca","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/010/TEST_STATUS.md"]},
+    {"changeset":"CS011","historical_commit":"cee4c053c3cb6761b7fcfb9e95a58e103b10cec9","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/011/TEST_STATUS.md"]},
+    {"changeset":"CS012","historical_commit":"02fc48739084f849733b68cd644c66e56660a655","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/012/TEST_STATUS.md"]},
+    {"changeset":"CS013","historical_commit":"48d016f6211c7617cae96c5fcb735bb0bfe66a5c","provenance_kind":"direct_changeset","evidence_paths":["docs/changesets/013/TEST_STATUS.md"]},
+    {"changeset":"CS014","historical_commit":"1933dad93ca137a11ff0b3f05c7be34c59423c01","provenance_kind":"accepted_baseline_closure","evidence_paths":["docs/changesets/014/TEST_STATUS.md"]},
+    {"changeset":"CS015","historical_commit":"fea93021315668a3314b9e23b659cf4843548486","provenance_kind":"accepted_baseline_closure","evidence_paths":["docs/changesets/015/TEST_STATUS.md"]}
+  ],
+  "rules": [
+    "Every historical_commit must exist and be an ancestor of the protected v1.14.1 baseline commit.",
+    "Every evidence_path must exist at its declared historical_commit and in the current protected baseline ancestry.",
+    "This plan freezes provenance only; it does not assign risk, reproducibility, rerun necessity, or PASS/FAIL disposition.",
+    "Historical failures and limitations remain preserved; post-physical assurance PASS means the audit procedure completed, not that every historical claim was retroactively promoted."
+  ]
+}
