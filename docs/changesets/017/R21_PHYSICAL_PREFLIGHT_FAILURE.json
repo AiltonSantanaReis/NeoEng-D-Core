@@ -1,0 +1,40 @@
+{
+  "schema": "neoeng.dlab.ev00-failure-record.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R21",
+  "classification": "FAILED_NONQUALIFYING_PHYSICAL_PREFLIGHT_LEGACY_VERIFIER_IDENTITY_INVARIANT_CONFLICT",
+  "canonical_plan_commit": "53a1fbaee0a2747256a661771d07205d93600423",
+  "pull_request": 49,
+  "static_validation": {
+    "ev00_run_id": 32589265418,
+    "ev00_job_id": 97070363536,
+    "ev00_conclusion": "success",
+    "changeset_run_id": 32589265395,
+    "candidate_diagnostic": "success",
+    "trusted_gate": "skipped"
+  },
+  "physical_preflight_executed": true,
+  "physical_preflight_exit_code": 1,
+  "physical_qualify_executed": false,
+  "local_control_branch": "cs017-r21-local",
+  "control_head": "53a1fbaee0a2747256a661771d07205d93600423",
+  "product_commit_present": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "control_tree_clean_before": true,
+  "control_tree_clean_after": true,
+  "failure_location": "scripts/dlab/ev00/invoke_ev00_r17.ps1:130",
+  "failure_message": "R17 runtime verifier must be byte-for-byte identical to preserved R16 verifier.",
+  "root_cause": "The frozen R21 wrapper delegated through R20 and R19 into preserved R17. R17 still required the canonical verifier to be byte-identical to the preserved R16 verifier, while R20 intentionally changed the canonical verifier to correct supported/research membership semantics and R21 preserved that corrected verifier. The inherited identity invariant was therefore incompatible with the frozen R21 verifier by construction.",
+  "product_defect_established": false,
+  "runtime_abi_defect_established": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_rerun_authorized": false,
+  "qualify_authorized": false,
+  "release_authorized": false,
+  "notes": [
+    "R21 static validation passed before physical execution.",
+    "No R21 qualifying run was executed.",
+    "The physical host/toolchain prerequisites visible before wrapper failure were valid and the control tree remained clean.",
+    "Prospective correction must bind the canonical verifier to the preserved R20 verifier instead of the obsolete R16 identity invariant, without weakening MSVC/link-smoke/parser/dual-surface/self-test checks."
+  ]
+}
