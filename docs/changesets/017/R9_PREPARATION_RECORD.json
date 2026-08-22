@@ -1,0 +1,31 @@
+{
+  "schema": "neoeng.dcore.ev00-preparation-record.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R9",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "qualification_state": "NOT_STARTED",
+  "preparation_state": "IMPLEMENTED_PENDING_PREFLIGHT",
+  "source_under_test": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "preflight_workflow": ".github/workflows/cs017-r9-preparation-preflight.yml",
+  "preflight_run_id": null,
+  "preflight_run_attempt": null,
+  "preflight_head_sha": null,
+  "preflight_conclusion": null,
+  "planned_stage_operation_paths": [
+    "scripts/dlab/ev00/run_ev00_dlab_windows.ps1",
+    "scripts/dlab/ev00/verify_ev00_dlab_evidence.py",
+    ".github/workflows/ev00-dlab.yml",
+    "docs/changesets/017/LOCAL_DLAB_RUNBOOK.md"
+  ],
+  "historical_records_preserved": [
+    "docs/changesets/017/R5_FAILURE_RECORD.json",
+    "docs/changesets/017/R6_FAILURE_RECORD.json",
+    "docs/changesets/017/R7_PREPARATION_RECORD.json",
+    "audit/validation/CS000H/R8_PREPARATION_FAILURE.json"
+  ],
+  "qualifying_run_started": false,
+  "local_evidence_reused": false,
+  "release_authorized": false,
+  "note": "This record is non-qualifying. No physical Qualify command may run until the R9 preparation preflight succeeds and the complete R9 harness/workflow/verifier surface plus a frozen VALIDATION_PLAN are committed."
+}
