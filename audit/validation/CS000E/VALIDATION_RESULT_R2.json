@@ -1,0 +1,48 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000E",
+  "plan_commit": "6ae3ccce81576c91f6a9a7e04658876c16e5784f",
+  "plan_sha256": "2fa352bb2712e845b4304a18954f3c9856e60571c0386152bf6609191cf79500",
+  "source_sha": "6ae3ccce81576c91f6a9a7e04658876c16e5784f",
+  "run_id": 32545040931,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000e-r2-governance-transition-reconciliation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {"test_id":"r2.selftest","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"R2 verifier self-test"},
+    {"test_id":"r2.core-authority","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify reconciled prospective authority"},
+    {"test_id":"r2.attempt1-preserved","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify Attempt 1 nonacceptance and negative history"},
+    {"test_id":"r2.legacy-retired","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify stale automatic workflows are manual-only"},
+    {"test_id":"r2.live-evidence","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify live transition evidence and branch protection"},
+    {"test_id":"r2.scope","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify R2 administrative-only scope"},
+    {"test_id":"r2.non-effects","status":"PASS","evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify R2 non-effects and historical preservation"}
+  ],
+  "preserved_history": {
+    "attempt_1": {
+      "source_sha": "71d016850099a3b7e4d5b994c867fe106df12e10",
+      "run_id": 32544869579,
+      "run_attempt": 1,
+      "campaign_conclusion": "success",
+      "acceptance_decision": "NOT_ACCEPTED",
+      "record": "audit/validation/CS000E/ATTEMPT_001_NONACCEPTANCE.json"
+    },
+    "stale_cs000d_failure": {
+      "source_sha": "71d016850099a3b7e4d5b994c867fe106df12e10",
+      "run_id": 32544869512,
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "reclassified": false
+    }
+  },
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_tests": "NONE",
+    "ev00": "NOT_STARTED",
+    "cs017": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "qualification": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
