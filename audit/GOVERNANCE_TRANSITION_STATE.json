@@ -1,0 +1,47 @@
+{
+  "schema": "neoeng.dcore.governance-transition-state.v1",
+  "program_id": "POST_1_14_1",
+  "changeset": "CS000E",
+  "base_sha": "3640394d902c92f620b463f1542e14ab47a10959",
+  "activation_rule": "This transition is prospectively effective only after CS000E is VALIDATED/ACCEPTED and the trusted base gate accepts the closure head.",
+  "prospective_authority": {
+    "regime_id": "CHANGESET_VALIDATION",
+    "policy": "audit/CHANGESET_VALIDATION_POLICY.json",
+    "policy_document": "docs/governance/CHANGESET_VALIDATION_POLICY.md",
+    "workflow": ".github/workflows/changeset-validation.yml",
+    "verifier": "scripts/verify_changeset_validation.py",
+    "required_branch_check": "Trusted ChangeSet validation gate",
+    "required_branch_check_app_id": 15368
+  },
+  "legacy_cs016e": {
+    "status": "SUPERSEDED_UNACCEPTED",
+    "accepted": false,
+    "accepted_source_commit": null,
+    "evidence_manifest": null,
+    "root_file": "audit/GOVERNANCE_ROOT_OF_TRUST.json",
+    "acceptance_chain": "audit/GOVERNANCE_ACCEPTANCE_CHAIN.json",
+    "preserve_bytes": true,
+    "may_be_reclassified_as_accepted": false
+  },
+  "transition_evidence": {
+    "cs016e_bootstrap_pr": {"number": 27, "merged": true, "merge_commit": "d20a40d0cd0952d653965b34b67ec30e9ba1b42f"},
+    "new_regime_bootstrap_pr": {"number": 28, "merged": true, "merge_commit": "ffe41397783d1550d39d7c1c0ea445e69d2750bd"},
+    "trusted_gate_proof_pr": {"number": 29, "merged": true, "merge_commit": "c7c608ba04edb74303a971bdcdf4ca60d1b44119", "trusted_gate_run_id": 31647385145},
+    "legacy_automatic_retirement_pr": {"number": 30, "merged": true, "merge_commit": "d092ac56290d76dddf51982549a98234f038f3ee", "trusted_gate_run_id": 31648404320},
+    "current_main_at_plan": "3640394d902c92f620b463f1542e14ab47a10959"
+  },
+  "stale_text_resolution": {
+    "docs/records/evolution/DEV-0006.md": "Historical transition record; pre-merge wording is retained as historical context and is not current authority after CS000E acceptance.",
+    "docs/governance/CHANGESET_VALIDATION_POLICY.md": "The original transition-candidate heading is historical context; activation status is governed by this machine record plus CHANGESET_VALIDATION_POLICY_ACTIVATION.md."
+  },
+  "non_effects": {
+    "runtime": false,
+    "abi": false,
+    "product_tests": false,
+    "ev00_started": false,
+    "cs017_started": false,
+    "release_authorized": false,
+    "qualification": false,
+    "historical_evidence_rewritten": false
+  }
+}

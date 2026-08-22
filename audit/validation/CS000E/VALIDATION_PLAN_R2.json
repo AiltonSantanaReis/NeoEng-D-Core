@@ -1,0 +1,33 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000E",
+  "objective": "Prospective CS000E R2 reconciliation after Attempt 1 exposed stale automatic CS000D applicability; retire CS000D and Attempt1 workflows to manual-only while preserving their bodies/history, retain CS016E as superseded/unaccepted, and create no product/EV-00/release effect.",
+  "base_sha": "3640394d902c92f620b463f1542e14ab47a10959",
+  "execution_workflow": ".github/workflows/cs000e-r2-governance-transition-reconciliation.yml",
+  "required_tests": [
+    {"test_id":"r2.selftest","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"R2 verifier self-test"},
+    {"test_id":"r2.core-authority","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify reconciled prospective authority"},
+    {"test_id":"r2.attempt1-preserved","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify Attempt 1 nonacceptance and negative history"},
+    {"test_id":"r2.legacy-retired","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify stale automatic workflows are manual-only"},
+    {"test_id":"r2.live-evidence","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify live transition evidence and branch protection"},
+    {"test_id":"r2.scope","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify R2 administrative-only scope"},
+    {"test_id":"r2.non-effects","required":true,"evidence_job":"CS000E R2 governance transition reconciliation","evidence_step":"Verify R2 non-effects and historical preservation"}
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000d-documentation-finalization-correction.yml",
+    ".github/workflows/cs000e-governance-transition-reconciliation.yml",
+    ".github/workflows/cs000e-r2-governance-transition-reconciliation.yml",
+    "scripts/verify_governance_transition_reconciliation_r2.py",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "docs/governance/CHANGESET_VALIDATION_POLICY_ACTIVATION.md",
+    "docs/changesets/000E/CHANGESET.md",
+    "audit/validation/CS000E/ATTEMPT_001_NONACCEPTANCE.json"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}

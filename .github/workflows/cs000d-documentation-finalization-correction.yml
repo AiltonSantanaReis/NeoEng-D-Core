@@ -1,8 +1,9 @@
 name: CS000D documentation finalization control-plane correction
 
+# Historical CS000D workflow retained for manual diagnostics only after CS000E R2.
+# Automatic pull_request applicability was retired after unrelated CS000E changes
+# correctly exposed its frozen CS000D-only scope.
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

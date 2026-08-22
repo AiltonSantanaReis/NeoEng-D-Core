@@ -6,6 +6,10 @@
   "precedence": [
     "docs/governance/NEOENG_DCORE_SOURCE_OF_TRUTH.md",
     "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "docs/governance/CHANGESET_VALIDATION_POLICY_ACTIVATION.md",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "docs/governance/CHANGESET_VALIDATION_POLICY.md",
     "audit/GOVERNANCE_ROOT_OF_TRUST.json",
     "audit/REPOSITORY_PROTECTION_POLICY.json",
     "audit/STAGE_SCOPE_MAXIMA.json",
@@ -52,6 +56,8 @@
     "docs/original"
   ],
   "machine_ledgers": [
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
     "audit/GOVERNANCE_ROOT_OF_TRUST.json",
     "audit/REPOSITORY_PROTECTION_POLICY.json",
     "audit/STAGE_SCOPE_MAXIMA.json",
@@ -108,7 +114,9 @@
     "scripts/verify_governance_history.py",
     "scripts/verify_github_evidence.py",
     "scripts/verify_repository_protection.py",
-    "scripts/verify_release_attestation.py"
+    "scripts/verify_release_attestation.py",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_governance_transition_reconciliation.py"
   ],
   "conflict_policy": "Higher-precedence documents control. Conflicts stop the affected claim or implementation until reconciled by a ChangeSet.",
   "scope_statement": "NeoEng D-Core is an independent product based on consolidated Year-1 technical work and is not the five-year engine program.",
@@ -154,7 +162,21 @@
     "repository_protection_verifier": "scripts/verify_repository_protection.py",
     "release_attestation_verifier": "scripts/verify_release_attestation.py",
     "bootstrap_changeset": "CS016",
-    "root_of_trust_changeset": "CS016E"
+    "root_of_trust_changeset": "CS016E",
+    "prospective_governance_regime": {
+      "regime_id": "CHANGESET_VALIDATION",
+      "activation_record": "audit/GOVERNANCE_TRANSITION_STATE.json",
+      "activation_document": "docs/governance/CHANGESET_VALIDATION_POLICY_ACTIVATION.md",
+      "policy": "audit/CHANGESET_VALIDATION_POLICY.json",
+      "policy_document": "docs/governance/CHANGESET_VALIDATION_POLICY.md",
+      "workflow": ".github/workflows/changeset-validation.yml",
+      "verifier": "scripts/verify_changeset_validation.py",
+      "required_branch_check": "Trusted ChangeSet validation gate",
+      "required_branch_check_app_id": 15368,
+      "effective_condition": "CS000E accepted under the trusted ChangeSet validation gate"
+    },
+    "legacy_root_status": "CS016E_SUPERSEDED_UNACCEPTED_FOR_PROSPECTIVE_CHANGESET_AUTHORIZATION",
+    "legacy_root_preservation": "All CS016E artifacts, failures and non-acceptance history remain preserved; no accepted_source_commit or evidence_manifest is invented."
   },
   "authoritative_input_baseline": {
     "version": "1.8.0",

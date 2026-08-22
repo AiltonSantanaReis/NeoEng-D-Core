@@ -1,0 +1,41 @@
+name: CS000E R2 governance transition reconciliation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validate:
+    name: CS000E R2 governance transition reconciliation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: R2 verifier self-test
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --self-test
+      - name: Verify reconciled prospective authority
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check core
+      - name: Verify Attempt 1 nonacceptance and negative history
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check attempt1
+      - name: Verify stale automatic workflows are manual-only
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check retirement
+      - name: Verify live transition evidence and branch protection
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check live
+      - name: Verify R2 administrative-only scope
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check scope
+      - name: Verify R2 non-effects and historical preservation
+        run: python3 scripts/verify_governance_transition_reconciliation_r2.py --check non-effects

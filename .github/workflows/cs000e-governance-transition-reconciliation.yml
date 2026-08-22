@@ -1,0 +1,39 @@
+name: CS000E governance transition reconciliation
+
+# Attempt 1 is preserved for historical diagnostics only.
+# Automatic execution retired prospectively by CS000E R2 after a stale
+# CS000D automatic workflow was discovered outside Attempt 1's frozen inventory.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000E governance transition reconciliation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reconciliation verifier self-test
+        run: python3 scripts/verify_governance_transition_reconciliation.py --self-test
+      - name: Verify prospective authority record
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check machine-state
+      - name: Verify source-of-truth precedence
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check source-of-truth
+      - name: Verify CS016E superseded without acceptance
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check cs016e
+      - name: Verify live transition evidence and branch protection
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check live-evidence
+      - name: Verify administrative-only scope
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check scope
+      - name: Verify no product or EV-00 effects
+        run: python3 scripts/verify_governance_transition_reconciliation.py --check non-effects
