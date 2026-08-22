@@ -1,0 +1,30 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000E",
+  "objective": "Administrative reconciliation of the completed governance-regime transition: activate evidence-driven ChangeSet validation prospectively, classify CS016E as superseded/unaccepted, preserve historical evidence, and create no EV-00/CS017/product/release effect.",
+  "base_sha": "3640394d902c92f620b463f1542e14ab47a10959",
+  "execution_workflow": ".github/workflows/cs000e-governance-transition-reconciliation.yml",
+  "required_tests": [
+    {"test_id":"reconciliation.selftest","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Reconciliation verifier self-test"},
+    {"test_id":"authority.machine-state","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify prospective authority record"},
+    {"test_id":"authority.source-of-truth","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify source-of-truth precedence"},
+    {"test_id":"legacy.cs016e-unaccepted","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify CS016E superseded without acceptance"},
+    {"test_id":"transition.live-evidence","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify live transition evidence and branch protection"},
+    {"test_id":"scope.administrative-only","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify administrative-only scope"},
+    {"test_id":"effects.none","required":true,"evidence_job":"CS000E governance transition reconciliation","evidence_step":"Verify no product or EV-00 effects"}
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000e-governance-transition-reconciliation.yml",
+    "scripts/verify_governance_transition_reconciliation.py",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "docs/governance/CHANGESET_VALIDATION_POLICY_ACTIVATION.md",
+    "docs/changesets/000E/CHANGESET.md"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
