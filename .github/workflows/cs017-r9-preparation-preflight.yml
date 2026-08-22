@@ -6,6 +6,9 @@ on:
     paths:
       - 'docs/changesets/017/**'
       - 'audit/EVOLUTION_ROADMAP.json'
+      - 'audit/validation/CS017/R9_PREPARATION_ATTEMPT1.json'
+      - 'audit/validation/CS017/PREPARATION_VALIDATION_PLAN.json'
+      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
       - '.github/workflows/cs017-r9-preparation-preflight.yml'
 
 permissions:
@@ -99,6 +102,11 @@ jobs:
               raise SystemExit('R9 preparation record state mismatch')
           if record.get('qualifying_run_started') is not False or record.get('local_evidence_reused') is not False:
               raise SystemExit('R9 preparation record claims qualifying execution/reuse')
+          attempt = read('audit/validation/CS017/R9_PREPARATION_ATTEMPT1.json')
+          if attempt.get('classification') != 'STAGE_PREFLIGHT_PASSED_CHANGESET_DESCRIPTOR_STALE':
+              raise SystemExit('R9 Attempt 1 preservation record mismatch')
+          if attempt.get('qualifying_campaign_started') is not False:
+              raise SystemExit('R9 Attempt 1 incorrectly claims qualifying campaign')
           print('R9 preparation state and ACTION_SCOPE: PASS')
           PY
 
@@ -136,7 +144,12 @@ jobs:
           maximum = next(row for row in maxima['stages'] if row['stage_id'] == 'EV-00')
           stage_allowed = list(maximum['allowed_patterns'])
           forbidden = list(maximum['mandatory_forbidden_patterns'])
-          control_allowed = ['.github/workflows/cs017-r9-preparation-preflight.yml']
+          control_allowed = [
+              '.github/workflows/cs017-r9-preparation-preflight.yml',
+              'audit/validation/CS017/R9_PREPARATION_ATTEMPT1.json',
+              'audit/validation/CS017/PREPARATION_VALIDATION_PLAN.json',
+              'audit/CURRENT_CHANGESET_VALIDATION.json',
+          ]
           p = subprocess.run(['git','diff','--name-only',f'{BASE}...HEAD'], text=True, capture_output=True, check=True)
           changed = [x for x in p.stdout.splitlines() if x]
           if not changed:
@@ -155,3 +168,8 @@ jobs:
           for path in changed:
               print(' -', path)
           PY
+
+      - name: Verify R9 ChangeSet preparation validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS017/PREPARATION_VALIDATION_PLAN.json

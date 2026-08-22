@@ -1,0 +1,34 @@
+{
+  "schema": "neoeng.dcore.cs017-r9-preparation-attempt.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R9",
+  "attempt": 1,
+  "source_sha": "dd15f4acf6c2af04f9e5f7be2a444eb41f772722",
+  "source_tree": "56cb1d495ea9a6bb12276e6b57f47180374dd8f3",
+  "stage_preflight": {
+    "run_id": 32556567193,
+    "run_attempt": 1,
+    "workflow": ".github/workflows/cs017-r9-preparation-preflight.yml",
+    "conclusion": "success",
+    "required_steps_passed": true
+  },
+  "changeset_diagnostic": {
+    "run_id": 32556567335,
+    "run_attempt": 1,
+    "workflow": ".github/workflows/changeset-validation.yml",
+    "conclusion": "failure",
+    "failed_step": "Validate active descriptor when present",
+    "observed_errors": [
+      "plan base_sha differs from trusted PR base",
+      "frozen file changed after plan_commit: audit/EVOLUTION_ROADMAP.json",
+      "accepted result has blocking validation errors"
+    ],
+    "root_cause": "The active descriptor still referenced accepted CS000H while CS017 R9 had begun a new PR from a later trusted base. The diagnostic therefore correctly rejected reuse of CS000H acceptance as authority for the R9 candidate."
+  },
+  "classification": "STAGE_PREFLIGHT_PASSED_CHANGESET_DESCRIPTOR_STALE",
+  "qualifying_campaign_started": false,
+  "physical_windows_command_executed": false,
+  "reusable_as_qualifying_evidence": false,
+  "disposition": "Preserved as non-qualifying preparation history. A prospective R9 preparation validation plan and descriptor binding must be frozen before a new validation run."
+}

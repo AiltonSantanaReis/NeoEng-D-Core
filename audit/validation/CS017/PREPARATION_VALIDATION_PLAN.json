@@ -1,0 +1,69 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS017",
+  "objective": "Validate only the R9 EV-00 preparation control plane after the first stage preflight succeeded but the generic diagnostic correctly rejected the stale CS000H active descriptor. This plan does not validate or accept the physical EV-00 qualifying campaign and does not replace the later canonical audit/validation/CS017/VALIDATION_PLAN.json that must be frozen after the complete harness exists.",
+  "base_sha": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "execution_workflow": ".github/workflows/cs017-r9-preparation-preflight.yml",
+  "required_tests": [
+    {
+      "test_id": "r9.preparation-state",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Verify R9 preparation state and exact current ACTION_SCOPE"
+    },
+    {
+      "test_id": "r9.authorizer-self-test",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Canonical evolution authorizer self-test"
+    },
+    {
+      "test_id": "r9.start-stage",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Authorize EV-00 start state"
+    },
+    {
+      "test_id": "r9.stage-operation-paths",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Pre-authorize exact R9 harness publication paths"
+    },
+    {
+      "test_id": "r9.combined-scope",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Verify combined stage and control-plane scope"
+    },
+    {
+      "test_id": "changeset.preparation-plan-structure",
+      "required": true,
+      "evidence_job": "CS017 R9 non-qualifying preparation preflight",
+      "evidence_step": "Verify R9 ChangeSet preparation validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/cs017-r9-preparation-preflight.yml",
+    "audit/EVOLUTION_ROADMAP.json",
+    "docs/changesets/017/ACTION_SCOPE.json",
+    "docs/changesets/017/CHANGESET.md",
+    "docs/changesets/017/R5_FAILURE_RECORD.json",
+    "docs/changesets/017/R6_FAILURE_RECORD.json",
+    "docs/changesets/017/R7_PREPARATION_RECORD.json",
+    "docs/changesets/017/R9_PREPARATION_RECORD.json",
+    "audit/validation/CS017/R9_PREPARATION_ATTEMPT1.json",
+    "scripts/authorize_evolution_action.py",
+    "scripts/authorize_evolution_action_legacy.py",
+    "audit/STAGE_SCOPE_MAXIMA.json",
+    "audit/DLAB_EXECUTION_POLICY.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/validation/CS000H/R8_PREPARATION_FAILURE.json",
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false,
+  "scope_note": "Passing this preparation plan authorizes publication of the already-declared R9 harness paths only. It is not EV-00 acceptance, qualification, release authorization, or a product correctness claim."
+}
