@@ -72,49 +72,30 @@ def authorize_state(*, root: Path, roadmap: dict, amendments: dict, policy: dict
     )
 
 
-def _roadmap_fixture(roadmap: dict, status: str) -> dict:
-    fixture = copy.deepcopy(roadmap)
-    rows = fixture.get("stages")
-    if not isinstance(rows, list):
-        raise ValueError("roadmap stages missing for self-test fixture")
-    row = next((item for item in rows if isinstance(item, dict) and item.get("stage_id") == "EV-00"), None)
-    if row is None:
-        raise ValueError("EV-00 missing for self-test fixture")
-    fixture["current_stage"] = "EV-00"
-    row["status"] = status
-    row["planned_changeset"] = "CS017"
-    return fixture
-
-
 def self_test(root: Path) -> list[str]:
     failures = list(legacy.self_test(root))
-    live_roadmap = legacy.load_json(root / legacy.ROADMAP)
+    roadmap = legacy.load_json(root / legacy.ROADMAP)
     amendments = legacy.load_json(root / legacy.AMENDMENTS)
     policy = legacy.load_json(root / legacy.POLICY)
     transition = _load_transition(root)
 
-    # Supersession assertions use explicit lifecycle fixtures. They must not inherit
-    # the live EV-00 state, otherwise a correct not_started -> in_progress transition
-    # can make the self-test reject the repository for the wrong reason.
-    preflight_roadmap = _roadmap_fixture(live_roadmap, "not_started")
-
     legacy_preflight = legacy.authorize_state(
-        root=root, roadmap=preflight_roadmap, amendments=amendments, policy=policy,
+        root=root, roadmap=roadmap, amendments=amendments, policy=policy,
         action="preflight", changeset="CS017", stage="EV-00", paths=[])
     if legacy_preflight.get("authorized"):
         failures.append("legacy authorizer unexpectedly resolved superseded CS016E")
 
     current = authorize_state(
-        root=root, roadmap=preflight_roadmap, amendments=amendments, policy=policy,
+        root=root, roadmap=roadmap, amendments=amendments, policy=policy,
         action="preflight", changeset="CS017", stage="EV-00", paths=[],
         transition_override=transition)
     if not current.get("authorized"):
-        failures.append("authoritative CS016E supersession did not resolve EV-00 preflight fixture")
+        failures.append("authoritative CS016E supersession did not resolve EV-00 preflight")
 
     bad_transition = copy.deepcopy(transition)
     bad_transition["prospective_authority"]["regime_id"] = "TAMPERED"
     bad = authorize_state(
-        root=root, roadmap=preflight_roadmap, amendments=amendments, policy=policy,
+        root=root, roadmap=roadmap, amendments=amendments, policy=policy,
         action="preflight", changeset="CS017", stage="EV-00", paths=[],
         transition_override=bad_transition)
     if bad.get("authorized"):
@@ -124,7 +105,7 @@ def self_test(root: Path) -> list[str]:
     row = next(r for r in bad_amendments["amendments"] if r.get("changeset") == "CS016E")
     row["superseded_by"] = "CS999"
     bad = authorize_state(
-        root=root, roadmap=preflight_roadmap, amendments=bad_amendments, policy=policy,
+        root=root, roadmap=roadmap, amendments=bad_amendments, policy=policy,
         action="preflight", changeset="CS017", stage="EV-00", paths=[],
         transition_override=transition)
     if bad.get("authorized"):
@@ -134,24 +115,11 @@ def self_test(root: Path) -> list[str]:
     row = next(r for r in unrelated["amendments"] if r.get("changeset") == "CS016D")
     row["status"] = "superseded"
     bad = authorize_state(
-        root=root, roadmap=preflight_roadmap, amendments=unrelated, policy=policy,
+        root=root, roadmap=roadmap, amendments=unrelated, policy=policy,
         action="preflight", changeset="CS017", stage="EV-00", paths=[],
         transition_override=transition)
     if bad.get("authorized"):
         failures.append("generic superseded amendment was treated as resolved")
-
-    in_progress = _roadmap_fixture(live_roadmap, "in_progress")
-    lifecycle = authorize_state(
-        root=root, roadmap=in_progress, amendments=amendments, policy=policy,
-        action="preflight", changeset="CS017", stage="EV-00", paths=[],
-        transition_override=transition)
-    if lifecycle.get("authorized"):
-        failures.append("preflight incorrectly authorized in_progress EV-00 fixture")
-    reasons = lifecycle.get("reasons") if isinstance(lifecycle.get("reasons"), list) else []
-    if not any("preflight requires not_started" in str(reason) for reason in reasons):
-        failures.append("in_progress fixture did not fail on lifecycle rule")
-    if any("required amendments not accepted" in str(reason) for reason in reasons):
-        failures.append("in_progress fixture regressed to CS016E amendment blocker")
 
     return failures
 
