@@ -1,15 +1,8 @@
 name: EV-00 D-Lab evidence validation
 
+# Historical CS017 R22 qualifying workflow retained for manual diagnostics only.
+# Automatic pull_request applicability retired by accepted CS000I ledger closure.
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'scripts/dlab/ev00/**'
-      - '.github/workflows/ev00-dlab.yml'
-      - 'docs/changesets/017/**'
-      - 'audit/validation/CS017/**'
-      - 'audit/CURRENT_CHANGESET_VALIDATION.json'
-      - 'audit/EVOLUTION_ROADMAP.json'
   workflow_dispatch:
 
 permissions:

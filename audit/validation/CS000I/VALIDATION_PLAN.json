@@ -1,0 +1,115 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000I",
+  "objective": "Close the EV-00 ledger only after accepted CS017 R22 integration, bind EV-00 to merge commit 89c134795e41357cc204265f7cd96ddadd804c57, verify EVREQ-001..004 from committed R22 evidence, preserve EV-01 and release boundaries, and retire automatic pull_request applicability of the historical R22 workflow while retaining it for manual diagnostics.",
+  "base_sha": "89c134795e41357cc204265f7cd96ddadd804c57",
+  "execution_workflow": ".github/workflows/cs000i-ev00-ledger-closure-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000i.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "CS000I verifier negative self-test"
+    },
+    {
+      "test_id": "cs000i.cs017-integration",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify accepted CS017 integration binding"
+    },
+    {
+      "test_id": "cs000i.github-provenance",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify live GitHub acceptance provenance"
+    },
+    {
+      "test_id": "cs000i.r22-workflow-retirement",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify R22 workflow is manual-only"
+    },
+    {
+      "test_id": "cs000i.ledger-closure",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify exact EV-00 ledger closure"
+    },
+    {
+      "test_id": "cs000i.requirements-closure",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EVREQ-001 through EVREQ-004"
+    },
+    {
+      "test_id": "cs000i.acceptance-evidence",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EV-00 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000i.scope",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify CS000I administrative-only scope"
+    },
+    {
+      "test_id": "cs000i.non-effects",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify no product release or EV-01 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "evolution.advance-stage",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify EV-00 advance authorization boundary"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000I EV-00 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000i-ev00-ledger-closure-validation.yml",
+    "scripts/verify_cs000i_ev00_ledger_closure.py",
+    ".github/workflows/ev00-dlab.yml",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "docs/changesets/000I/evidence/EV00_ACCEPTANCE_MANIFEST.json",
+    "docs/records/evolution/DEV-0007.md",
+    "docs/changesets/000I/CHANGESET.md",
+    "audit/validation/CS017/VALIDATION_PLAN.json",
+    "audit/validation/CS017/VALIDATION_RESULT.json",
+    "docs/changesets/017/HISTORICAL_ASSURANCE_RESULT.json",
+    "audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/run-identity.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/environment.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/evidence-manifest.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/terminal-state.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/historical-comparison.json",
+    "docs/changesets/017/evidence/local-windows/ev00-20260822T212835Z-d3eb8773/replay-rollback-validation.json",
+    "scripts/authorize_evolution_action.py",
+    "scripts/authorize_evolution_action_legacy.py",
+    "scripts/verify_evolution_plan.py"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
