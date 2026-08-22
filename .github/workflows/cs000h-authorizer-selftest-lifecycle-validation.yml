@@ -1,0 +1,50 @@
+name: CS000H authorizer self-test lifecycle correction
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/authorize_evolution_action.py'
+      - 'scripts/authorize_evolution_action_cs000f.py'
+      - 'scripts/verify_cs000h_authorizer_selftest_lifecycle.py'
+      - 'audit/validation/CS000H/VALIDATION_PLAN.json'
+      - 'audit/validation/CS000H/R8_PREPARATION_FAILURE.json'
+      - 'docs/changesets/000H/CHANGESET.md'
+      - '.github/workflows/cs000h-authorizer-selftest-lifecycle-validation.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validate:
+    name: CS000H authorizer self-test lifecycle correction
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: CS000H verifier negative self-test
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --self-test
+      - name: Verify prior wrapper preservation and semantic isolation
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --preservation
+      - name: Verify preserved R8 failure and live GitHub history
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --history
+      - name: Verify lifecycle-independent authorizer behavior
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --behavior
+      - name: Verify CS000H workflow is path-scoped
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --applicability
+      - name: Verify CS000H administrative-only scope
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --scope
+      - name: Verify no EV-00 or product effects
+        run: python3 scripts/verify_cs000h_authorizer_selftest_lifecycle.py --non-effects
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000H/VALIDATION_PLAN.json
