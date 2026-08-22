@@ -1,0 +1,33 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000F",
+  "objective": "Prospective CS000F R2 correction after Attempt 1 exposed stale CS000E R2 automatic applicability; retire the CS000E R2 and CS000F Attempt 1 workflows to manual-only, preserve both historical runs and the legacy authorizer, and validate the supersession-aware EV-00 authorizer without starting EV-00.",
+  "base_sha": "4ad5e0629ef2c9a0ce9503b71af1c15fa9d21491",
+  "execution_workflow": ".github/workflows/cs000f-r2-authorizer-transition-validation.yml",
+  "required_tests": [
+    {"test_id":"cs000f-r2.verifier-self-test","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"CS000F R2 verifier negative self-test"},
+    {"test_id":"cs000f-r2.attempt1-preserved","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify Attempt 1 nonacceptance and live history"},
+    {"test_id":"cs000f-r2.workflows-retired","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify stale specific workflows are manual-only"},
+    {"test_id":"cs000f-r2.authorizer-behavior","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify reconciled authorizer behavior"},
+    {"test_id":"cs000f-r2.scope","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify CS000F R2 administrative-only scope"},
+    {"test_id":"cs000f-r2.non-effects","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify R2 non-effects and history preservation"},
+    {"test_id":"changeset.plan-structure","required":true,"evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify ChangeSet validation plan"}
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/cs000e-r2-governance-transition-reconciliation.yml",
+    ".github/workflows/cs000f-authorizer-transition-validation.yml",
+    ".github/workflows/cs000f-r2-authorizer-transition-validation.yml",
+    "scripts/authorize_evolution_action.py",
+    "scripts/authorize_evolution_action_legacy.py",
+    "scripts/verify_cs000f_authorizer_transition.py",
+    "scripts/verify_cs000f_authorizer_transition_r2.py",
+    "audit/validation/CS000F/ATTEMPT_001_NONACCEPTANCE.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/EVOLUTION_AMENDMENTS.json"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}

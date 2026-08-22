@@ -1,8 +1,9 @@
 name: CS000F evolution authorizer transition correction
 
+# Attempt 1 retained for manual diagnostics only after CS000F R2.
+# Automatic execution retired prospectively after a stale CS000E R2 workflow was observed.
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
