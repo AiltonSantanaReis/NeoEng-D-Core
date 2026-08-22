@@ -1,0 +1,27 @@
+{
+  "schema": "neoeng.dcore.changeset-action-scope.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "state": "in_progress",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "predecessor_attempts": [
+    {"revision":"R9","pull_request":37,"canonical_plan_commit":"e12d3780eb95af076399ace7ef906dc6489948f3","local_run_id":"ev00-20260822T074919Z-47b2284e","terminal_disposition":"FAILED_HARNESS_INITIALIZATION_BEFORE_TERMINAL_RECORD","record":"docs/changesets/017/R9_PHYSICAL_ATTEMPT1_FAILURE.json","reusable_as_qualifying_evidence":false},
+    {"revision":"R10","pull_request":38,"canonical_plan_commit":"9c88def414f6313c5e4235cb063f4aa66dc8225a","local_run_id":"ev00-20260822T080349Z-7b051c0f","terminal_disposition":"FAILED_TERMINAL_TOOLCHAIN_ENVIRONMENT_PREFLIGHT_GAP","record":"docs/changesets/017/R10_PHYSICAL_ATTEMPT1_FAILURE.json","reusable_as_qualifying_evidence":false},
+    {"revision":"R11","pull_request":39,"canonical_plan_commit":"4ceac7e8ec213e91f1d79a669773e226e93f671c","local_run_id":"ev00-20260822T093201Z-4a33e537","terminal_disposition":"FAILED_TERMINAL_HARNESS_HISTORICAL_COMPARISON_ORACLE_DEFECT","record":"docs/changesets/017/R11_PHYSICAL_ATTEMPT1_FAILURE.json","reusable_as_qualifying_evidence":false},
+    {"revision":"R12","pull_request":40,"canonical_plan_commit":"ed747232d17253d141aeb12d3563a5288182c97f","local_run_id":null,"terminal_disposition":"FAILED_NONQUALIFYING_STATIC_VALIDATION_ISOLATION_MISMATCH","record":"docs/changesets/017/R12_STATIC_VALIDATION_FAILURE.json","reusable_as_qualifying_evidence":false}
+  ],
+  "source_under_test": {"release_tag":"v1.14.1","commit":"e3fff973554a2e56b8bd7afdc1132f75f3ec337c","immutable_during_qualifying_run":true},
+  "runtime_change_authorized": false,
+  "claim_change_authorized": false,
+  "release_authorized": false,
+  "allowed_paths": ["docs/changesets/017/**","audit/DLAB_HISTORICAL_REVALIDATION_MATRIX.json","audit/DLAB_SCENARIO_CATALOG.json","audit/EVOLUTION_ROADMAP.json","audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016A.json","docs/records/evolution/**","scripts/dlab/**",".github/workflows/ev00-dlab.yml","MANIFEST.sha256"],
+  "forbidden_paths": ["src/**","include/**","CMakeLists.txt","cmake/**","tests/**","tools/**","examples/**","modules/**","apps/**",".github/workflows/evolution-governance.yml",".github/workflows/governance-root.yml","docs/governance/**","audit/SOURCE_OF_TRUTH_INDEX.json","audit/EVOLUTION_AMENDMENTS.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016B.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016C.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016D.json","audit/EVOLUTION_REQUIREMENTS_AMENDMENT_016E.json","audit/EVOLUTION_INVARIANTS.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016A.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016B.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016C.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016D.json","audit/EVOLUTION_INVARIANTS_AMENDMENT_016E.json","audit/DLAB_EXECUTION_POLICY.json","audit/GOVERNANCE_ROOT_OF_TRUST.json","audit/GOVERNANCE_ACCEPTANCE_CHAIN.json","audit/STAGE_SCOPE_MAXIMA.json","audit/REPOSITORY_PROTECTION_POLICY.json","audit/PRODUCT_CLAIMS_LEDGER.json","audit/RELEASE_ASSURANCE_POLICY.json","audit/FINAL_ACCEPTANCE_POLICY.json","scripts/authorize_evolution_action.py","scripts/verify_dlab_governance.py","scripts/verify_dlab_governance_v15.py","scripts/verify_governance_root.py","scripts/verify_governance_history.py","scripts/verify_github_evidence.py","scripts/verify_repository_protection.py","scripts/verify_evolution_plan.py","docs/commercial/**","scripts/verify_release_attestation.py"],
+  "destructive_operations_authorized": false,
+  "stage_operation_requires_authorization": true,
+  "notes": [
+    "R13 starts from accepted main after R12 failed static isolation validation before any physical execution.",
+    "R9-R12 remain immutable failed history and are never reused as qualifying output.",
+    "R13 canonical runner is the exact R11 byte stream transformed only by the normative CS015 historical-oracle substitutions; the R12 missing-terminal-LF runner is preserved separately.",
+    "The qualifying source under test remains immutable v1.14.1."
+  ]
+}
