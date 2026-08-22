@@ -1,0 +1,40 @@
+name: CS000F R2 evolution authorizer transition correction
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validate:
+    name: CS000F R2 evolution authorizer transition correction
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: CS000F R2 verifier negative self-test
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --self-test
+      - name: Verify Attempt 1 nonacceptance and live history
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --attempt1
+      - name: Verify stale specific workflows are manual-only
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --retirement
+      - name: Verify reconciled authorizer behavior
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --behavior
+      - name: Verify CS000F R2 administrative-only scope
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --scope
+      - name: Verify R2 non-effects and history preservation
+        run: python3 scripts/verify_cs000f_authorizer_transition_r2.py --non-effects
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000F/VALIDATION_PLAN_R2.json

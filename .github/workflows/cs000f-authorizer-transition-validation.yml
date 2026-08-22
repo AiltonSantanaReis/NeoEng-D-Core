@@ -1,0 +1,35 @@
+name: CS000F evolution authorizer transition correction
+
+# Attempt 1 retained for manual diagnostics only after CS000F R2.
+# Automatic execution retired prospectively after a stale CS000E R2 workflow was observed.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000F evolution authorizer transition correction
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: CS000F verifier negative self-test
+        run: python3 scripts/verify_cs000f_authorizer_transition.py --self-test
+      - name: Evolution authorizer self-test
+        run: python3 scripts/authorize_evolution_action.py --self-test
+      - name: Verify supersession-aware authorizer behavior
+        run: python3 scripts/verify_cs000f_authorizer_transition.py --behavior
+      - name: Verify CS000F administrative-only scope
+        run: python3 scripts/verify_cs000f_authorizer_transition.py --scope
+      - name: Verify no EV-00 or product effects
+        run: python3 scripts/verify_cs000f_authorizer_transition.py --non-effects
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000F/VALIDATION_PLAN.json

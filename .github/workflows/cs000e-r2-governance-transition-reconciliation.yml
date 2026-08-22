@@ -1,8 +1,9 @@
 name: CS000E R2 governance transition reconciliation
 
+# Historical CS000E R2 workflow retained for manual diagnostics only after CS000F R2.
+# Automatic pull_request applicability was retired after it rejected unrelated CS000F scope.
 on:
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read

@@ -1,0 +1,37 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-nonacceptance.v1",
+  "changeset": "CS000F",
+  "attempt": 1,
+  "source_sha": "5c82691d9592c77894e855a504ea18a0245ede70",
+  "source_tree": "29608e52d773b60f50219d8c184552e759498f49",
+  "frozen_plan": "audit/validation/CS000F/VALIDATION_PLAN.json",
+  "campaign": {
+    "workflow_path": ".github/workflows/cs000f-authorizer-transition-validation.yml",
+    "run_id": 32545986480,
+    "run_attempt": 1,
+    "conclusion": "success",
+    "required_tests_passed": 6,
+    "required_tests_total": 6
+  },
+  "post_run_control_plane_observation": {
+    "workflow_path": ".github/workflows/cs000e-r2-governance-transition-reconciliation.yml",
+    "run_id": 32545986452,
+    "run_attempt": 1,
+    "conclusion": "failure",
+    "failed_step": "Verify R2 administrative-only scope",
+    "reason": "The historical CS000E R2 workflow still had pull_request applicability and applied its frozen CS000E-only scope to unrelated CS000F paths."
+  },
+  "classification": "SUCCESSFUL_FROZEN_CAMPAIGN_WITH_POST_RUN_STALE_WORKFLOW_APPLICABILITY_GAP",
+  "acceptance_decision": "NOT_ACCEPTED",
+  "rerun_same_attempt": false,
+  "historical_runs_preserved": true,
+  "non_effects": {
+    "ev00_started": false,
+    "cs017_started": false,
+    "runtime": false,
+    "abi": false,
+    "product_tests": false,
+    "release_authorized": false,
+    "qualification": false
+  }
+}

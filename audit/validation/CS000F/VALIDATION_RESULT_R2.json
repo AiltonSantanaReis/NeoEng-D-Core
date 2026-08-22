@@ -1,0 +1,49 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000F",
+  "plan_commit": "2977cf82aa5aaa80825c12c9f0c0eb0d3939bffe",
+  "plan_sha256": "da867513bf727fa9ee9da01889491cea05a7116c7ea974e2185347ce83f08384",
+  "source_sha": "2977cf82aa5aaa80825c12c9f0c0eb0d3939bffe",
+  "run_id": 32546117350,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000f-r2-authorizer-transition-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {"test_id":"cs000f-r2.verifier-self-test","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"CS000F R2 verifier negative self-test"},
+    {"test_id":"cs000f-r2.attempt1-preserved","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify Attempt 1 nonacceptance and live history"},
+    {"test_id":"cs000f-r2.workflows-retired","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify stale specific workflows are manual-only"},
+    {"test_id":"cs000f-r2.authorizer-behavior","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify reconciled authorizer behavior"},
+    {"test_id":"cs000f-r2.scope","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify CS000F R2 administrative-only scope"},
+    {"test_id":"cs000f-r2.non-effects","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify R2 non-effects and history preservation"},
+    {"test_id":"changeset.plan-structure","status":"PASS","evidence_job":"CS000F R2 evolution authorizer transition correction","evidence_step":"Verify ChangeSet validation plan"}
+  ],
+  "preserved_history": {
+    "attempt_1": {
+      "source_sha": "5c82691d9592c77894e855a504ea18a0245ede70",
+      "run_id": 32545986480,
+      "run_attempt": 1,
+      "campaign_conclusion": "success",
+      "acceptance_decision": "NOT_ACCEPTED",
+      "record": "audit/validation/CS000F/ATTEMPT_001_NONACCEPTANCE.json"
+    },
+    "stale_cs000e_r2_failure": {
+      "source_sha": "5c82691d9592c77894e855a504ea18a0245ede70",
+      "run_id": 32545986452,
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "failed_step": "Verify R2 administrative-only scope",
+      "reclassified": false
+    }
+  },
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_tests": "NONE",
+    "ev00": "NOT_STARTED",
+    "cs017": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "qualification": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
