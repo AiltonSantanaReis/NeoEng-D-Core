@@ -1,0 +1,42 @@
+{
+  "schema": "neoeng.dcore.ev00-static-validation-failure.v1",
+  "changeset": "CS017",
+  "revision": "R12",
+  "classification": "FAILED_NONQUALIFYING_STATIC_VALIDATION_ISOLATION_MISMATCH",
+  "repository": "AiltonSantanaReis/NeoEng-D-Core",
+  "control_base_commit": "3ebb989c5aaca65501ddbc5e552e1f751079e310",
+  "canonical_plan_commit": "ed747232d17253d141aeb12d3563a5288182c97f",
+  "pull_request": 40,
+  "workflow_run_id": 32566544173,
+  "workflow_job_id": 97015864240,
+  "workflow_name": "EV-00 D-Lab evidence validation",
+  "generic_changeset_diagnostic_run_id": 32566544169,
+  "failed_step": "Verify R12 normative historical oracle and isolated runner delta",
+  "observed_failure": "R12 runner differs from preserved R11 runner outside the frozen oracle substitutions",
+  "passed_before_failure": [
+    "Verify R12 stage scope and R9/R10/R11 failure preservation",
+    "Canonical evolution authorizer self-test",
+    "Authorize EV-00 start state",
+    "Authorize exact R12 harness paths",
+    "Evidence verifier self-test",
+    "PowerShell harness syntax check",
+    "Verify R12 named-branch plan guard",
+    "Verify R12 MSVC compile-link preflight contract"
+  ],
+  "r12_runner_blob": "2e9c32a6e342839ebcb7d6d1f71fff26b6f50f3b",
+  "preserved_r11_runner_blob": "00cc326fa1c8cd40402c525c877a1af21969ba42",
+  "root_cause": {
+    "summary": "The R12 canonical runner omitted the final LF present in the preserved R11 byte stream. The frozen isolation test compared the complete transformed byte stream and correctly rejected this serialization-only delta because it was outside the authorized historical-oracle substitutions.",
+    "semantic_change_established": false,
+    "serialization_difference": "single missing terminal LF after final 'exit 0'"
+  },
+  "physical_preflight_executed": false,
+  "physical_qualify_executed": false,
+  "local_run_id": null,
+  "product_campaign_executed": false,
+  "product_defect_established": false,
+  "reusable_as_qualifying_evidence": false,
+  "rerun_under_same_plan_prohibited": true,
+  "reclassification_as_pass_prohibited": true,
+  "corrective_disposition": "Prospective R13 must preserve R12 as failed and reconstruct the canonical runner as the exact preserved R11 byte stream transformed only by the authorized normative historical-oracle substitutions, including the original terminal LF."
+}
