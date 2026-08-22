@@ -1,0 +1,69 @@
+{
+  "schema": "neoeng.dcore.ev00-physical-attempt-failure.v1",
+  "changeset": "CS017",
+  "revision": "R10",
+  "attempt": 1,
+  "pull_request": 38,
+  "classification": "FAILED_TERMINAL_TOOLCHAIN_ENVIRONMENT_PREFLIGHT_GAP",
+  "canonical_plan_commit": "9c88def414f6313c5e4235cb063f4aa66dc8225a",
+  "local_run_id": "ev00-20260822T080349Z-7b051c0f",
+  "workspace": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T080349Z-7b051c0f",
+  "repository_evidence_package": "docs/changesets/017/evidence/local-windows/ev00-20260822T080349Z-7b051c0f",
+  "evidence_origin": "MAINTAINER_OBSERVED_LOCAL_TERMINAL_PACKAGE",
+  "package_committed_in_r10": false,
+  "preflight": {
+    "state": "PASS",
+    "control_tree_clean": true,
+    "physical_host": true,
+    "virtualization_indicators": []
+  },
+  "run_identity": {
+    "harness_sha": "9c88def414f6313c5e4235cb063f4aa66dc8225a",
+    "control_branch": "cs017-r10-local",
+    "product_sha": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "source_head": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+    "source_dirty": false,
+    "workspace_fresh": true,
+    "preexisting_build_used": false
+  },
+  "terminal_state": {
+    "state": "FAILED",
+    "reason": "CMake configure failed",
+    "finished_at_utc": "2026-08-22T08:06:39.3264128Z"
+  },
+  "failed_command": {
+    "name": "cmake-configure",
+    "exit_code": 1,
+    "phase": "CMake compiler ABI / simple program link probe"
+  },
+  "observed_linker_errors": [
+    "lld-link: error: could not open 'msvcrtd.lib': no such file or directory",
+    "lld-link: error: could not open 'oldnames.lib': no such file or directory"
+  ],
+  "dependency_setup": {
+    "vcpkg_install_completed": true,
+    "requested_packages_completed": true
+  },
+  "maintainer_environment_observation": {
+    "VCToolsInstallDir": "EMPTY",
+    "WindowsSdkDir": "C:\\Program Files (x86)\\Windows Kits\\10\\",
+    "LIB": [
+      "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8.1\\lib\\um\\x64",
+      "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.26100.0\\ucrt\\x64",
+      "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.26100.0\\um\\x64"
+    ],
+    "msvc_lib_directory_present_in_LIB": false
+  },
+  "historical_comparison": {
+    "available": false,
+    "note": "comparison unavailable because the run terminated earlier"
+  },
+  "product_build_started": false,
+  "product_tests_started": false,
+  "product_defect_evidence": false,
+  "environment_toolchain_failure": true,
+  "reusable_as_qualification": false,
+  "rerun_under_same_plan_prohibited": true,
+  "preservation_required": true,
+  "prospective_disposition": "R11 adds a fail-closed MSVC environment check and actual clang-cl compile-link smoke test to Preflight before any Qualify workspace is allowed."
+}
