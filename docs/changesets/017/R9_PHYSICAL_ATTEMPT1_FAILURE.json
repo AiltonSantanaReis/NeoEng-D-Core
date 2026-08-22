@@ -1,0 +1,63 @@
+{
+  "schema": "neoeng.dcore.ev00-physical-attempt-failure.v1",
+  "changeset": "CS017",
+  "stage": "EV-00",
+  "revision": "R9",
+  "attempt": 1,
+  "evidence_origin": "USER_SUPPLIED_CONSOLE_TRANSCRIPT",
+  "qualifying_plan_commit": "e12d3780eb95af076399ace7ef906dc6489948f3",
+  "protected_product_sha": "e3fff973554a2e56b8bd7afdc1132f75f3ec337c",
+  "runner_blob": "00cc326fa1c8cd40402c525c877a1af21969ba42",
+  "local_run_id": "ev00-20260822T074919Z-47b2284e",
+  "local_workspace": "C:\\Users\\atnco\\NeoEng-DLab\\EV-00\\runs\\ev00-20260822T074919Z-47b2284e",
+  "workspace_creation_time_utc": "2026-08-22T07:49:19Z",
+  "preflight": {
+    "status": "PASS",
+    "harness_head": "e12d3780eb95af076399ace7ef906dc6489948f3",
+    "control_tree_clean": true,
+    "protected_product_commit_present": true,
+    "physical_host": true,
+    "virtualization_indicators": [],
+    "powershell": "7.6.3",
+    "git": "2.54.0.windows.1",
+    "python": "3.14.2",
+    "cmake_ctest": "4.3.1-msvc1",
+    "ninja": "1.13.2",
+    "clang_cl": "22.1.0"
+  },
+  "qualify": {
+    "invoked": true,
+    "classification": "FAILED_HARNESS_INITIALIZATION_BEFORE_TERMINAL_RECORD",
+    "script_line": 263,
+    "observed_error": "You cannot call a method on a null-valued expression.",
+    "failing_expression": "(& git -C $ControlRepo branch --show-current).Trim()",
+    "root_cause": "The required detached control checkout returns no branch name from git branch --show-current; PowerShell therefore attempted Trim() on null while constructing run-identity.",
+    "run_identity_written": false,
+    "terminal_state_written": false,
+    "evidence_manifest_written": false,
+    "product_worktree_created": false,
+    "product_build_started": false,
+    "qualifying_tests_started": false
+  },
+  "observed_workspace_entries": [
+    "build/",
+    "deps/",
+    "evidence/",
+    "install/",
+    "evidence/raw/",
+    "evidence/raw/commands/",
+    "evidence/raw/logs/"
+  ],
+  "local_post_failure_verification": {
+    "git_head": "e12d3780eb95af076399ace7ef906dc6489948f3",
+    "git_status_porcelain_empty": true,
+    "runner_blob": "00cc326fa1c8cd40402c525c877a1af21969ba42"
+  },
+  "reusable_as_qualifying_evidence": false,
+  "rerun_under_r9_prohibited": true,
+  "local_workspace_preservation_required": true,
+  "product_failure": false,
+  "environment_failure": false,
+  "release_authorized": false,
+  "corrective_disposition": "Prospective R10 preserves the R9 runner bytes and adds a plan-bound named-branch invoker so the preserved runner receives a non-null control_branch without weakening the exact plan-commit or clean-tree requirements."
+}

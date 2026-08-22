@@ -1,0 +1,30 @@
+{
+  "schema": "neoeng.dcore.cs017-static-validation-failure.v1",
+  "changeset": "CS017",
+  "revision": "R15",
+  "pull_request": 43,
+  "canonical_plan_commit": "a8b5d3f49e0c34097581f18d6b16aa2d3a2a2113",
+  "physical_preflight_executed": false,
+  "physical_qualify_executed": false,
+  "ev00_workflow_run": 32580703973,
+  "ev00_workflow_job": 97049512570,
+  "changeset_validation_run": 32580703983,
+  "passed_before_failure": [
+    "Verify R15 stage scope and R9-R14 preservation",
+    "Canonical evolution authorizer self-test",
+    "Authorize EV-00 start state",
+    "Authorize exact R15 harness paths"
+  ],
+  "failed_step": "Evidence verifier self-test",
+  "exact_failure": "neoeng_ev00_r11_verifier.EvidenceError: command research-cmake-configure missing started_at_utc",
+  "root_cause": {
+    "class": "VERIFIER_SELF_TEST_FIXTURE_SCHEMA_MISMATCH",
+    "detail": "R15 research_contract_self_test generated synthetic command records without the complete command-record fields required by the preserved R11 verifier contract. Runtime dual-surface verification semantics were not reached."
+  },
+  "classification": "FAILED_NONQUALIFYING_STATIC_VALIDATION_VERIFIER_SELF_TEST_FIXTURE_SCHEMA_MISMATCH",
+  "product_defect_evidence": false,
+  "accepted_as_ev00_evidence": false,
+  "reusable_as_qualifying_evidence": false,
+  "same_plan_physical_execution_allowed": false,
+  "prospective_correction": "Preserve R15 runtime runner/verifier semantics and correct only the synthetic verifier self-test fixture to emit schema-complete command records, with an isolation proof before physical execution."
+}
