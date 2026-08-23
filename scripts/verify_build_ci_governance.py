@@ -13,11 +13,17 @@ from typing import Callable
 ROOT = Path(__file__).resolve().parents[1]
 
 BASE = "e9e095e61d4de2995db704c51e9308850e1c929d"
+R1_SOURCE = "4adccdb77607fc6d6f886369a842d2efa48a7028"
+BRANCH = "agent/cs018-ev01-build-ci-governance-hardening"
 
 PERMANENT = ".github/workflows/current-product-regression.yml"
 QUALIFYING = ".github/workflows/cs018-validation.yml"
 PLAN = "audit/validation/CS018/VALIDATION_PLAN.json"
+PLAN_R2 = "audit/validation/CS018/VALIDATION_PLAN_R2.json"
+ATTEMPT_R1 = "audit/validation/CS018/ATTEMPT_001_NONACCEPTANCE.json"
 DISCOVERY = "docs/changesets/018/BUILD_CI_DISCOVERY.json"
+CHANGESET_R1 = "docs/changesets/018/CHANGESET.md"
+CHANGESET_R2 = "docs/changesets/018/CHANGESET_R2.md"
 ROADMAP = "audit/EVOLUTION_ROADMAP.json"
 REQS = "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json"
 DESCRIPTOR = "audit/CURRENT_CHANGESET_VALIDATION.json"
@@ -42,6 +48,12 @@ EXPECTED_SOURCE_PATHS = {
     "docs/changesets/018/CHANGESET.md",
     "docs/changesets/018/BUILD_CI_DISCOVERY.json",
     "MANIFEST.sha256",
+}
+
+EXPECTED_R2_SOURCE_PATHS = EXPECTED_SOURCE_PATHS | {
+    ATTEMPT_R1,
+    PLAN_R2,
+    CHANGESET_R2,
 }
 
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
@@ -423,8 +435,10 @@ def classification_errors() -> list[str]:
     if current["classifications"].get(PERMANENT) != "CURRENT":
         errors.append("permanent regression workflow is not CURRENT")
 
-    if current["classifications"].get(QUALIFYING) != "MANUAL_ONLY":
-        errors.append("CS018 qualifying workflow is not MANUAL_ONLY")
+    if current["classifications"].get(QUALIFYING) != "HISTORICAL_BRANCH":
+        errors.append(
+            "CS018 R2 qualifying workflow is not HISTORICAL_BRANCH"
+        )
 
     for path in HISTORICAL:
         if (
@@ -571,6 +585,201 @@ def historical_boundary_errors() -> list[str]:
 
         if current.read_bytes() != prior:
             errors.append(f"historical workflow bytes changed: {path}")
+
+    return errors
+
+
+
+def r2_trigger_errors() -> list[str]:
+    errors: list[str] = []
+    text = workflow_text_current(QUALIFYING)
+    events, branches = parse_on(text)
+
+    if events != {"push"}:
+        errors.append(
+            "R2 qualifying workflow must have only push automatic trigger"
+        )
+
+    if branches != [BRANCH]:
+        errors.append(
+            "R2 qualifying workflow must target exact CS018 branch"
+        )
+
+    if classify(text) != "HISTORICAL_BRANCH":
+        errors.append(
+            "R2 qualifying workflow must classify HISTORICAL_BRANCH"
+        )
+
+    required_trigger_paths = (
+        QUALIFYING,
+        ATTEMPT_R1,
+        PLAN_R2,
+        CHANGESET_R2,
+        "scripts/verify_build_ci_governance.py",
+    )
+
+    for path in required_trigger_paths:
+        token = f"- '{path}'"
+        if token not in text:
+            errors.append(
+                f"R2 qualifying push path missing: {path}"
+            )
+
+    if "workflow_dispatch:" in text:
+        errors.append(
+            "R2 qualifying workflow must not depend on workflow_dispatch"
+        )
+
+    if "name: CS018 R2 validation" not in text:
+        errors.append("R2 evidence job name missing")
+
+    return errors
+
+
+def r1_preservation_errors() -> list[str]:
+    errors: list[str] = []
+
+    attempt = load(ATTEMPT_R1)
+
+    expected = {
+        "schema":
+            "neoeng.dcore.changeset-validation-attempt-record.v1",
+        "changeset": "CS018",
+        "attempt": 1,
+        "plan_path":
+            "audit/validation/CS018/VALIDATION_PLAN.json",
+        "plan_commit": R1_SOURCE,
+        "source_sha": R1_SOURCE,
+        "workflow_path": QUALIFYING,
+        "execution_attempted": False,
+        "dispatch_attempted": False,
+        "workflow_run_created": False,
+        "validation_state": "BLOCKED",
+        "acceptance_decision": "NOT_ACCEPTED",
+        "classification": "PRE_EXECUTION_PLATFORM_CONSTRAINT",
+        "rerun_attempt1": False,
+        "next_plan":
+            "audit/validation/CS018/VALIDATION_PLAN_R2.json",
+    }
+
+    for key, value in expected.items():
+        if attempt.get(key) != value:
+            errors.append(f"R1 attempt record {key} mismatch")
+
+    if attempt.get("run_id") is not None:
+        errors.append("R1 blocked campaign must not invent run_id")
+
+    if attempt.get("run_attempt") is not None:
+        errors.append("R1 blocked campaign must not invent run_attempt")
+
+    preserve = (
+        PLAN,
+        DISCOVERY,
+        CHANGESET_R1,
+        PERMANENT,
+        ROADMAP,
+        REQS,
+        "scripts/verify_evolution_plan.py",
+    )
+
+    for rel in preserve:
+        prior = git_show(R1_SOURCE, rel)
+        current = ROOT / rel
+
+        if prior is None:
+            errors.append(f"cannot read R1 preserved file: {rel}")
+            continue
+
+        if not current.is_file():
+            errors.append(f"R1 preserved file missing: {rel}")
+            continue
+
+        if current.read_bytes() != prior:
+            errors.append(f"R1 preserved bytes changed: {rel}")
+
+    r1_workflow = workflow_text_at(R1_SOURCE, QUALIFYING)
+
+    if classify(r1_workflow) != "MANUAL_ONLY":
+        errors.append(
+            "R1 workflow history is not manual-only at R1 source"
+        )
+
+    ancestry = run(
+        "git", "merge-base", "--is-ancestor", R1_SOURCE, "HEAD"
+    )
+    if ancestry.returncode != 0:
+        errors.append("R1 source is not ancestor of current HEAD")
+
+    return errors
+
+
+def cs018_r2_scope_errors() -> list[str]:
+    errors: list[str] = []
+
+    p = run("git", "diff", "--name-only", f"{BASE}...HEAD")
+    if p.returncode != 0:
+        return ["cannot compute CS018 R2 source diff"]
+
+    actual = {
+        line.strip()
+        for line in p.stdout.splitlines()
+        if line.strip()
+    }
+
+    if actual != EXPECTED_R2_SOURCE_PATHS:
+        extra = sorted(actual - EXPECTED_R2_SOURCE_PATHS)
+        missing = sorted(EXPECTED_R2_SOURCE_PATHS - actual)
+
+        if extra:
+            errors.append(
+                "paths outside CS018 R2 source scope: "
+                + ", ".join(extra)
+            )
+
+        if missing:
+            errors.append(
+                "required CS018 R2 source paths missing: "
+                + ", ".join(missing)
+            )
+
+    base_descriptor = git_show(BASE, DESCRIPTOR)
+
+    if base_descriptor is None:
+        errors.append("cannot read base validation descriptor")
+    elif (ROOT / DESCRIPTOR).read_bytes() != base_descriptor:
+        errors.append(
+            "CURRENT_CHANGESET_VALIDATION changed before R2 result"
+        )
+
+    forbidden_prefixes = (
+        "src/",
+        "include/",
+        "tests/",
+        "apps/",
+        "modules/",
+        "cmake/",
+        "tools/",
+    )
+
+    forbidden_exact = {
+        "CMakeLists.txt",
+        "CMakePresets.json",
+        "vcpkg.json",
+        "vcpkg-configuration.json",
+    }
+
+    product = sorted(
+        path
+        for path in actual
+        if path in forbidden_exact
+        or path.startswith(forbidden_prefixes)
+    )
+
+    if product:
+        errors.append(
+            "product/build-definition paths changed: "
+            + ", ".join(product)
+        )
 
     return errors
 
@@ -749,6 +958,107 @@ def plan_structure_errors() -> list[str]:
     return errors
 
 
+
+def r2_plan_structure_errors() -> list[str]:
+    errors: list[str] = []
+
+    sys.path.insert(0, str(ROOT))
+    from scripts.verify_changeset_validation import (
+        read_json,
+        validate_plan,
+    )
+
+    plan = read_json(ROOT / PLAN_R2)
+    policy = read_json(
+        ROOT / "audit/CHANGESET_VALIDATION_POLICY.json"
+    )
+
+    errors.extend(validate_plan(plan, policy))
+
+    expected = {
+        "changeset": "CS018",
+        "base_sha": BASE,
+        "execution_workflow": QUALIFYING,
+        "acceptance_requires_all_required_pass": True,
+        "allow_test_removal_after_execution": False,
+    }
+
+    for key, value in expected.items():
+        if plan.get(key) != value:
+            errors.append(f"R2 plan {key} mismatch")
+
+    expected_ids = [
+        "cs018.r2.verifier-self-test",
+        "cs018.workflow-classification",
+        "cs018.action-pinning",
+        "cs018.cmake-options",
+        "cs018.regression-contract",
+        "cs018.historical-boundary",
+        "cs018.r2.trigger-contract",
+        "cs018.r1-preservation",
+        "cs018.ledger-transition",
+        "evolution.plan",
+        "evolution.self-test",
+        "changeset.policy-self-test",
+        "cs018.r2.scope",
+        "repository.manifest",
+        "changeset.r2-plan-structure",
+        "product.configure",
+        "product.build",
+        "product.smoke",
+    ]
+
+    actual_ids = [
+        item.get("test_id")
+        for item in plan.get("required_tests", [])
+        if isinstance(item, dict)
+    ]
+
+    if actual_ids != expected_ids:
+        errors.append("R2 required test inventory/order mismatch")
+
+    frozen = set(plan.get("frozen_files", []))
+
+    must_freeze = {
+        PLAN,
+        ATTEMPT_R1,
+        QUALIFYING,
+        "scripts/verify_build_ci_governance.py",
+        PERMANENT,
+        ROADMAP,
+        REQS,
+        CHANGESET_R1,
+        CHANGESET_R2,
+        DISCOVERY,
+    }
+
+    missing_frozen = sorted(must_freeze - frozen)
+
+    if missing_frozen:
+        errors.append(
+            "R2 frozen_files missing: "
+            + ", ".join(missing_frozen)
+        )
+
+    descriptor = load(DESCRIPTOR)
+
+    if descriptor.get("plan_path") != (
+        "audit/validation/CS000I/VALIDATION_PLAN.json"
+    ):
+        errors.append(
+            "descriptor must remain CS000I before R2 result"
+        )
+
+    if descriptor.get("result_path") != (
+        "audit/validation/CS000I/VALIDATION_RESULT.json"
+    ):
+        errors.append(
+            "descriptor result must remain CS000I before R2 result"
+        )
+
+    return errors
+
+
 def self_test_errors() -> list[str]:
     errors: list[str] = []
 
@@ -821,9 +1131,13 @@ def main() -> int:
     parser.add_argument("--cmake-options", action="store_true")
     parser.add_argument("--regression-workflow", action="store_true")
     parser.add_argument("--historical-boundary", action="store_true")
+    parser.add_argument("--r2-trigger", action="store_true")
+    parser.add_argument("--r1-preservation", action="store_true")
     parser.add_argument("--cs018-ledger", action="store_true")
     parser.add_argument("--cs018-scope", action="store_true")
+    parser.add_argument("--cs018-r2-scope", action="store_true")
     parser.add_argument("--plan-structure", action="store_true")
+    parser.add_argument("--r2-plan-structure", action="store_true")
     args = parser.parse_args()
 
     selected = [
@@ -833,9 +1147,13 @@ def main() -> int:
         args.cmake_options,
         args.regression_workflow,
         args.historical_boundary,
+        args.r2_trigger,
+        args.r1_preservation,
         args.cs018_ledger,
         args.cs018_scope,
+        args.cs018_r2_scope,
         args.plan_structure,
+        args.r2_plan_structure,
     ]
 
     if sum(selected) != 1:
@@ -869,6 +1187,16 @@ def main() -> int:
                 "historical-workflow-boundary",
                 historical_boundary_errors(),
             )
+        if args.r2_trigger:
+            return emit(
+                "r2-qualifying-trigger-contract",
+                r2_trigger_errors(),
+            )
+        if args.r1_preservation:
+            return emit(
+                "r1-blocked-campaign-preservation",
+                r1_preservation_errors(),
+            )
         if args.cs018_ledger:
             return emit(
                 "cs018-ledger-transition",
@@ -879,10 +1207,20 @@ def main() -> int:
                 "cs018-source-scope",
                 cs018_scope_errors(),
             )
+        if args.cs018_r2_scope:
+            return emit(
+                "cs018-r2-source-scope",
+                cs018_r2_scope_errors(),
+            )
+        if args.plan_structure:
+            return emit(
+                "validation-plan-structure",
+                plan_structure_errors(),
+            )
 
         return emit(
-            "validation-plan-structure",
-            plan_structure_errors(),
+            "validation-plan-r2-structure",
+            r2_plan_structure_errors(),
         )
     except Exception as exc:
         return emit("exception", [str(exc)])
