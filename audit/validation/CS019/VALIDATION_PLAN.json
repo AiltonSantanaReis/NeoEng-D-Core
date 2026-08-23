@@ -1,0 +1,173 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS019",
+  "objective": "Execute EV-02 fundamental-contract hardening by defining explicit fail-closed maximum-frame and unknown-entity transition behavior, preserving rollback precommit semantics on rejected transitions, revalidating the existing Q32.32 overflow/division/narrowing/rounding contract without changing its arithmetic implementation, and proving stable fundamental rejection classes across GCC and Clang while preserving Host SDK ABI 1.0 and existing build definitions.",
+  "base_sha": "bf3051abdb084273540e6caeb72329eafa0a2eea",
+  "execution_workflow": ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs019.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "CS019 verifier negative self-test"
+    },
+    {
+      "test_id": "cs019.authority",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs019.planning-ledger",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify EV-02 planning ledger"
+    },
+    {
+      "test_id": "cs019.scope",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify exact CS019 source scope"
+    },
+    {
+      "test_id": "cs019.references",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify frozen reference surfaces"
+    },
+    {
+      "test_id": "cs019.workflow-contract",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify CS019 workflow contract"
+    },
+    {
+      "test_id": "cs019.non-effects",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify CS019 non-effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "changeset.policy-self-test",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify ChangeSet policy self-test"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify ChangeSet validation plan"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "product.configure",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Configure primary product regression"
+    },
+    {
+      "test_id": "product.build",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Build primary product regression"
+    },
+    {
+      "test_id": "cs019.fundamental-core",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Run fundamental core tests"
+    },
+    {
+      "test_id": "product.smoke",
+      "required": true,
+      "evidence_job": "CS019 validation",
+      "evidence_step": "Run product smoke regression"
+    },
+    {
+      "test_id": "cs019.gcc-configure",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Configure GCC fundamental corpus"
+    },
+    {
+      "test_id": "cs019.gcc-build",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Build GCC fundamental corpus"
+    },
+    {
+      "test_id": "cs019.gcc-negative-corpus",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Run GCC fundamental rejection corpus"
+    },
+    {
+      "test_id": "cs019.clang-configure",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Configure Clang fundamental corpus"
+    },
+    {
+      "test_id": "cs019.clang-build",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Build Clang fundamental corpus"
+    },
+    {
+      "test_id": "cs019.clang-negative-corpus",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Run Clang fundamental rejection corpus"
+    },
+    {
+      "test_id": "cs019.cross-compiler-equivalence",
+      "required": true,
+      "evidence_job": "CS019 cross-compiler negative corpus",
+      "evidence_step": "Compare cross-compiler rejection corpus"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/STAGE_SCOPE_MAXIMA.json",
+    "audit/EVOLUTION_AMENDMENTS.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    ".github/workflows/current-product-regression.yml",
+    ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+    "scripts/verify_cs019_ev02_fundamental_contracts.py",
+    "scripts/verify_evolution_plan.py",
+    "scripts/generate_manifest.py",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "docs/changesets/019/CHANGESET.md",
+    "CMakeLists.txt",
+    "modules/host_sdk/CMakeLists.txt",
+    "include/neoeng/core/types.hpp",
+    "include/neoeng/core/fixed.hpp",
+    "include/neoeng/core/numeric_contract.hpp",
+    "include/neoeng/core/rollback.hpp",
+    "src/numeric_contract.cpp",
+    "modules/host_sdk/include/neoeng/dcore_host.h",
+    "modules/host_sdk/src/dcore_host.cpp",
+    "docs/contracts/NUMERIC_CLOSURE_V1.md",
+    "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+    "docs/contracts/HOST_SDK_C_ABI_V1.md"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
