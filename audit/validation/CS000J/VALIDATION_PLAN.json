@@ -1,0 +1,113 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000J",
+  "objective": "Close the EV-01 ledger only after accepted CS018 R2 integration, bind EV-01 to protected merge commit 342d19079f395c02c95655c630370077a089738c, verify EVREQ-005..008 from preserved CS018 and post-merge evidence, preserve CS018 R1/R2 history and release boundaries, and retire automatic pull_request applicability of the historical CS000I EV-00 closure workflow.",
+  "base_sha": "342d19079f395c02c95655c630370077a089738c",
+  "execution_workflow": ".github/workflows/cs000j-ev01-ledger-closure-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000j.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "CS000J verifier negative self-test"
+    },
+    {
+      "test_id": "cs000j.authority",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000j.cs018-integration",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify accepted CS018 integration binding"
+    },
+    {
+      "test_id": "cs000j.github-provenance",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify live CS018 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000j.cs000i-retirement",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify CS000I workflow is manual-only"
+    },
+    {
+      "test_id": "cs000j.ledger-closure",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify exact EV-01 ledger closure"
+    },
+    {
+      "test_id": "cs000j.requirements-closure",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify EVREQ-005 through EVREQ-008"
+    },
+    {
+      "test_id": "cs000j.acceptance-evidence",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify EV-01 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000j.scope",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify CS000J administrative-only scope"
+    },
+    {
+      "test_id": "cs000j.non-effects",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify no product release or EV-02 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    ".github/workflows/cs000i-ev00-ledger-closure-validation.yml",
+    ".github/workflows/cs000j-ev01-ledger-closure-validation.yml",
+    "scripts/verify_cs000j_ev01_ledger_closure.py",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "docs/changesets/000J/CHANGESET.md",
+    "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json",
+    "docs/records/evolution/DEV-0008.md",
+    "audit/validation/CS018/VALIDATION_PLAN_R2.json",
+    "audit/validation/CS018/VALIDATION_RESULT_R2.json",
+    "audit/validation/CS018/ATTEMPT_001_NONACCEPTANCE.json",
+    "docs/changesets/018/BUILD_CI_DISCOVERY.json",
+    "docs/changesets/018/CHANGESET.md",
+    "docs/changesets/018/CHANGESET_R2.md",
+    ".github/workflows/cs018-validation.yml",
+    ".github/workflows/current-product-regression.yml",
+    "scripts/verify_build_ci_governance.py",
+    "scripts/verify_evolution_plan.py"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}

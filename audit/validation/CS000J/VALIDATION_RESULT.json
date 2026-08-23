@@ -1,0 +1,117 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000J",
+  "plan_commit": "2a733a2ae3e10b8eaa6aaa3f5ea2a5eb5eac6b44",
+  "plan_sha256": "dea19d443a21cf07a9870ffc2c2f9343200ca027005a0102ec7b9cf160e485ce",
+  "source_sha": "2a733a2ae3e10b8eaa6aaa3f5ea2a5eb5eac6b44",
+  "run_id": 32614842758,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000j-ev01-ledger-closure-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000j.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "CS000J verifier negative self-test"
+    },
+    {
+      "test_id": "cs000j.authority",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000j.cs018-integration",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify accepted CS018 integration binding"
+    },
+    {
+      "test_id": "cs000j.github-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify live CS018 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000j.cs000i-retirement",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify CS000I workflow is manual-only"
+    },
+    {
+      "test_id": "cs000j.ledger-closure",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify exact EV-01 ledger closure"
+    },
+    {
+      "test_id": "cs000j.requirements-closure",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify EVREQ-005 through EVREQ-008"
+    },
+    {
+      "test_id": "cs000j.acceptance-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify EV-01 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000j.scope",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify CS000J administrative-only scope"
+    },
+    {
+      "test_id": "cs000j.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify no product release or EV-02 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000J EV-01 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "source_phase_observation": {
+    "trusted_gate_run_id": 32614842719,
+    "trusted_gate_run_attempt": 1,
+    "trusted_gate_app_id": 15368,
+    "trusted_gate_conclusion": "failure",
+    "trusted_gate_classification": "EXPECTED_PLAN_ONLY_REJECT_BEFORE_RESULT_BINDING",
+    "trusted_gate_failed_step": "Verify accepted candidate from trusted base",
+    "candidate_diagnostic_run_id": 32614842730,
+    "product_regression_run_id": 32614842718,
+    "dedicated_qualification_rerun": false,
+    "historical_cs000i_retrigger": false
+  },
+  "effects": {
+    "ev01": "LEDGER_ACCEPTED",
+    "ev02": "NOT_STARTED",
+    "cs019": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "build_definitions": "NONE",
+    "product_tests": "NONE",
+    "product_baseline": "v1.14.1_UNCHANGED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
