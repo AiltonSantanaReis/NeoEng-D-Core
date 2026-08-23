@@ -1,17 +1,19 @@
-name: CS019 EV-02 fundamental contract hardening
+name: CS019 EV-02 fundamental contract hardening R2
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [agent/cs019-ev02-fundamental-contract-hardening]
     paths:
       - ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml"
-      - "MANIFEST.sha256"
-      - "audit/CURRENT_CHANGESET_VALIDATION.json"
       - "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json"
       - "audit/EVOLUTION_ROADMAP.json"
+      - "audit/validation/CS019/ATTEMPT_001_NONACCEPTANCE.json"
       - "audit/validation/CS019/VALIDATION_PLAN.json"
+      - "audit/validation/CS019/VALIDATION_PLAN_R2.json"
       - "docs/changesets/019/CHANGESET.md"
+      - "docs/changesets/019/CHANGESET_R2.md"
       - "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md"
+      - "docs/records/evolution/DEV-0009.md"
       - "include/neoeng/core/simulation.hpp"
       - "modules/host_sdk/tests/host_sdk_tests.cpp"
       - "scripts/verify_cs019_ev02_fundamental_contracts.py"
@@ -25,13 +27,13 @@ permissions:
 
 jobs:
   validation:
-    name: CS019 validation
+    name: CS019 R2 validation
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout exact PR head
+      - name: Checkout exact R2 source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -40,7 +42,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libboost-dev ninja-build gcc g++ clang
 
-      - name: CS019 verifier negative self-test
+      - name: CS019 R2 verifier negative self-test
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --self-test
 
       - name: Verify prospective governance authority
@@ -49,28 +51,52 @@ jobs:
       - name: Verify EV-02 planning ledger
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --planning
 
-      - name: Verify exact CS019 source scope
+      - name: Verify CS019 R1 nonacceptance preservation
+        run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --r1-preservation
+
+      - name: Verify exact CS019 R2 source scope
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --scope
 
-      - name: Verify frozen reference surfaces
+      - name: Verify frozen R1 product and reference surfaces
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --references
 
-      - name: Verify CS019 workflow contract
+      - name: Verify CS019 R2 workflow contract
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --workflow
 
-      - name: Verify CS019 non-effects
+      - name: Verify CS019 R2 non-effects
         run: python3 scripts/verify_cs019_ev02_fundamental_contracts.py --non-effects
+
+      - name: Build CI governance self-test
+        run: python3 scripts/verify_build_ci_governance.py --self-test
+
+      - name: Verify workflow classification
+        run: python3 scripts/verify_build_ci_governance.py --classification
+
+      - name: Verify critical action pinning
+        run: python3 scripts/verify_build_ci_governance.py --action-pinning
+
+      - name: Verify current CMake options
+        run: python3 scripts/verify_build_ci_governance.py --cmake-options
+
+      - name: Verify permanent regression contract
+        run: python3 scripts/verify_build_ci_governance.py --regression-workflow
+
+      - name: Verify historical workflow boundary
+        run: python3 scripts/verify_build_ci_governance.py --historical-boundary
 
       - name: Verify evolution ledger
         run: python3 scripts/verify_evolution_plan.py
 
+      - name: Verify evolution verifier self-test
+        run: python3 scripts/verify_evolution_plan.py --self-test
+
       - name: Verify ChangeSet policy self-test
         run: python3 scripts/verify_changeset_validation.py --self-test
 
-      - name: Verify ChangeSet validation plan
+      - name: Verify ChangeSet validation R2 plan
         run: >-
           python3 scripts/verify_changeset_validation.py
-          --plan audit/validation/CS019/VALIDATION_PLAN.json
+          --plan audit/validation/CS019/VALIDATION_PLAN_R2.json
           --expected-base-sha bf3051abdb084273540e6caeb72329eafa0a2eea
 
       - name: Verify tracked-file manifest
@@ -78,7 +104,7 @@ jobs:
 
       - name: Configure primary product regression
         run: >-
-          cmake -S . -B build/cs019-primary -G Ninja
+          cmake -S . -B build/cs019-r2-primary -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DBUILD_TESTING=ON
           -DNEOENG_WARNINGS_AS_ERRORS=ON
@@ -88,28 +114,28 @@ jobs:
           -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
 
       - name: Build primary product regression
-        run: cmake --build build/cs019-primary --parallel 2
+        run: cmake --build build/cs019-r2-primary --parallel 2
 
       - name: Run fundamental core tests
         run: >-
-          ctest --test-dir build/cs019-primary
+          ctest --test-dir build/cs019-r2-primary
           --output-on-failure
           -R '^(neoeng_tests|neoeng_numeric_closure_tests|neoeng_host_sdk_tests)$'
 
       - name: Run product smoke regression
         run: >-
-          ctest --test-dir build/cs019-primary
+          ctest --test-dir build/cs019-r2-primary
           --output-on-failure -L smoke
 
   cross_compiler:
-    name: CS019 cross-compiler negative corpus
+    name: CS019 R2 cross-compiler negative corpus
     needs: validation
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout exact PR head
+      - name: Checkout exact R2 source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -123,7 +149,7 @@ jobs:
           CC: gcc
           CXX: g++
         run: >-
-          cmake -S . -B build/cs019-gcc -G Ninja
+          cmake -S . -B build/cs019-r2-gcc -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DBUILD_TESTING=ON
           -DNEOENG_WARNINGS_AS_ERRORS=ON
@@ -134,32 +160,32 @@ jobs:
 
       - name: Build GCC fundamental corpus
         run: >-
-          cmake --build build/cs019-gcc
+          cmake --build build/cs019-r2-gcc
           --target neoeng_tests neoeng_numeric_closure_tests neoeng_host_sdk_tests
           --parallel 2
 
       - name: Run GCC fundamental rejection corpus
         run: |
-          mkdir -p artifacts/cs019-gcc
-          build/cs019-gcc/neoeng_tests | tee artifacts/cs019-gcc/core.txt
-          build/cs019-gcc/neoeng_numeric_closure_tests | tee artifacts/cs019-gcc/numeric.txt
-          build/cs019-gcc/modules/host_sdk/neoeng_host_sdk_tests | tee artifacts/cs019-gcc/host.txt
+          mkdir -p artifacts/cs019-r2-gcc
+          build/cs019-r2-gcc/neoeng_tests | tee artifacts/cs019-r2-gcc/core.txt
+          build/cs019-r2-gcc/neoeng_numeric_closure_tests | tee artifacts/cs019-r2-gcc/numeric.txt
+          build/cs019-r2-gcc/modules/host_sdk/neoeng_host_sdk_tests | tee artifacts/cs019-r2-gcc/host.txt
 
           grep '^cs019_core_contract=PASS frame_max=overflow_rejected unknown_entity=not_found rollback_precommit=preserved$' \
-            artifacts/cs019-gcc/core.txt > artifacts/cs019-gcc/corpus.txt
+            artifacts/cs019-r2-gcc/core.txt > artifacts/cs019-r2-gcc/corpus.txt
           grep '^cs019_q32_contract=PASS rounding=toward_zero overflow=overflow_error division_by_zero=domain_error narrowing=overflow_error$' \
-            artifacts/cs019-gcc/numeric.txt >> artifacts/cs019-gcc/corpus.txt
+            artifacts/cs019-r2-gcc/numeric.txt >> artifacts/cs019-r2-gcc/corpus.txt
           grep '^cs019_host_contract=PASS frame_max=numeric_overflow unknown_entity=not_found abi=1.0$' \
-            artifacts/cs019-gcc/host.txt >> artifacts/cs019-gcc/corpus.txt
+            artifacts/cs019-r2-gcc/host.txt >> artifacts/cs019-r2-gcc/corpus.txt
 
-          test "$(wc -l < artifacts/cs019-gcc/corpus.txt)" -eq 3
+          test "$(wc -l < artifacts/cs019-r2-gcc/corpus.txt)" -eq 3
 
       - name: Configure Clang fundamental corpus
         env:
           CC: clang
           CXX: clang++
         run: >-
-          cmake -S . -B build/cs019-clang -G Ninja
+          cmake -S . -B build/cs019-r2-clang -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DBUILD_TESTING=ON
           -DNEOENG_WARNINGS_AS_ERRORS=ON
@@ -170,28 +196,28 @@ jobs:
 
       - name: Build Clang fundamental corpus
         run: >-
-          cmake --build build/cs019-clang
+          cmake --build build/cs019-r2-clang
           --target neoeng_tests neoeng_numeric_closure_tests neoeng_host_sdk_tests
           --parallel 2
 
       - name: Run Clang fundamental rejection corpus
         run: |
-          mkdir -p artifacts/cs019-clang
-          build/cs019-clang/neoeng_tests | tee artifacts/cs019-clang/core.txt
-          build/cs019-clang/neoeng_numeric_closure_tests | tee artifacts/cs019-clang/numeric.txt
-          build/cs019-clang/modules/host_sdk/neoeng_host_sdk_tests | tee artifacts/cs019-clang/host.txt
+          mkdir -p artifacts/cs019-r2-clang
+          build/cs019-r2-clang/neoeng_tests | tee artifacts/cs019-r2-clang/core.txt
+          build/cs019-r2-clang/neoeng_numeric_closure_tests | tee artifacts/cs019-r2-clang/numeric.txt
+          build/cs019-r2-clang/modules/host_sdk/neoeng_host_sdk_tests | tee artifacts/cs019-r2-clang/host.txt
 
           grep '^cs019_core_contract=PASS frame_max=overflow_rejected unknown_entity=not_found rollback_precommit=preserved$' \
-            artifacts/cs019-clang/core.txt > artifacts/cs019-clang/corpus.txt
+            artifacts/cs019-r2-clang/core.txt > artifacts/cs019-r2-clang/corpus.txt
           grep '^cs019_q32_contract=PASS rounding=toward_zero overflow=overflow_error division_by_zero=domain_error narrowing=overflow_error$' \
-            artifacts/cs019-clang/numeric.txt >> artifacts/cs019-clang/corpus.txt
+            artifacts/cs019-r2-clang/numeric.txt >> artifacts/cs019-r2-clang/corpus.txt
           grep '^cs019_host_contract=PASS frame_max=numeric_overflow unknown_entity=not_found abi=1.0$' \
-            artifacts/cs019-clang/host.txt >> artifacts/cs019-clang/corpus.txt
+            artifacts/cs019-r2-clang/host.txt >> artifacts/cs019-r2-clang/corpus.txt
 
-          test "$(wc -l < artifacts/cs019-clang/corpus.txt)" -eq 3
+          test "$(wc -l < artifacts/cs019-r2-clang/corpus.txt)" -eq 3
 
       - name: Compare cross-compiler rejection corpus
         run: >-
           diff -u
-          artifacts/cs019-gcc/corpus.txt
-          artifacts/cs019-clang/corpus.txt
+          artifacts/cs019-r2-gcc/corpus.txt
+          artifacts/cs019-r2-clang/corpus.txt
