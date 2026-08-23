@@ -1,0 +1,139 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS018",
+  "plan_commit": "127f2afaf056ef396752f491d30091014e4ba7e4",
+  "plan_sha256": "1e20cefedbb6b977a88cf6f7a7280719326c238e094a2e0ea8570067228f63ec",
+  "source_sha": "127f2afaf056ef396752f491d30091014e4ba7e4",
+  "run_id": 32612620385,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs018-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs018.r2.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "CS018 R2 verifier negative self-test"
+    },
+    {
+      "test_id": "cs018.workflow-classification",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify workflow classification"
+    },
+    {
+      "test_id": "cs018.action-pinning",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify critical action pinning"
+    },
+    {
+      "test_id": "cs018.cmake-options",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify current CMake options"
+    },
+    {
+      "test_id": "cs018.regression-contract",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify permanent regression contract"
+    },
+    {
+      "test_id": "cs018.historical-boundary",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify historical workflow boundary"
+    },
+    {
+      "test_id": "cs018.r2.trigger-contract",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify R2 qualifying trigger contract"
+    },
+    {
+      "test_id": "cs018.r1-preservation",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify R1 blocked campaign preservation"
+    },
+    {
+      "test_id": "cs018.ledger-transition",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify EV-01 ledger transition"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "evolution.self-test",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify evolution verifier self-test"
+    },
+    {
+      "test_id": "changeset.policy-self-test",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify ChangeSet policy self-test"
+    },
+    {
+      "test_id": "cs018.r2.scope",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify exact CS018 R2 scope"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.r2-plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Verify ChangeSet validation R2 plan"
+    },
+    {
+      "test_id": "product.configure",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Configure product regression"
+    },
+    {
+      "test_id": "product.build",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Build product regression"
+    },
+    {
+      "test_id": "product.smoke",
+      "status": "PASS",
+      "evidence_job": "CS018 R2 validation",
+      "evidence_step": "Run product smoke regression"
+    }
+  ],
+  "preserved_history": {
+    "r1": {
+      "source_sha": "4adccdb77607fc6d6f886369a842d2efa48a7028",
+      "record": "audit/validation/CS018/ATTEMPT_001_NONACCEPTANCE.json",
+      "validation_state": "BLOCKED",
+      "acceptance_decision": "NOT_ACCEPTED",
+      "rerun": false
+    }
+  },
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "ev01_stage_acceptance": "NOT_SET",
+    "release": "NOT_AUTHORIZED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
