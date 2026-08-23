@@ -1,19 +1,7 @@
 name: CS000I EV-00 ledger closure
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/ev00-dlab.yml'
-      - '.github/workflows/cs000i-ev00-ledger-closure-validation.yml'
-      - 'scripts/verify_cs000i_ev00_ledger_closure.py'
-      - 'audit/EVOLUTION_ROADMAP.json'
-      - 'audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json'
-      - 'audit/validation/CS000I/VALIDATION_PLAN.json'
-      - 'docs/changesets/000I/CHANGESET.md'
-      - 'docs/changesets/000I/evidence/EV00_ACCEPTANCE_MANIFEST.json'
-      - 'docs/records/evolution/DEV-0007.md'
-      - 'MANIFEST.sha256'
+  workflow_dispatch:
 
 permissions:
   contents: read

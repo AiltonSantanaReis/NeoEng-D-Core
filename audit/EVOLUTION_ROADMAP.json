@@ -47,14 +47,14 @@
     {
       "stage_id": "EV-01",
       "title": "Hardening de build, CI e governança operacional",
-      "status": "in_progress",
+      "status": "accepted",
       "depends_on": [
         "EV-00"
       ],
       "planned_changeset": "CS018",
-      "accepted_commit": null,
-      "evidence_manifest": null,
-      "decision_record": null
+      "accepted_commit": "342d19079f395c02c95655c630370077a089738c",
+      "evidence_manifest": "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json",
+      "decision_record": "docs/records/evolution/DEV-0008.md"
     },
     {
       "stage_id": "EV-02",

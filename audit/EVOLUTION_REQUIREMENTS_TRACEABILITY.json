@@ -74,43 +74,63 @@
       "requirement_id": "EVREQ-005",
       "stage": "EV-01",
       "statement": "Opções CMake usadas por CI crítico devem corresponder a opções realmente definidas.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "configure logs",
         "unknown-option gate"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/changesets/018/BUILD_CI_DISCOVERY.json",
+        "audit/validation/CS018/VALIDATION_RESULT_R2.json",
+        ".github/workflows/current-product-regression.yml",
+        "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-006",
       "stage": "EV-01",
       "statement": "Mudanças em main/PR devem executar verificação de governança apropriada.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "CI run"
       ],
-      "evidence": []
+      "evidence": [
+        "audit/validation/CS018/VALIDATION_RESULT_R2.json",
+        ".github/workflows/changeset-validation.yml",
+        ".github/workflows/current-product-regression.yml",
+        "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-007",
       "stage": "EV-01",
       "statement": "Actions críticas e dependências de build devem ser progressivamente fixadas ou registrar explicitamente sua identidade.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "workflow diff",
         "environment identity"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/changesets/018/BUILD_CI_DISCOVERY.json",
+        ".github/workflows/cs018-validation.yml",
+        ".github/workflows/current-product-regression.yml",
+        "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-008",
       "stage": "EV-01",
       "statement": "Validação corrente e evidência histórica devem ser distinguíveis sem ambiguidade.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "audit layout/report"
       ],
-      "evidence": []
+      "evidence": [
+        "audit/validation/CS018/ATTEMPT_001_NONACCEPTANCE.json",
+        "audit/validation/CS018/VALIDATION_RESULT_R2.json",
+        "docs/changesets/018/CHANGESET_R2.md",
+        "docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-009",

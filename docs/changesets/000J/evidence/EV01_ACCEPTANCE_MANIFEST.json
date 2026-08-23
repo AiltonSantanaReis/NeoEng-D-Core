@@ -1,0 +1,111 @@
+{
+  "schema": "neoeng.dcore.evolution-evidence-manifest.v1",
+  "stage": "EV-01",
+  "changeset": "CS018",
+  "closure_changeset": "CS000J",
+  "source_commit": "342d19079f395c02c95655c630370077a089738c",
+  "hash_mode": "lf-normalized-text",
+  "external_evidence": {
+    "cs018_qualifying_run": {
+      "run_id": 32612620385,
+      "run_attempt": 1,
+      "source_sha": "127f2afaf056ef396752f491d30091014e4ba7e4",
+      "workflow_path": ".github/workflows/cs018-validation.yml",
+      "conclusion": "success"
+    },
+    "pr52_trusted_gate": {
+      "run_id": 32613076285,
+      "run_attempt": 1,
+      "head_sha": "b77cc8495cbda8a9e73d117338bf0d94d75672bf",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "pr52_candidate_diagnostic": {
+      "run_id": 32613076284,
+      "run_attempt": 1,
+      "head_sha": "b77cc8495cbda8a9e73d117338bf0d94d75672bf",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "pr52_product_regression": {
+      "run_id": 32613076295,
+      "run_attempt": 1,
+      "head_sha": "b77cc8495cbda8a9e73d117338bf0d94d75672bf",
+      "workflow_path": ".github/workflows/current-product-regression.yml",
+      "conclusion": "success"
+    },
+    "pr52_cs000i_stale_scope": {
+      "run_id": 32613076327,
+      "run_attempt": 1,
+      "head_sha": "b77cc8495cbda8a9e73d117338bf0d94d75672bf",
+      "workflow_path": ".github/workflows/cs000i-ev00-ledger-closure-validation.yml",
+      "conclusion": "failure",
+      "classification": "NOT_APPLICABLE_STALE_SCOPE",
+      "rerun": false
+    },
+    "main_changeset_validation": {
+      "run_id": 32613410810,
+      "run_attempt": 1,
+      "head_sha": "342d19079f395c02c95655c630370077a089738c",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "post_merge_product_regression": {
+      "run_id": 32613410836,
+      "run_attempt": 1,
+      "head_sha": "342d19079f395c02c95655c630370077a089738c",
+      "workflow_path": ".github/workflows/current-product-regression.yml",
+      "conclusion": "success"
+    }
+  },
+  "files": [
+    {
+      "path": "audit/validation/CS018/VALIDATION_PLAN_R2.json",
+      "sha256": "1e20cefedbb6b977a88cf6f7a7280719326c238e094a2e0ea8570067228f63ec"
+    },
+    {
+      "path": "audit/validation/CS018/VALIDATION_RESULT_R2.json",
+      "sha256": "dc4471c7896910334d75c3c99dab38865ff7f36676f369da8a47586beea060cc"
+    },
+    {
+      "path": "audit/validation/CS018/ATTEMPT_001_NONACCEPTANCE.json",
+      "sha256": "6c656ffc99a21166ab682fd3e4d70d0075bd3a1066c64b69fce2126c55cf6135"
+    },
+    {
+      "path": "docs/changesets/018/BUILD_CI_DISCOVERY.json",
+      "sha256": "7bdf123dc164005eca4c76346711abbc35673df074421000e557f941cf55b54b"
+    },
+    {
+      "path": "docs/changesets/018/CHANGESET.md",
+      "sha256": "68b58b4e24c903dc843db9b8e0d0922c6b292c06c3572a88998fd2a46a798991"
+    },
+    {
+      "path": "docs/changesets/018/CHANGESET_R2.md",
+      "sha256": "5aaa437a2a82f2545713023306cb31a302cf62d29dfcaff90dab65d9560e2bec"
+    },
+    {
+      "path": ".github/workflows/cs018-validation.yml",
+      "sha256": "c114d16ccb9f2b15cf70e21a5773bb8bd140cf8c669ac828c1b0537e10fdb6e3"
+    },
+    {
+      "path": ".github/workflows/current-product-regression.yml",
+      "sha256": "c61e77b4a0799839e89fc3e63edd0f0165c78cd32309d03bd4fa9803bc0893dc"
+    },
+    {
+      "path": "scripts/verify_build_ci_governance.py",
+      "sha256": "a629c8648b74238b165bbc678deef7ab56a4cd1290a93a680bbbc0cb6d305fe9"
+    },
+    {
+      "path": "audit/GOVERNANCE_TRANSITION_STATE.json",
+      "sha256": "73058842181b1132d14e8ae7a7a3243a714b1fc65a9be859d4971089bcfe94d5"
+    },
+    {
+      "path": "audit/CHANGESET_VALIDATION_POLICY.json",
+      "sha256": "af51ee16e0d4f9c1a472537ea14b0eaf00479ae9bc4438caf15e62e96fe32653"
+    },
+    {
+      "path": ".github/workflows/changeset-validation.yml",
+      "sha256": "c29d6f3e9ddce67f6fb4c99b890db7d235d6c4aebf3ccd9e777c11c7a9f5aca0"
+    }
+  ]
+}
