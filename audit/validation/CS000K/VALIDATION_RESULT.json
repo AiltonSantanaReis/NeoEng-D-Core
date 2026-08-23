@@ -1,0 +1,122 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000K",
+  "plan_commit": "43ecf8258505767adc26ce54263eed69bce29a3d",
+  "plan_sha256": "6f98f0530e797c017ab0f35a9b6fa50d6fec5ac53c9ea7a0ca2ba52ccd74c1cf",
+  "source_sha": "43ecf8258505767adc26ce54263eed69bce29a3d",
+  "run_id": 32666914103,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000k-ev02-ledger-closure-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000k.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "CS000K verifier negative self-test"
+    },
+    {
+      "test_id": "cs000k.authority",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000k.cs019-integration",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify accepted CS019 integration binding"
+    },
+    {
+      "test_id": "cs000k.recovery-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify preserved net-zero post-acceptance recovery"
+    },
+    {
+      "test_id": "cs000k.github-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify live CS019 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000k.cs000j-retirement",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify CS000J workflow is manual-only"
+    },
+    {
+      "test_id": "cs000k.ledger-closure",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify exact EV-02 ledger closure"
+    },
+    {
+      "test_id": "cs000k.requirements-closure",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify EVREQ-009 through EVREQ-012"
+    },
+    {
+      "test_id": "cs000k.acceptance-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify EV-02 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000k.scope",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify CS000K administrative-only scope"
+    },
+    {
+      "test_id": "cs000k.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify no product release or EV-03 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "source_phase_observation": {
+    "trusted_gate_run_id": 32666914050,
+    "trusted_gate_run_attempt": 1,
+    "trusted_gate_app_id": 15368,
+    "trusted_gate_conclusion": "failure",
+    "trusted_gate_classification": "EXPECTED_PLAN_ONLY_REJECT_BEFORE_RESULT_BINDING",
+    "trusted_gate_failed_step": "Verify accepted candidate from trusted base",
+    "candidate_diagnostic_run_id": 32666914071,
+    "product_regression_run_id": 32666914073,
+    "dedicated_qualification_rerun": false,
+    "historical_cs000j_retrigger": false
+  },
+  "effects": {
+    "ev02": "LEDGER_ACCEPTED",
+    "ev03": "NOT_STARTED",
+    "cs020": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "build_definitions": "NONE",
+    "product_tests": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
