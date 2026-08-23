@@ -214,8 +214,8 @@ def validate_repository(root: Path, *, check_git: bool = True) -> list[str]:
     expected_active = {
         "program_id": "POST_1_14_1",
         "baseline_commit": BASELINE_COMMIT,
-        "master_plan": str(FILES["master"]),
-        "roadmap": str(FILES["roadmap"]),
+        "master_plan": FILES["master"].as_posix(),
+        "roadmap": FILES["roadmap"].as_posix(),
         "bootstrap_changeset": "CS016",
     }
     if not isinstance(active, dict):
@@ -242,7 +242,7 @@ def validate_repository(root: Path, *, check_git: bool = True) -> list[str]:
             errors.append("baseline commit mismatch")
         if baseline.get("historical_immutable") is not True:
             errors.append("baseline must be historical_immutable")
-    if roadmap.get("normative_document") != str(FILES["master"]):
+    if roadmap.get("normative_document") != FILES["master"].as_posix():
         errors.append("roadmap normative_document mismatch")
     if roadmap.get("stage_statuses") != STAGE_STATUS_ORDER:
         errors.append("stage status set/order mismatch")
@@ -468,7 +468,16 @@ def self_test() -> list[str]:
         "stage before dependency",
         lambda case: mutate_json(
             case / FILES["roadmap"],
-            lambda d: d["stages"][1].update({"status": "in_progress"}),
+            lambda d: (
+                d["stages"][0].update(
+                    {
+                        "status": "not_started",
+                        "accepted_commit": None,
+                        "evidence_manifest": None,
+                    }
+                ),
+                d["stages"][1].update({"status": "in_progress"}),
+            ),
         ),
     )
     expect_reject(
@@ -481,8 +490,12 @@ def self_test() -> list[str]:
         "accepted stage without evidence",
         lambda case: mutate_json(
             case / FILES["roadmap"],
-            lambda d: d["stages"][0].update(
-                {"status": "accepted", "accepted_commit": "a" * 40}
+            lambda d: d["stages"][1].update(
+                {
+                    "status": "accepted",
+                    "accepted_commit": "a" * 40,
+                    "evidence_manifest": None,
+                }
             ),
         ),
     )

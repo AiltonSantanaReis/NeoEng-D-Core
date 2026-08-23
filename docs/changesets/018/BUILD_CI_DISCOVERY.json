@@ -1,0 +1,41 @@
+{
+  "schema": "neoeng.dcore.cs018-build-ci-discovery.v1",
+  "changeset": "CS018",
+  "stage": "EV-01",
+  "base_sha": "e9e095e61d4de2995db704c51e9308850e1c929d",
+  "classification_model": {
+    "CURRENT": "pull_request/pull_request_target/schedule, push to main, unrestricted push, or unknown automatic trigger",
+    "HISTORICAL_BRANCH": "push restricted exclusively to literal non-main branches",
+    "MANUAL_ONLY": "workflow_dispatch without automatic triggers"
+  },
+  "baseline": {
+    "current_unpinned_actions": 0,
+    "current_unknown_neoeng_options": 0,
+    "historical_unpinned_actions": 43,
+    "historical_unknown_neoeng_options": 7,
+    "current_product_regression_workflows": 0
+  },
+  "candidate_expected": {
+    "current_unpinned_actions": 0,
+    "current_unknown_neoeng_options": 0,
+    "historical_unpinned_actions": 43,
+    "historical_unknown_neoeng_options": 7,
+    "current_product_regression_workflows": 1
+  },
+  "historical_unknown_option": "NEOENG_DCORE_BUILD_VIEWER",
+  "current_defined_view_option": "NEOENG_DCORE_BUILD_VIEW_LAB",
+  "historical_workflow_blob_anchors": {
+    ".github/workflows/cs010-cross-compiler.yml": "eb7509db0afe367ead61086da044d2fbedf72911",
+    ".github/workflows/cs011-cross-compiler.yml": "75fc5d3f98cb46586dcab0974134d1aab25cf3d8",
+    ".github/workflows/cs012-cross-compiler.yml": "21f179a0fb83ee2e3a2066a8352feec4f297a26b",
+    ".github/workflows/cs013-cross-compiler.yml": "5e18d062746dcf907cdef1af472e4e148ba096a8",
+    ".github/workflows/cs014-release-assurance.yml": "76799e1322a265419c7b6cf102fc43ce7b09c2b9",
+    ".github/workflows/cs015-final-acceptance.yml": "1fc6e8f452f41f708876937113c84c6347250bb7"
+  },
+  "interpretation": [
+    "Historical unpinned action refs are preserved evidence, not current CI.",
+    "Historical NEOENG_DCORE_BUILD_VIEWER usage is preserved evidence, not a current CMake contract.",
+    "No current unpinned action or unknown NEOENG option existed at the protected base.",
+    "The protected base lacked a permanent current PR/main product regression workflow."
+  ]
+}

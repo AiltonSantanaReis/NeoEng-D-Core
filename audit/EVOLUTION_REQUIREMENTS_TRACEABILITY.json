@@ -74,7 +74,7 @@
       "requirement_id": "EVREQ-005",
       "stage": "EV-01",
       "statement": "Opções CMake usadas por CI crítico devem corresponder a opções realmente definidas.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "configure logs",
         "unknown-option gate"
@@ -85,7 +85,7 @@
       "requirement_id": "EVREQ-006",
       "stage": "EV-01",
       "statement": "Mudanças em main/PR devem executar verificação de governança apropriada.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "CI run"
       ],
@@ -95,7 +95,7 @@
       "requirement_id": "EVREQ-007",
       "stage": "EV-01",
       "statement": "Actions críticas e dependências de build devem ser progressivamente fixadas ou registrar explicitamente sua identidade.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "workflow diff",
         "environment identity"
@@ -106,7 +106,7 @@
       "requirement_id": "EVREQ-008",
       "stage": "EV-01",
       "statement": "Validação corrente e evidência histórica devem ser distinguíveis sem ambiguidade.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "audit layout/report"
       ],

@@ -1,0 +1,37 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-attempt-record.v1",
+  "changeset": "CS018",
+  "attempt": 1,
+  "plan_path": "audit/validation/CS018/VALIDATION_PLAN.json",
+  "plan_commit": "4adccdb77607fc6d6f886369a842d2efa48a7028",
+  "source_sha": "4adccdb77607fc6d6f886369a842d2efa48a7028",
+  "workflow_path": ".github/workflows/cs018-validation.yml",
+  "execution_attempted": false,
+  "dispatch_attempted": false,
+  "workflow_run_created": false,
+  "run_id": null,
+  "run_attempt": null,
+  "workflow_conclusion": null,
+  "required_tests_executed": 0,
+  "required_tests_total": 16,
+  "validation_state": "BLOCKED",
+  "acceptance_decision": "NOT_ACCEPTED",
+  "classification": "PRE_EXECUTION_PLATFORM_CONSTRAINT",
+  "reason": "The frozen R1 execution workflow was workflow_dispatch-only and was introduced on the CS018 feature branch. GitHub workflow_dispatch only receives events when the workflow file exists on the default branch. No R1 dispatch was attempted and no R1 workflow run was created.",
+  "platform_constraint": {
+    "provider": "GitHub Actions",
+    "rule": "workflow_dispatch requires the workflow file to exist on the default branch",
+    "verified_date": "2026-08-22",
+    "documentation": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow"
+  },
+  "rerun_attempt1": false,
+  "next_plan": "audit/validation/CS018/VALIDATION_PLAN_R2.json",
+  "effects": {
+    "runtime": false,
+    "abi": false,
+    "product_source": false,
+    "release": false,
+    "acceptance": false,
+    "historical_evidence_rewrite": false
+  }
+}

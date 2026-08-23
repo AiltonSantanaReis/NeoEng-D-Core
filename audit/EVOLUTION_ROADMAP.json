@@ -15,7 +15,7 @@
     "evidence_manifest": "docs/changesets/016/evidence/EVIDENCE_MANIFEST.json"
   },
   "program_state": "active",
-  "current_stage": "EV-00",
+  "current_stage": "EV-01",
   "release_authorized": false,
   "stage_statuses": [
     "not_started",
@@ -47,7 +47,7 @@
     {
       "stage_id": "EV-01",
       "title": "Hardening de build, CI e governança operacional",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": [
         "EV-00"
       ],
