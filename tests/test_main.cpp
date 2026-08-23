@@ -29,6 +29,8 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <limits>
+#include <stdexcept>
 #include <string_view>
 #include <vector>
 
@@ -116,6 +118,116 @@ void test_input_order_is_canonicalized() {
     };
     const std::vector<InputCommand> reversed{ordered.rbegin(), ordered.rend()};
     CHECK(name, step(world, ordered) == step(world, reversed));
+}
+
+
+void test_fundamental_transition_rejections_are_fail_closed() {
+    constexpr std::string_view name =
+        "fundamental_transition_rejections_are_fail_closed";
+
+    WorldState maximum_world = make_world(2);
+    maximum_world.frame = std::numeric_limits<std::uint64_t>::max();
+    const std::uint64_t maximum_hash = stable_hash(maximum_world);
+
+    bool maximum_step_rejected = false;
+    try {
+        static_cast<void>(step(maximum_world, {}));
+    } catch (const std::overflow_error& error) {
+        maximum_step_rejected =
+            std::string_view(error.what()) == "World frame maximum reached";
+    }
+    CHECK(name, maximum_step_rejected);
+    CHECK(name, maximum_world.frame == std::numeric_limits<std::uint64_t>::max());
+    CHECK(name, stable_hash(maximum_world) == maximum_hash);
+
+    RollbackEngine maximum_engine(maximum_world, 8U);
+    const std::size_t maximum_snapshot_count =
+        maximum_engine.snapshots().size();
+    bool maximum_rollback_rejected = false;
+    try {
+        maximum_engine.advance({});
+    } catch (const std::overflow_error& error) {
+        maximum_rollback_rejected =
+            std::string_view(error.what()) == "World frame maximum reached";
+    }
+    CHECK(name, maximum_rollback_rejected);
+    CHECK(name, maximum_engine.state().frame
+                    == std::numeric_limits<std::uint64_t>::max());
+    CHECK(name, stable_hash(maximum_engine.state()) == maximum_hash);
+    CHECK(name, maximum_engine.retained_input_frames() == 0U);
+    CHECK(name, maximum_engine.snapshots().size() == maximum_snapshot_count);
+
+    const WorldState normal_world = make_world(2);
+    const std::uint64_t normal_hash = stable_hash(normal_world);
+    const std::vector<InputCommand> unknown_inputs{
+        {
+            .entity = 99U,
+            .acceleration = {Fixed::from_integer(1), {}},
+        },
+    };
+
+    bool unknown_step_rejected = false;
+    try {
+        static_cast<void>(step(normal_world, unknown_inputs));
+    } catch (const std::out_of_range& error) {
+        unknown_step_rejected =
+            std::string_view(error.what())
+            == "Input references unknown EntityId";
+    }
+    CHECK(name, unknown_step_rejected);
+    CHECK(name, normal_world.frame == 0U);
+    CHECK(name, stable_hash(normal_world) == normal_hash);
+
+    RollbackEngine unknown_engine(normal_world, 8U);
+    const std::size_t unknown_snapshot_count =
+        unknown_engine.snapshots().size();
+    bool unknown_rollback_rejected = false;
+    try {
+        unknown_engine.advance(unknown_inputs);
+    } catch (const std::out_of_range& error) {
+        unknown_rollback_rejected =
+            std::string_view(error.what())
+            == "Input references unknown EntityId";
+    }
+    CHECK(name, unknown_rollback_rejected);
+    CHECK(name, unknown_engine.state().frame == 0U);
+    CHECK(name, stable_hash(unknown_engine.state()) == normal_hash);
+    CHECK(name, unknown_engine.retained_input_frames() == 0U);
+    CHECK(name, unknown_engine.snapshots().size() == unknown_snapshot_count);
+
+    RollbackEngine correction_engine(normal_world, 8U);
+    correction_engine.advance({});
+    correction_engine.advance({});
+
+    const std::uint64_t correction_hash =
+        stable_hash(correction_engine.state());
+    const std::size_t correction_history_count =
+        correction_engine.retained_input_frames();
+    const std::size_t correction_snapshot_count =
+        correction_engine.snapshots().size();
+
+    bool correction_rejected = false;
+    try {
+        static_cast<void>(
+            correction_engine.correct_input_and_resimulate(
+                0U, unknown_inputs));
+    } catch (const std::out_of_range& error) {
+        correction_rejected =
+            std::string_view(error.what())
+            == "Input references unknown EntityId";
+    }
+
+    CHECK(name, correction_rejected);
+    CHECK(name, correction_engine.state().frame == 2U);
+    CHECK(name, stable_hash(correction_engine.state()) == correction_hash);
+    CHECK(
+        name,
+        correction_engine.retained_input_frames()
+            == correction_history_count);
+    CHECK(
+        name,
+        correction_engine.snapshots().size()
+            == correction_snapshot_count);
 }
 
 void test_snapshot_strategies_restore_identically() {
@@ -1730,6 +1842,7 @@ int main() {
         test_fixed_arithmetic();
         test_repeated_execution_is_identical();
         test_input_order_is_canonicalized();
+        test_fundamental_transition_rejections_are_fail_closed();
         test_snapshot_strategies_restore_identically();
         test_snapshot_capacity_and_eviction();
         test_snapshot_frame_gaps_are_rejected();
@@ -1794,6 +1907,11 @@ int main() {
         std::cerr << failures << " assertion(s) failed\n";
         return EXIT_FAILURE;
     }
+    std::cout
+        << "cs019_core_contract=PASS "
+           "frame_max=overflow_rejected "
+           "unknown_entity=not_found "
+           "rollback_precommit=preserved\n";
     std::cout << "All NeoEng Core Lab v0.28 tests passed.\n";
     return EXIT_SUCCESS;
 }

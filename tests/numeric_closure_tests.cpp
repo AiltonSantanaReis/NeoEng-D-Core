@@ -133,6 +133,55 @@ void test_construction_boundaries() {
     check(overflow, "out-of-domain whole value must be rejected");
 }
 
+
+void test_q32_direct_failure_and_rounding_contract() {
+    bool overflow_rejected = false;
+    try {
+        static_cast<void>(
+            Fixed::from_raw(std::numeric_limits<Fixed::rep>::max())
+            + Fixed::from_raw(1));
+    } catch (const std::overflow_error&) {
+        overflow_rejected = true;
+    }
+    check(overflow_rejected, "direct Q32.32 overflow must reject");
+
+    bool division_by_zero_rejected = false;
+    try {
+        static_cast<void>(
+            Fixed::from_integer(1) / Fixed::from_raw(0));
+    } catch (const std::domain_error&) {
+        division_by_zero_rejected = true;
+    }
+    check(
+        division_by_zero_rejected,
+        "direct Q32.32 division by zero must reject");
+
+    bool narrowing_rejected = false;
+    try {
+        static_cast<void>(
+            Fixed::from_integer(
+                static_cast<Fixed::rep>(
+                    std::numeric_limits<std::int32_t>::max())
+                + 1));
+    } catch (const std::overflow_error&) {
+        narrowing_rejected = true;
+    }
+    check(
+        narrowing_rejected,
+        "Q32.32 construction narrowing must reject");
+
+    const Fixed half = Fixed::from_ratio(1, 2);
+    check(
+        (Fixed::from_raw(-3) * half).raw() == -1,
+        "negative Q32.32 multiplication must truncate toward zero");
+
+    const Fixed negative_third =
+        Fixed::from_integer(-1) / Fixed::from_integer(3);
+    check(
+        negative_third.raw() == -(Fixed::scale / 3),
+        "negative Q32.32 division must truncate toward zero");
+}
+
 void test_policy_rejects_unsupported_global_claims() {
     constexpr auto policy = neoeng::core::numeric_closure_policy_v1();
     check(
@@ -237,9 +286,16 @@ int main() {
     try {
         test_fixed_classifier_matches_primitive();
         test_construction_boundaries();
+        test_q32_direct_failure_and_rounding_contract();
         test_policy_rejects_unsupported_global_claims();
         test_raa_remains_bounded_research_evidence();
         test_oblique_scope_is_explicit();
+        std::cout
+            << "cs019_q32_contract=PASS "
+               "rounding=toward_zero "
+               "overflow=overflow_error "
+               "division_by_zero=domain_error "
+               "narrowing=overflow_error\n";
         std::cout << "numeric_closure_tests=passed\n";
         return 0;
     } catch (const std::exception& error) {
