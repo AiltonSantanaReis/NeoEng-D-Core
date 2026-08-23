@@ -1,0 +1,82 @@
+name: CS018 validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: CS018 validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build
+
+      - name: CS018 verifier negative self-test
+        run: python3 scripts/verify_build_ci_governance.py --self-test
+
+      - name: Verify workflow classification
+        run: python3 scripts/verify_build_ci_governance.py --classification
+
+      - name: Verify critical action pinning
+        run: python3 scripts/verify_build_ci_governance.py --action-pinning
+
+      - name: Verify current CMake options
+        run: python3 scripts/verify_build_ci_governance.py --cmake-options
+
+      - name: Verify permanent regression contract
+        run: python3 scripts/verify_build_ci_governance.py --regression-workflow
+
+      - name: Verify historical workflow boundary
+        run: python3 scripts/verify_build_ci_governance.py --historical-boundary
+
+      - name: Verify EV-01 ledger transition
+        run: python3 scripts/verify_build_ci_governance.py --cs018-ledger
+
+      - name: Verify evolution ledger
+        run: python3 scripts/verify_evolution_plan.py
+
+      - name: Verify evolution verifier self-test
+        run: python3 scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify ChangeSet policy self-test
+        run: python3 scripts/verify_changeset_validation.py --self-test
+
+      - name: Verify exact CS018 scope
+        run: python3 scripts/verify_build_ci_governance.py --cs018-scope
+
+      - name: Verify tracked-file manifest
+        run: python3 scripts/generate_manifest.py --check
+
+      - name: Verify ChangeSet validation plan
+        run: python3 scripts/verify_build_ci_governance.py --plan-structure
+
+      - name: Configure product regression
+        run: >-
+          cmake -S . -B build/current-regression -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build product regression
+        run: cmake --build build/current-regression --parallel 2
+
+      - name: Run product smoke regression
+        run: >-
+          ctest --test-dir build/current-regression
+          --output-on-failure -L smoke

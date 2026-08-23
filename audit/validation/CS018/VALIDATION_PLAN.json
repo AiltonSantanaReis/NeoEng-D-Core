@@ -1,0 +1,129 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS018",
+  "objective": "Start EV-01 and harden current build/CI governance by adding a permanent PR/main product regression workflow, enforcing current Action SHA pinning and valid NEOENG CMake options, preserving historical workflow bytes, repairing Windows-portable evolution path verification and stale negative fixtures, and proving that no product/build-definition paths change.",
+  "base_sha": "e9e095e61d4de2995db704c51e9308850e1c929d",
+  "execution_workflow": ".github/workflows/cs018-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs018.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "CS018 verifier negative self-test"
+    },
+    {
+      "test_id": "cs018.workflow-classification",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify workflow classification"
+    },
+    {
+      "test_id": "cs018.action-pinning",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify critical action pinning"
+    },
+    {
+      "test_id": "cs018.cmake-options",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify current CMake options"
+    },
+    {
+      "test_id": "cs018.regression-contract",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify permanent regression contract"
+    },
+    {
+      "test_id": "cs018.historical-boundary",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify historical workflow boundary"
+    },
+    {
+      "test_id": "cs018.ledger-transition",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify EV-01 ledger transition"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "evolution.self-test",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify evolution verifier self-test"
+    },
+    {
+      "test_id": "changeset.policy-self-test",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify ChangeSet policy self-test"
+    },
+    {
+      "test_id": "cs018.scope",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify exact CS018 scope"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Verify ChangeSet validation plan"
+    },
+    {
+      "test_id": "product.configure",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Configure product regression"
+    },
+    {
+      "test_id": "product.build",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Build product regression"
+    },
+    {
+      "test_id": "product.smoke",
+      "required": true,
+      "evidence_job": "CS018 validation",
+      "evidence_step": "Run product smoke regression"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    ".github/workflows/current-product-regression.yml",
+    ".github/workflows/cs018-validation.yml",
+    "scripts/verify_build_ci_governance.py",
+    "scripts/verify_evolution_plan.py",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "docs/changesets/018/CHANGESET.md",
+    "docs/changesets/018/BUILD_CI_DISCOVERY.json",
+    "CMakeLists.txt",
+    "CMakePresets.json",
+    "scripts/generate_manifest.py",
+    ".github/workflows/cs010-cross-compiler.yml",
+    ".github/workflows/cs011-cross-compiler.yml",
+    ".github/workflows/cs012-cross-compiler.yml",
+    ".github/workflows/cs013-cross-compiler.yml",
+    ".github/workflows/cs014-release-assurance.yml",
+    ".github/workflows/cs015-final-acceptance.yml"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
