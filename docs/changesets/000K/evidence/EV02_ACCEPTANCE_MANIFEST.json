@@ -1,0 +1,153 @@
+{
+  "schema": "neoeng.dcore.evolution-evidence-manifest.v1",
+  "stage": "EV-02",
+  "changeset": "CS019",
+  "closure_changeset": "CS000K",
+  "source_commit": "9e35c25fd4c618d4707067f8760712c549f01a3e",
+  "hash_mode": "lf-normalized-text",
+  "external_evidence": {
+    "cs019_qualifying_run": {
+      "run_id": 32644940394,
+      "run_attempt": 1,
+      "source_sha": "49b0ea1c9ed006503957331d6dd037f51e55745d",
+      "workflow_path": ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+      "conclusion": "success"
+    },
+    "pr54_recovery_trusted_gate": {
+      "run_id": 32647449825,
+      "run_attempt": 1,
+      "head_sha": "16e18cd53af9bbc8b4791f2c0701f91990230809",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "pr54_candidate_diagnostic": {
+      "run_id": 32647451020,
+      "run_attempt": 1,
+      "head_sha": "16e18cd53af9bbc8b4791f2c0701f91990230809",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "pr54_product_regression": {
+      "run_id": 32647451062,
+      "run_attempt": 1,
+      "head_sha": "16e18cd53af9bbc8b4791f2c0701f91990230809",
+      "workflow_path": ".github/workflows/current-product-regression.yml",
+      "conclusion": "success"
+    },
+    "pr54_cs000j_stale_scope": {
+      "run_id": 32647451040,
+      "run_attempt": 1,
+      "head_sha": "16e18cd53af9bbc8b4791f2c0701f91990230809",
+      "workflow_path": ".github/workflows/cs000j-ev01-ledger-closure-validation.yml",
+      "conclusion": "failure",
+      "classification": "NOT_APPLICABLE_STALE_SCOPE",
+      "rerun": false
+    },
+    "post_acceptance_net_zero_recovery": {
+      "binding_sha": "c30a8fdd5ca20d5b2b2473e858e5adc53904c345",
+      "accidental_sha": "ca4a7d0397660e7955d22899ec338b67442b6c52",
+      "recovery_sha": "16e18cd53af9bbc8b4791f2c0701f91990230809",
+      "tree_sha": "eaef6588e3c591b37e66dce595e7b1ac25dcd5e9",
+      "transient_path": "NONEXISTENT",
+      "net_tree_delta": "ZERO",
+      "history_rewrite": "NONE",
+      "qualifying_rerun": false
+    },
+    "main_changeset_validation": {
+      "run_id": 32650927099,
+      "run_attempt": 1,
+      "head_sha": "9e35c25fd4c618d4707067f8760712c549f01a3e",
+      "workflow_path": ".github/workflows/changeset-validation.yml",
+      "conclusion": "success"
+    },
+    "post_merge_product_regression": {
+      "run_id": 32650927094,
+      "run_attempt": 1,
+      "head_sha": "9e35c25fd4c618d4707067f8760712c549f01a3e",
+      "workflow_path": ".github/workflows/current-product-regression.yml",
+      "conclusion": "success"
+    }
+  },
+  "files": [
+    {
+      "path": "audit/validation/CS019/VALIDATION_PLAN_R2.json",
+      "sha256": "4915b0c06106d0d1d32396460ee27433b5af3b9d0583a0e3c4341a16d5a077f6"
+    },
+    {
+      "path": "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+      "sha256": "dd2e0646a9dc97ce25f56caa45fe91e9f0e6275f97ec675e94375af91b5d7359"
+    },
+    {
+      "path": "audit/validation/CS019/ATTEMPT_001_NONACCEPTANCE.json",
+      "sha256": "95b9e3629e4a9923a0892759f2d5b8c09551a12324bdb318e21b31232c6a6276"
+    },
+    {
+      "path": "docs/changesets/019/CHANGESET.md",
+      "sha256": "fb8a94c420759291203cfa08ecb521e083d0102f4eaabff73d8d23d639f0727f"
+    },
+    {
+      "path": "docs/changesets/019/CHANGESET_R2.md",
+      "sha256": "56524610a8e2d4a0303f914a38670119d3c51d9c8dedb1975648a603ff2f96fc"
+    },
+    {
+      "path": "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+      "sha256": "34a855cb66cbea7c4fb70f76a5c1dc0147c4715fc44684b134a5efa474c3385c"
+    },
+    {
+      "path": "docs/records/evolution/DEV-0009.md",
+      "sha256": "51ce5f166bed655e3ecc5d6f05e3cf277aeb3cb4ef14c8305f3997b2a90bcc26"
+    },
+    {
+      "path": ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+      "sha256": "38196c12b497d26017c4d699ae150c568bf176bcf7cdd888363304dc04415f67"
+    },
+    {
+      "path": ".github/workflows/current-product-regression.yml",
+      "sha256": "c61e77b4a0799839e89fc3e63edd0f0165c78cd32309d03bd4fa9803bc0893dc"
+    },
+    {
+      "path": "scripts/verify_cs019_ev02_fundamental_contracts.py",
+      "sha256": "880fd7595c9754691df5cc326b349d464c006dfacd070215018d54eb0bccf615"
+    },
+    {
+      "path": "scripts/verify_build_ci_governance.py",
+      "sha256": "a629c8648b74238b165bbc678deef7ab56a4cd1290a93a680bbbc0cb6d305fe9"
+    },
+    {
+      "path": "tests/test_main.cpp",
+      "sha256": "ff7b3c086a2d4a61b678b66374d1e302883dfbdb6be132a06848dd3e344e5543"
+    },
+    {
+      "path": "tests/numeric_closure_tests.cpp",
+      "sha256": "aab28a524c3e7ee76001f4179a5409f41b5af47a7de818aadead824f1b2dda88"
+    },
+    {
+      "path": "modules/host_sdk/tests/host_sdk_tests.cpp",
+      "sha256": "3230bef3c88dcbf96b91b9bf60948f1a64afc1431a0aa2ff69bb0ec2bfbdba5b"
+    },
+    {
+      "path": "include/neoeng/core/simulation.hpp",
+      "sha256": "ebad435cca780f0ac73fe21ad482ca03e68044910d1d88c74da865201067a8cb"
+    },
+    {
+      "path": "src/simulation.cpp",
+      "sha256": "740e968f6346cd0459fd9cdd53dfee2f8fe1ade8f5040c50f1b7ddd6c7c82251"
+    },
+    {
+      "path": "src/rollback.cpp",
+      "sha256": "c29a9b50349c0adfcfda2a117505a474af15528f33d338a64117d5a91891a52c"
+    },
+    {
+      "path": "audit/GOVERNANCE_TRANSITION_STATE.json",
+      "sha256": "73058842181b1132d14e8ae7a7a3243a714b1fc65a9be859d4971089bcfe94d5"
+    },
+    {
+      "path": "audit/CHANGESET_VALIDATION_POLICY.json",
+      "sha256": "af51ee16e0d4f9c1a472537ea14b0eaf00479ae9bc4438caf15e62e96fe32653"
+    },
+    {
+      "path": ".github/workflows/changeset-validation.yml",
+      "sha256": "c29d6f3e9ddce67f6fb4c99b890db7d235d6c4aebf3ccd9e777c11c7a9f5aca0"
+    }
+  ]
+}

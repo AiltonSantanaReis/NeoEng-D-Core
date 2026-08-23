@@ -1,18 +1,7 @@
 name: CS000J EV-01 ledger closure
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/cs000i-ev00-ledger-closure-validation.yml'
-      - '.github/workflows/cs000j-ev01-ledger-closure-validation.yml'
-      - 'scripts/verify_cs000j_ev01_ledger_closure.py'
-      - 'audit/EVOLUTION_ROADMAP.json'
-      - 'audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json'
-      - 'audit/validation/CS000J/VALIDATION_PLAN.json'
-      - 'docs/changesets/000J/CHANGESET.md'
-      - 'docs/changesets/000J/evidence/EV01_ACCEPTANCE_MANIFEST.json'
-      - 'docs/records/evolution/DEV-0008.md'
+  workflow_dispatch:
 
 permissions:
   contents: read

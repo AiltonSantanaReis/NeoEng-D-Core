@@ -1,0 +1,127 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000K",
+  "objective": "Close the EV-02 ledger only after accepted CS019 R2 integration, bind EV-02 to protected merge commit 9e35c25fd4c618d4707067f8760712c549f01a3e, verify EVREQ-009..012 from preserved CS019 and post-merge evidence, preserve CS019 R1/R2 and net-zero recovery history, retire automatic pull_request applicability of the historical CS000J closure workflow, keep EV-03 not_started, and keep release unauthorized.",
+  "base_sha": "9e35c25fd4c618d4707067f8760712c549f01a3e",
+  "execution_workflow": ".github/workflows/cs000k-ev02-ledger-closure-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000k.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "CS000K verifier negative self-test"
+    },
+    {
+      "test_id": "cs000k.authority",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000k.cs019-integration",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify accepted CS019 integration binding"
+    },
+    {
+      "test_id": "cs000k.recovery-provenance",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify preserved net-zero post-acceptance recovery"
+    },
+    {
+      "test_id": "cs000k.github-provenance",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify live CS019 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000k.cs000j-retirement",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify CS000J workflow is manual-only"
+    },
+    {
+      "test_id": "cs000k.ledger-closure",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify exact EV-02 ledger closure"
+    },
+    {
+      "test_id": "cs000k.requirements-closure",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify EVREQ-009 through EVREQ-012"
+    },
+    {
+      "test_id": "cs000k.acceptance-evidence",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify EV-02 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000k.scope",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify CS000K administrative-only scope"
+    },
+    {
+      "test_id": "cs000k.non-effects",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify no product release or EV-03 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000K EV-02 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".github/workflows/changeset-validation.yml",
+    "scripts/verify_changeset_validation.py",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    ".github/workflows/cs000j-ev01-ledger-closure-validation.yml",
+    ".github/workflows/cs000k-ev02-ledger-closure-validation.yml",
+    "scripts/verify_cs000k_ev02_ledger_closure.py",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "docs/changesets/000K/CHANGESET.md",
+    "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json",
+    "docs/records/evolution/DEV-0010.md",
+    "audit/validation/CS019/VALIDATION_PLAN_R2.json",
+    "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+    "audit/validation/CS019/ATTEMPT_001_NONACCEPTANCE.json",
+    "docs/changesets/019/CHANGESET.md",
+    "docs/changesets/019/CHANGESET_R2.md",
+    "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+    "docs/records/evolution/DEV-0009.md",
+    ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+    ".github/workflows/current-product-regression.yml",
+    "scripts/verify_cs019_ev02_fundamental_contracts.py",
+    "scripts/verify_build_ci_governance.py",
+    "scripts/verify_evolution_plan.py",
+    "tests/test_main.cpp",
+    "tests/numeric_closure_tests.cpp",
+    "modules/host_sdk/tests/host_sdk_tests.cpp",
+    "include/neoeng/core/simulation.hpp",
+    "src/simulation.cpp",
+    "src/rollback.cpp"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
