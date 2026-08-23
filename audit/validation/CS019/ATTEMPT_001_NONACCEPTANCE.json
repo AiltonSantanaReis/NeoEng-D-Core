@@ -1,0 +1,59 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-attempt-record.v1",
+  "changeset": "CS019",
+  "attempt": 1,
+  "plan_path": "audit/validation/CS019/VALIDATION_PLAN.json",
+  "plan_commit": "4b7e2470006486f07c0e027da79e5dd23e13b2f6",
+  "source_sha": "9a131f35ed3d8d7d4989b23e6382f5eaf8c8f121",
+  "workflow_path": ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+  "execution_attempted": true,
+  "dispatch_attempted": false,
+  "workflow_run_created": true,
+  "run_id": 32641132546,
+  "run_attempt": 1,
+  "workflow_conclusion": "success",
+  "required_tests_executed": 22,
+  "required_tests_total": 22,
+  "required_tests_passed": 22,
+  "validation_state": "BLOCKED",
+  "acceptance_decision": "NOT_ACCEPTED",
+  "classification": "POST_EXECUTION_PERMANENT_GOVERNANCE_REGRESSION",
+  "reason": "The dedicated CS019 qualifying run completed successfully with all 22 frozen required tests PASS, including the primary 28-test smoke surface and byte-identical GCC/Clang rejection corpus. The same PR-triggered source also started the permanent Current product regression workflow, run 32641132506 attempt 1, which failed at Verify workflow classification because the pull_request-triggered CS019 workflow was itself classified as a second CURRENT product-regression workflow. INV-EV-007 and INV-EV-020 therefore block validation/acceptance until a prospective amendment removes the classification collision without weakening the permanent gate.",
+  "rerun_attempt1": false,
+  "next_plan": "audit/validation/CS019/VALIDATION_PLAN_R2.json",
+  "parallel_observations": [
+    {
+      "workflow": "ChangeSet validation",
+      "run_id": 32641132539,
+      "run_attempt": 1,
+      "conclusion": "success",
+      "classification": "PROSPECTIVE_GENERIC_DIAGNOSTIC"
+    },
+    {
+      "workflow": "Current product regression",
+      "run_id": 32641132506,
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "classification": "PERMANENT_BUILD_CI_GOVERNANCE_REGRESSION",
+      "failed_step": "Verify workflow classification",
+      "reason": "current_product_regression_workflows was 2 instead of 1"
+    },
+    {
+      "workflow": "CS000J EV-01 ledger closure",
+      "run_id": 32641132555,
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "classification": "NOT_APPLICABLE_STALE_SCOPE",
+      "failed_step": "Verify exact EV-01 ledger closure",
+      "reason": "historical EV-01 closure verifier rejects EV-02 in_progress"
+    }
+  ],
+  "effects": {
+    "runtime": false,
+    "abi": false,
+    "product_source": false,
+    "release": false,
+    "acceptance": false,
+    "historical_evidence_rewrite": false
+  }
+}

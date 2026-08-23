@@ -20,8 +20,8 @@ RollbackEngine::RollbackEngine(WorldState initial, SnapshotStoreConfig config)
 }
 
 void RollbackEngine::advance(std::span<const InputCommand> inputs) {
-    input_history_[current_.frame] = std::vector<InputCommand>(inputs.begin(), inputs.end());
     StepResult result = step_with_dirty(current_, inputs);
+    input_history_[current_.frame] = std::vector<InputCommand>(inputs.begin(), inputs.end());
     snapshots_->capture(result.state, &result.dirty);
     current_ = std::move(result.state);
 
@@ -54,6 +54,22 @@ std::size_t RollbackEngine::correct_input_and_resimulate(
     }
 
     WorldState restored = snapshots_->restore(input_frame);
+
+    // Preflight the complete deterministic replay before mutating retained
+    // input history or the snapshot window. Fundamental transition failures
+    // therefore leave rollback state unchanged.
+    WorldState preflight = restored;
+    while (preflight.frame < target_frame) {
+        const auto history = input_history_.find(preflight.frame);
+        const std::span<const InputCommand> frame_inputs =
+            preflight.frame == input_frame
+                ? corrected_inputs
+                : history == input_history_.end()
+                    ? std::span<const InputCommand>{}
+                    : std::span<const InputCommand>{history->second};
+        preflight = step_with_dirty(preflight, frame_inputs).state;
+    }
+
     input_history_[input_frame] = std::vector<InputCommand>(
         corrected_inputs.begin(), corrected_inputs.end());
     snapshots_->truncate_after(input_frame);

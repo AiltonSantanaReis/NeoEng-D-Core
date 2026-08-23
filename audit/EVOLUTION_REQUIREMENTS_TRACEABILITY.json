@@ -136,7 +136,7 @@
       "requirement_id": "EVREQ-009",
       "stage": "EV-02",
       "statement": "Avanço em frame máximo deve possuir comportamento fail-closed explícito e testado.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "boundary tests"
       ],
@@ -146,7 +146,7 @@
       "requirement_id": "EVREQ-010",
       "stage": "EV-02",
       "statement": "Input para entidade inexistente deve possuir comportamento normativo explícito e diagnóstico estável.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "negative tests",
         "Host SDK test"
@@ -157,7 +157,7 @@
       "requirement_id": "EVREQ-011",
       "stage": "EV-02",
       "statement": "Contrato Q32.32 deve declarar overflow, divisão por zero, narrowing e política de arredondamento.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "numeric contract",
         "tests"
@@ -168,7 +168,7 @@
       "requirement_id": "EVREQ-012",
       "stage": "EV-02",
       "statement": "Falhas fundamentais devem produzir classes estáveis de erro no escopo multiplataforma declarado.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "cross-compiler negative corpus"
       ],

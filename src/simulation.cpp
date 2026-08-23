@@ -1,6 +1,7 @@
 #include "neoeng/core/simulation.hpp"
 
 #include <algorithm>
+#include <limits>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -22,6 +23,10 @@ void validate_world(const WorldState& state) {
 StepResult step_with_dirty(const WorldState& current, std::span<const InputCommand> inputs) {
     validate_world(current);
 
+    if (current.frame == std::numeric_limits<std::uint64_t>::max()) {
+        throw std::overflow_error("World frame maximum reached");
+    }
+
     std::vector<InputCommand> canonical_inputs(inputs.begin(), inputs.end());
     std::sort(canonical_inputs.begin(), canonical_inputs.end(),
         [](const InputCommand& lhs, const InputCommand& rhs) {
@@ -33,6 +38,18 @@ StepResult step_with_dirty(const WorldState& current, std::span<const InputComma
             }
             return lhs.acceleration.y < rhs.acceleration.y;
         });
+
+    std::size_t validation_body_index = 0U;
+    for (const InputCommand& input : canonical_inputs) {
+        while (validation_body_index < current.bodies.size()
+               && current.bodies[validation_body_index].id < input.entity) {
+            ++validation_body_index;
+        }
+        if (validation_body_index == current.bodies.size()
+            || current.bodies[validation_body_index].id != input.entity) {
+            throw std::out_of_range("Input references unknown EntityId");
+        }
+    }
 
     StepResult result{.state = current, .dirty = DirtySet(current.bodies.size())};
     result.state.frame = current.frame + 1U;

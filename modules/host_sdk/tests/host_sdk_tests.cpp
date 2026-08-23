@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 #include <thread>
 
 namespace {
@@ -26,18 +27,23 @@ neoeng_dcore_host_config default_config() {
     return config;
 }
 
-neoeng_dcore_host* create_host() {
+neoeng_dcore_host* create_host_at_frame(std::uint64_t frame) {
     const std::array<neoeng_dcore_body, 2> bodies{{
         {1U, 0U, 0, 0, 0, 0},
         {2U, 0U, 0, 0, 0, 0},
     }};
     neoeng_dcore_host* host = nullptr;
     const auto config = default_config();
-    require(neoeng_dcore_host_create(0U, bodies.data(), bodies.size(), &config, &host)
+    require(neoeng_dcore_host_create(
+                frame, bodies.data(), bodies.size(), &config, &host)
                 == NEOENG_DCORE_STATUS_OK,
             "create valid host");
     require(host != nullptr, "host pointer");
     return host;
+}
+
+neoeng_dcore_host* create_host() {
+    return create_host_at_frame(0U);
 }
 
 void test_version_and_creation_guards() {
@@ -222,6 +228,83 @@ void test_recovery_contract() {
             "destroy recovery host");
 }
 
+
+void test_fundamental_rejection_statuses_are_stable() {
+    neoeng_dcore_host* maximum_host =
+        create_host_at_frame(std::numeric_limits<std::uint64_t>::max());
+
+    neoeng_dcore_state_summary maximum_before{};
+    require(
+        neoeng_dcore_host_get_state_summary(
+            maximum_host, &maximum_before)
+            == NEOENG_DCORE_STATUS_OK,
+        "maximum-frame summary before rejection");
+
+    neoeng_dcore_state_summary ignored{};
+    require(
+        neoeng_dcore_host_advance(
+            maximum_host, nullptr, 0U, 40U, 0U, &ignored)
+            == NEOENG_DCORE_STATUS_NUMERIC_OVERFLOW,
+        "maximum frame maps to numeric overflow");
+
+    neoeng_dcore_state_summary maximum_after{};
+    require(
+        neoeng_dcore_host_get_state_summary(
+            maximum_host, &maximum_after)
+            == NEOENG_DCORE_STATUS_OK,
+        "maximum-frame summary after rejection");
+
+    require(
+        maximum_after.frame == maximum_before.frame,
+        "maximum-frame rejection preserves frame");
+    require(
+        maximum_after.stable_hash == maximum_before.stable_hash,
+        "maximum-frame rejection preserves canonical state");
+
+    require(
+        neoeng_dcore_host_destroy(maximum_host)
+            == NEOENG_DCORE_STATUS_OK,
+        "destroy maximum-frame host");
+
+    neoeng_dcore_host* unknown_host = create_host();
+
+    neoeng_dcore_state_summary unknown_before{};
+    require(
+        neoeng_dcore_host_get_state_summary(
+            unknown_host, &unknown_before)
+            == NEOENG_DCORE_STATUS_OK,
+        "unknown-entity summary before rejection");
+
+    const neoeng_dcore_input unknown{
+        99U, 0U, 0, 0,
+    };
+
+    require(
+        neoeng_dcore_host_advance(
+            unknown_host, &unknown, 1U, 41U, 0U, &ignored)
+            == NEOENG_DCORE_STATUS_NOT_FOUND,
+        "unknown entity maps to not found");
+
+    neoeng_dcore_state_summary unknown_after{};
+    require(
+        neoeng_dcore_host_get_state_summary(
+            unknown_host, &unknown_after)
+            == NEOENG_DCORE_STATUS_OK,
+        "unknown-entity summary after rejection");
+
+    require(
+        unknown_after.frame == unknown_before.frame,
+        "unknown-entity rejection preserves frame");
+    require(
+        unknown_after.stable_hash == unknown_before.stable_hash,
+        "unknown-entity rejection preserves canonical state");
+
+    require(
+        neoeng_dcore_host_destroy(unknown_host)
+            == NEOENG_DCORE_STATUS_OK,
+        "destroy unknown-entity host");
+}
+
 void test_thread_ownership_and_input_guards() {
     neoeng_dcore_host* host = create_host();
     neoeng_dcore_status worker_status = NEOENG_DCORE_STATUS_OK;
@@ -254,7 +337,13 @@ int main() {
     test_version_and_creation_guards();
     test_state_rollback_and_buffers();
     test_recovery_contract();
+    test_fundamental_rejection_statuses_are_stable();
     test_thread_ownership_and_input_guards();
+    std::cout
+        << "cs019_host_contract=PASS "
+           "frame_max=numeric_overflow "
+           "unknown_entity=not_found "
+           "abi=1.0\n";
     std::cout << "host_sdk_tests=PASS abi=1.0 runtime=1.12.0\n";
     return 0;
 }
