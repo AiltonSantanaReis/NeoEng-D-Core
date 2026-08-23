@@ -1,4 +1,5 @@
 {
   "schema": "neoeng.dcore.current-changeset-validation.v1",
-  "plan_path": "audit/validation/CS000J/VALIDATION_PLAN.json"
+  "plan_path": "audit/validation/CS000J/VALIDATION_PLAN.json",
+  "result_path": "audit/validation/CS000J/VALIDATION_RESULT.json"
 }
