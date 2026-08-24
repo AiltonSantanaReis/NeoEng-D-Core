@@ -1,0 +1,133 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000L",
+  "objective": "Close the EV-03 ledger only after accepted CS020 integration; bind EV-03 to protected merge 0adf4721ebefb77723e2c59ee042f35fb291854a; verify EVREQ-013..015 from preserved deterministic golden-corpus evidence; preserve CS020 qualification, binding and post-merge evidence; keep EV-04 not_started; and keep release unauthorized.",
+  "base_sha": "0adf4721ebefb77723e2c59ee042f35fb291854a",
+  "execution_workflow": ".github/workflows/cs000l-ev03-ledger-closure-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000l.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "CS000L verifier negative self-test"
+    },
+    {
+      "test_id": "cs000l.authority",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000l.cs020-integration",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify accepted CS020 protected integration"
+    },
+    {
+      "test_id": "cs000l.github-provenance",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify live CS020 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000l.cs000k-preservation",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify accepted CS000K predecessor preservation"
+    },
+    {
+      "test_id": "cs000l.golden-preservation",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify immutable EV-03 golden corpus preservation"
+    },
+    {
+      "test_id": "cs000l.ledger-closure",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify exact EV-03 ledger closure"
+    },
+    {
+      "test_id": "cs000l.requirements-closure",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify EVREQ-013 through EVREQ-015"
+    },
+    {
+      "test_id": "cs000l.acceptance-evidence",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify EV-03 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000l.scope",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify CS000L administrative-only scope"
+    },
+    {
+      "test_id": "cs000l.non-effects",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify no product release or EV-04 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".gitattributes",
+    ".github/workflows/changeset-validation.yml",
+    ".github/workflows/cs000k-ev02-ledger-closure-validation.yml",
+    ".github/workflows/cs000l-ev03-ledger-closure-validation.yml",
+    ".github/workflows/cs020-ev03-deterministic-golden-corpus-validation.yml",
+    ".github/workflows/current-product-regression.yml",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/validation/CS000K/VALIDATION_RESULT.json",
+    "audit/validation/CS000L/VALIDATION_PLAN.json",
+    "audit/validation/CS020/VALIDATION_PLAN.json",
+    "audit/validation/CS020/VALIDATION_RESULT.json",
+    "CMakeLists.txt",
+    "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json",
+    "docs/changesets/000L/CHANGESET.md",
+    "docs/changesets/000L/evidence/EV03_ACCEPTANCE_MANIFEST.json",
+    "docs/changesets/020/CHANGESET.md",
+    "docs/contracts/GOLDEN_CORPUS_V1.md",
+    "docs/records/evolution/DEV-0010.md",
+    "docs/records/evolution/DEV-0011.md",
+    "docs/records/evolution/DEV-0012.md",
+    "scripts/generate_manifest.py",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_cs000l_ev03_ledger_closure.py",
+    "scripts/verify_cs020_ev03_golden_corpus.py",
+    "scripts/verify_evolution_plan.py",
+    "tests/golden_corpus_tests.cpp",
+    "tests/golden/ev03/v1/corpus.json",
+    "tests/golden/ev03/v1/evidence_envelope.bin",
+    "tests/golden/ev03/v1/manifest.json",
+    "tests/golden/ev03/v1/world_after_rollback_replay.bin",
+    "tests/golden/ev03/v1/world_after_transition.bin",
+    "tests/golden/ev03/v1/world_initial.bin"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}

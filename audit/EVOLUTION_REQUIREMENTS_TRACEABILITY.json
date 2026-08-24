@@ -199,31 +199,51 @@
       "requirement_id": "EVREQ-013",
       "stage": "EV-03",
       "statement": "Corpus ouro deve cobrir transições e serialização canônica com bytes e hashes esperados.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "golden corpus"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts/GOLDEN_CORPUS_V1.md",
+        "tests/golden/ev03/v1/corpus.json",
+        "tests/golden/ev03/v1/world_initial.bin",
+        "tests/golden/ev03/v1/world_after_transition.bin",
+        "audit/validation/CS020/VALIDATION_RESULT.json",
+        "docs/changesets/000L/evidence/EV03_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-014",
       "stage": "EV-03",
       "statement": "Corpus ouro deve cobrir snapshots, rollback, replay, SHA-256, Merkle e diagnósticos aplicáveis.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "golden corpus"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/golden/ev03/v1/corpus.json",
+        "tests/golden/ev03/v1/manifest.json",
+        "tests/golden/ev03/v1/world_after_rollback_replay.bin",
+        "tests/golden/ev03/v1/evidence_envelope.bin",
+        "audit/validation/CS020/VALIDATION_RESULT.json",
+        "docs/changesets/000L/evidence/EV03_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-015",
       "stage": "EV-03",
       "statement": "Artefatos ouro devem ser versionados, manifestados e imutavelmente vinculados ao contrato que validam.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "golden manifest"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts/GOLDEN_CORPUS_V1.md",
+        "docs/records/evolution/DEV-0011.md",
+        "tests/golden/ev03/v1/manifest.json",
+        "audit/validation/CS020/VALIDATION_RESULT.json",
+        "docs/changesets/000L/evidence/EV03_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-016",

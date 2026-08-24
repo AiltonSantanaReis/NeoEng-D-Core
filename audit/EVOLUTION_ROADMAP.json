@@ -71,14 +71,14 @@
     {
       "stage_id": "EV-03",
       "title": "Corpus ouro determinístico",
-      "status": "in_progress",
+      "status": "accepted",
       "depends_on": [
         "EV-02"
       ],
       "planned_changeset": "CS020",
-      "accepted_commit": null,
-      "evidence_manifest": null,
-      "decision_record": null
+      "accepted_commit": "0adf4721ebefb77723e2c59ee042f35fb291854a",
+      "evidence_manifest": "docs/changesets/000L/evidence/EV03_ACCEPTANCE_MANIFEST.json",
+      "decision_record": "docs/records/evolution/DEV-0012.md"
     },
     {
       "stage_id": "EV-04",
