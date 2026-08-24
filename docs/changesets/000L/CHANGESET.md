@@ -1,6 +1,6 @@
 # CS000L — EV-03 ledger acceptance closure
 
-State: **IMPLEMENTED CANDIDATE / NOT YET QUALIFIED / NOT YET ACCEPTED**
+State: **CORRECTED IMPLEMENTED CANDIDATE / PRIOR SOURCE RUN 32722146773 PROSPECTIVELY INVALIDATED / NOT YET QUALIFIED / NOT YET ACCEPTED**
 
 ## Purpose
 
@@ -92,6 +92,30 @@ trigger qualification.
 
 The successful source qualification, if obtained, must not be rerun merely to
 bind its result.
+
+### Preserved prospectively invalidated source execution
+
+Source `01afe6d8eb45023b74d82856c054d1b7eef85e19` produced qualifying run
+`32722146773`, attempt `1`, which completed successfully with all 14 required
+tests PASS.
+
+After terminal success, but before any result binding or acceptance decision,
+the lifecycle audit found that
+`audit/CURRENT_CHANGESET_VALIDATION.json` already contained `result_path`,
+while this contract requires the future source-to-binding delta to contain
+exactly three changed paths including that descriptor.
+
+No `audit/validation/CS000L/VALIDATION_RESULT.json` was created, no acceptance
+decision was bound, and the successful execution is preserved permanently as
+historical evidence.
+
+Source `01afe6d8eb45023b74d82856c054d1b7eef85e19` is therefore prospectively
+invalidated for acceptance. Run `32722146773` must never be rerun.
+
+A corrected source may be qualified only after the descriptor is restored to
+plan-only state and at least one qualification-trigger path changes. Any later
+qualification is a qualification of a new source SHA, not a rerun of
+`32722146773`.
 
 ## Preserved technical evidence
 
