@@ -1,0 +1,128 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000L",
+  "plan_commit": "815dfd59a4e956823f0afd7b1a58e34587e13e87",
+  "plan_sha256": "c0643a55c52203f7ff1674788b5c48dac0ca713739a9614b9a94202e464f4156",
+  "source_sha": "815dfd59a4e956823f0afd7b1a58e34587e13e87",
+  "run_id": 32745344238,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000l-ev03-ledger-closure-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000l.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "CS000L verifier negative self-test"
+    },
+    {
+      "test_id": "cs000l.authority",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify prospective governance authority"
+    },
+    {
+      "test_id": "cs000l.cs020-integration",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify accepted CS020 protected integration"
+    },
+    {
+      "test_id": "cs000l.github-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify live CS020 and post-merge provenance"
+    },
+    {
+      "test_id": "cs000l.cs000k-preservation",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify accepted CS000K predecessor preservation"
+    },
+    {
+      "test_id": "cs000l.golden-preservation",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify immutable EV-03 golden corpus preservation"
+    },
+    {
+      "test_id": "cs000l.ledger-closure",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify exact EV-03 ledger closure"
+    },
+    {
+      "test_id": "cs000l.requirements-closure",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify EVREQ-013 through EVREQ-015"
+    },
+    {
+      "test_id": "cs000l.acceptance-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify EV-03 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000l.scope",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify CS000L administrative-only scope"
+    },
+    {
+      "test_id": "cs000l.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify no product release or EV-04 effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000L EV-03 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "source_phase_observation": {
+    "prospectively_invalidated_source_sha": "01afe6d8eb45023b74d82856c054d1b7eef85e19",
+    "prospectively_invalidated_run_id": 32722146773,
+    "prospectively_invalidated_run_attempt": 1,
+    "prospectively_invalidated_run_conclusion": "success",
+    "prospectively_invalidated_source_acceptable": false,
+    "prospectively_invalidated_run_rerun_allowed": false,
+    "corrected_source_parent": "01afe6d8eb45023b74d82856c054d1b7eef85e19",
+    "corrected_source_sha": "815dfd59a4e956823f0afd7b1a58e34587e13e87",
+    "corrected_source_tree": "516f8aa612ce56ac6f51bc7594772b51cde83fb6",
+    "corrected_qualification_run_id": 32745344238,
+    "corrected_qualification_run_attempt": 1,
+    "corrected_qualification_rerun": false
+  },
+  "effects": {
+    "ev03": "LEDGER_ACCEPTED",
+    "current_stage": "EV-03",
+    "evreq_013_015": "VERIFIED",
+    "ev04": "NOT_STARTED",
+    "cs021": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "build_definitions": "NONE",
+    "product_tests": "NONE",
+    "golden_corpus_bytes": "UNCHANGED",
+    "golden_reemission": "NONE",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
