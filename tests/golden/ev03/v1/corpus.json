@@ -1,0 +1,53 @@
+{
+  "schema": "neoeng.dcore.golden-corpus.v1",
+  "corpus_version": 1,
+  "base_sha": "98c1042249ced4c1775dddf9a871e29dc6070828",
+  "scenario": "ev03-transition-rollback-evidence-v1",
+  "canonical_world_format_version": 1,
+  "state_evidence_schema_version": 1,
+  "state_merkle_format_version": 1,
+  "merkle_chunk_bodies": 1,
+  "initial": {
+    "frame": 7,
+    "stable_hash": "0x4D948918C8C6A779",
+    "canonical_sha256": "8a0bd49d7bcfe755d29962e26e781ff0ba041375c595770ef6705254e3efaeee",
+    "merkle_root_sha256": "a4cd72d5af7603a60fa5971869fd2f41bed8f1c5648fefeb764cf6ba44cbca4c",
+    "artifact": "world_initial.bin"
+  },
+  "after_transition": {
+    "frame": 8,
+    "stable_hash": "0x6AD2A46606F1AB90",
+    "canonical_sha256": "9475640a4aa7842cfdc548eb14f97e1ed492b01c764708f833948493ebbbc793",
+    "merkle_root_sha256": "0a78acd07c1e1fde3250508063a37d50193f11e96b81e4f713fc6d15f5920f6d",
+    "artifact": "world_after_transition.bin"
+  },
+  "rollback_replay": {
+    "frame": 9,
+    "resimulated_frames": 2,
+    "stable_hash": "0x5675F93D33D779FD",
+    "canonical_sha256": "4059584698bad4d2e864bab6d9f17c6710a7e4e5a93bbe3ddb53f52cb64d6cf7",
+    "merkle_root_sha256": "4c036091f332ab9cbbfa303b9dee3195cf535cfeca5dd186e2f77658288b4b87",
+    "artifact": "world_after_rollback_replay.bin"
+  },
+  "snapshot_strategies": ["full_copy", "delta_checkpoint", "paged_cow", "persistent_chunk_tree", "component_soa", "hybrid_adaptive"],
+  "snapshot_restore_all_pass": true,
+  "diagnostics": {
+    "maximum_frame": {
+      "exception": "std::overflow_error",
+      "message": "World frame maximum reached"
+    },
+    "unknown_entity": {
+      "exception": "std::out_of_range",
+      "message": "Input references unknown EntityId"
+    }
+  },
+  "state_evidence": {
+    "artifact": "evidence_envelope.bin",
+    "branch_id": 49184,
+    "sequence": 0,
+    "frame": 8,
+    "envelope_sha256": "3e84dbcaea8e769516a94730847119e71e2a5d37a29b01d22b41d3bba54f4f85",
+    "accepted": true,
+    "deterministic_rejection_reason": "canonical_digest_mismatch"
+  }
+}

@@ -199,7 +199,7 @@
       "requirement_id": "EVREQ-013",
       "stage": "EV-03",
       "statement": "Corpus ouro deve cobrir transições e serialização canônica com bytes e hashes esperados.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "golden corpus"
       ],
@@ -209,7 +209,7 @@
       "requirement_id": "EVREQ-014",
       "stage": "EV-03",
       "statement": "Corpus ouro deve cobrir snapshots, rollback, replay, SHA-256, Merkle e diagnósticos aplicáveis.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "golden corpus"
       ],
@@ -219,7 +219,7 @@
       "requirement_id": "EVREQ-015",
       "stage": "EV-03",
       "statement": "Artefatos ouro devem ser versionados, manifestados e imutavelmente vinculados ao contrato que validam.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "golden manifest"
       ],

@@ -594,6 +594,14 @@ if(BUILD_TESTING)
   target_link_libraries(neoeng_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_tests)
   add_test(NAME neoeng_tests COMMAND neoeng_tests)
+  add_executable(neoeng_golden_corpus_tests tests/golden_corpus_tests.cpp)
+  target_link_libraries(neoeng_golden_corpus_tests PRIVATE neoeng_dcore)
+  neoeng_set_warnings(neoeng_golden_corpus_tests)
+  add_test(NAME neoeng_golden_corpus_tests
+    COMMAND neoeng_golden_corpus_tests
+      ${CMAKE_SOURCE_DIR}/tests/golden/ev03/v1)
+  set_tests_properties(neoeng_golden_corpus_tests
+    PROPERTIES LABELS "smoke;dcore;ev03;golden-corpus")
   add_executable(neoeng_operational_hardening_tests tests/operational_hardening_tests.cpp)
   target_link_libraries(neoeng_operational_hardening_tests PRIVATE neoeng_dcore)
   neoeng_set_warnings(neoeng_operational_hardening_tests)

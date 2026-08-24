@@ -1,0 +1,209 @@
+name: CS020 EV-03 deterministic golden corpus
+
+on:
+  push:
+    branches: [agent/cs020-ev03-deterministic-golden-corpus]
+    paths:
+      - ".github/workflows/cs000k-ev02-ledger-closure-validation.yml"
+      - ".github/workflows/cs020-ev03-deterministic-golden-corpus-validation.yml"
+      - "CMakeLists.txt"
+      - "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json"
+      - "audit/EVOLUTION_ROADMAP.json"
+      - "audit/validation/CS020/VALIDATION_PLAN.json"
+      - "docs/changesets/020/CHANGESET.md"
+      - "docs/contracts/GOLDEN_CORPUS_V1.md"
+      - "docs/records/evolution/DEV-0011.md"
+      - "scripts/verify_cs020_ev03_golden_corpus.py"
+      - "tests/golden_corpus_tests.cpp"
+      - "tests/golden/ev03/v1/corpus.json"
+      - "tests/golden/ev03/v1/manifest.json"
+      - "tests/golden/ev03/v1/world_initial.bin"
+      - "tests/golden/ev03/v1/world_after_transition.bin"
+      - "tests/golden/ev03/v1/world_after_rollback_replay.bin"
+      - "tests/golden/ev03/v1/evidence_envelope.bin"
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: CS020 validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS020 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build gcc g++ clang
+
+      - name: CS020 verifier negative self-test
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --self-test
+
+      - name: Verify prospective governance authority
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --authority
+
+      - name: Verify EV-03 planning ledger
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --planning
+
+      - name: Verify accepted CS000K preservation
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --cs000k-preservation
+
+      - name: Verify CS000K workflow is manual-only
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --workflow-retirement
+
+      - name: Verify exact CS020 source scope
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --scope
+
+      - name: Verify frozen runtime reference surfaces
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --references
+
+      - name: Verify golden corpus schema
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --corpus-schema
+
+      - name: Verify golden artifact manifest
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --golden-manifest
+
+      - name: Verify immutable golden contract bindings
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --contract-binding
+
+      - name: Verify CS020 product non-effects
+        run: python3 -B scripts/verify_cs020_ev03_golden_corpus.py --non-effects
+
+      - name: Verify evolution ledger
+        run: python3 -B scripts/verify_evolution_plan.py
+
+      - name: Verify evolution verifier self-test
+        run: python3 -B scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify ChangeSet policy self-test
+        run: python3 -B scripts/verify_changeset_validation.py --self-test
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 -B scripts/verify_changeset_validation.py
+          --plan audit/validation/CS020/VALIDATION_PLAN.json
+          --expected-base-sha 98c1042249ced4c1775dddf9a871e29dc6070828
+
+      - name: Verify tracked-file manifest
+        run: python3 -B scripts/generate_manifest.py --check
+
+      - name: Configure primary product regression
+        run: >-
+          cmake -S . -B build/cs020-primary -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build primary product regression
+        run: cmake --build build/cs020-primary --parallel 2
+
+      - name: Run deterministic golden corpus
+        run: >-
+          ctest --test-dir build/cs020-primary
+          --output-on-failure
+          -R '^neoeng_golden_corpus_tests$'
+
+      - name: Run EV-03 reference regressions
+        run: >-
+          ctest --test-dir build/cs020-primary
+          --output-on-failure
+          -R '^(neoeng_tests|neoeng_session_recovery_contract_tests|neoeng_state_evidence_tests|neoeng_temporal_closure_tests)$'
+
+      - name: Run product smoke regression
+        run: >-
+          ctest --test-dir build/cs020-primary
+          --output-on-failure
+          -L smoke
+
+  cross_compiler:
+    name: CS020 cross-compiler golden corpus
+    needs: validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS020 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build gcc g++ clang
+
+      - name: Configure GCC golden corpus
+        env:
+          CC: gcc
+          CXX: g++
+        run: >-
+          cmake -S . -B build/cs020-gcc -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build GCC golden corpus
+        run: >-
+          cmake --build build/cs020-gcc
+          --target neoeng_golden_corpus_tests
+          --parallel 2
+
+      - name: Run GCC golden corpus
+        run: |
+          mkdir -p artifacts/cs020-gcc
+          build/cs020-gcc/neoeng_golden_corpus_tests \
+            "$GITHUB_WORKSPACE/tests/golden/ev03/v1" \
+            | tee artifacts/cs020-gcc/corpus.txt
+          grep '^cs020_golden_corpus=PASS states=3 snapshots=6 diagnostics=2 evidence=accepted_and_rejected mode=verify$' \
+            artifacts/cs020-gcc/corpus.txt
+
+      - name: Configure Clang golden corpus
+        env:
+          CC: clang
+          CXX: clang++
+        run: >-
+          cmake -S . -B build/cs020-clang -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build Clang golden corpus
+        run: >-
+          cmake --build build/cs020-clang
+          --target neoeng_golden_corpus_tests
+          --parallel 2
+
+      - name: Run Clang golden corpus
+        run: |
+          mkdir -p artifacts/cs020-clang
+          build/cs020-clang/neoeng_golden_corpus_tests \
+            "$GITHUB_WORKSPACE/tests/golden/ev03/v1" \
+            | tee artifacts/cs020-clang/corpus.txt
+          grep '^cs020_golden_corpus=PASS states=3 snapshots=6 diagnostics=2 evidence=accepted_and_rejected mode=verify$' \
+            artifacts/cs020-clang/corpus.txt
+
+      - name: Compare cross-compiler golden corpus
+        run: >-
+          diff -u
+          artifacts/cs020-gcc/corpus.txt
+          artifacts/cs020-clang/corpus.txt
