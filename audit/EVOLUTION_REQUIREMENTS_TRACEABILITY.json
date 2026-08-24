@@ -136,43 +136,64 @@
       "requirement_id": "EVREQ-009",
       "stage": "EV-02",
       "statement": "Avanço em frame máximo deve possuir comportamento fail-closed explícito e testado.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "boundary tests"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+        "tests/test_main.cpp",
+        "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+        "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-010",
       "stage": "EV-02",
       "statement": "Input para entidade inexistente deve possuir comportamento normativo explícito e diagnóstico estável.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "negative tests",
         "Host SDK test"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+        "tests/test_main.cpp",
+        "modules/host_sdk/tests/host_sdk_tests.cpp",
+        "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+        "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-011",
       "stage": "EV-02",
       "statement": "Contrato Q32.32 deve declarar overflow, divisão por zero, narrowing e política de arredondamento.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "numeric contract",
         "tests"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+        "tests/numeric_closure_tests.cpp",
+        "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+        "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-012",
       "stage": "EV-02",
       "statement": "Falhas fundamentais devem produzir classes estáveis de erro no escopo multiplataforma declarado.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "cross-compiler negative corpus"
       ],
-      "evidence": []
+      "evidence": [
+        ".github/workflows/cs019-ev02-fundamental-contract-hardening-validation.yml",
+        "audit/validation/CS019/VALIDATION_RESULT_R2.json",
+        "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+        "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-013",

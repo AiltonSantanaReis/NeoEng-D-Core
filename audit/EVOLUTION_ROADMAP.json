@@ -59,14 +59,14 @@
     {
       "stage_id": "EV-02",
       "title": "Hardening dos contratos fundamentais",
-      "status": "in_progress",
+      "status": "accepted",
       "depends_on": [
         "EV-01"
       ],
       "planned_changeset": "CS019",
-      "accepted_commit": null,
-      "evidence_manifest": null,
-      "decision_record": null
+      "accepted_commit": "9e35c25fd4c618d4707067f8760712c549f01a3e",
+      "evidence_manifest": "docs/changesets/000K/evidence/EV02_ACCEPTANCE_MANIFEST.json",
+      "decision_record": "docs/records/evolution/DEV-0010.md"
     },
     {
       "stage_id": "EV-03",
