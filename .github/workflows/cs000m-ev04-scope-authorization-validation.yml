@@ -1,0 +1,70 @@
+name: CS000M EV-04 scope authorization
+
+on:
+  push:
+    branches:
+      - agent/cs000m-ev04-scope-authorization
+    paths:
+      - '.github/workflows/cs000m-ev04-scope-authorization-validation.yml'
+      - 'audit/STAGE_SCOPE_MAXIMA.json'
+      - 'audit/validation/CS000M/VALIDATION_PLAN.json'
+      - 'docs/changesets/000M/CHANGESET.md'
+      - 'docs/records/evolution/DEV-0013.md'
+      - 'scripts/verify_cs000m_ev04_scope_authorization.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000M EV-04 scope authorization
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS000M source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: CS000M verifier negative self-test
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --self-test
+
+      - name: Verify prospective ChangeSet authority
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --authority
+
+      - name: Verify stage-scope conflict reconciliation
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --reconciliation
+
+      - name: Verify exact EV-04 maximum definition
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --scope-ledger
+
+      - name: Verify accepted CS000L preservation
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --predecessor
+
+      - name: Verify EV-04 and CS021 remain not started
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --nonstart
+
+      - name: Verify CS000M source descriptor geometry
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --descriptor
+
+      - name: Verify exact CS000M administrative scope
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --scope
+
+      - name: Verify CS000M product non-effects
+        run: python3 -B scripts/verify_cs000m_ev04_scope_authorization.py --non-effects
+
+      - name: Verify evolution ledger
+        run: |
+          python3 -B scripts/verify_evolution_plan.py
+          python3 -B scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify tracked-file manifest
+        run: python3 -B scripts/generate_manifest.py --check
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 -B scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000M/VALIDATION_PLAN.json
+          --expected-base-sha f3629342f9db5fca75393a217f2d559493e13001

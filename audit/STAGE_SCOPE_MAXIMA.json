@@ -72,13 +72,63 @@
         "docs/commercial/**",
         "scripts/verify_release_attestation.py"
       ]
+    },
+    {
+      "stage_id": "EV-04",
+      "planned_changeset": "CS021",
+      "status": "defined",
+      "preparation_allowed_patterns": [
+        ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
+        "CMakeLists.txt",
+        "MANIFEST.sha256",
+        "audit/CURRENT_CHANGESET_VALIDATION.json",
+        "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+        "audit/EVOLUTION_ROADMAP.json",
+        "audit/validation/CS021/**",
+        "docs/changesets/021/**",
+        "scripts/verify_cs021_ev04_property_model_testing.py",
+        "tests/property_model_tests.cpp"
+      ],
+      "allowed_patterns": [
+        ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
+        "CMakeLists.txt",
+        "MANIFEST.sha256",
+        "audit/CURRENT_CHANGESET_VALIDATION.json",
+        "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+        "audit/EVOLUTION_ROADMAP.json",
+        "audit/validation/CS021/**",
+        "docs/changesets/021/**",
+        "scripts/verify_cs021_ev04_property_model_testing.py",
+        "tests/property_model_tests.cpp"
+      ],
+      "mandatory_forbidden_patterns": [
+        "src/**",
+        "include/**",
+        "modules/**",
+        "apps/**",
+        "cmake/**",
+        "docs/governance/**",
+        "audit/SOURCE_OF_TRUTH_INDEX.json",
+        "audit/STAGE_SCOPE_MAXIMA.json",
+        "audit/CHANGESET_VALIDATION_POLICY.json",
+        "audit/GOVERNANCE_TRANSITION_STATE.json",
+        "audit/EVOLUTION_INVARIANTS.json",
+        ".github/workflows/changeset-validation.yml",
+        ".github/workflows/current-product-regression.yml",
+        "scripts/generate_manifest.py",
+        "scripts/verify_changeset_validation.py",
+        "scripts/verify_evolution_plan.py",
+        "tests/golden/ev03/v1/**",
+        "docs/contracts/GOLDEN_CORPUS_V1.md",
+        "audit/validation/CS000L/**",
+        "docs/changesets/000L/**"
+      ]
     }
   ],
   "undefined_stages": [
     "EV-01",
     "EV-02",
     "EV-03",
-    "EV-04",
     "EV-05",
     "EV-06",
     "EV-07",
