@@ -1,0 +1,151 @@
+{
+  "schema": "neoeng.dcore.golden-corpus-manifest.v1",
+  "corpus_schema": "neoeng.dcore.golden-corpus.v1",
+  "corpus_version": 1,
+  "base_sha": "98c1042249ced4c1775dddf9a871e29dc6070828",
+  "hash_mode": "raw-bytes-sha256",
+  "artifacts": [
+    {
+      "path": "tests/golden/ev03/v1/world_initial.bin",
+      "role": "canonical-world-initial",
+      "sha256": "8a0bd49d7bcfe755d29962e26e781ff0ba041375c595770ef6705254e3efaeee"
+    },
+    {
+      "path": "tests/golden/ev03/v1/world_after_transition.bin",
+      "role": "canonical-world-after-transition",
+      "sha256": "9475640a4aa7842cfdc548eb14f97e1ed492b01c764708f833948493ebbbc793"
+    },
+    {
+      "path": "tests/golden/ev03/v1/world_after_rollback_replay.bin",
+      "role": "canonical-world-after-rollback-replay",
+      "sha256": "4059584698bad4d2e864bab6d9f17c6710a7e4e5a93bbe3ddb53f52cb64d6cf7"
+    },
+    {
+      "path": "tests/golden/ev03/v1/evidence_envelope.bin",
+      "role": "canonical-state-evidence-envelope",
+      "sha256": "3e84dbcaea8e769516a94730847119e71e2a5d37a29b01d22b41d3bba54f4f85"
+    },
+    {
+      "path": "tests/golden/ev03/v1/corpus.json",
+      "role": "semantic-golden-oracle",
+      "sha256": "42978121523d1b17cf9df6100e82a23d8bed46a5d5e53e474f3649ca69c08f32"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "docs/contracts/GOLDEN_CORPUS_V1.md",
+      "sha256": "4319b699ccab8a6d5eb076648d3f2a909532c8fe0f6d41487e46eb07ccb099f2"
+    },
+    {
+      "path": "docs/contracts/FUNDAMENTAL_TRANSITION_V1.md",
+      "sha256": "34a855cb66cbea7c4fb70f76a5c1dc0147c4715fc44684b134a5efa474c3385c"
+    },
+    {
+      "path": "docs/contracts/STATE_EVIDENCE_V1.md",
+      "sha256": "2bffeb03897e51a0c7a64fb855e32673d3641e4c359942bf89838f6d39fe1990"
+    },
+    {
+      "path": "docs/contracts/TEMPORAL_CLOSURE_V1.md",
+      "sha256": "32ebad6a52a75e9626982b0ae3e5c874c562ab2de3aa042c0086b899e8def80c"
+    }
+  ],
+  "producers": [
+    {
+      "path": "include/neoeng/core/hash.hpp",
+      "base_blob": "1d3b536812a55e4d5daa38adde82c3efe896efe2"
+    },
+    {
+      "path": "src/hash.cpp",
+      "base_blob": "1b4611fc53ef825f5e73913ad4e023ea35e10ed9"
+    },
+    {
+      "path": "include/neoeng/core/simulation.hpp",
+      "base_blob": "92acf0239ccaa761e6a536c4dbde8b04a53ca1b2"
+    },
+    {
+      "path": "src/simulation.cpp",
+      "base_blob": "ad79eff7e7e1f3bbe4c4570e365ca0662b61491e"
+    },
+    {
+      "path": "include/neoeng/core/snapshot_store.hpp",
+      "base_blob": "168969c093450da3d28434ad73ed0fd314a9cd80"
+    },
+    {
+      "path": "src/snapshot_store.cpp",
+      "base_blob": "5ad4b3efa2567ea79fa648ee08fa0fb083de9b4d"
+    },
+    {
+      "path": "include/neoeng/core/rollback.hpp",
+      "base_blob": "d08e76b7383d031be8d5c8531010a9f19408e812"
+    },
+    {
+      "path": "src/rollback.cpp",
+      "base_blob": "07d3b29b88a7722aa54d3b04d46eefb3f380cb3c"
+    },
+    {
+      "path": "include/neoeng/core/state_evidence.hpp",
+      "base_blob": "154add7fae4180be9cbe6fd4fd64dea459d5dbe3"
+    },
+    {
+      "path": "src/state_evidence.cpp",
+      "base_blob": "81d25a077d1e8f065a34e930d54b8267e487ba91"
+    }
+  ],
+  "legacy_blob_bindings": [
+    {
+      "path": "include/neoeng/core/fixed.hpp",
+      "base_blob": "461ec4071388b9281c8d76862a24388255751ec4",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "include/neoeng/core/hash.hpp",
+      "base_blob": "1d3b536812a55e4d5daa38adde82c3efe896efe2",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "include/neoeng/core/rollback.hpp",
+      "base_blob": "d08e76b7383d031be8d5c8531010a9f19408e812",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "include/neoeng/core/simulation.hpp",
+      "base_blob": "92acf0239ccaa761e6a536c4dbde8b04a53ca1b2",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "include/neoeng/core/snapshot_store.hpp",
+      "base_blob": "168969c093450da3d28434ad73ed0fd314a9cd80",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "include/neoeng/core/types.hpp",
+      "base_blob": "d8efafccdec49d360fb8f7616ef50e8e655544e1",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "src/hash.cpp",
+      "base_blob": "1b4611fc53ef825f5e73913ad4e023ea35e10ed9",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "src/rollback.cpp",
+      "base_blob": "07d3b29b88a7722aa54d3b04d46eefb3f380cb3c",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "src/simulation.cpp",
+      "base_blob": "ad79eff7e7e1f3bbe4c4570e365ca0662b61491e",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "src/snapshot_store.cpp",
+      "base_blob": "5ad4b3efa2567ea79fa648ee08fa0fb083de9b4d",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    },
+    {
+      "path": "tests/test_main.cpp",
+      "base_blob": "b95dd6ea73979b546e6ac0c01808e38a934bbbee",
+      "binding_mode": "git-blob-sha1-cross-platform"
+    }
+  ]
+}

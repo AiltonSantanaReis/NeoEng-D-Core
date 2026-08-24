@@ -15,7 +15,7 @@
     "evidence_manifest": "docs/changesets/016/evidence/EVIDENCE_MANIFEST.json"
   },
   "program_state": "active",
-  "current_stage": "EV-02",
+  "current_stage": "EV-03",
   "release_authorized": false,
   "stage_statuses": [
     "not_started",
@@ -71,7 +71,7 @@
     {
       "stage_id": "EV-03",
       "title": "Corpus ouro determinístico",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": [
         "EV-02"
       ],
