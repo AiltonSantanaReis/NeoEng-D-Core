@@ -87,7 +87,12 @@
         "audit/validation/CS021/**",
         "docs/changesets/021/**",
         "scripts/verify_cs021_ev04_property_model_testing.py",
-        "tests/property_model_tests.cpp"
+        "tests/property_model_tests.cpp",
+        ".github/workflows/cs000o-ev04-ledger-closure-validation.yml",
+        "audit/validation/CS000O/**",
+        "docs/changesets/000O/**",
+        "docs/records/evolution/DEV-0015.md",
+        "scripts/verify_cs000o_ev04_ledger_closure.py"
       ],
       "allowed_patterns": [
         ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
@@ -99,7 +104,12 @@
         "audit/validation/CS021/**",
         "docs/changesets/021/**",
         "scripts/verify_cs021_ev04_property_model_testing.py",
-        "tests/property_model_tests.cpp"
+        "tests/property_model_tests.cpp",
+        ".github/workflows/cs000o-ev04-ledger-closure-validation.yml",
+        "audit/validation/CS000O/**",
+        "docs/changesets/000O/**",
+        "docs/records/evolution/DEV-0015.md",
+        "scripts/verify_cs000o_ev04_ledger_closure.py"
       ],
       "mandatory_forbidden_patterns": [
         "src/**",

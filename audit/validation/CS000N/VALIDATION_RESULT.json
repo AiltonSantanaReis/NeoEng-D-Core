@@ -1,0 +1,119 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000N",
+  "plan_commit": "17241ced2a480c166481467d6aa72aa743e8e04a",
+  "plan_sha256": "faa4ce4b0922c73296b524cb9e4068089441224a3de750de17df6cf22f49a0f1",
+  "source_sha": "17241ced2a480c166481467d6aa72aa743e8e04a",
+  "run_id": 32859078916,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000n-ev04-closure-scope-authorization-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000n.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "CS000N verifier negative self-test"
+    },
+    {
+      "test_id": "cs000n.authority",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify prospective ChangeSet authority"
+    },
+    {
+      "test_id": "cs000n.reconciliation",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact EV-04 closure-scope reconciliation"
+    },
+    {
+      "test_id": "cs000n.scope-ledger",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact extended EV-04 maximum"
+    },
+    {
+      "test_id": "cs000n.predecessor",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify accepted CS021 protected integration preservation"
+    },
+    {
+      "test_id": "cs000n.base-manifest-anomaly",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify preserved CS021 manifest anomaly and prospective repair"
+    },
+    {
+      "test_id": "cs000n.nonclosure",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify EV-04 remains open and CS000O remains dormant"
+    },
+    {
+      "test_id": "cs000n.descriptor",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify CS000N source descriptor geometry"
+    },
+    {
+      "test_id": "cs000n.scope",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact CS000N administrative scope"
+    },
+    {
+      "test_id": "cs000n.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify CS000N product non-effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "qualification": {
+    "run_number": 1,
+    "event": "push",
+    "head_branch": "agent/cs000n-ev04-closure-scope-authorization",
+    "head_sha": "17241ced2a480c166481467d6aa72aa743e8e04a",
+    "head_tree": "239dda79a3323543aaa52ab89d7c346f9840c521",
+    "status": "completed",
+    "conclusion": "success",
+    "dedicated_qualification_rerun": false
+  },
+  "effects": {
+    "stage_scope": "EV04_CLOSURE_SCOPE_AUTHORIZED",
+    "current_stage": "EV-04",
+    "ev04": "IN_PROGRESS",
+    "cs000o": "DORMANT",
+    "evreq_016_018": "IN_PROGRESS",
+    "ev05": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "product_tests": "NONE",
+    "golden_corpus_bytes": "UNCHANGED",
+    "historical_evidence_rewrite": "NONE",
+    "base_manifest_anomaly": "PRESERVED",
+    "current_manifest": "REPAIRED"
+  }
+}
