@@ -1,0 +1,131 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000N",
+  "objective": "Extend the existing defined EV-04 maximum only enough to authorize the future CS000O administrative ledger closure after accepted CS021 protected integration; preserve all current CS021-authorized paths and forbidden boundaries; preserve and explicitly diagnose the exact two-row CRLF-derived MANIFEST.sha256 anomaly inherited from the CS021 binding while prospectively repairing only the current tracked-file manifest; keep EV-04 in_progress, EVREQ-016..018 in_progress, EV-05 not_started, and release unauthorized.",
+  "base_sha": "d75fb80e7aa304576060339c31ff87fdb9dae206",
+  "execution_workflow": ".github/workflows/cs000n-ev04-closure-scope-authorization-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000n.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "CS000N verifier negative self-test"
+    },
+    {
+      "test_id": "cs000n.authority",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify prospective ChangeSet authority"
+    },
+    {
+      "test_id": "cs000n.reconciliation",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact EV-04 closure-scope reconciliation"
+    },
+    {
+      "test_id": "cs000n.scope-ledger",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact extended EV-04 maximum"
+    },
+    {
+      "test_id": "cs000n.predecessor",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify accepted CS021 protected integration preservation"
+    },
+    {
+      "test_id": "cs000n.base-manifest-anomaly",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify preserved CS021 manifest anomaly and prospective repair"
+    },
+    {
+      "test_id": "cs000n.nonclosure",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify EV-04 remains open and CS000O remains dormant"
+    },
+    {
+      "test_id": "cs000n.descriptor",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify CS000N source descriptor geometry"
+    },
+    {
+      "test_id": "cs000n.scope",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify exact CS000N administrative scope"
+    },
+    {
+      "test_id": "cs000n.non-effects",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify CS000N product non-effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000N EV-04 closure scope authorization",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".gitattributes",
+    ".github/workflows/changeset-validation.yml",
+    ".github/workflows/cs000m-ev04-scope-authorization-validation.yml",
+    ".github/workflows/cs000n-ev04-closure-scope-authorization-validation.yml",
+    ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
+    ".github/workflows/current-product-regression.yml",
+    "CMakeLists.txt",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/STAGE_SCOPE_MAXIMA.json",
+    "audit/validation/CS000M/VALIDATION_PLAN.json",
+    "audit/validation/CS000M/VALIDATION_RESULT.json",
+    "audit/validation/CS000N/VALIDATION_PLAN.json",
+    "audit/validation/CS021/VALIDATION_PLAN.json",
+    "audit/validation/CS021/VALIDATION_RESULT.json",
+    "docs/changesets/000M/CHANGESET.md",
+    "docs/changesets/000N/CHANGESET.md",
+    "docs/changesets/021/CHANGESET.md",
+    "docs/contracts/GOLDEN_CORPUS_V1.md",
+    "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md",
+    "docs/records/evolution/DEV-0013.md",
+    "docs/records/evolution/DEV-0014.md",
+    "scripts/generate_manifest.py",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_cs000m_ev04_scope_authorization.py",
+    "scripts/verify_cs000n_ev04_closure_scope_authorization.py",
+    "scripts/verify_cs021_ev04_property_model_testing.py",
+    "scripts/verify_evolution_plan.py",
+    "tests/golden_corpus_tests.cpp",
+    "tests/property_model_tests.cpp",
+    "tests/golden/ev03/v1/corpus.json",
+    "tests/golden/ev03/v1/evidence_envelope.bin",
+    "tests/golden/ev03/v1/manifest.json",
+    "tests/golden/ev03/v1/world_after_rollback_replay.bin",
+    "tests/golden/ev03/v1/world_after_transition.bin",
+    "tests/golden/ev03/v1/world_initial.bin"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}

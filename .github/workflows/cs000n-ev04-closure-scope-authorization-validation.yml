@@ -1,0 +1,73 @@
+name: CS000N EV-04 closure scope authorization
+
+on:
+  push:
+    branches:
+      - agent/cs000n-ev04-closure-scope-authorization
+    paths:
+      - '.github/workflows/cs000n-ev04-closure-scope-authorization-validation.yml'
+      - 'audit/STAGE_SCOPE_MAXIMA.json'
+      - 'audit/validation/CS000N/VALIDATION_PLAN.json'
+      - 'docs/changesets/000N/CHANGESET.md'
+      - 'docs/records/evolution/DEV-0014.md'
+      - 'scripts/verify_cs000n_ev04_closure_scope_authorization.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CS000N EV-04 closure scope authorization
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS000N source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: CS000N verifier negative self-test
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --self-test
+
+      - name: Verify prospective ChangeSet authority
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --authority
+
+      - name: Verify exact EV-04 closure-scope reconciliation
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --reconciliation
+
+      - name: Verify exact extended EV-04 maximum
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --scope-ledger
+
+      - name: Verify accepted CS021 protected integration preservation
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --predecessor
+
+      - name: Verify preserved CS021 manifest anomaly and prospective repair
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --base-manifest-anomaly
+
+      - name: Verify EV-04 remains open and CS000O remains dormant
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --nonclosure
+
+      - name: Verify CS000N source descriptor geometry
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --descriptor
+
+      - name: Verify exact CS000N administrative scope
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --scope
+
+      - name: Verify CS000N product non-effects
+        run: python3 -B scripts/verify_cs000n_ev04_closure_scope_authorization.py --non-effects
+
+      - name: Verify evolution ledger
+        run: |
+          python3 -B scripts/verify_evolution_plan.py
+          python3 -B scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify tracked-file manifest
+        run: python3 -B scripts/generate_manifest.py --check
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 -B scripts/verify_changeset_validation.py
+          --plan audit/validation/CS000N/VALIDATION_PLAN.json
+          --expected-base-sha d75fb80e7aa304576060339c31ff87fdb9dae206
