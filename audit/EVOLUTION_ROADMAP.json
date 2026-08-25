@@ -15,7 +15,7 @@
     "evidence_manifest": "docs/changesets/016/evidence/EVIDENCE_MANIFEST.json"
   },
   "program_state": "active",
-  "current_stage": "EV-03",
+  "current_stage": "EV-04",
   "release_authorized": false,
   "stage_statuses": [
     "not_started",
@@ -83,7 +83,7 @@
     {
       "stage_id": "EV-04",
       "title": "Property-based e model-based testing",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": [
         "EV-03"
       ],

@@ -1,0 +1,193 @@
+name: CS021 EV-04 property and model testing
+
+on:
+  push:
+    branches:
+      - agent/cs021-ev04-property-model-testing
+    paths:
+      - ".github/workflows/cs021-ev04-property-model-testing-validation.yml"
+      - "CMakeLists.txt"
+      - "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json"
+      - "audit/EVOLUTION_ROADMAP.json"
+      - "audit/validation/CS021/VALIDATION_PLAN.json"
+      - "docs/changesets/021/CHANGESET.md"
+      - "scripts/verify_cs021_ev04_property_model_testing.py"
+      - "tests/property_model_tests.cpp"
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: CS021 validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS021 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build gcc g++ clang
+
+      - name: CS021 verifier negative self-test
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --self-test
+
+      - name: Verify EV-04 prospective authority
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --authority
+
+      - name: Verify EV-04 planning ledger
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --planning
+
+      - name: Verify accepted EV-03 predecessor
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --predecessor
+
+      - name: Verify exact CS021 source scope
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --scope
+
+      - name: Verify immutable EV-03 golden corpus
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --golden
+
+      - name: Verify CS021 source descriptor geometry
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --descriptor
+
+      - name: Verify CS021 product non-effects
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --non-effects
+
+      - name: Verify property-model campaign registration
+        run: python3 -B scripts/verify_cs021_ev04_property_model_testing.py --registration
+
+      - name: Verify evolution ledger
+        run: python3 -B scripts/verify_evolution_plan.py
+
+      - name: Verify evolution verifier self-test
+        run: python3 -B scripts/verify_evolution_plan.py --self-test
+
+      - name: Verify ChangeSet policy self-test
+        run: python3 -B scripts/verify_changeset_validation.py --self-test
+
+      - name: Verify ChangeSet validation plan
+        run: >-
+          python3 -B scripts/verify_changeset_validation.py
+          --plan audit/validation/CS021/VALIDATION_PLAN.json
+          --expected-base-sha 9e5c00faa4db0868da48913b8ffa24e0f64972e2
+
+      - name: Verify tracked-file manifest
+        run: python3 -B scripts/generate_manifest.py --check
+
+      - name: Configure primary property-model campaign
+        run: >-
+          cmake -S . -B build/cs021-primary -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=ON
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build primary property-model campaign
+        run: cmake --build build/cs021-primary --parallel 2
+
+      - name: Run primary property-model campaign
+        run: >-
+          ctest --test-dir build/cs021-primary
+          --output-on-failure
+          -R '^neoeng_property_model_tests$'
+
+      - name: Run EV-03 golden corpus regression
+        run: >-
+          ctest --test-dir build/cs021-primary
+          --output-on-failure
+          -R '^neoeng_golden_corpus_tests$'
+
+      - name: Run product smoke regression
+        run: >-
+          ctest --test-dir build/cs021-primary
+          --output-on-failure
+          -L smoke
+
+  cross_compiler:
+    name: CS021 cross-compiler property-model
+    needs: validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout exact CS021 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-dev ninja-build gcc g++ clang
+
+      - name: Configure GCC property-model campaign
+        env:
+          CC: gcc
+          CXX: g++
+        run: >-
+          cmake -S . -B build/cs021-gcc -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build GCC property-model campaign
+        run: >-
+          cmake --build build/cs021-gcc
+          --target neoeng_property_model_tests
+          --parallel 2
+
+      - name: Run GCC property-model campaign
+        run: |
+          mkdir -p artifacts/cs021-gcc
+          build/cs021-gcc/neoeng_property_model_tests \
+            | tee artifacts/cs021-gcc/property-model.txt
+          grep '^cs021_property_model=PASS seed=0xc5021e0400000001 scenarios=128 permutations=4 model=reference snapshots=6 rollback=6 serialize=covered deserialize=not_applicable$' \
+            artifacts/cs021-gcc/property-model.txt
+
+      - name: Configure Clang property-model campaign
+        env:
+          CC: clang
+          CXX: clang++
+        run: >-
+          cmake -S . -B build/cs021-clang -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_TESTING=ON
+          -DNEOENG_WARNINGS_AS_ERRORS=ON
+          -DNEOENG_DCORE_BUILD_FULL_TOOLSET=OFF
+          -DNEOENG_DCORE_BUILD_RELEASE_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_RESEARCH_TOOLS=OFF
+          -DNEOENG_DCORE_BUILD_VIEW_LAB=OFF
+
+      - name: Build Clang property-model campaign
+        run: >-
+          cmake --build build/cs021-clang
+          --target neoeng_property_model_tests
+          --parallel 2
+
+      - name: Run Clang property-model campaign
+        run: |
+          mkdir -p artifacts/cs021-clang
+          build/cs021-clang/neoeng_property_model_tests \
+            | tee artifacts/cs021-clang/property-model.txt
+          grep '^cs021_property_model=PASS seed=0xc5021e0400000001 scenarios=128 permutations=4 model=reference snapshots=6 rollback=6 serialize=covered deserialize=not_applicable$' \
+            artifacts/cs021-clang/property-model.txt
+
+      - name: Compare cross-compiler property-model summary
+        run: >-
+          diff -u
+          artifacts/cs021-gcc/property-model.txt
+          artifacts/cs021-clang/property-model.txt

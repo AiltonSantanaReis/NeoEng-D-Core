@@ -249,7 +249,7 @@
       "requirement_id": "EVREQ-016",
       "stage": "EV-04",
       "statement": "Property tests devem verificar invariância à ordem não semântica dos inputs quando o contrato canonicaliza essa ordem.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "property campaign"
       ],
@@ -259,7 +259,7 @@
       "requirement_id": "EVREQ-017",
       "stage": "EV-04",
       "statement": "Modelo simples de referência deve comparar resultados contra implementações otimizadas em cenários gerados.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "differential report"
       ],
@@ -269,7 +269,7 @@
       "requirement_id": "EVREQ-018",
       "stage": "EV-04",
       "statement": "Propriedades de serialize/deserialize, restore, rollback/replay e equivalência entre estratégias devem ser exercitadas quando aplicáveis.",
-      "status": "planned",
+      "status": "in_progress",
       "evidence_required": [
         "property campaign"
       ],
