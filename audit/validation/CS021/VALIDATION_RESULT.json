@@ -1,0 +1,194 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS021",
+  "plan_commit": "0c4b66b4474c128583f2ce1920aef848bebc3db8",
+  "plan_sha256": "461470d5f46c5d082b872ac3815c9398dd0fc33525b55cc7efada4a96551a955",
+  "source_sha": "0c4b66b4474c128583f2ce1920aef848bebc3db8",
+  "run_id": 32794089676,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs021.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "CS021 verifier negative self-test"
+    },
+    {
+      "test_id": "cs021.authority",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify EV-04 prospective authority"
+    },
+    {
+      "test_id": "cs021.planning-ledger",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify EV-04 planning ledger"
+    },
+    {
+      "test_id": "cs021.predecessor",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify accepted EV-03 predecessor"
+    },
+    {
+      "test_id": "cs021.scope",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify exact CS021 source scope"
+    },
+    {
+      "test_id": "cs021.golden-preservation",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify immutable EV-03 golden corpus"
+    },
+    {
+      "test_id": "cs021.descriptor",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify CS021 source descriptor geometry"
+    },
+    {
+      "test_id": "cs021.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify CS021 product non-effects"
+    },
+    {
+      "test_id": "cs021.registration",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify property-model campaign registration"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "evolution.self-test",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify evolution verifier self-test"
+    },
+    {
+      "test_id": "changeset.policy-self-test",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify ChangeSet policy self-test"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify ChangeSet validation plan"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "product.configure",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Configure primary property-model campaign"
+    },
+    {
+      "test_id": "product.build",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Build primary property-model campaign"
+    },
+    {
+      "test_id": "cs021.property-model",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Run primary property-model campaign"
+    },
+    {
+      "test_id": "cs021.golden-regression",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Run EV-03 golden corpus regression"
+    },
+    {
+      "test_id": "product.smoke",
+      "status": "PASS",
+      "evidence_job": "CS021 validation",
+      "evidence_step": "Run product smoke regression"
+    },
+    {
+      "test_id": "cs021.gcc-configure",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Configure GCC property-model campaign"
+    },
+    {
+      "test_id": "cs021.gcc-build",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Build GCC property-model campaign"
+    },
+    {
+      "test_id": "cs021.gcc-campaign",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Run GCC property-model campaign"
+    },
+    {
+      "test_id": "cs021.clang-configure",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Configure Clang property-model campaign"
+    },
+    {
+      "test_id": "cs021.clang-build",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Build Clang property-model campaign"
+    },
+    {
+      "test_id": "cs021.clang-campaign",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Run Clang property-model campaign"
+    },
+    {
+      "test_id": "cs021.cross-compiler-equivalence",
+      "status": "PASS",
+      "evidence_job": "CS021 cross-compiler property-model",
+      "evidence_step": "Compare cross-compiler property-model summary"
+    }
+  ],
+  "qualification": {
+    "run_number": 1,
+    "event": "push",
+    "head_branch": "agent/cs021-ev04-property-model-testing",
+    "head_sha": "0c4b66b4474c128583f2ce1920aef848bebc3db8",
+    "head_tree": "c8c6cb2c38c5b09480629992da24a85528877e4c",
+    "status": "completed",
+    "conclusion": "success",
+    "dedicated_qualification_rerun": false
+  },
+  "effects": {
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "canonical_formats": "UNCHANGED",
+    "golden_corpus_bytes": "UNCHANGED",
+    "ev04_stage_acceptance": "NOT_SET_BY_THIS_RESULT",
+    "evreq_016_018_ledger_verification": "NOT_SET_BY_THIS_RESULT",
+    "ev05": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "public_product_claim": "NONE",
+    "historical_evidence_rewrite": "NONE",
+    "golden_reemission": "NONE"
+  }
+}
