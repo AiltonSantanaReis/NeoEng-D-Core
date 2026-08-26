@@ -1,0 +1,100 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000P",
+  "plan_commit": "18993029fd2b2e706f79d46cd79ff5e0866dbb98",
+  "plan_sha256": "7ef63c37d8fa115af6b4ce0ece4311c02a81333c16b0af60f324c2bfa82952dc",
+  "source_sha": "18993029fd2b2e706f79d46cd79ff5e0866dbb98",
+  "run_id": 32955146894,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000p-ev05-scope-authorization-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000p.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "CS000P verifier negative self-test"
+    },
+    {
+      "test_id": "cs000p.authority",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify prospective ChangeSet authority"
+    },
+    {
+      "test_id": "cs000p.reconciliation",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify stage-scope conflict reconciliation"
+    },
+    {
+      "test_id": "cs000p.scope-ledger",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify exact EV-05 maximum definition"
+    },
+    {
+      "test_id": "cs000p.predecessor",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify accepted CS000O predecessor preservation"
+    },
+    {
+      "test_id": "cs000p.nonstart",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify EV-05 and CS022 remain not started"
+    },
+    {
+      "test_id": "cs000p.descriptor",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify CS000P source descriptor geometry"
+    },
+    {
+      "test_id": "cs000p.scope",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify exact CS000P administrative scope"
+    },
+    {
+      "test_id": "cs000p.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify CS000P product non-effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "effects": {
+    "stage_scope": "EV05_DEFINED",
+    "current_stage": "EV-04",
+    "ev05": "NOT_STARTED",
+    "cs022": "NOT_STARTED",
+    "evreq_019_021": "PLANNED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "product_tests": "NONE",
+    "golden_corpus_bytes": "UNCHANGED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
