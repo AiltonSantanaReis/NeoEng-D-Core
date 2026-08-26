@@ -1,0 +1,130 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-result.v1",
+  "changeset": "CS000O",
+  "plan_commit": "9913352ab88a14b444a857377e9bcd2bc4dccde6",
+  "plan_sha256": "35df7054ce4134e8a8f1ccf52f9241618af9dea5c84982d19044ba94f503c623",
+  "source_sha": "9913352ab88a14b444a857377e9bcd2bc4dccde6",
+  "run_id": 32913944112,
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/cs000o-ev04-ledger-closure-validation.yml",
+  "validation_state": "VALIDATED",
+  "acceptance_decision": "ACCEPTED",
+  "tests": [
+    {
+      "test_id": "cs000o.verifier-self-test",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "CS000O verifier negative self-test"
+    },
+    {
+      "test_id": "cs000o.authority",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify prospective EV-04 closure authority"
+    },
+    {
+      "test_id": "cs000o.cs021-integration",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify accepted CS021 protected integration"
+    },
+    {
+      "test_id": "cs000o.github-provenance",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify live CS021 and protected provenance"
+    },
+    {
+      "test_id": "cs000o.cs000n-preservation",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify accepted CS000N closure authorization"
+    },
+    {
+      "test_id": "cs000o.technical-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify preserved EV-04 technical evidence"
+    },
+    {
+      "test_id": "cs000o.ledger-closure",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify exact EV-04 ledger closure"
+    },
+    {
+      "test_id": "cs000o.requirements-closure",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify EVREQ-016 through EVREQ-018"
+    },
+    {
+      "test_id": "cs000o.acceptance-evidence",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify EV-04 acceptance evidence and decision"
+    },
+    {
+      "test_id": "cs000o.descriptor",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify CS000O source descriptor geometry"
+    },
+    {
+      "test_id": "cs000o.scope",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify exact CS000O administrative-only scope"
+    },
+    {
+      "test_id": "cs000o.non-effects",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify no product EV-05 or release effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "status": "PASS",
+      "evidence_job": "CS000O EV-04 ledger closure",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "qualification": {
+    "run_number": 1,
+    "event": "push",
+    "head_branch": "agent/cs000o-ev04-ledger-closure",
+    "head_sha": "9913352ab88a14b444a857377e9bcd2bc4dccde6",
+    "head_tree": "dc41edcaf300af1d33198721579d89bd4c6ad19f",
+    "status": "completed",
+    "conclusion": "success",
+    "dedicated_qualification_rerun": false
+  },
+  "effects": {
+    "ev04": "LEDGER_ACCEPTED",
+    "current_stage": "EV-04",
+    "evreq_016_018": "VERIFIED",
+    "ev05": "NOT_STARTED",
+    "cs022": "NOT_STARTED",
+    "release": "NOT_AUTHORIZED",
+    "runtime": "NONE",
+    "abi": "NONE",
+    "product_source": "NONE",
+    "build_definitions": "NONE",
+    "product_tests": "NONE",
+    "property_model_implementation": "UNCHANGED",
+    "golden_corpus_bytes": "UNCHANGED",
+    "historical_evidence_rewrite": "NONE"
+  }
+}
