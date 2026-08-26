@@ -83,14 +83,14 @@
     {
       "stage_id": "EV-04",
       "title": "Property-based e model-based testing",
-      "status": "in_progress",
+      "status": "accepted",
       "depends_on": [
         "EV-03"
       ],
       "planned_changeset": "CS021",
-      "accepted_commit": null,
-      "evidence_manifest": null,
-      "decision_record": null
+      "accepted_commit": "d75fb80e7aa304576060339c31ff87fdb9dae206",
+      "evidence_manifest": "docs/changesets/000O/evidence/EV04_ACCEPTANCE_MANIFEST.json",
+      "decision_record": "docs/records/evolution/DEV-0015.md"
     },
     {
       "stage_id": "EV-05",

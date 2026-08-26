@@ -249,31 +249,45 @@
       "requirement_id": "EVREQ-016",
       "stage": "EV-04",
       "statement": "Property tests devem verificar invariância à ordem não semântica dos inputs quando o contrato canonicaliza essa ordem.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "property campaign"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/property_model_tests.cpp",
+        ".github/workflows/cs021-ev04-property-model-testing-validation.yml",
+        "audit/validation/CS021/VALIDATION_RESULT.json",
+        "docs/changesets/000O/evidence/EV04_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-017",
       "stage": "EV-04",
       "statement": "Modelo simples de referência deve comparar resultados contra implementações otimizadas em cenários gerados.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "differential report"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/property_model_tests.cpp",
+        "audit/validation/CS021/VALIDATION_RESULT.json",
+        "docs/changesets/000O/evidence/EV04_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-018",
       "stage": "EV-04",
       "statement": "Propriedades de serialize/deserialize, restore, rollback/replay e equivalência entre estratégias devem ser exercitadas quando aplicáveis.",
-      "status": "in_progress",
+      "status": "verified",
       "evidence_required": [
         "property campaign"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/property_model_tests.cpp",
+        "docs/changesets/021/CHANGESET.md",
+        "audit/validation/CS021/VALIDATION_RESULT.json",
+        "docs/changesets/000O/evidence/EV04_ACCEPTANCE_MANIFEST.json"
+      ]
     },
     {
       "requirement_id": "EVREQ-019",
