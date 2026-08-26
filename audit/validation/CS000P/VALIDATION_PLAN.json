@@ -1,0 +1,120 @@
+{
+  "schema": "neoeng.dcore.changeset-validation-plan.v1",
+  "changeset": "CS000P",
+  "objective": "Reconcile the active higher-precedence stage-scope ledger before CS022 by defining the minimal EV-05 semantic-fuzz/corruption maximum, removing only EV-05 from undefined_stages, preserving accepted CS000O/EV-04 evidence and lifecycle, keeping EV-05 not_started and EVREQ-019..021 planned, and keeping release unauthorized.",
+  "base_sha": "ca3746d7af4476387d269e2dfbe1e9677bd670cb",
+  "execution_workflow": ".github/workflows/cs000p-ev05-scope-authorization-validation.yml",
+  "required_tests": [
+    {
+      "test_id": "cs000p.verifier-self-test",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "CS000P verifier negative self-test"
+    },
+    {
+      "test_id": "cs000p.authority",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify prospective ChangeSet authority"
+    },
+    {
+      "test_id": "cs000p.reconciliation",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify stage-scope conflict reconciliation"
+    },
+    {
+      "test_id": "cs000p.scope-ledger",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify exact EV-05 maximum definition"
+    },
+    {
+      "test_id": "cs000p.predecessor",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify accepted CS000O predecessor preservation"
+    },
+    {
+      "test_id": "cs000p.nonstart",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify EV-05 and CS022 remain not started"
+    },
+    {
+      "test_id": "cs000p.descriptor",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify CS000P source descriptor geometry"
+    },
+    {
+      "test_id": "cs000p.scope",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify exact CS000P administrative scope"
+    },
+    {
+      "test_id": "cs000p.non-effects",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify CS000P product non-effects"
+    },
+    {
+      "test_id": "evolution.plan",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify evolution ledger"
+    },
+    {
+      "test_id": "repository.manifest",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify tracked-file manifest"
+    },
+    {
+      "test_id": "changeset.plan-structure",
+      "required": true,
+      "evidence_job": "CS000P EV-05 scope authorization",
+      "evidence_step": "Verify ChangeSet validation plan"
+    }
+  ],
+  "frozen_files": [
+    ".gitattributes",
+    ".github/workflows/changeset-validation.yml",
+    ".github/workflows/current-product-regression.yml",
+    ".github/workflows/cs000o-ev04-ledger-closure-validation.yml",
+    ".github/workflows/cs000p-ev05-scope-authorization-validation.yml",
+    "CMakeLists.txt",
+    "audit/CHANGESET_VALIDATION_POLICY.json",
+    "audit/EVOLUTION_INVARIANTS.json",
+    "audit/EVOLUTION_REQUIREMENTS_TRACEABILITY.json",
+    "audit/EVOLUTION_ROADMAP.json",
+    "audit/GOVERNANCE_TRANSITION_STATE.json",
+    "audit/SOURCE_OF_TRUTH_INDEX.json",
+    "audit/STAGE_SCOPE_MAXIMA.json",
+    "audit/validation/CS000O/VALIDATION_PLAN.json",
+    "audit/validation/CS000O/VALIDATION_RESULT.json",
+    "audit/validation/CS000P/VALIDATION_PLAN.json",
+    "docs/changesets/000O/CHANGESET.md",
+    "docs/changesets/000O/evidence/EV04_ACCEPTANCE_MANIFEST.json",
+    "docs/changesets/000P/CHANGESET.md",
+    "docs/governance/POST_1_14_1_EVOLUTION_MASTER_PLAN.md",
+    "docs/records/evolution/DEV-0015.md",
+    "docs/records/evolution/DEV-0016.md",
+    "scripts/generate_manifest.py",
+    "scripts/verify_changeset_validation.py",
+    "scripts/verify_cs000o_ev04_ledger_closure.py",
+    "scripts/verify_cs000p_ev05_scope_authorization.py",
+    "scripts/verify_evolution_plan.py",
+    "tests/golden_corpus_tests.cpp",
+    "tests/property_model_tests.cpp",
+    "tests/golden/ev03/v1/corpus.json",
+    "tests/golden/ev03/v1/evidence_envelope.bin",
+    "tests/golden/ev03/v1/manifest.json",
+    "tests/golden/ev03/v1/world_after_rollback_replay.bin",
+    "tests/golden/ev03/v1/world_after_transition.bin",
+    "tests/golden/ev03/v1/world_initial.bin"
+  ],
+  "acceptance_requires_all_required_pass": true,
+  "allow_test_removal_after_execution": false
+}
